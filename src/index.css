@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-stone-50 text-stone-900 font-sans;
+  }
+}
+
+.flow-node {
+  @apply relative flex flex-col items-center p-3 rounded-2xl border-2 transition-all duration-200 cursor-pointer;
+}
+
+.flow-connector {
+  @apply w-0.5 bg-stone-300 h-6 relative;
+}
+
+.flow-connector::after {
+  content: '';
+  @apply absolute -bottom-1 -left-[3px] border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-stone-300;
+}
+
+.planner-input {
+  @apply w-full bg-transparent border-b border-stone-200 focus:border-stone-400 outline-none py-1 transition-colors;
+}

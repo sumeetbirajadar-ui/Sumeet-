@@ -1,0 +1,964 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { 
+  Sun, 
+  Moon, 
+  Calendar, 
+  CheckCircle2, 
+  Layout, 
+  ChevronRight, 
+  ChevronLeft,
+  Plus,
+  Trash2,
+  Heart,
+  DollarSign,
+  Bell,
+  BookOpen,
+  Wind,
+  GlassWater,
+  Briefcase,
+  CheckSquare,
+  Bath,
+  User,
+  FileText,
+  UserCircle,
+  Smile,
+  Droplets,
+  Phone,
+  TrendingUp,
+  Target,
+  Trophy,
+  Star,
+  BarChart3
+} from 'lucide-react';
+import { 
+  DailyData, 
+  WeeklyReview,
+  AppState,
+  INITIAL_ROUTINE_TASKS, 
+  EVENING_530_TASKS, 
+  EVENING_730_TASKS, 
+  WEEKLY_TASKS 
+} from './types';
+
+const iconMap: Record<string, React.ReactNode> = {
+  Sun: <Sun className="w-5 h-5" />,
+  Moon: <Moon className="w-5 h-5" />,
+  BookOpen: <BookOpen className="w-5 h-5" />,
+  Wind: <Wind className="w-5 h-5" />,
+  GlassWater: <GlassWater className="w-5 h-5" />,
+  Briefcase: <Briefcase className="w-5 h-5" />,
+  CheckSquare: <CheckSquare className="w-5 h-5" />,
+  Bath: <Bath className="w-5 h-5" />,
+  User: <User className="w-5 h-5" />,
+  Heart: <Heart className="w-5 h-5" />,
+  FileText: <FileText className="w-5 h-5" />,
+  UserCircle: <UserCircle className="w-5 h-5" />,
+  Smile: <Smile className="w-5 h-5" />,
+  Droplets: <Droplets className="w-5 h-5" />,
+  Phone: <Phone className="w-5 h-5" />,
+};
+
+export default function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem('is_authenticated') === 'true';
+  });
+  const [view, setView] = useState<'routine' | 'planner' | 'weekly'>('routine');
+  const [arrivalPath, setArrivalPath] = useState<'530' | '730'>('530');
+  const [currentDate, setCurrentDate] = useState(new Date().toISOString().split('T')[0]);
+  
+  const [state, setState] = useState<AppState>(() => {
+    const saved = localStorage.getItem('daily_tracker_app_state');
+    if (saved) return JSON.parse(saved);
+    return {
+      daily: {},
+      weekly: {}
+    };
+  });
+
+  const handleLogin = (success: boolean) => {
+    if (success) {
+      setIsAuthenticated(true);
+      localStorage.setItem('is_authenticated', 'true');
+    }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    localStorage.removeItem('is_authenticated');
+  };
+
+  const getDayData = (date: string): DailyData => {
+    return state.daily[date] || {
+      date,
+      routine: {},
+      todo: Array(10).fill(''),
+      expenses: Array(5).fill({ item: '', amount: '' }),
+      reminders: Array(5).fill(''),
+      gratitude: Array(3).fill(''),
+      reflection: Array(2).fill(''),
+      sections: {
+        xi_a: Array(4).fill(''),
+        xi_b: Array(4).fill(''),
+        kcet: Array(4).fill(''),
+        neet: Array(4).fill(''),
+      }
+    };
+  };
+
+  const currentData = getDayData(currentDate);
+
+  useEffect(() => {
+    localStorage.setItem('daily_tracker_app_state', JSON.stringify(state));
+  }, [state]);
+
+  const updateDailyData = (date: string, newData: DailyData) => {
+    setState(prev => ({
+      ...prev,
+      daily: { ...prev.daily, [date]: newData }
+    }));
+  };
+
+  const toggleRoutine = (id: string) => {
+    const newData = { ...currentData };
+    newData.routine = { ...newData.routine, [id]: !newData.routine[id] };
+    updateDailyData(currentDate, newData);
+  };
+
+  const updateField = (section: keyof DailyData, index: number, value: any) => {
+    const newData = { ...currentData };
+    if (Array.isArray(newData[section])) {
+      (newData[section] as any)[index] = value;
+    }
+    updateDailyData(currentDate, newData);
+  };
+
+  const updateSectionField = (section: keyof DailyData['sections'], index: number, value: string) => {
+    const newData = { ...currentData };
+    newData.sections = {
+      ...newData.sections,
+      [section]: newData.sections[section].map((item, i) => i === index ? value : item)
+    };
+    updateDailyData(currentDate, newData);
+  };
+
+  const getWeekKey = (date: string) => {
+    const d = new Date(date);
+    const day = d.getDay();
+    const diff = d.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
+    const monday = new Date(d.setDate(diff));
+    return monday.toISOString().split('T')[0];
+  };
+
+  const currentWeekKey = getWeekKey(currentDate);
+
+  const getWeeklyReview = (weekKey: string): WeeklyReview => {
+    return state.weekly[weekKey] || {
+      weekStarting: weekKey,
+      wins: Array(3).fill(''),
+      challenges: Array(3).fill(''),
+      goalsNextWeek: Array(3).fill(''),
+      overallRating: 0
+    };
+  };
+
+  const currentWeeklyReview = getWeeklyReview(currentWeekKey);
+
+  const updateWeeklyReview = (weekKey: string, newData: WeeklyReview) => {
+    setState(prev => ({
+      ...prev,
+      weekly: { ...prev.weekly, [weekKey]: newData }
+    }));
+  };
+
+  const getWeeklyStats = () => {
+    const weekDates = [];
+    const start = new Date(currentWeekKey);
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(start);
+      d.setDate(start.getDate() + i);
+      weekDates.push(d.toISOString().split('T')[0]);
+    }
+
+    const allRoutineTasks = [
+      ...INITIAL_ROUTINE_TASKS,
+      ...EVENING_530_TASKS,
+      ...EVENING_730_TASKS,
+      ...WEEKLY_TASKS
+    ];
+
+    const stats = allRoutineTasks.map(task => {
+      let completedCount = 0;
+      weekDates.forEach(date => {
+        if (state.daily[date]?.routine[task.id]) completedCount++;
+      });
+      return {
+        label: task.label,
+        count: completedCount,
+        percentage: Math.round((completedCount / 7) * 100)
+      };
+    });
+
+    let totalExpenses = 0;
+    weekDates.forEach(date => {
+      const dayData = state.daily[date];
+      if (dayData) {
+        dayData.expenses.forEach(exp => {
+          totalExpenses += parseFloat(exp.amount) || 0;
+        });
+      }
+    });
+
+    const gratitudeHighlights = weekDates
+      .map(date => state.daily[date]?.gratitude.filter(g => g.trim() !== ''))
+      .flat()
+      .filter(Boolean) as string[];
+
+    return { stats, totalExpenses, gratitudeHighlights };
+  };
+
+  const { stats, totalExpenses, gratitudeHighlights } = getWeeklyStats();
+
+  if (!isAuthenticated) {
+    return <Login onLogin={handleLogin} />;
+  }
+
+  const RoutineView = () => (
+    <div className="max-w-2xl mx-auto py-8 px-4">
+      <header className="text-center mb-12">
+        <h1 className="text-3xl font-bold tracking-tight uppercase font-display mb-2">My Daily Journey & Routine - 2026</h1>
+        <div className="flex justify-center items-center gap-4 text-stone-500">
+          <button onClick={() => {
+            const d = new Date(currentDate);
+            d.setDate(d.getDate() - 1);
+            setCurrentDate(d.toISOString().split('T')[0]);
+          }} className="p-1 hover:bg-stone-200 rounded-full transition-colors">
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <div className="flex items-center gap-2">
+            <Calendar className="w-4 h-4" />
+            <span className="text-sm font-medium">{new Date(currentDate).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>
+          </div>
+          <button onClick={() => {
+            const d = new Date(currentDate);
+            d.setDate(d.getDate() + 1);
+            setCurrentDate(d.toISOString().split('T')[0]);
+          }} className="p-1 hover:bg-stone-200 rounded-full transition-colors">
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </div>
+      </header>
+
+      <div className="flex flex-col items-center space-y-6">
+        {/* Morning Kickstart */}
+        <div className="flex flex-col items-center w-full">
+          <div className="bg-amber-100 text-amber-900 px-6 py-2 rounded-full font-bold text-sm uppercase tracking-wider mb-6 shadow-sm border border-amber-200">
+            Morning Kickstart (3:40 AM)
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+            {INITIAL_ROUTINE_TASKS.slice(0, 3).map(task => (
+              <RoutineNode key={task.id} task={task} completed={!!currentData.routine[task.id]} onToggle={() => toggleRoutine(task.id)} />
+            ))}
+          </div>
+          
+          <div className="h-8 w-0.5 bg-stone-300 my-2"></div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+            {INITIAL_ROUTINE_TASKS.slice(3).map(task => (
+              <RoutineNode key={task.id} task={task} completed={!!currentData.routine[task.id]} onToggle={() => toggleRoutine(task.id)} />
+            ))}
+          </div>
+        </div>
+
+        <div className="flex flex-col items-center py-4">
+          <div className="bg-stone-800 text-white px-6 py-2 rounded-full font-bold text-sm uppercase tracking-wider shadow-lg">
+            Work Day
+          </div>
+          <div className="h-12 w-0.5 bg-stone-300"></div>
+          
+          <div className="relative w-full max-w-md flex justify-between items-start">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-12 flex justify-center">
+              <svg className="w-full h-full" viewBox="0 0 200 50" fill="none">
+                <path d="M100 0 C100 25 20 25 20 50" stroke="#cbd5e1" strokeWidth="2" />
+                <path d="M100 0 C100 25 180 25 180 50" stroke="#cbd5e1" strokeWidth="2" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        {/* Evening Arrival */}
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-12 pt-4">
+          {/* 5:30 PM Path */}
+          <div className={`flex flex-col items-center space-y-4 transition-opacity duration-300 ${arrivalPath === '730' ? 'opacity-40' : 'opacity-100'}`}>
+            <button 
+              onClick={() => setArrivalPath('530')}
+              className={`px-6 py-2 rounded-full font-bold text-sm uppercase tracking-wider border-2 transition-all ${arrivalPath === '530' ? 'bg-blue-100 border-blue-300 text-blue-900' : 'bg-white border-stone-200 text-stone-400'}`}
+            >
+              Came Home at 5:30 PM
+            </button>
+            <div className="flex flex-col items-center space-y-4 w-full">
+              {EVENING_530_TASKS.map(task => (
+                <RoutineNode key={task.id} task={task} completed={!!currentData.routine[task.id]} onToggle={() => toggleRoutine(task.id)} />
+              ))}
+            </div>
+          </div>
+
+          {/* 7:30 PM Path */}
+          <div className={`flex flex-col items-center space-y-4 transition-opacity duration-300 ${arrivalPath === '530' ? 'opacity-40' : 'opacity-100'}`}>
+            <button 
+              onClick={() => setArrivalPath('730')}
+              className={`px-6 py-2 rounded-full font-bold text-sm uppercase tracking-wider border-2 transition-all ${arrivalPath === '730' ? 'bg-orange-100 border-orange-300 text-orange-900' : 'bg-white border-stone-200 text-stone-400'}`}
+            >
+              Came Home at 7:30 PM
+            </button>
+            <div className="flex flex-col items-center space-y-4 w-full">
+              {EVENING_730_TASKS.map(task => (
+                <RoutineNode key={task.id} task={task} completed={!!currentData.routine[task.id]} onToggle={() => toggleRoutine(task.id)} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Daily Reflection */}
+        <div className="w-full mt-12 pt-8 border-t border-stone-200">
+          <div className="bg-stone-100 text-stone-600 px-6 py-2 rounded-full font-bold text-xs uppercase tracking-widest mb-6 inline-block">
+            Daily Reflection
+          </div>
+          <div className="bg-white p-6 rounded-3xl border-2 border-stone-200 shadow-sm">
+            <p className="text-sm font-bold text-stone-700 mb-4 italic">If tasks not done (Reason):</p>
+            <div className="space-y-4">
+              {currentData.reflection.map((reason, i) => (
+                <div key={i} className="flex items-center gap-3">
+                  <span className="text-stone-400 font-bold">{i + 1})</span>
+                  <input 
+                    type="text" 
+                    value={reason}
+                    onChange={(e) => updateField('reflection', i, e.target.value)}
+                    className="flex-1 border-b border-stone-200 focus:border-stone-400 outline-none py-1 transition-colors bg-transparent"
+                    placeholder="Type reason here..."
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Weekly Maintenance */}
+        <div className="w-full mt-12 bg-stone-100 p-8 rounded-[40px] border-2 border-stone-200">
+          <div className="text-center mb-8">
+            <div className="bg-white px-6 py-2 rounded-full font-bold text-xs uppercase tracking-widest inline-block border border-stone-200 shadow-sm">
+              Weekly Maintenance Station
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {WEEKLY_TASKS.map(task => (
+              <div key={task.id} className="flex items-center justify-between bg-white p-4 rounded-2xl border border-stone-200 shadow-sm">
+                <div className="flex items-center gap-4">
+                  <div className="p-2 bg-stone-50 rounded-xl text-stone-600">
+                    {iconMap[task.icon || '']}
+                  </div>
+                  <div>
+                    <p className="font-bold text-sm text-stone-800">{task.label}</p>
+                    <p className="text-xs text-stone-400 font-medium">{task.days}</p>
+                  </div>
+                </div>
+                <button 
+                  onClick={() => toggleRoutine(task.id)}
+                  className={`w-6 h-6 rounded-md border-2 transition-all flex items-center justify-center ${currentData.routine[task.id] ? 'bg-stone-800 border-stone-800 text-white' : 'bg-white border-stone-300'}`}
+                >
+                  {currentData.routine[task.id] && <CheckCircle2 className="w-4 h-4" />}
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const PlannerView = () => (
+    <div className="max-w-4xl mx-auto py-8 px-4">
+      <div className="bg-white shadow-2xl rounded-[2rem] overflow-hidden border border-stone-200 min-h-[1000px] flex flex-col relative">
+        {/* Decorative Paper Clips and Plants */}
+        <div className="absolute top-4 right-8 opacity-20 rotate-12">
+          <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+            <path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.51a2 2 0 0 1-2.83-2.83l8.49-8.48" />
+          </svg>
+        </div>
+
+        <div className="p-12 flex-1">
+          <div className="flex justify-between items-start mb-12">
+            <div className="flex items-center gap-4">
+              <span className="text-stone-500 font-medium">Date:</span>
+              <input 
+                type="text" 
+                value={currentData.date}
+                onChange={(e) => updateDailyData(currentDate, { ...currentData, date: e.target.value })}
+                className="border-b-2 border-stone-200 focus:border-stone-400 outline-none px-2 py-1 font-medium text-stone-700 bg-transparent"
+              />
+            </div>
+            <div className="text-right italic text-stone-400 text-sm">
+              "Gratitude turns what we have into enough."
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            {/* To Do List */}
+            <div className="space-y-4">
+              <div className="bg-blue-100 text-blue-900 px-4 py-2 rounded-lg font-bold text-center text-sm uppercase tracking-wider">
+                To do list
+              </div>
+              <div className="space-y-2">
+                {currentData.todo.map((item, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <span className="text-stone-300">•</span>
+                    <input 
+                      type="text" 
+                      value={item}
+                      onChange={(e) => updateField('todo', i, e.target.value)}
+                      className="planner-input text-sm"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Expenses */}
+            <div className="space-y-4">
+              <div className="bg-blue-100 text-blue-900 px-4 py-2 rounded-lg font-bold text-center text-sm uppercase tracking-wider">
+                Expenses
+              </div>
+              <div className="space-y-2">
+                {currentData.expenses.map((exp, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <input 
+                      type="text" 
+                      value={exp.item}
+                      onChange={(e) => updateField('expenses', i, { ...exp, item: e.target.value })}
+                      className="planner-input text-sm flex-1"
+                      placeholder="Item"
+                    />
+                    <input 
+                      type="text" 
+                      value={exp.amount}
+                      onChange={(e) => updateField('expenses', i, { ...exp, amount: e.target.value })}
+                      className="planner-input text-sm w-16 text-right"
+                      placeholder="0.00"
+                    />
+                  </div>
+                ))}
+                <div className="pt-4 flex justify-between items-center border-t border-stone-200">
+                  <span className="font-bold text-stone-500 text-sm">Total:</span>
+                  <span className="font-bold text-stone-800 text-sm">
+                    {currentData.expenses.reduce((sum, exp) => sum + (parseFloat(exp.amount) || 0), 0).toFixed(2)}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Reminders */}
+            <div className="space-y-4">
+              <div className="bg-blue-100 text-blue-900 px-4 py-2 rounded-lg font-bold text-center text-sm uppercase tracking-wider">
+                Reminders
+              </div>
+              <div className="space-y-2">
+                {currentData.reminders.map((item, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <input 
+                      type="text" 
+                      value={item}
+                      onChange={(e) => updateField('reminders', i, e.target.value)}
+                      className="planner-input text-sm"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Daily Gratitude */}
+          <div className="mb-12 space-y-4">
+            <div className="bg-blue-100 text-blue-900 px-4 py-2 rounded-lg font-bold text-center text-sm uppercase tracking-wider w-full">
+              Daily Gratitude
+            </div>
+            <div className="space-y-4">
+              {currentData.gratitude.map((item, i) => (
+                <input 
+                  key={i}
+                  type="text" 
+                  value={item}
+                  onChange={(e) => updateField('gratitude', i, e.target.value)}
+                  className="planner-input text-base italic"
+                  placeholder={`I am grateful for...`}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Academic Sections */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <AcademicSection title="XI - A" items={currentData.sections.xi_a} onUpdate={(i, v) => updateSectionField('xi_a', i, v)} />
+            <AcademicSection title="KCET" items={currentData.sections.kcet} onUpdate={(i, v) => updateSectionField('kcet', i, v)} />
+            <AcademicSection title="XI - B" items={currentData.sections.xi_b} onUpdate={(i, v) => updateSectionField('xi_b', i, v)} />
+            <AcademicSection title="NEET" items={currentData.sections.neet} onUpdate={(i, v) => updateSectionField('neet', i, v)} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const WeeklyReviewView = () => (
+    <div className="max-w-4xl mx-auto py-8 px-4">
+      <header className="text-center mb-12">
+        <h1 className="text-3xl font-bold tracking-tight uppercase font-display mb-2">Weekly Review & Reflection</h1>
+        <div className="flex justify-center items-center gap-4 text-stone-500">
+          <button onClick={() => {
+            const d = new Date(currentWeekKey);
+            d.setDate(d.getDate() - 7);
+            setCurrentDate(d.toISOString().split('T')[0]);
+          }} className="p-1 hover:bg-stone-200 rounded-full transition-colors">
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <div className="flex items-center gap-2">
+            <Calendar className="w-4 h-4" />
+            <span className="text-sm font-medium">Week of {new Date(currentWeekKey).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}</span>
+          </div>
+          <button onClick={() => {
+            const d = new Date(currentWeekKey);
+            d.setDate(d.getDate() + 7);
+            setCurrentDate(d.toISOString().split('T')[0]);
+          }} className="p-1 hover:bg-stone-200 rounded-full transition-colors">
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </div>
+      </header>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Left Column: Stats & Highlights */}
+        <div className="lg:col-span-1 space-y-8">
+          {/* Routine Consistency */}
+          <div className="bg-white p-6 rounded-3xl border-2 border-stone-200 shadow-sm">
+            <div className="flex items-center gap-2 mb-6">
+              <BarChart3 className="w-5 h-5 text-amber-500" />
+              <h2 className="font-bold text-sm uppercase tracking-wider text-stone-700">Routine Consistency</h2>
+            </div>
+            <div className="space-y-4">
+              {stats.filter(s => s.count > 0).slice(0, 5).map((stat, i) => (
+                <div key={i} className="space-y-1">
+                  <div className="flex justify-between text-xs font-bold text-stone-600">
+                    <span>{stat.label}</span>
+                    <span>{stat.percentage}%</span>
+                  </div>
+                  <div className="h-2 bg-stone-100 rounded-full overflow-hidden">
+                    <motion.div 
+                      initial={{ width: 0 }}
+                      animate={{ width: `${stat.percentage}%` }}
+                      className="h-full bg-amber-400"
+                    />
+                  </div>
+                </div>
+              ))}
+              {stats.filter(s => s.count > 0).length === 0 && (
+                <p className="text-xs text-stone-400 italic">No routine data for this week yet.</p>
+              )}
+            </div>
+          </div>
+
+          {/* Financial Summary */}
+          <div className="bg-emerald-50 p-6 rounded-3xl border-2 border-emerald-100 shadow-sm">
+            <div className="flex items-center gap-2 mb-4">
+              <DollarSign className="w-5 h-5 text-emerald-600" />
+              <h2 className="font-bold text-sm uppercase tracking-wider text-emerald-900">Weekly Spending</h2>
+            </div>
+            <p className="text-3xl font-bold text-emerald-900">${totalExpenses.toFixed(2)}</p>
+            <p className="text-xs text-emerald-600 mt-2 font-medium">Total expenses recorded this week</p>
+          </div>
+
+          {/* Gratitude Highlights */}
+          <div className="bg-rose-50 p-6 rounded-3xl border-2 border-rose-100 shadow-sm">
+            <div className="flex items-center gap-2 mb-4">
+              <Heart className="w-5 h-5 text-rose-500" />
+              <h2 className="font-bold text-sm uppercase tracking-wider text-rose-900">Gratitude Highlights</h2>
+            </div>
+            <div className="space-y-3">
+              {gratitudeHighlights.slice(0, 3).map((g, i) => (
+                <p key={i} className="text-sm italic text-rose-800 leading-relaxed">"{g}"</p>
+              ))}
+              {gratitudeHighlights.length === 0 && (
+                <p className="text-xs text-rose-400 italic">No gratitude entries yet.</p>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column: Review Form */}
+        <div className="lg:col-span-2 space-y-8">
+          <div className="bg-white p-8 rounded-[2.5rem] border-2 border-stone-200 shadow-xl relative overflow-hidden">
+            {/* Decorative Icon */}
+            <div className="absolute -top-4 -right-4 opacity-5">
+              <Trophy className="w-32 h-32" />
+            </div>
+
+            <div className="space-y-8">
+              {/* Wins Section */}
+              <section>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 bg-amber-100 rounded-xl text-amber-600">
+                    <Trophy className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-bold text-lg text-stone-800">Biggest Wins</h3>
+                </div>
+                <div className="space-y-3">
+                  {currentWeeklyReview.wins.map((win, i) => (
+                    <div key={i} className="flex items-center gap-3">
+                      <span className="text-amber-400 font-bold">#</span>
+                      <input 
+                        type="text" 
+                        value={win}
+                        onChange={(e) => {
+                          const newWins = [...currentWeeklyReview.wins];
+                          newWins[i] = e.target.value;
+                          updateWeeklyReview(currentWeekKey, { ...currentWeeklyReview, wins: newWins });
+                        }}
+                        className="flex-1 border-b border-stone-100 focus:border-amber-200 outline-none py-2 transition-colors bg-transparent text-stone-700"
+                        placeholder="What went well?"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              {/* Challenges Section */}
+              <section>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 bg-stone-100 rounded-xl text-stone-600">
+                    <TrendingUp className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-bold text-lg text-stone-800">Challenges & Lessons</h3>
+                </div>
+                <div className="space-y-3">
+                  {currentWeeklyReview.challenges.map((challenge, i) => (
+                    <div key={i} className="flex items-center gap-3">
+                      <span className="text-stone-300 font-bold">!</span>
+                      <input 
+                        type="text" 
+                        value={challenge}
+                        onChange={(e) => {
+                          const newChallenges = [...currentWeeklyReview.challenges];
+                          newChallenges[i] = e.target.value;
+                          updateWeeklyReview(currentWeekKey, { ...currentWeeklyReview, challenges: newChallenges });
+                        }}
+                        className="flex-1 border-b border-stone-100 focus:border-stone-300 outline-none py-2 transition-colors bg-transparent text-stone-700"
+                        placeholder="What was difficult?"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              {/* Goals Section */}
+              <section>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 bg-blue-100 rounded-xl text-blue-600">
+                    <Target className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-bold text-lg text-stone-800">Goals for Next Week</h3>
+                </div>
+                <div className="space-y-3">
+                  {currentWeeklyReview.goalsNextWeek.map((goal, i) => (
+                    <div key={i} className="flex items-center gap-3">
+                      <div className="w-2 h-2 rounded-full bg-blue-400"></div>
+                      <input 
+                        type="text" 
+                        value={goal}
+                        onChange={(e) => {
+                          const newGoals = [...currentWeeklyReview.goalsNextWeek];
+                          newGoals[i] = e.target.value;
+                          updateWeeklyReview(currentWeekKey, { ...currentWeeklyReview, goalsNextWeek: newGoals });
+                        }}
+                        className="flex-1 border-b border-stone-100 focus:border-blue-200 outline-none py-2 transition-colors bg-transparent text-stone-700"
+                        placeholder="What's next?"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              {/* Weekly Rating */}
+              <section className="pt-8 border-t border-stone-100">
+                <div className="flex flex-col items-center gap-4">
+                  <h3 className="font-bold text-sm uppercase tracking-widest text-stone-400">Overall Week Rating</h3>
+                  <div className="flex gap-2">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <button 
+                        key={star}
+                        onClick={() => updateWeeklyReview(currentWeekKey, { ...currentWeeklyReview, overallRating: star })}
+                        className={`p-2 transition-all ${currentWeeklyReview.overallRating >= star ? 'text-amber-400 scale-110' : 'text-stone-200 hover:text-stone-300'}`}
+                      >
+                        <Star className={`w-8 h-8 ${currentWeeklyReview.overallRating >= star ? 'fill-current' : ''}`} />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen bg-stone-50 pb-24">
+      <AnimatePresence mode="wait">
+        {view === 'routine' ? (
+          <motion.div
+            key="routine"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <RoutineView />
+          </motion.div>
+        ) : view === 'planner' ? (
+          <motion.div
+            key="planner"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <PlannerView />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="weekly"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <WeeklyReviewView />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Navigation Bar */}
+      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 bg-stone-900/90 backdrop-blur-md text-white px-8 py-4 rounded-full shadow-2xl flex items-center gap-8 z-50">
+        <button 
+          onClick={() => setView('routine')}
+          className={`flex items-center gap-2 transition-colors ${view === 'routine' ? 'text-amber-400' : 'text-stone-400 hover:text-white'}`}
+        >
+          <Layout className="w-5 h-5" />
+          <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Routine</span>
+        </button>
+        <div className="w-px h-6 bg-stone-700"></div>
+        <button 
+          onClick={() => setView('planner')}
+          className={`flex items-center gap-2 transition-colors ${view === 'planner' ? 'text-blue-400' : 'text-stone-400 hover:text-white'}`}
+        >
+          <Calendar className="w-5 h-5" />
+          <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Planner</span>
+        </button>
+        <div className="w-px h-6 bg-stone-700"></div>
+        <button 
+          onClick={() => setView('weekly')}
+          className={`flex items-center gap-2 transition-colors ${view === 'weekly' ? 'text-emerald-400' : 'text-stone-400 hover:text-white'}`}
+        >
+          <TrendingUp className="w-5 h-5" />
+          <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Review</span>
+        </button>
+        <div className="w-px h-6 bg-stone-700"></div>
+        <button 
+          onClick={handleLogout}
+          className="text-stone-400 hover:text-rose-400 transition-colors p-2"
+          title="Logout"
+        >
+          <Trash2 className="w-5 h-5" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+const Login: React.FC<{ onLogin: (success: boolean) => void }> = ({ onLogin }) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError('');
+
+    // Simulate a small delay for "rich" feel
+    setTimeout(() => {
+      if (username === 'Sumeet' && password === 'Sumeet') {
+        onLogin(true);
+      } else {
+        setError('Invalid username or password');
+        setIsLoading(false);
+      }
+    }, 800);
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-stone-950 relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div 
+          animate={{ 
+            scale: [1, 1.2, 1],
+            rotate: [0, 90, 0],
+            opacity: [0.1, 0.2, 0.1]
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute -top-1/4 -left-1/4 w-full h-full bg-amber-500/20 blur-[120px] rounded-full"
+        />
+        <motion.div 
+          animate={{ 
+            scale: [1, 1.5, 1],
+            rotate: [0, -90, 0],
+            opacity: [0.1, 0.3, 0.1]
+          }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          className="absolute -bottom-1/4 -right-1/4 w-full h-full bg-blue-500/20 blur-[120px] rounded-full"
+        />
+      </div>
+
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        className="w-full max-w-md p-8 relative z-10"
+      >
+        <div className="bg-white/10 backdrop-blur-2xl p-10 rounded-[3rem] border border-white/20 shadow-2xl">
+          <div className="text-center mb-10">
+            <motion.div 
+              initial={{ rotate: -10 }}
+              animate={{ rotate: 0 }}
+              className="inline-block p-4 bg-amber-400 rounded-3xl shadow-lg mb-6"
+            >
+              <Layout className="w-8 h-8 text-stone-900" />
+            </motion.div>
+            <h1 className="text-3xl font-bold text-white tracking-tight font-display mb-2">Welcome Back</h1>
+            <p className="text-stone-400 text-sm">Sign in to your daily journey</p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-stone-400 uppercase tracking-widest ml-1">Username</label>
+              <div className="relative">
+                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-500" />
+                <input 
+                  type="text" 
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white outline-none focus:border-amber-400/50 focus:bg-white/10 transition-all"
+                  placeholder="Enter username"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-stone-400 uppercase tracking-widest ml-1">Password</label>
+              <div className="relative">
+                <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-500" />
+                <input 
+                  type="password" 
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white outline-none focus:border-amber-400/50 focus:bg-white/10 transition-all"
+                  placeholder="Enter password"
+                  required
+                />
+              </div>
+            </div>
+
+            {error && (
+              <motion.p 
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="text-rose-400 text-xs font-bold text-center bg-rose-400/10 py-2 rounded-lg border border-rose-400/20"
+              >
+                {error}
+              </motion.p>
+            )}
+
+            <button 
+              type="submit"
+              disabled={isLoading}
+              className="w-full bg-amber-400 hover:bg-amber-300 text-stone-900 font-bold py-4 rounded-2xl shadow-lg shadow-amber-400/20 transition-all active:scale-95 flex items-center justify-center gap-2 group"
+            >
+              {isLoading ? (
+                <div className="w-5 h-5 border-2 border-stone-900/30 border-t-stone-900 rounded-full animate-spin" />
+              ) : (
+                <>
+                  <span>Sign In</span>
+                  <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </>
+              )}
+            </button>
+          </form>
+
+          <div className="mt-10 text-center">
+            <p className="text-stone-500 text-xs">
+              Secure access for <span className="text-amber-400/80 font-bold">Sumeet</span> only
+            </p>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
+const RoutineNode: React.FC<{ task: any, completed: boolean, onToggle: () => void }> = ({ task, completed, onToggle }) => {
+  return (
+    <div 
+      onClick={onToggle}
+      className={`flow-node group ${task.color} ${completed ? 'opacity-60 scale-95' : 'hover:scale-105 hover:shadow-md'}`}
+    >
+      <div className="flex items-center justify-between w-full mb-2">
+        <div className="p-1.5 bg-white rounded-lg shadow-sm">
+          {iconMap[task.icon || '']}
+        </div>
+        <div className={`w-5 h-5 rounded border-2 transition-all flex items-center justify-center ${completed ? 'bg-stone-800 border-stone-800 text-white' : 'bg-white border-stone-300'}`}>
+          {completed && <CheckCircle2 className="w-3 h-3" />}
+        </div>
+      </div>
+      <div className="text-center">
+        <p className="text-xs font-bold text-stone-800 leading-tight mb-1">{task.label}</p>
+        {task.time && <p className="text-[10px] font-bold text-stone-500 uppercase tracking-tighter">{task.time}</p>}
+      </div>
+    </div>
+  );
+};
+
+const AcademicSection: React.FC<{ title: string, items: string[], onUpdate: (i: number, v: string) => void }> = ({ title, items, onUpdate }) => {
+  return (
+    <div className="space-y-4 border border-stone-200 rounded-2xl overflow-hidden">
+      <div className="bg-blue-100 text-blue-900 px-4 py-2 font-bold text-center text-sm uppercase tracking-wider">
+        {title}
+      </div>
+      <div className="p-4 space-y-2">
+        {items.map((item, i) => (
+          <input 
+            key={i}
+            type="text" 
+            value={item}
+            onChange={(e) => onUpdate(i, e.target.value)}
+            className="planner-input text-sm"
+          />
+        ))}
+      </div>
+    </div>
+  );
+};

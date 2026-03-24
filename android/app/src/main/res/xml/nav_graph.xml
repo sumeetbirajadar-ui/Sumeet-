@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/routineFragment">
+
+    <fragment
+        android:id="@+id/routineFragment"
+        android:name="com.sumeet.dailytracker.ui.RoutineFragment"
+        android:label="Routine" />
+
+    <fragment
+        android:id="@+id/plannerFragment"
+        android:name="com.sumeet.dailytracker.ui.PlannerFragment"
+        android:label="Planner" />
+
+    <fragment
+        android:id="@+id/weeklyFragment"
+        android:name="com.sumeet.dailytracker.ui.WeeklyFragment"
+        android:label="Weekly" />
+</navigation>

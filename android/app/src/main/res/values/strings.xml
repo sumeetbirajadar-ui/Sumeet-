@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Daily Tracker</string>
+    <string name="routine">Routine</string>
+    <string name="planner">Planner</string>
+    <string name="weekly">Weekly</string>
+    <string name="login_title">Daily Journey\n&amp; Routine Tracker</string>
+    <string name="login_subtitle">Enter your PIN to continue</string>
+    <string name="pin_hint">4-digit PIN</string>
+    <string name="btn_login">Login</string>
+    <string name="logout">Logout</string>
+</resources>

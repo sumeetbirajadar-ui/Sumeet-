@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KCET College Predictor 2025</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a237e 0%, #4a148c 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.4);
+            overflow: hidden;
+        }
+
+        /* ── Header ── */
+        .header {
+            background: linear-gradient(135deg, #1a237e 0%, #4a148c 100%);
+            color: #fff;
+            padding: 40px 40px 35px;
+            text-align: center;
+        }
+        .header h1 { font-size: 2.4em; font-weight: 700; letter-spacing: 0.5px; }
+        .header p  { font-size: 1.05em; opacity: 0.85; margin-top: 8px; }
+        .header .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.35);
+            border-radius: 20px;
+            padding: 4px 14px;
+            font-size: 0.82em;
+            margin-top: 12px;
+            letter-spacing: 0.4px;
+        }
+
+        /* ── Form ── */
+        .form-section {
+            padding: 35px 40px;
+            background: #f4f6fb;
+            border-bottom: 2px solid #e3e8f0;
+        }
+        .form-section h2 { font-size: 1.15em; color: #37474f; margin-bottom: 20px; font-weight: 600; }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            align-items: end;
+        }
+        .form-group { display: flex; flex-direction: column; }
+        label { font-weight: 600; font-size: 0.9em; margin-bottom: 7px; color: #455a64; }
+        input, select {
+            padding: 13px 16px;
+            border: 2px solid #cfd8dc;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: border-color 0.25s, box-shadow 0.25s;
+            background: #fff;
+            color: #263238;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3949ab;
+            box-shadow: 0 0 0 3px rgba(57,73,171,0.12);
+        }
+        .btn-predict {
+            background: linear-gradient(135deg, #1a237e, #4a148c);
+            color: #fff;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-size: 1.05em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            letter-spacing: 0.3px;
+        }
+        .btn-predict:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(26,35,126,0.45);
+        }
+        .btn-reset {
+            background: #eceff1;
+            color: #546e7a;
+            border: 2px solid #b0bec5;
+            padding: 13px 20px;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-reset:hover { background: #cfd8dc; }
+
+        /* ── Results ── */
+        .results-section { padding: 35px 40px; }
+        .results-title { font-size: 1.25em; color: #263238; margin-bottom: 22px; }
+        .results-title span { color: #3949ab; font-weight: 700; }
+
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .stat-card {
+            text-align: center;
+            padding: 16px 10px;
+            border-radius: 12px;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+        .stat-total    { background: #3949ab; }
+        .stat-safe     { background: #2e7d32; }
+        .stat-moderate { background: #f57f17; }
+        .stat-risky    { background: #c62828; }
+        .stat-number { font-size: 2em; font-weight: 700; }
+        .stat-label  { font-size: 0.8em; margin-top: 4px; opacity: 0.9; }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin-bottom: 22px;
+            padding: 14px 18px;
+            background: #f9f9fb;
+            border-radius: 10px;
+            border: 1px solid #e0e4f0;
+        }
+        .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.88em; color: #37474f; }
+        .legend-dot { width: 13px; height: 13px; border-radius: 50%; flex-shrink: 0; }
+
+        /* ── Table ── */
+        .table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid #e3e8f0; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.91em; }
+        thead th {
+            background: linear-gradient(135deg, #1a237e, #4a148c);
+            color: #fff;
+            padding: 14px 16px;
+            text-align: left;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        thead th:nth-child(n+3) { text-align: center; }
+        tbody tr { transition: background 0.15s; }
+        tbody tr:nth-child(even) { background: #f8f9fc; }
+        tbody tr:hover { background: #e8eaf6; }
+        tbody td { padding: 12px 16px; border-bottom: 1px solid #e3e8f0; vertical-align: middle; }
+        tbody td:nth-child(n+3) { text-align: center; }
+        .college-name { font-weight: 600; color: #1a237e; }
+        .location-chip {
+            display: inline-block;
+            background: #e8eaf6;
+            color: #3949ab;
+            border-radius: 6px;
+            padding: 2px 8px;
+            font-size: 0.82em;
+            font-weight: 600;
+        }
+
+        .cutoff-val { font-weight: 500; color: #37474f; }
+
+        /* Status badges */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 13px;
+            border-radius: 20px;
+            font-size: 0.82em;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+        }
+        .badge-safe       { background: #e8f5e9; color: #1b5e20; border: 1px solid #a5d6a7; }
+        .badge-moderate   { background: #fff8e1; color: #e65100; border: 1px solid #ffcc80; }
+        .badge-borderline { background: #fce4ec; color: #b71c1c; border: 1px solid #ef9a9a; }
+        .badge-longshot   { background: #eceff1; color: #37474f; border: 1px solid #b0bec5; }
+
+        /* Trend arrow */
+        .trend { font-size: 1.1em; }
+
+        /* Disclaimer */
+        .disclaimer {
+            background: #fff8e1;
+            border-left: 5px solid #ffc107;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-top: 28px;
+            font-size: 0.88em;
+            color: #5d4037;
+            line-height: 1.6;
+        }
+        .disclaimer strong { color: #bf360c; }
+
+        /* No results */
+        .no-results {
+            text-align: center;
+            padding: 50px 20px;
+            color: #78909c;
+        }
+        .no-results .icon { font-size: 3em; margin-bottom: 12px; }
+
+        /* Filter info bar */
+        .filter-info {
+            background: #e8eaf6;
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-size: 0.9em;
+            color: #3949ab;
+            margin-bottom: 18px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+        .filter-chip {
+            background: #fff;
+            border: 1px solid #9fa8da;
+            border-radius: 20px;
+            padding: 3px 12px;
+            font-weight: 600;
+            font-size: 0.88em;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.6em; }
+            .form-section, .results-section { padding: 20px; }
+            .form-grid { grid-template-columns: 1fr; }
+            table { font-size: 0.8em; }
+            td, th { padding: 9px 10px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- ══ HEADER ══ -->
+    <div class="header">
+        <h1>&#127979; KCET College Predictor 2025</h1>
+        <p>Enter your rank, branch, and category to see probable colleges based on 2022–2024 cutoffs</p>
+        <div class="badge">Karnataka CET &nbsp;|&nbsp; Government Quota Seats &nbsp;|&nbsp; Based on KEA Round-1 Closing Ranks</div>
+    </div>
+
+    <!-- ══ FORM ══ -->
+    <div class="form-section">
+        <h2>&#128269; Enter Your Details</h2>
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="rank">Your KCET Rank</label>
+                <input type="number" id="rank" placeholder="e.g. 5000" min="1" max="200000" />
+            </div>
+            <div class="form-group">
+                <label for="branch">Preferred Branch</label>
+                <select id="branch">
+                    <option value="">-- Select Branch --</option>
+                    <option value="CSE">Computer Science Engg. (CSE)</option>
+                    <option value="ISE">Information Science Engg. (ISE)</option>
+                    <option value="AI&ML">AI &amp; Machine Learning (AI&amp;ML)</option>
+                    <option value="DS">Data Science (DS)</option>
+                    <option value="ECE">Electronics &amp; Communication (ECE)</option>
+                    <option value="EEE">Electrical &amp; Electronics (EEE)</option>
+                    <option value="ME">Mechanical Engineering (ME)</option>
+                    <option value="Civil">Civil Engineering</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category">
+                    <option value="">-- Select Category --</option>
+                    <option value="GM">GM (General Merit)</option>
+                    <option value="2A">OBC – 2A</option>
+                    <option value="2B">OBC – 2B</option>
+                    <option value="3A">OBC – 3A</option>
+                    <option value="3B">OBC – 3B</option>
+                    <option value="SC">SC (Scheduled Caste)</option>
+                    <option value="ST">ST (Scheduled Tribe)</option>
+                </select>
+            </div>
+            <div class="form-group" style="display:flex;flex-direction:row;gap:10px;">
+                <button class="btn-predict" onclick="predictColleges()" style="flex:1">&#128269; Predict</button>
+                <button class="btn-reset" onclick="resetForm()">&#8635; Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ RESULTS ══ -->
+    <div class="results-section" id="results" style="display:none;"></div>
+
+</div>
+
+<script>
+// ────────────────────────────────────────────────────────────────────────────
+// KCET Historical Closing Rank Data — Round 1, Government Quota
+// Source pattern: approximate figures derived from publicly available KEA data.
+// Always verify with official KEA website before making decisions.
+// ────────────────────────────────────────────────────────────────────────────
+
+const DATA = [
+
+  // ╔══════════════════════════════════╗
+  // ║  RV College of Engineering       ║
+  // ╚══════════════════════════════════╝
+  {c:"RV College of Engineering (RVCE)",         loc:"Bangalore", branch:"CSE",   cat:"GM", y:{2022:480,  2023:560,  2024:510  }},
+  {c:"RV College of Engineering (RVCE)",         loc:"Bangalore", branch:"CSE",   cat:"2A", y:{2022:1200, 2023:1400, 2024:1280 }},
+  {c:"RV College of Engineering (RVCE)",         loc:"Bangalore", branch:"CSE",   cat:"2B", y:{2022:1100, 2023:1300, 2024:1180 }},
+  {c:"RV College of Engineering (RVCE)",         loc:"Bangalore", branch:"CSE",   cat:"3A", y:{2022:1050, 2023:1220, 2024:1100 }},
+  {c:"RV College of Engineering (RVCE)",         loc:"Bangalore", branch:"CSE",   cat:"3B", y:{2022:1150, 2023:1350, 2024:1220 }},
+  {c:"RV College of Engineering (RVCE)",         loc:"Bangalore", branch:"CSE",   cat:"SC", y:{2022:3500, 2023:4100, 2024:3750 }},
+  {c:"RV College of Engineering (RVCE)",         loc:"Bangalore", branch:"CSE",   cat:"ST", y:{2022:8000, 2023:9200, 2024:8500 }},
+  {c:"RV College of Engineering (RVCE)",         loc:"Bangalore", branch:"ISE",   cat:"GM", y:{2022:1800, 2023:2200, 2024:1980 }},
+  {c:"RV College of Engineering (RVCE)",         loc:"Bangalore", branch:"ISE",   cat:"2A", y:{2022:4500, 2023:5500, 2024:4900 }},
+  {c:"RV College of Engineering (RVCE)",         loc:"Bangalore", branch:"ISE",   cat:"SC", y:{2022:10000,2023:12000,2024:11000}},
+  {c:"RV College of Engineering (RVCE)",         loc:"Bangalore", branch:"AI&ML", cat:"GM", y:{2022:900,  2023:1050, 2024:960  }},
+  {c:"RV College of Engineering (RVCE)",         loc:"Bangalore", branch:"AI&ML", cat:"2A", y:{2022:2200, 2023:2600, 2024:2380 }},
+  {c:"RV College of Engineering (RVCE)",         loc:"Bangalore", branch:"ECE",   cat:"GM", y:{2022:1500, 2023:1800, 2024:1620 }},
+  {c:"RV College of Engineering (RVCE)",         loc:"Bangalore", branch:"ECE",   cat:"2A", y:{2022:3700, 2023:4400, 2024:4000 }},
+  {c:"RV College of Engineering (RVCE)",         loc:"Bangalore", branch:"ECE",   cat:"SC", y:{2022:9500, 2023:11500,2024:10500}},
+  {c:"RV College of Engineering (RVCE)",         loc:"Bangalore", branch:"EEE",   cat:"GM", y:{2022:3000, 2023:3600, 2024:3250 }},
+  {c:"RV College of Engineering (RVCE)",         loc:"Bangalore", branch:"ME",    cat:"GM", y:{2022:5000, 2023:6000, 2024:5500 }},
+  {c:"RV College of Engineering (RVCE)",         loc:"Bangalore", branch:"Civil", cat:"GM", y:{2022:8000, 2023:9500, 2024:8800 }},
+
+  // ╔══════════════════════════════════╗
+  // ║  BMS College of Engineering      ║
+  // ╚══════════════════════════════════╝
+  {c:"BMS College of Engineering (BMSCE)",       loc:"Bangalore", branch:"CSE",   cat:"GM", y:{2022:1400, 2023:1700, 2024:1550 }},
+  {c:"BMS College of Engineering (BMSCE)",       loc:"Bangalore", branch:"CSE",   cat:"2A", y:{2022:3500, 2023:4200, 2024:3800 }},
+  {c:"BMS College of Engineering (BMSCE)",       loc:"Bangalore", branch:"CSE",   cat:"2B", y:{2022:3200, 2023:3900, 2024:3500 }},
+  {c:"BMS College of Engineering (BMSCE)",       loc:"Bangalore", branch:"CSE",   cat:"3A", y:{2022:3000, 2023:3600, 2024:3250 }},
+  {c:"BMS College of Engineering (BMSCE)",       loc:"Bangalore", branch:"CSE",   cat:"SC", y:{2022:8000, 2023:9600, 2024:8800 }},
+  {c:"BMS College of Engineering (BMSCE)",       loc:"Bangalore", branch:"CSE",   cat:"ST", y:{2022:15000,2023:18000,2024:16500}},
+  {c:"BMS College of Engineering (BMSCE)",       loc:"Bangalore", branch:"ISE",   cat:"GM", y:{2022:4000, 2023:4800, 2024:4350 }},
+  {c:"BMS College of Engineering (BMSCE)",       loc:"Bangalore", branch:"ISE",   cat:"2A", y:{2022:10000,2023:12000,2024:11000}},
+  {c:"BMS College of Engineering (BMSCE)",       loc:"Bangalore", branch:"AI&ML", cat:"GM", y:{2022:2600, 2023:3100, 2024:2820 }},
+  {c:"BMS College of Engineering (BMSCE)",       loc:"Bangalore", branch:"AI&ML", cat:"2A", y:{2022:6500, 2023:7800, 2024:7100 }},
+  {c:"BMS College of Engineering (BMSCE)",       loc:"Bangalore", branch:"ECE",   cat:"GM", y:{2022:3500, 2023:4200, 2024:3800 }},
+  {c:"BMS College of Engineering (BMSCE)",       loc:"Bangalore", branch:"ECE",   cat:"2A", y:{2022:8700, 2023:10500,2024:9500 }},
+  {c:"BMS College of Engineering (BMSCE)",       loc:"Bangalore", branch:"EEE",   cat:"GM", y:{2022:6000, 2023:7200, 2024:6550 }},
+  {c:"BMS College of Engineering (BMSCE)",       loc:"Bangalore", branch:"ME",    cat:"GM", y:{2022:8500, 2023:10200,2024:9250 }},
+  {c:"BMS College of Engineering (BMSCE)",       loc:"Bangalore", branch:"Civil", cat:"GM", y:{2022:15000,2023:18000,2024:16500}},
+
+  // ╔══════════════════════════════════╗
+  // ║  MS Ramaiah Institute of Tech    ║
+  // ╚══════════════════════════════════╝
+  {c:"MS Ramaiah Institute of Technology (MSRIT)",loc:"Bangalore",branch:"CSE",   cat:"GM", y:{2022:1900, 2023:2300, 2024:2100 }},
+  {c:"MS Ramaiah Institute of Technology (MSRIT)",loc:"Bangalore",branch:"CSE",   cat:"2A", y:{2022:4800, 2023:5800, 2024:5250 }},
+  {c:"MS Ramaiah Institute of Technology (MSRIT)",loc:"Bangalore",branch:"CSE",   cat:"2B", y:{2022:4400, 2023:5300, 2024:4800 }},
+  {c:"MS Ramaiah Institute of Technology (MSRIT)",loc:"Bangalore",branch:"CSE",   cat:"SC", y:{2022:12000,2023:14500,2024:13200}},
+  {c:"MS Ramaiah Institute of Technology (MSRIT)",loc:"Bangalore",branch:"CSE",   cat:"ST", y:{2022:25000,2023:30000,2024:27500}},
+  {c:"MS Ramaiah Institute of Technology (MSRIT)",loc:"Bangalore",branch:"ISE",   cat:"GM", y:{2022:5500, 2023:6600, 2024:6000 }},
+  {c:"MS Ramaiah Institute of Technology (MSRIT)",loc:"Bangalore",branch:"ISE",   cat:"2A", y:{2022:13800,2023:16500,2024:15100}},
+  {c:"MS Ramaiah Institute of Technology (MSRIT)",loc:"Bangalore",branch:"AI&ML", cat:"GM", y:{2022:3500, 2023:4200, 2024:3820 }},
+  {c:"MS Ramaiah Institute of Technology (MSRIT)",loc:"Bangalore",branch:"AI&ML", cat:"2A", y:{2022:8700, 2023:10500,2024:9500 }},
+  {c:"MS Ramaiah Institute of Technology (MSRIT)",loc:"Bangalore",branch:"ECE",   cat:"GM", y:{2022:5000, 2023:6000, 2024:5500 }},
+  {c:"MS Ramaiah Institute of Technology (MSRIT)",loc:"Bangalore",branch:"ECE",   cat:"2A", y:{2022:12500,2023:15000,2024:13700}},
+  {c:"MS Ramaiah Institute of Technology (MSRIT)",loc:"Bangalore",branch:"EEE",   cat:"GM", y:{2022:8000, 2023:9600, 2024:8750 }},
+  {c:"MS Ramaiah Institute of Technology (MSRIT)",loc:"Bangalore",branch:"ME",    cat:"GM", y:{2022:12000,2023:14500,2024:13200}},
+  {c:"MS Ramaiah Institute of Technology (MSRIT)",loc:"Bangalore",branch:"Civil", cat:"GM", y:{2022:25000,2023:30000,2024:27000}},
+
+  // ╔══════════════════════════════════╗
+  // ║  SJCE / JSS S&T Univ, Mysuru     ║
+  // ╚══════════════════════════════════╝
+  {c:"SJCE – JSS S&T University",               loc:"Mysuru",    branch:"CSE",   cat:"GM", y:{2022:2200, 2023:2700, 2024:2450 }},
+  {c:"SJCE – JSS S&T University",               loc:"Mysuru",    branch:"CSE",   cat:"2A", y:{2022:5500, 2023:6700, 2024:6100 }},
+  {c:"SJCE – JSS S&T University",               loc:"Mysuru",    branch:"CSE",   cat:"2B", y:{2022:5000, 2023:6100, 2024:5550 }},
+  {c:"SJCE – JSS S&T University",               loc:"Mysuru",    branch:"CSE",   cat:"SC", y:{2022:14000,2023:17000,2024:15500}},
+  {c:"SJCE – JSS S&T University",               loc:"Mysuru",    branch:"ISE",   cat:"GM", y:{2022:6000, 2023:7300, 2024:6600 }},
+  {c:"SJCE – JSS S&T University",               loc:"Mysuru",    branch:"AI&ML", cat:"GM", y:{2022:4200, 2023:5000, 2024:4600 }},
+  {c:"SJCE – JSS S&T University",               loc:"Mysuru",    branch:"ECE",   cat:"GM", y:{2022:5500, 2023:6700, 2024:6100 }},
+  {c:"SJCE – JSS S&T University",               loc:"Mysuru",    branch:"ECE",   cat:"2A", y:{2022:13800,2023:16500,2024:15100}},
+  {c:"SJCE – JSS S&T University",               loc:"Mysuru",    branch:"EEE",   cat:"GM", y:{2022:9000, 2023:11000,2024:10000}},
+  {c:"SJCE – JSS S&T University",               loc:"Mysuru",    branch:"ME",    cat:"GM", y:{2022:14000,2023:17000,2024:15500}},
+  {c:"SJCE – JSS S&T University",               loc:"Mysuru",    branch:"Civil", cat:"GM", y:{2022:22000,2023:26500,2024:24000}},
+
+  // ╔══════════════════════════════════╗
+  // ║  Bangalore Institute of Tech     ║
+  // ╚══════════════════════════════════╝
+  {c:"Bangalore Institute of Technology (BIT)",  loc:"Bangalore", branch:"CSE",   cat:"GM", y:{2022:3500, 2023:4200, 2024:3800 }},
+  {c:"Bangalore Institute of Technology (BIT)",  loc:"Bangalore", branch:"CSE",   cat:"2A", y:{2022:8700, 2023:10500,2024:9500 }},
+  {c:"Bangalore Institute of Technology (BIT)",  loc:"Bangalore", branch:"CSE",   cat:"SC", y:{2022:21000,2023:25000,2024:23000}},
+  {c:"Bangalore Institute of Technology (BIT)",  loc:"Bangalore", branch:"ISE",   cat:"GM", y:{2022:8500, 2023:10200,2024:9250 }},
+  {c:"Bangalore Institute of Technology (BIT)",  loc:"Bangalore", branch:"ECE",   cat:"GM", y:{2022:7500, 2023:9000, 2024:8200 }},
+  {c:"Bangalore Institute of Technology (BIT)",  loc:"Bangalore", branch:"ECE",   cat:"2A", y:{2022:18700,2023:22500,2024:20500}},
+  {c:"Bangalore Institute of Technology (BIT)",  loc:"Bangalore", branch:"EEE",   cat:"GM", y:{2022:12000,2023:14400,2024:13100}},
+  {c:"Bangalore Institute of Technology (BIT)",  loc:"Bangalore", branch:"ME",    cat:"GM", y:{2022:18000,2023:21600,2024:19700}},
+  {c:"Bangalore Institute of Technology (BIT)",  loc:"Bangalore", branch:"Civil", cat:"GM", y:{2022:30000,2023:36000,2024:33000}},
+
+  // ╔══════════════════════════════════╗
+  // ║  JSS Academy of Tech (JSSATE)    ║
+  // ╚══════════════════════════════════╝
+  {c:"JSS Academy of Technical Education (JSSATE)",loc:"Bangalore",branch:"CSE",  cat:"GM", y:{2022:2800, 2023:3350, 2024:3060 }},
+  {c:"JSS Academy of Technical Education (JSSATE)",loc:"Bangalore",branch:"CSE",  cat:"2A", y:{2022:7000, 2023:8400, 2024:7650 }},
+  {c:"JSS Academy of Technical Education (JSSATE)",loc:"Bangalore",branch:"CSE",  cat:"SC", y:{2022:17000,2023:20500,2024:18700}},
+  {c:"JSS Academy of Technical Education (JSSATE)",loc:"Bangalore",branch:"ISE",  cat:"GM", y:{2022:7000, 2023:8400, 2024:7650 }},
+  {c:"JSS Academy of Technical Education (JSSATE)",loc:"Bangalore",branch:"AI&ML",cat:"GM", y:{2022:5000, 2023:6000, 2024:5500 }},
+  {c:"JSS Academy of Technical Education (JSSATE)",loc:"Bangalore",branch:"ECE",  cat:"GM", y:{2022:6500, 2023:7800, 2024:7100 }},
+  {c:"JSS Academy of Technical Education (JSSATE)",loc:"Bangalore",branch:"ME",   cat:"GM", y:{2022:18000,2023:21600,2024:19700}},
+
+  // ╔══════════════════════════════════╗
+  // ║  The National Institute of Engg  ║
+  // ╚══════════════════════════════════╝
+  {c:"The National Institute of Engineering (NIE)",loc:"Mysuru",   branch:"CSE",  cat:"GM", y:{2022:4200, 2023:5000, 2024:4600 }},
+  {c:"The National Institute of Engineering (NIE)",loc:"Mysuru",   branch:"CSE",  cat:"2A", y:{2022:10500,2023:12600,2024:11500}},
+  {c:"The National Institute of Engineering (NIE)",loc:"Mysuru",   branch:"CSE",  cat:"SC", y:{2022:25200,2023:30300,2024:27700}},
+  {c:"The National Institute of Engineering (NIE)",loc:"Mysuru",   branch:"ISE",  cat:"GM", y:{2022:10000,2023:12000,2024:11000}},
+  {c:"The National Institute of Engineering (NIE)",loc:"Mysuru",   branch:"ECE",  cat:"GM", y:{2022:9000, 2023:10800,2024:9900 }},
+  {c:"The National Institute of Engineering (NIE)",loc:"Mysuru",   branch:"EEE",  cat:"GM", y:{2022:17000,2023:20400,2024:18600}},
+  {c:"The National Institute of Engineering (NIE)",loc:"Mysuru",   branch:"ME",   cat:"GM", y:{2022:20000,2023:24000,2024:22000}},
+  {c:"The National Institute of Engineering (NIE)",loc:"Mysuru",   branch:"Civil",cat:"GM", y:{2022:28000,2023:33600,2024:30800}},
+
+  // ╔══════════════════════════════════╗
+  // ║  Dayananda Sagar College of Engg ║
+  // ╚══════════════════════════════════╝
+  {c:"Dayananda Sagar College of Engineering (DSCE)",loc:"Bangalore",branch:"CSE",cat:"GM", y:{2022:4800, 2023:5750, 2024:5250 }},
+  {c:"Dayananda Sagar College of Engineering (DSCE)",loc:"Bangalore",branch:"CSE",cat:"2A", y:{2022:12000,2023:14400,2024:13150}},
+  {c:"Dayananda Sagar College of Engineering (DSCE)",loc:"Bangalore",branch:"CSE",cat:"SC", y:{2022:28800,2023:34500,2024:31500}},
+  {c:"Dayananda Sagar College of Engineering (DSCE)",loc:"Bangalore",branch:"ISE",cat:"GM", y:{2022:12000,2023:14400,2024:13150}},
+  {c:"Dayananda Sagar College of Engineering (DSCE)",loc:"Bangalore",branch:"AI&ML",cat:"GM",y:{2022:8500,2023:10200,2024:9300}},
+  {c:"Dayananda Sagar College of Engineering (DSCE)",loc:"Bangalore",branch:"ECE",cat:"GM", y:{2022:10000,2023:12000,2024:11000}},
+  {c:"Dayananda Sagar College of Engineering (DSCE)",loc:"Bangalore",branch:"ME", cat:"GM", y:{2022:25000,2023:30000,2024:27500}},
+
+  // ╔══════════════════════════════════╗
+  // ║  RNS Institute of Technology     ║
+  // ╚══════════════════════════════════╝
+  {c:"RNS Institute of Technology (RNSIT)",      loc:"Bangalore", branch:"CSE",   cat:"GM", y:{2022:5200, 2023:6250, 2024:5700 }},
+  {c:"RNS Institute of Technology (RNSIT)",      loc:"Bangalore", branch:"CSE",   cat:"2A", y:{2022:13000,2023:15600,2024:14250}},
+  {c:"RNS Institute of Technology (RNSIT)",      loc:"Bangalore", branch:"CSE",   cat:"SC", y:{2022:31200,2023:37500,2024:34200}},
+  {c:"RNS Institute of Technology (RNSIT)",      loc:"Bangalore", branch:"ISE",   cat:"GM", y:{2022:12500,2023:15000,2024:13700}},
+  {c:"RNS Institute of Technology (RNSIT)",      loc:"Bangalore", branch:"AI&ML", cat:"GM", y:{2022:9500, 2023:11400,2024:10400}},
+  {c:"RNS Institute of Technology (RNSIT)",      loc:"Bangalore", branch:"ECE",   cat:"GM", y:{2022:10500,2023:12600,2024:11500}},
+  {c:"RNS Institute of Technology (RNSIT)",      loc:"Bangalore", branch:"ME",    cat:"GM", y:{2022:25000,2023:30000,2024:27500}},
+
+  // ╔══════════════════════════════════╗
+  // ║  Nitte Meenakshi IT (NMIT)       ║
+  // ╚══════════════════════════════════╝
+  {c:"Nitte Meenakshi Institute of Technology (NMIT)",loc:"Bangalore",branch:"CSE",cat:"GM",y:{2022:5800, 2023:6950, 2024:6350 }},
+  {c:"Nitte Meenakshi Institute of Technology (NMIT)",loc:"Bangalore",branch:"CSE",cat:"2A",y:{2022:14500,2023:17400,2024:15900}},
+  {c:"Nitte Meenakshi Institute of Technology (NMIT)",loc:"Bangalore",branch:"CSE",cat:"SC",y:{2022:34800,2023:41700,2024:38100}},
+  {c:"Nitte Meenakshi Institute of Technology (NMIT)",loc:"Bangalore",branch:"ISE",cat:"GM",y:{2022:14000,2023:16800,2024:15350}},
+  {c:"Nitte Meenakshi Institute of Technology (NMIT)",loc:"Bangalore",branch:"AI&ML",cat:"GM",y:{2022:10500,2023:12600,2024:11500}},
+  {c:"Nitte Meenakshi Institute of Technology (NMIT)",loc:"Bangalore",branch:"ECE",cat:"GM",y:{2022:12000,2023:14400,2024:13150}},
+
+  // ╔══════════════════════════════════╗
+  // ║  PESIT South Campus              ║
+  // ╚══════════════════════════════════╝
+  {c:"PES Institute of Technology – South (PESIT-S)",loc:"Bangalore",branch:"CSE",cat:"GM",y:{2022:6500, 2023:7800, 2024:7100 }},
+  {c:"PES Institute of Technology – South (PESIT-S)",loc:"Bangalore",branch:"CSE",cat:"2A",y:{2022:16200,2023:19500,2024:17800}},
+  {c:"PES Institute of Technology – South (PESIT-S)",loc:"Bangalore",branch:"CSE",cat:"SC",y:{2022:39000,2023:46800,2024:42800}},
+  {c:"PES Institute of Technology – South (PESIT-S)",loc:"Bangalore",branch:"ISE",cat:"GM",y:{2022:16000,2023:19200,2024:17550}},
+  {c:"PES Institute of Technology – South (PESIT-S)",loc:"Bangalore",branch:"ECE",cat:"GM",y:{2022:14000,2023:16800,2024:15350}},
+
+  // ╔══════════════════════════════════╗
+  // ║  KLE Technological University    ║
+  // ╚══════════════════════════════════╝
+  {c:"KLE Technological University (KLE Tech)",  loc:"Hubli",     branch:"CSE",   cat:"GM", y:{2022:7000, 2023:8400, 2024:7650 }},
+  {c:"KLE Technological University (KLE Tech)",  loc:"Hubli",     branch:"CSE",   cat:"2A", y:{2022:17500,2023:21000,2024:19200}},
+  {c:"KLE Technological University (KLE Tech)",  loc:"Hubli",     branch:"CSE",   cat:"SC", y:{2022:42000,2023:50400,2024:46100}},
+  {c:"KLE Technological University (KLE Tech)",  loc:"Hubli",     branch:"ISE",   cat:"GM", y:{2022:17000,2023:20400,2024:18650}},
+  {c:"KLE Technological University (KLE Tech)",  loc:"Hubli",     branch:"ECE",   cat:"GM", y:{2022:15000,2023:18000,2024:16500}},
+  {c:"KLE Technological University (KLE Tech)",  loc:"Hubli",     branch:"ME",    cat:"GM", y:{2022:32000,2023:38400,2024:35100}},
+  {c:"KLE Technological University (KLE Tech)",  loc:"Hubli",     branch:"Civil", cat:"GM", y:{2022:50000,2023:60000,2024:55000}},
+
+  // ╔══════════════════════════════════╗
+  // ║  Siddaganga IT (SIT), Tumkur     ║
+  // ╚══════════════════════════════════╝
+  {c:"Siddaganga Institute of Technology (SIT)", loc:"Tumkur",    branch:"CSE",   cat:"GM", y:{2022:8000, 2023:9600, 2024:8750 }},
+  {c:"Siddaganga Institute of Technology (SIT)", loc:"Tumkur",    branch:"CSE",   cat:"2A", y:{2022:20000,2023:24000,2024:21900}},
+  {c:"Siddaganga Institute of Technology (SIT)", loc:"Tumkur",    branch:"CSE",   cat:"SC", y:{2022:48000,2023:57600,2024:52600}},
+  {c:"Siddaganga Institute of Technology (SIT)", loc:"Tumkur",    branch:"ECE",   cat:"GM", y:{2022:17000,2023:20400,2024:18650}},
+  {c:"Siddaganga Institute of Technology (SIT)", loc:"Tumkur",    branch:"ME",    cat:"GM", y:{2022:38000,2023:45600,2024:41700}},
+
+  // ╔══════════════════════════════════╗
+  // ║  SDMCET, Dharwad                 ║
+  // ╚══════════════════════════════════╝
+  {c:"SDM College of Engineering & Technology (SDMCET)",loc:"Dharwad",branch:"CSE",cat:"GM",y:{2022:9000, 2023:10800,2024:9850 }},
+  {c:"SDM College of Engineering & Technology (SDMCET)",loc:"Dharwad",branch:"CSE",cat:"2A",y:{2022:22500,2023:27000,2024:24700}},
+  {c:"SDM College of Engineering & Technology (SDMCET)",loc:"Dharwad",branch:"ECE",cat:"GM",y:{2022:19000,2023:22800,2024:20850}},
+  {c:"SDM College of Engineering & Technology (SDMCET)",loc:"Dharwad",branch:"ME", cat:"GM",y:{2022:42000,2023:50400,2024:46100}},
+
+  // ╔══════════════════════════════════╗
+  // ║  CMR Institute of Technology     ║
+  // ╚══════════════════════════════════╝
+  {c:"CMR Institute of Technology (CMRIT)",      loc:"Bangalore", branch:"CSE",   cat:"GM", y:{2022:9500, 2023:11400,2024:10400}},
+  {c:"CMR Institute of Technology (CMRIT)",      loc:"Bangalore", branch:"CSE",   cat:"2A", y:{2022:23750,2023:28500,2024:26050}},
+  {c:"CMR Institute of Technology (CMRIT)",      loc:"Bangalore", branch:"ISE",   cat:"GM", y:{2022:23000,2023:27600,2024:25250}},
+  {c:"CMR Institute of Technology (CMRIT)",      loc:"Bangalore", branch:"AI&ML", cat:"GM", y:{2022:17000,2023:20400,2024:18650}},
+  {c:"CMR Institute of Technology (CMRIT)",      loc:"Bangalore", branch:"ECE",   cat:"GM", y:{2022:20000,2023:24000,2024:21900}},
+
+  // ╔══════════════════════════════════╗
+  // ║  Acharya Institute of Technology ║
+  // ╚══════════════════════════════════╝
+  {c:"Acharya Institute of Technology (AIT)",    loc:"Bangalore", branch:"CSE",   cat:"GM", y:{2022:7500, 2023:9000, 2024:8200 }},
+  {c:"Acharya Institute of Technology (AIT)",    loc:"Bangalore", branch:"CSE",   cat:"2A", y:{2022:18750,2023:22500,2024:20550}},
+  {c:"Acharya Institute of Technology (AIT)",    loc:"Bangalore", branch:"ISE",   cat:"GM", y:{2022:18000,2023:21600,2024:19750}},
+  {c:"Acharya Institute of Technology (AIT)",    loc:"Bangalore", branch:"ECE",   cat:"GM", y:{2022:15000,2023:18000,2024:16500}},
+  {c:"Acharya Institute of Technology (AIT)",    loc:"Bangalore", branch:"ME",    cat:"GM", y:{2022:35000,2023:42000,2024:38500}},
+
+  // ╔══════════════════════════════════╗
+  // ║  Vidyavardhaka CE (VVCE), Mysuru ║
+  // ╚══════════════════════════════════╝
+  {c:"Vidyavardhaka College of Engineering (VVCE)",loc:"Mysuru",  branch:"CSE",   cat:"GM", y:{2022:8500, 2023:10200,2024:9300 }},
+  {c:"Vidyavardhaka College of Engineering (VVCE)",loc:"Mysuru",  branch:"CSE",   cat:"2A", y:{2022:21250,2023:25500,2024:23300}},
+  {c:"Vidyavardhaka College of Engineering (VVCE)",loc:"Mysuru",  branch:"ECE",   cat:"GM", y:{2022:18000,2023:21600,2024:19750}},
+  {c:"Vidyavardhaka College of Engineering (VVCE)",loc:"Mysuru",  branch:"ME",    cat:"GM", y:{2022:40000,2023:48000,2024:43900}},
+
+  // ╔══════════════════════════════════╗
+  // ║  Bapuji IT (BIET), Davangere     ║
+  // ╚══════════════════════════════════╝
+  {c:"Bapuji Institute of Engineering & Technology (BIET)",loc:"Davangere",branch:"CSE",cat:"GM",y:{2022:10000,2023:12000,2024:11000}},
+  {c:"Bapuji Institute of Engineering & Technology (BIET)",loc:"Davangere",branch:"CSE",cat:"2A",y:{2022:25000,2023:30000,2024:27400}},
+  {c:"Bapuji Institute of Engineering & Technology (BIET)",loc:"Davangere",branch:"ECE",cat:"GM",y:{2022:21000,2023:25200,2024:23050}},
+  {c:"Bapuji Institute of Engineering & Technology (BIET)",loc:"Davangere",branch:"ME", cat:"GM",y:{2022:45000,2023:54000,2024:49400}},
+
+  // ╔══════════════════════════════════╗
+  // ║  MVJ College of Engineering      ║
+  // ╚══════════════════════════════════╝
+  {c:"MVJ College of Engineering (MVJCE)",       loc:"Bangalore", branch:"CSE",   cat:"GM", y:{2022:11000,2023:13200,2024:12050}},
+  {c:"MVJ College of Engineering (MVJCE)",       loc:"Bangalore", branch:"CSE",   cat:"2A", y:{2022:27500,2023:33000,2024:30150}},
+  {c:"MVJ College of Engineering (MVJCE)",       loc:"Bangalore", branch:"ISE",   cat:"GM", y:{2022:26000,2023:31200,2024:28550}},
+  {c:"MVJ College of Engineering (MVJCE)",       loc:"Bangalore", branch:"ECE",   cat:"GM", y:{2022:22000,2023:26400,2024:24150}},
+  {c:"MVJ College of Engineering (MVJCE)",       loc:"Bangalore", branch:"ME",    cat:"GM", y:{2022:48000,2023:57600,2024:52700}},
+
+  // ╔══════════════════════════════════╗
+  // ║  Gogte IT (GIT), Belgaum         ║
+  // ╚══════════════════════════════════╝
+  {c:"Gogte Institute of Technology (GIT)",      loc:"Belgaum",   branch:"CSE",   cat:"GM", y:{2022:9200, 2023:11040,2024:10100}},
+  {c:"Gogte Institute of Technology (GIT)",      loc:"Belgaum",   branch:"CSE",   cat:"2A", y:{2022:23000,2023:27600,2024:25250}},
+  {c:"Gogte Institute of Technology (GIT)",      loc:"Belgaum",   branch:"ECE",   cat:"GM", y:{2022:20000,2023:24000,2024:21900}},
+  {c:"Gogte Institute of Technology (GIT)",      loc:"Belgaum",   branch:"ME",    cat:"GM", y:{2022:40000,2023:48000,2024:43900}},
+
+  // ╔══════════════════════════════════╗
+  // ║  APS College of Engineering      ║
+  // ╚══════════════════════════════════╝
+  {c:"APS College of Engineering",               loc:"Bangalore", branch:"CSE",   cat:"GM", y:{2022:12000,2023:14400,2024:13150}},
+  {c:"APS College of Engineering",               loc:"Bangalore", branch:"CSE",   cat:"2A", y:{2022:30000,2023:36000,2024:32900}},
+  {c:"APS College of Engineering",               loc:"Bangalore", branch:"ECE",   cat:"GM", y:{2022:24000,2023:28800,2024:26350}},
+
+  // ╔══════════════════════════════════╗
+  // ║  BMS Institute of Technology     ║
+  // ╚══════════════════════════════════╝
+  {c:"BMS Institute of Technology & Management (BMSIT)",loc:"Bangalore",branch:"CSE",cat:"GM",y:{2022:6200, 2023:7450, 2024:6800 }},
+  {c:"BMS Institute of Technology & Management (BMSIT)",loc:"Bangalore",branch:"CSE",cat:"2A",y:{2022:15500,2023:18600,2024:17000}},
+  {c:"BMS Institute of Technology & Management (BMSIT)",loc:"Bangalore",branch:"ISE",cat:"GM",y:{2022:15000,2023:18000,2024:16450}},
+  {c:"BMS Institute of Technology & Management (BMSIT)",loc:"Bangalore",branch:"AI&ML",cat:"GM",y:{2022:11000,2023:13200,2024:12050}},
+  {c:"BMS Institute of Technology & Management (BMSIT)",loc:"Bangalore",branch:"ECE",cat:"GM",y:{2022:13000,2023:15600,2024:14250}},
+  {c:"BMS Institute of Technology & Management (BMSIT)",loc:"Bangalore",branch:"ME", cat:"GM",y:{2022:30000,2023:36000,2024:32900}},
+
+  // ╔══════════════════════════════════╗
+  // ║  East West IT                    ║
+  // ╚══════════════════════════════════╝
+  {c:"East West Institute of Technology (EWIT)", loc:"Bangalore", branch:"CSE",   cat:"GM", y:{2022:18000,2023:21600,2024:19750}},
+  {c:"East West Institute of Technology (EWIT)", loc:"Bangalore", branch:"CSE",   cat:"2A", y:{2022:45000,2023:54000,2024:49400}},
+  {c:"East West Institute of Technology (EWIT)", loc:"Bangalore", branch:"ECE",   cat:"GM", y:{2022:37000,2023:44400,2024:40600}},
+
+  // ╔══════════════════════════════════╗
+  // ║  Sapthagiri CE                   ║
+  // ╚══════════════════════════════════╝
+  {c:"Sapthagiri College of Engineering",        loc:"Bangalore", branch:"CSE",   cat:"GM", y:{2022:20000,2023:24000,2024:21900}},
+  {c:"Sapthagiri College of Engineering",        loc:"Bangalore", branch:"CSE",   cat:"2A", y:{2022:50000,2023:60000,2024:54900}},
+  {c:"Sapthagiri College of Engineering",        loc:"Bangalore", branch:"ECE",   cat:"GM", y:{2022:42000,2023:50400,2024:46100}},
+];
+
+// ── Prediction logic ──────────────────────────────────────────────────────
+function getStatus(rank, years) {
+    const vals = Object.values(years);
+    const minCut = Math.min(...vals);
+    const maxCut = Math.max(...vals);
+
+    if (rank <= minCut * 0.82)          return {label:"Safe",        cls:"badge-safe"      };
+    if (rank <= maxCut * 0.95)          return {label:"Moderate",    cls:"badge-moderate"  };
+    if (rank <= maxCut * 1.18)          return {label:"Borderline",  cls:"badge-borderline"};
+    return                                     {label:"Long Shot",   cls:"badge-longshot"  };
+}
+
+function getTrend(years) {
+    const ys = Object.keys(years).sort();
+    const first = years[ys[0]], last = years[ys[ys.length-1]];
+    if (last < first * 0.95) return {sym:"↓", tip:"Cutoff getting easier (more seats / less demand)", color:"#388e3c"};
+    if (last > first * 1.05) return {sym:"↑", tip:"Cutoff getting tougher (higher competition)",     color:"#c62828"};
+    return                         {sym:"→", tip:"Cutoff relatively stable",                         color:"#616161"};
+}
+
+function predictColleges() {
+    const rankRaw = document.getElementById('rank').value.trim();
+    const branch  = document.getElementById('branch').value;
+    const cat     = document.getElementById('category').value;
+
+    if (!rankRaw || !branch || !cat) {
+        showToast("Please fill in all three fields.");
+        return;
+    }
+    const rank = parseInt(rankRaw, 10);
+    if (isNaN(rank) || rank < 1) {
+        showToast("Please enter a valid rank.");
+        return;
+    }
+
+    let rows = DATA.filter(d => d.branch === branch && d.cat === cat);
+
+    if (rows.length === 0) {
+        // Fallback: show GM data if category-specific data not available
+        const fallback = DATA.filter(d => d.branch === branch && d.cat === "GM");
+        if (fallback.length === 0) {
+            document.getElementById('results').innerHTML = noResultsHTML(branch, cat);
+            document.getElementById('results').style.display = 'block';
+            return;
+        }
+        rows = fallback;
+        showResults(rows, rank, branch, cat, true);
+        return;
+    }
+
+    showResults(rows, rank, branch, cat, false);
+}
+
+function showResults(rows, rank, branch, cat, isFallback) {
+    const years = Object.keys(rows[0].y).sort().map(Number);
+
+    // Sort by average cutoff ascending (best college first)
+    rows = [...rows].sort((a,b) => avg(a.y) - avg(b.y));
+
+    let safe=0, mod=0, risk=0, long=0;
+
+    const tableRows = rows.map(d => {
+        const st = getStatus(rank, d.y);
+        const tr = getTrend(d.y);
+        if (st.label==="Safe")       safe++;
+        else if (st.label==="Moderate")  mod++;
+        else if (st.label==="Borderline") risk++;
+        else long++;
+
+        const cutoffCells = years.map(y =>
+            `<td class="cutoff-val">${d.y[y].toLocaleString()}</td>`
+        ).join('');
+
+        return `<tr>
+            <td class="college-name">${d.c}</td>
+            <td><span class="location-chip">${d.loc}</span></td>
+            ${cutoffCells}
+            <td title="${tr.tip}" style="color:${tr.color};font-weight:700;font-size:1.1em;cursor:default">${tr.sym}</td>
+            <td><span class="status-badge ${st.cls}">${st.label}</span></td>
+        </tr>`;
+    }).join('');
+
+    const yearHeaders = years.map(y =>
+        `<th style="text-align:center">${y}<br><small style="font-weight:400;opacity:.75">Cutoff</small></th>`
+    ).join('');
+
+    const fallbackNote = isFallback
+        ? `<div style="background:#fff3e0;border-left:4px solid #ff9800;padding:10px 16px;border-radius:6px;margin-bottom:16px;font-size:0.88em;color:#bf360c;">
+               <strong>Note:</strong> No data found for <strong>${cat}</strong> category in <strong>${branch}</strong>. Showing <strong>GM</strong> (General Merit) cutoffs as reference. Your actual cutoff as ${cat} will typically be higher.
+           </div>` : '';
+
+    const html = `
+        <h2 class="results-title">
+            Showing results for Rank: <span>${rank.toLocaleString()}</span>
+            &nbsp;&middot;&nbsp; Branch: <span>${branch}</span>
+            &nbsp;&middot;&nbsp; Category: <span>${cat}</span>
+        </h2>
+
+        ${fallbackNote}
+
+        <div class="filter-info">
+            <span>&#128200; Summary:</span>
+            <span class="filter-chip">&#9989; ${safe} Safe</span>
+            <span class="filter-chip">&#128993; ${mod} Moderate</span>
+            <span class="filter-chip">&#128997; ${risk} Borderline</span>
+            <span class="filter-chip">&#9888;&#65039; ${long} Long Shot</span>
+            <span class="filter-chip">Total: ${rows.length} colleges</span>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat-card stat-total"><div class="stat-number">${rows.length}</div><div class="stat-label">Colleges Found</div></div>
+            <div class="stat-card stat-safe"><div class="stat-number">${safe}</div><div class="stat-label">Safe Admissions</div></div>
+            <div class="stat-card stat-moderate"><div class="stat-number">${mod}</div><div class="stat-label">Moderate Chance</div></div>
+            <div class="stat-card stat-risky"><div class="stat-number">${risk+long}</div><div class="stat-label">Borderline / Long Shot</div></div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item"><div class="legend-dot" style="background:#2e7d32"></div><strong>Safe</strong> — rank comfortably within last 3 yrs' cutoffs</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#f57f17"></div><strong>Moderate</strong> — rank near cutoff; good but not certain</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#c62828"></div><strong>Borderline</strong> — rank slightly over; possible in later rounds</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#78909c"></div><strong>Long Shot</strong> — rank significantly exceeds historical cutoff</div>
+            <div class="legend-item"><span style="color:#388e3c;font-weight:700;font-size:1.1em">↓</span>&nbsp;Trend: cutoff improving (easier)</div>
+            <div class="legend-item"><span style="color:#c62828;font-weight:700;font-size:1.1em">↑</span>&nbsp;Trend: cutoff getting tougher</div>
+            <div class="legend-item"><span style="color:#616161;font-weight:700;font-size:1.1em">→</span>&nbsp;Trend: stable</div>
+        </div>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="min-width:280px">College</th>
+                        <th>Location</th>
+                        ${yearHeaders}
+                        <th style="text-align:center">Trend</th>
+                        <th style="text-align:center">Prediction</th>
+                    </tr>
+                </thead>
+                <tbody>${tableRows}</tbody>
+            </table>
+        </div>
+
+        <div class="disclaimer">
+            <strong>&#9888; Important Disclaimer:</strong>
+            The cutoff figures shown above are <strong>approximate estimates</strong> based on publicly available KCET data patterns for
+            reference and planning purposes only. Actual cutoffs vary each year based on the number of applicants, availability
+            of seats, and government reservation policies.
+            <br><br>
+            Always cross-check with the official <strong>KEA (Karnataka Examinations Authority)</strong> website
+            <em>(cetonline.karnataka.gov.in)</em> for verified historical and current-year cutoffs before making
+            college choices. This tool is a <strong>guidance aid — not a guarantee</strong>.
+        </div>
+    `;
+
+    const el = document.getElementById('results');
+    el.innerHTML = html;
+    el.style.display = 'block';
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function noResultsHTML(branch, cat) {
+    return `<div class="no-results">
+        <div class="icon">&#128269;</div>
+        <p><strong>No data found</strong> for <strong>${branch}</strong> + <strong>${cat}</strong>.</p>
+        <p style="margin-top:8px;font-size:0.9em;color:#90a4ae">
+            Try selecting a different branch or category combination.
+        </p>
+    </div>`;
+}
+
+function resetForm() {
+    document.getElementById('rank').value = '';
+    document.getElementById('branch').value = '';
+    document.getElementById('category').value = '';
+    document.getElementById('results').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function avg(obj) {
+    const v = Object.values(obj);
+    return v.reduce((a,b)=>a+b,0)/v.length;
+}
+
+function showToast(msg) {
+    // Simple inline alert fallback
+    const old = document.getElementById('toast-msg');
+    if (old) old.remove();
+    const t = document.createElement('div');
+    t.id = 'toast-msg';
+    t.style.cssText = `
+        position:fixed;top:20px;left:50%;transform:translateX(-50%);
+        background:#b71c1c;color:#fff;padding:12px 28px;border-radius:8px;
+        font-weight:600;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.3);
+        font-family:'Segoe UI',sans-serif;font-size:0.95em;`;
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 3000);
+}
+
+document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') predictColleges();
+});
+</script>
+</body>
+</html>

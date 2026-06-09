@@ -277,6 +277,22 @@ footer .attr{font-weight:700;color:var(--text)}
 
         </select>
       </div>
+      <div id="round-wrap">
+        <label for="round">Round</label>
+        <select id="round">
+          <option value="8">2024 Final (Recommended)</option>
+          <option value="7">2024 Round 2</option>
+          <option value="6">2024 Round 1</option>
+          <option value="5">2023 Final</option>
+          <option value="4">2023 Round 2</option>
+          <option value="3">2023 Round 1</option>
+          <option value="2">2022 Final</option>
+          <option value="1">2022 Round 2</option>
+          <option value="0">2022 Round 1</option>
+          <option value="est">Est. 2025 (Projected)</option>
+        </select>
+      </div>
+
       <div>
         <button class="btn" onclick="predict()">&#128269; Predict Colleges</button>
       </div>
@@ -488,21 +504,43 @@ const PROF_BRANCH_OPTS = `<option value="VS">B.V.Sc and A.H</option>
 
 let currentType = 'engg';
 
+const ENGG_ROUND_OPTS = `
+  <option value="8">2024 Final (Recommended)</option>
+  <option value="7">2024 Round 2</option>
+  <option value="6">2024 Round 1</option>
+  <option value="5">2023 Final</option>
+  <option value="4">2023 Round 2</option>
+  <option value="3">2023 Round 1</option>
+  <option value="2">2022 Final</option>
+  <option value="1">2022 Round 2</option>
+  <option value="0">2022 Round 1</option>
+  <option value="est">Est. 2025 (Projected)</option>`;
+
+const AGRI_ROUND_OPTS = `
+  <option value="2024_R2">2024 Round 2 (Latest)</option>
+  <option value="2024_R1">2024 Round 1</option>
+  <option value="est">Est. 2025 (Projected)</option>`;
+
 function switchType(type, btn) {
   currentType = type;
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  const sel = document.getElementById('branch');
+  const branchSel = document.getElementById('branch');
   const opts = type === 'engg' ? ENGG_BRANCH_OPTS : type === 'agri' ? AGRI_BRANCH_OPTS : PROF_BRANCH_OPTS;
-  sel.innerHTML = '<option value="">-- Select Course --</option>' + opts;
+  branchSel.innerHTML = '<option value="">-- Select Course --</option>' + opts;
   document.getElementById('branch-label').textContent = type === 'engg' ? 'Branch / Programme' : 'Course';
   const rankLbl = document.querySelector('label[for="rank"]');
+  const roundWrap = document.getElementById('round-wrap');
+  const roundSel = document.getElementById('round');
   if (type === 'prof') {
     rankLbl.textContent = 'Your UGCET Rank';
     document.getElementById('rank').placeholder = 'e.g. 2000';
+    roundWrap.style.display = 'none';
   } else {
     rankLbl.textContent = 'Your KCET Rank';
     document.getElementById('rank').placeholder = 'e.g. 5000';
+    roundWrap.style.display = '';
+    roundSel.innerHTML = type === 'engg' ? ENGG_ROUND_OPTS : AGRI_ROUND_OPTS;
   }
   document.getElementById('results').innerHTML = '';
 }
@@ -544,107 +582,102 @@ function predict() {
   if (!rank || rank < 1) { alert('Please enter a valid rank.'); return; }
   if (!branch) { alert('Please select a course.'); return; }
   if (!cat) { alert('Please select a category.'); return; }
-
   if (currentType === 'engg') predictEngg(rank, branch, cat);
   else if (currentType === 'agri') predictAgri(rank, branch, cat);
   else predictProf(rank, branch, cat);
 }
 
+function roundLabel(val) {
+  const m = {'0':'2022 Round 1','1':'2022 Round 2','2':'2022 Final','3':'2023 Round 1','4':'2023 Round 2','5':'2023 Final','6':'2024 Round 1','7':'2024 Round 2','8':'2024 Final','est':'Est. 2025 (Projected)','2024_R1':'2024 Round 1','2024_R2':'2024 Round 2'};
+  return m[val] || val;
+}
+
+function buildTable(rows, rank, rndLabel, cutoffFn) {
+  const ORDER = {safe:0,moderate:1,borderline:2,longshot:3,unknown:4};
+  rows.sort((a,b) => (ORDER[a.pred]-ORDER[b.pred]) || (a.cutoff-b.cutoff));
+  const counts = countPreds(rows);
+  let html = buildStatsBar(rows.length, counts, rndLabel);
+  html += '<div class="table-wrap"><table><thead><tr>';
+  html += '<th class="col-name"># College</th><th class="col-loc">Location</th>';
+  html += '<th class="col-pred">Prediction</th><th>' + rndLabel + ' Cutoff</th></tr></thead><tbody>';
+  rows.forEach((r,i) => {
+    html += '<tr><td class="col-name">' + (i+1) + '.&nbsp;' + r.name + '</td>';
+    html += '<td class="col-loc">' + (r.loc||'&#8212;') + '</td>';
+    html += '<td>' + badgeHtml(r.pred) + '</td>';
+    html += '<td>' + cutoffFn(rank, r.cutoff) + '</td></tr>';
+  });
+  html += '</tbody></table></div></div>';
+  return html;
+}
+
 function predictEngg(rank, branch, cat) {
+  const rndVal = document.getElementById('round').value;
+  const isEst = rndVal === 'est';
+  const rndIdx = isEst ? -1 : parseInt(rndVal);
   const rows = [];
   for (const [code, col] of Object.entries(ENGG)) {
     const bData = col.b[branch];
     if (!bData) continue;
     const arr = bData[cat];
     if (!arr) continue;
-    const finals = FINAL_IDX.map(i => arr[i]).filter(v => v > 0);
-    const avgFinal = finals.length > 0 ? finals.reduce((a,b)=>a+b,0)/finals.length : Infinity;
-    const pred = getPrediction(rank, avgFinal === Infinity ? 0 : avgFinal);
-    rows.push({ code, name: col.n, loc: col.l, arr, pred, est: weightedEst(arr), avgFinal });
+    let cutoff;
+    if (isEst) {
+      cutoff = weightedEst(arr);
+    } else {
+      cutoff = arr[rndIdx] || 0;
+    }
+    if (!cutoff) continue;
+    const pred = getPrediction(rank, cutoff);
+    rows.push({ code, name: col.n, loc: col.l, cutoff, pred });
   }
-  if (!rows.length) { showEmpty(branch,cat); return; }
-  const ORDER = {safe:0,moderate:1,borderline:2,longshot:3,unknown:4};
-  rows.sort((a,b) => (ORDER[a.pred]-ORDER[b.pred]) || (a.avgFinal-b.avgFinal));
-  const counts = countPreds(rows);
-  let html = buildStatsBar(rows.length, counts);
-  html += '<div class="table-wrap"><table><thead><tr>';
-  html += '<th class="col-name"># College</th><th class="col-loc">Location</th><th class="col-pred">Prediction</th>';
-  ENGG_ROUNDS.forEach(l => { html += '<th>' + l + '</th>'; });
-  html += '<th>Est.&nbsp;2025</th></tr></thead><tbody>';
-  rows.forEach((r,i) => {
-    html += '<tr><td class="col-name">' + (i+1) + '.&nbsp;' + r.name + '</td>';
-    html += '<td class="col-loc">' + (r.loc||'&#8212;') + '</td>';
-    html += '<td>' + badgeHtml(r.pred) + '</td>';
-    r.arr.forEach(v => { html += '<td>' + fmtCutoff(rank,v) + '</td>'; });
-    html += '<td>' + (r.est > 0 ? '<span class="est-2025">~'+r.est.toLocaleString()+'</span>' : '<span class="cell-na">&#8212;</span>') + '</td>';
-    html += '</tr>';
-  });
-  html += '</tbody></table></div></div>';
-  showResults(html);
+  if (!rows.length) { showEmpty(branch, cat, rndVal); return; }
+  const lbl = roundLabel(rndVal);
+  const fmtFn = isEst
+    ? (r, v) => v > 0 ? '<span class="est-2025">~' + v.toLocaleString() + '</span>' : '<span class="cell-na">&#8212;</span>'
+    : fmtCutoff;
+  showResults(buildTable(rows, rank, lbl, fmtFn));
 }
 
 function predictAgri(rank, branch, cat) {
+  const rndVal = document.getElementById('round').value;
+  const isEst = rndVal === 'est';
   const rows = [];
   for (const [code, col] of Object.entries(AGRI)) {
     const bData = col.b[branch];
-    if (!bData) continue;
-    const vals = {};
-    AGRI_ROUND_KEYS.forEach(rk => { vals[rk] = bData.r && bData.r[rk] ? bData.r[rk][cat] : null; });
-    const r2 = vals['2024_R2'] || vals['2024_R1'];
-    if (!r2 && !vals['2024_R1']) continue;
-    const refVal = r2 || vals['2024_R1'] || 0;
-    const pred = getPrediction(rank, refVal);
-    rows.push({ code, name: col.n, loc: col.l, vals, pred, refVal });
+    if (!bData || !bData.r) continue;
+    let cutoff;
+    if (isEst) {
+      const r2 = bData.r['2024_R2'] ? bData.r['2024_R2'][cat] : null;
+      const r1 = bData.r['2024_R1'] ? bData.r['2024_R1'][cat] : null;
+      cutoff = r2 || r1 || 0;
+    } else {
+      cutoff = bData.r[rndVal] ? bData.r[rndVal][cat] : null;
+    }
+    if (!cutoff) continue;
+    const pred = getPrediction(rank, cutoff);
+    rows.push({ code, name: col.n, loc: col.l, cutoff, pred });
   }
-  if (!rows.length) { showEmpty(branch,cat); return; }
-  const ORDER = {safe:0,moderate:1,borderline:2,longshot:3,unknown:4};
-  rows.sort((a,b) => (ORDER[a.pred]-ORDER[b.pred]) || (a.refVal-b.refVal));
-  const counts = countPreds(rows);
-  let html = buildStatsBar(rows.length, counts);
-  html += '<div class="table-wrap"><table><thead><tr>';
-  html += '<th class="col-name"># College</th><th class="col-loc">Location</th><th class="col-pred">Prediction</th>';
-  AGRI_ROUNDS.forEach(l => { html += '<th>' + l + '</th>'; });
-  html += '<th>Est.&nbsp;2025</th></tr></thead><tbody>';
-  rows.forEach((r,i) => {
-    html += '<tr><td class="col-name">' + (i+1) + '.&nbsp;' + r.name + '</td>';
-    html += '<td class="col-loc">' + (r.loc||'&#8212;') + '</td>';
-    html += '<td>' + badgeHtml(r.pred) + '</td>';
-    AGRI_ROUND_KEYS.forEach(rk => { html += '<td>' + fmtCutoff(rank, r.vals[rk]||0) + '</td>'; });
-    const est = r.refVal > 0 ? '<span class="est-2025">~'+Math.round(r.refVal).toLocaleString()+'</span>' : '<span class="cell-na">&#8212;</span>';
-    html += '<td>' + est + '</td>';
-    html += '</tr>';
-  });
-  html += '</tbody></table></div></div>';
-  showResults(html);
+  if (!rows.length) { showEmpty(branch, cat, rndVal); return; }
+  const lbl = roundLabel(rndVal);
+  const fmtFn = isEst
+    ? (r, v) => v > 0 ? '<span class="est-2025">~' + Math.round(v).toLocaleString() + '</span>' : '<span class="cell-na">&#8212;</span>'
+    : fmtCutoff;
+  showResults(buildTable(rows, rank, lbl, fmtFn));
 }
 
 function predictProf(rank, branch, cat) {
   const rows = [];
   for (const [code, col] of Object.entries(PROF)) {
     const bData = col.b[branch];
-    if (!bData) continue;
-    const cutoff = bData.d ? bData.d[cat] : null;
+    if (!bData || !bData.d) continue;
+    const cutoff = bData.d[cat];
     if (!cutoff) continue;
     const pred = getPrediction(rank, cutoff);
     rows.push({ code, name: col.n, loc: col.l, cutoff, pred });
   }
-  if (!rows.length) { showEmpty(branch,cat); return; }
-  const ORDER = {safe:0,moderate:1,borderline:2,longshot:3,unknown:4};
-  rows.sort((a,b) => (ORDER[a.pred]-ORDER[b.pred]) || (a.cutoff-b.cutoff));
-  const counts = countPreds(rows);
-  let html = buildStatsBar(rows.length, counts);
-  html += '<div class="table-wrap"><table><thead><tr>';
-  html += '<th class="col-name"># College</th><th class="col-loc">Location</th><th class="col-pred">Prediction</th>';
-  html += '<th>2025 Mock Cutoff</th></tr></thead><tbody>';
-  rows.forEach((r,i) => {
-    html += '<tr><td class="col-name">' + (i+1) + '.&nbsp;' + r.name + '</td>';
-    html += '<td class="col-loc">' + (r.loc||'&#8212;') + '</td>';
-    html += '<td>' + badgeHtml(r.pred) + '</td>';
-    html += '<td><span class="mock-2025">' + r.cutoff.toLocaleString() + '</span></td>';
-    html += '</tr>';
-  });
-  html += '</tbody></table></div></div>';
-  showResults(html);
+  if (!rows.length) { showEmpty(branch, cat, 'mock'); return; }
+  const fmtFn = (r, v) => v > 0 ? '<span class="mock-2025">' + v.toLocaleString() + '</span>' : '<span class="cell-na">&#8212;</span>';
+  showResults(buildTable(rows, rank, '2025 Mock', fmtFn));
 }
 
 function countPreds(rows) {
@@ -653,9 +686,9 @@ function countPreds(rows) {
   return c;
 }
 
-function buildStatsBar(total, c) {
+function buildStatsBar(total, c, rndLabel) {
   let h = '<div class="card"><div class="stats-bar">';
-  h += '<span>Showing <strong>' + total + '</strong> colleges &nbsp;</span>';
+  h += '<span>Showing <strong>' + total + '</strong> colleges for <strong>' + (rndLabel||'') + '</strong> &nbsp;</span>';
   if (c.safe)      h += '<span class="stat-chip chip-safe">&#10003; Safe: '+c.safe+'</span>';
   if (c.moderate)  h += '<span class="stat-chip chip-mod">~ Moderate: '+c.moderate+'</span>';
   if (c.borderline)h += '<span class="stat-chip chip-border">! Borderline: '+c.borderline+'</span>';
@@ -664,7 +697,7 @@ function buildStatsBar(total, c) {
   return h;
 }
 
-function showEmpty(branch, cat) {
+function showEmpty(branch, cat, rndVal) {
   document.getElementById('results').innerHTML =
     '<div class="card empty-msg">No data found for <strong>' + branch + '</strong> / <strong>' + cat +
     '</strong>.<br/>Try a different course or category combination.</div>';

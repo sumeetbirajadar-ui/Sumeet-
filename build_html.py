@@ -1,26 +1,28 @@
 #!/usr/bin/env python3
-"""
-build_html.py
-Generates kcet_college_predictor.html from kcet_data.json.
-"""
+"""build_html.py — generates kcet_college_predictor.html with Engineering +
+Agriculture & Farm Science + Veterinary & Professional data."""
 
-import json
-import os
+import json, os
 
-# ── Load source data ──────────────────────────────────────────────────────────
+# ── Load data ─────────────────────────────────────────────────────────────────
 with open('/home/user/Sumeet-/kcet_data.json', 'r') as f:
-    raw = json.load(f)
+    engg_raw = json.load(f)
 
-ROUNDS = ['2022_R1', '2022_R2', '2022_EXT', '2023_R1', '2023_R2', '2023_EXT', '2024_R1', '2024_R2', '2024_EXT']
-CATS   = ['1G','1K','1R','2AG','2AK','2AR','2BG','2BK','2BR',
-          '3AG','3AK','3AR','3BG','3BK','3BR','GM','GMK','GMR',
-          'SCG','SCK','SCR','STG','STK','STR']
+with open('/home/user/Sumeet-/agri_data.json', 'r') as f:
+    other_raw = json.load(f)
 
-# ── Build compact JS data object ──────────────────────────────────────────────
-# Structure: { college_code: { n: name, l: location, b: { branch: { cat: [9 values] } } } }
-js_data = {}
-for code, college in raw.items():
-    branches_out = {}
+agri_raw = other_raw['agriculture']
+prof_raw = other_raw['professional']
+
+ROUNDS = ['2022_R1','2022_R2','2022_EXT','2023_R1','2023_R2','2023_EXT','2024_R1','2024_R2','2024_EXT']
+CATS = ['1G','1K','1R','2AG','2AK','2AR','2BG','2BK','2BR',
+        '3AG','3AK','3AR','3BG','3BK','3BR','GM','GMK','GMR',
+        'SCG','SCK','SCR','STG','STK','STR']
+
+# ── Build Engineering JS data ─────────────────────────────────────────────────
+engg_js = {}
+for code, college in engg_raw.items():
+    bouts = {}
     for branch, rounds_data in college.get('branches', {}).items():
         cats_out = {}
         for cat in CATS:
@@ -28,225 +30,165 @@ for code, college in raw.items():
             has_any = False
             for rnd in ROUNDS:
                 val = rounds_data.get(rnd, {})
-                if isinstance(val, dict):
-                    v = val.get(cat, None)
-                else:
-                    v = None
+                v = val.get(cat) if isinstance(val, dict) else None
                 if v is not None:
                     has_any = True
                 arr.append(v if v is not None else 0)
             if has_any:
                 cats_out[cat] = arr
         if cats_out:
-            branches_out[branch] = cats_out
-    if branches_out:
-        js_data[code] = {
-            'n': college['name'],
-            'l': college.get('location', ''),
-            'b': branches_out
-        }
+            bouts[branch] = cats_out
+    if bouts:
+        engg_js[code] = {'n': college['name'], 'l': college.get('location',''), 'b': bouts}
 
-js_data_str = json.dumps(js_data, separators=(',', ':'), ensure_ascii=False)
+# ── Build Agriculture JS data ─────────────────────────────────────────────────
+# Format: { code: { n, l, b: { bcode: { n: name, r1: {cat:val}, r2: {cat:val} } } } }
+agri_js = {}
+for code, college in agri_raw.items():
+    bouts = {}
+    for bcode, bdata in college.get('branches', {}).items():
+        routs = {}
+        for rnd_key, round_data in bdata.get('rounds', {}).items():
+            cats_out = {}
+            for cat in CATS:
+                v = round_data.get(cat)
+                if v is not None:
+                    cats_out[cat] = v
+            if cats_out:
+                routs[rnd_key] = cats_out
+        if routs:
+            bouts[bcode] = {'n': bdata['name'], 'r': routs}
+    if bouts:
+        agri_js[code] = {'n': college['name'], 'l': college.get('location',''), 'b': bouts}
 
-# ── Branch name mapping ───────────────────────────────────────────────────────
+# ── Build Professional/Vet JS data ────────────────────────────────────────────
+# Format: { code: { n, l, b: { bcode: { n: name, d: {cat:val} } } } }
+prof_js = {}
+for code, college in prof_raw.items():
+    bouts = {}
+    for bcode, bdata in college.get('branches', {}).items():
+        cats_out = {}
+        for cat in CATS:
+            v = bdata.get('data', {}).get(cat)
+            if v is not None:
+                cats_out[cat] = v
+        if cats_out:
+            bouts[bcode] = {'n': bdata['name'], 'd': cats_out}
+    if bouts:
+        prof_js[code] = {'n': college['name'], 'l': college.get('location',''), 'b': bouts}
+
+engg_js_str = json.dumps(engg_js, separators=(',',':'), ensure_ascii=False)
+agri_js_str = json.dumps(agri_js, separators=(',',':'), ensure_ascii=False)
+prof_js_str = json.dumps(prof_js, separators=(',',':'), ensure_ascii=False)
+
+# ── Engineering branch list ────────────────────────────────────────────────────
 BRANCH_NAMES = {
-    'AD': 'Aeronautical Engineering',
-    'AE': 'Agricultural Engineering',
-    'AI': 'Artificial Intelligence & ML',
-    'AM': 'Aerospace Manufacturing',
-    'AR': 'Architecture',
-    'AT': 'Automation & Robotics',
-    'AU': 'Automobile Engineering',
-    'BA': 'Biomedical & Allied Sc',
-    'BB': 'Biomedical Engineering',
-    'BD': 'Bio-Design',
-    'BF': 'Biotechnology & Food Technology',
-    'BG': 'Bioinformatics & Genomics',
-    'BH': 'Biochemical Engineering',
-    'BJ': 'Biotechnology',
-    'BK': 'Blockchain Technology',
-    'BL': 'Business Analytics',
-    'BM': 'Biomedical Engineering',
-    'BN': 'Biochem Engineering',
-    'BO': 'Business Operations',
-    'BP': 'Bioinformatics',
-    'BQ': 'Bio-Technology',
-    'BR': 'Robotics Engineering',
-    'BT': 'Biotechnology Engineering',
-    'BU': 'Built Environment',
-    'BV': 'Bioinformatics',
-    'BW': 'Big Data Analytics',
-    'BX': 'Business Excellence',
-    'BY': 'Battery Technology',
-    'BZ': 'BioTech & Bioinformatics',
-    'CA': 'Computer Applications',
-    'CB': 'Cloud Computing & Big Data',
-    'CC': 'Computer and Communication Engg',
-    'CD': 'Computer Science (Data Science)',
-    'CE': 'Civil Engineering',
-    'CF': 'Computer Science (AI & Forensics)',
-    'CG': 'Computer Science (Gaming)',
-    'CH': 'Chemical Engineering',
-    'CI': 'Computer Science (IoT)',
-    'CK': 'Computer Science (Blockchain)',
-    'CL': 'Computer Science (Full Stack)',
-    'CM': 'Computer Science (ML)',
-    'CN': 'Construction Engineering',
-    'CO': 'Computer Science (Operations Research)',
-    'CQ': 'Computer Science (Quantum Computing)',
-    'CR': 'Computer Science (Robotics)',
-    'CS': 'Computer Science Engineering',
-    'CT': 'Computer Science & Tech',
-    'CU': 'Computer Science (UI/UX)',
-    'CV': 'Computer Science (VR/AR)',
-    'CW': 'Computer Science & Engineering (AI)',
-    'CX': 'Cyber Security',
-    'CY': 'Computer Science (Cyber Security)',
-    'CZ': 'Computer Science (Cloud Computing)',
-    'DA': 'Data Analytics',
-    'DB': 'Data Science',
-    'DC': 'Design Computing',
-    'DD': 'Digital Design',
-    'DE': 'Defence Technology',
-    'DF': 'Data Science & AI',
-    'DG': 'Digital Engineering',
-    'DH': 'Data Science (Healthcare)',
-    'DI': 'Digital Innovation',
-    'DJ': 'DevOps Engineering',
-    'DK': 'Design & Manufacturing',
-    'DM': 'Data Management',
-    'DN': 'Drone Technology',
-    'DS': 'Data Science Engineering',
-    'EA': 'Electronics & Communication (AI)',
-    'EB': 'Electronics & Biomed',
-    'EC': 'Electronics & Communication Engg',
-    'EE': 'Electrical & Electronics Engg',
-    'EG': 'Environmental Engineering',
-    'EI': 'Electronics & Instrumentation Engg',
-    'EL': 'Electrical Engineering',
-    'EN': 'Energy Engineering',
-    'ER': 'Environmental Science',
-    'ES': 'Embedded Systems',
-    'ET': 'Electronics & Telecom Engg',
-    'EV': 'Electric Vehicle Technology',
-    'EZ': 'Electronics (IoT)',
-    'IB': 'Industrial Biotechnology',
-    'IC': 'Information Science Engineering',
-    'IE': 'Industrial Engineering & Management',
-    'IG': 'Industrial IoT',
-    'II': 'Industrial IoT (AI)',
-    'IM': 'Industrial Management',
-    'IO': 'Internet of Things (IoT)',
-    'IP': 'Industrial Production Engineering',
-    'IY': 'Intelligent Automation',
-    'IZ': 'Information Technology (AI)',
-    'LA': 'Landscape Architecture',
-    'LC': 'Life Sciences Computing',
-    'LD': 'LNG & Distribution',
-    'LE': 'Liberal Engineering',
-    'LF': 'Logistics & Supply Chain',
-    'LG': 'Lean Manufacturing',
-    'LH': 'Leather Technology',
-    'LJ': 'LNG Engineering',
-    'LK': 'Logistics & Kindle',
-    'MC': 'Mechanical (Core)',
-    'MD': 'Mechatronics & Design',
-    'ME': 'Mechanical Engineering',
-    'MI': 'Mining Engineering',
-    'MK': 'Medical Knowledge Engineering',
-    'MM': 'Manufacturing & Management',
-    'MN': 'Mineral Engineering',
-    'MR': 'Marine Engineering',
-    'MT': 'Mechatronics',
-    'OP': 'Optical Engineering',
-    'OT': 'Ocean Technology',
-    'PL': 'Polymer Technology',
-    'PT': 'Petroleum Technology',
-    'RA': 'Robotics and Automation',
-    'RB': 'Robotics & AI',
-    'RI': 'Robotics & Industrial IoT',
-    'RM': 'Robotics & Manufacturing',
-    'RO': 'Robotics Engineering',
-    'SA': 'Space Applications',
-    'SE': 'Software Engineering',
-    'SS': 'Space Science',
-    'ST': 'Structural Engineering',
-    'TC': 'Textile Chemistry',
-    'TI': 'Textile & Infrastructure',
-    'TX': 'Textile Engineering',
-    'UP': 'Urban Planning',
-    'UR': 'Urban & Regional Planning',
-    'YA': 'Yoga & Allied Sciences',
-    'YC': 'Yoga & Counselling',
-    'YE': 'Yoga Education',
-    'YF': 'Yoga & Fitness',
-    'YH': 'Yoga & Healthcare',
-    'YI': 'Yoga & Integrative Medicine',
-    'ZA': 'Agricultural Engineering (ADV)',
-    'ZC': 'Computer Science & Design',
-    'ZH': 'Hybrid Vehicle Technology',
-    'ZL': 'Electrical (EV)',
-    'ZM': 'Materials Engineering',
-    'ZN': 'Nano Technology',
-    'ZT': 'Aerospace Technology',
-    'ZU': 'Urban Technology',
-    'ZV': 'EV & Energy Systems',
-    'ZW': 'Water Technology',
+    'AD':'Aeronautical Engineering','AE':'Agricultural Engineering',
+    'AI':'Artificial Intelligence & ML','AM':'Aerospace Manufacturing',
+    'AR':'Architecture','AT':'Automation & Robotics','AU':'Automobile Engineering',
+    'BT':'Biotechnology Engineering','CA':'Computer Applications',
+    'CB':'Cloud Computing & Big Data','CD':'Computer Science (Data Science)',
+    'CE':'Civil Engineering','CF':'CS (AI & Forensics)','CH':'Chemical Engineering',
+    'CI':'CS (IoT)','CK':'CS (Blockchain)','CL':'CS (Full Stack)',
+    'CM':'CS (Machine Learning)','CN':'Construction Engineering',
+    'CS':'Computer Science Engineering','CT':'CS & Technology',
+    'CU':'CS (UI/UX)','CW':'CS Engineering (AI)','CX':'Cyber Security',
+    'CY':'CS (Cyber Security)','CZ':'CS (Cloud Computing)',
+    'DA':'Data Analytics','DB':'Data Science','DS':'Data Science Engineering',
+    'EC':'Electronics & Communication Engg','EE':'Electrical & Electronics Engg',
+    'EI':'Electronics & Instrumentation Engg','ET':'Electronics & Telecom Engg',
+    'EV':'Electric Vehicle Technology','IC':'Information Science Engineering',
+    'IE':'Industrial Engineering & Management','IM':'Industrial Management',
+    'IO':'Internet of Things (IoT)','IP':'Industrial Production Engineering',
+    'MA':'Mechatronics','MC':'Mechanical (Core)','MD':'Mechatronics & Design',
+    'ME':'Mechanical Engineering','MI':'Mining Engineering','MN':'Mineral Engineering',
+    'MT':'Mechatronics','PL':'Polymer Technology','PT':'Petroleum Technology',
+    'RA':'Robotics and Automation','RB':'Robotics & AI','RI':'Robotics & Industrial IoT',
+    'RO':'Robotics Engineering','SE':'Software Engineering','ST':'Structural Engineering',
+    'TC':'Textile Chemistry','TX':'Textile Engineering',
 }
 
-# ── Build sorted branch list for dropdown ─────────────────────────────────────
-all_branches_in_data = set()
-for college in raw.values():
-    for branch in college.get('branches', {}):
-        all_branches_in_data.add(branch)
+all_engg_branches = set()
+for c in engg_raw.values():
+    for b in c.get('branches', {}):
+        all_engg_branches.add(b)
 
-# Priority branches first, then rest alphabetically
-priority = ['CS','EC','ME','CE','EE','IE','AI','CA','DS','IC','AD','AE','AR','AU','BT','CH','CY','CD','CB','CW','DB','DS','ET','EI','IO','MT','RA','SE','RO']
-branch_list = []
+priority = ['CS','EC','ME','CE','EE','IE','AI','CA','DS','IC','AD','AE','AR','AU','BT',
+            'CH','CY','CD','CB','CW','DB','ET','EI','IO','MT','RA','SE','RO']
+engg_branch_list = []
 for b in priority:
-    if b in all_branches_in_data:
-        branch_list.append(b)
-for b in sorted(all_branches_in_data):
-    if b not in branch_list:
-        branch_list.append(b)
+    if b in all_engg_branches:
+        engg_branch_list.append(b)
+for b in sorted(all_engg_branches):
+    if b not in engg_branch_list:
+        engg_branch_list.append(b)
 
-branch_options_html = ''
-for b in branch_list:
+engg_branch_opts = ''
+for b in engg_branch_list:
     label = BRANCH_NAMES.get(b, b)
-    branch_options_html += f'<option value="{b}">{b} - {label}</option>\n'
+    engg_branch_opts += f'<option value="{b}">{b} - {label}</option>\n'
 
-# ── Category dropdown HTML ────────────────────────────────────────────────────
-CAT_LABELS = {
-    'GM':  'GM - General Merit',
-    'GMR': 'GMR - GM Rural',
-    'GMK': 'GMK - GM Kannada Medium',
-    '1G':  '1G - Category I',
-    '1K':  '1K - Category I (Kannada Medium)',
-    '1R':  '1R - Category I (Rural)',
-    '2AG': '2AG - OBC 2A',
-    '2AK': '2AK - OBC 2A (Kannada Medium)',
-    '2AR': '2AR - OBC 2A (Rural)',
-    '2BG': '2BG - OBC 2B',
-    '2BK': '2BK - OBC 2B (Kannada Medium)',
-    '2BR': '2BR - OBC 2B (Rural)',
-    '3AG': '3AG - OBC 3A',
-    '3AK': '3AK - OBC 3A (Kannada Medium)',
-    '3AR': '3AR - OBC 3A (Rural)',
-    '3BG': '3BG - OBC 3B',
-    '3BK': '3BK - OBC 3B (Kannada Medium)',
-    '3BR': '3BR - OBC 3B (Rural)',
-    'SCG': 'SCG - Scheduled Caste',
-    'SCK': 'SCK - SC (Kannada Medium)',
-    'SCR': 'SCR - SC (Rural)',
-    'STG': 'STG - Scheduled Tribe',
-    'STK': 'STK - ST (Kannada Medium)',
-    'STR': 'STR - ST (Rural)',
+# ── Agriculture course list ────────────────────────────────────────────────────
+AGRI_COURSE_NAMES = {
+    'AG':  'B.Sc.(Hons) Agriculture',
+    'AM':  'B.Sc.(Hons) Ag. Business Mng.',
+    'AB':  'B.Tech (Biotechnology)',
+    'DT':  'B.Tech (Dairy Technology)',
+    'FH':  'B.Fisheries Science',
+    'FT':  'B.Tech (Food Technology)',
+    'HT':  'B.Sc.(Hons) Horticulture',
+    'ND':  'B.Sc.(Hons) Nutrition & Dietetics',
+    'FND': 'B.Sc.(Hons) Food Nutrition & Dietetics',
+    'SR':  'B.Sc.(Hons) Sericulture',
+    'FR':  'B.Sc.(Hons) Forestry',
+    'HS':  'B.Sc.(Hons) Community Science',
+    'EA':  'B.Tech (Agricultural Engineering)',
+    'VS':  'B.V.Sc and A.H',
 }
-cat_options_html = ''
-for cat, label in CAT_LABELS.items():
-    cat_options_html += f'<option value="{cat}">{label}</option>\n'
 
-# ── HTML template (using string concatenation to avoid f-string brace issues) ─
+all_agri_branches = set()
+for c in agri_raw.values():
+    for b in c.get('branches', {}):
+        all_agri_branches.add(b)
+
+agri_branch_opts = ''
+for b in sorted(all_agri_branches):
+    label = AGRI_COURSE_NAMES.get(b, b)
+    agri_branch_opts += f'<option value="{b}">{label}</option>\n'
+
+# ── Professional course list ───────────────────────────────────────────────────
+all_prof_branches = set()
+for c in prof_raw.values():
+    for b in c.get('branches', {}):
+        all_prof_branches.add(b)
+
+PROF_ORDER = ['VS','AG','FND','HT','SR','FR','AB','HS']
+prof_branch_opts = ''
+for b in PROF_ORDER:
+    if b in all_prof_branches:
+        label = AGRI_COURSE_NAMES.get(b, b)
+        prof_branch_opts += f'<option value="{b}">{label}</option>\n'
+for b in sorted(all_prof_branches):
+    if b not in PROF_ORDER:
+        label = AGRI_COURSE_NAMES.get(b, b)
+        prof_branch_opts += f'<option value="{b}">{label}</option>\n'
+
+# ── Category dropdown ─────────────────────────────────────────────────────────
+CAT_LABELS = {
+    'GM':'GM - General Merit','GMR':'GMR - GM Rural','GMK':'GMK - GM Kannada Medium',
+    '1G':'1G - Category I','1K':'1K - Category I (KM)','1R':'1R - Category I (Rural)',
+    '2AG':'2AG - OBC 2A','2AK':'2AK - OBC 2A (KM)','2AR':'2AR - OBC 2A (Rural)',
+    '2BG':'2BG - OBC 2B','2BK':'2BK - OBC 2B (KM)','2BR':'2BR - OBC 2B (Rural)',
+    '3AG':'3AG - OBC 3A','3AK':'3AK - OBC 3A (KM)','3AR':'3AR - OBC 3A (Rural)',
+    '3BG':'3BG - OBC 3B','3BK':'3BK - OBC 3B (KM)','3BR':'3BR - OBC 3B (Rural)',
+    'SCG':'SCG - Scheduled Caste','SCK':'SCK - SC (KM)','SCR':'SCR - SC (Rural)',
+    'STG':'STG - Scheduled Tribe','STK':'STK - ST (KM)','STR':'STR - ST (Rural)',
+}
+cat_opts = ''
+for cat, label in CAT_LABELS.items():
+    cat_opts += f'<option value="{cat}">{label}</option>\n'
+
+# ── HTML template ─────────────────────────────────────────────────────────────
 HTML = '''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -258,14 +200,14 @@ HTML = '''<!DOCTYPE html>
 :root{
   --grad1:#4f46e5;--grad2:#7c3aed;--grad3:#2563eb;
   --safe:#16a34a;--mod:#d97706;--border:#ef4444;--long:#6b7280;
-  --bg:#f8faff;--card:#fff;--text:#1e293b;--muted:#64748b;
-  --border-c:#e2e8f0;
+  --bg:#f8faff;--card:#fff;--text:#1e293b;--muted:#64748b;--border-c:#e2e8f0;
 }
 body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 header{background:linear-gradient(135deg,var(--grad1),var(--grad2),var(--grad3));color:#fff;padding:2rem 1rem;text-align:center}
+.college-header{font-size:clamp(1rem,3vw,1.35rem);font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:.6rem;padding-bottom:.6rem;border-bottom:2px solid rgba(255,255,255,.35)}
 header h1{font-size:clamp(1.4rem,4vw,2.2rem);font-weight:800;letter-spacing:-0.5px}
 header p.sub{font-size:.95rem;opacity:.88;margin-top:.4rem}
-.attribution{font-size:.82rem;opacity:.78;margin-top:.7rem;font-style:italic}
+.attribution{font-size:.9rem;margin-top:.7rem;font-weight:700;letter-spacing:.02em}
 .container{max-width:1400px;margin:0 auto;padding:1rem}
 .card{background:var(--card);border-radius:14px;box-shadow:0 2px 16px rgba(79,70,229,.08);padding:1.5rem;margin-bottom:1.5rem}
 .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;align-items:end}
@@ -276,10 +218,7 @@ input:focus,select:focus{outline:none;border-color:var(--grad1)}
 .btn:hover{opacity:.9}
 .stats-bar{display:flex;flex-wrap:wrap;gap:.75rem;margin-bottom:1rem;font-size:.85rem;font-weight:600}
 .stat-chip{padding:.35rem .9rem;border-radius:20px;color:#fff}
-.chip-safe{background:var(--safe)}
-.chip-mod{background:var(--mod)}
-.chip-border{background:var(--border)}
-.chip-long{background:var(--long)}
+.chip-safe{background:var(--safe)}.chip-mod{background:var(--mod)}.chip-border{background:var(--border)}.chip-long{background:var(--long)}
 .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
 table{width:100%;border-collapse:collapse;font-size:.82rem;white-space:nowrap}
 thead tr{background:linear-gradient(135deg,var(--grad1),var(--grad2));color:#fff}
@@ -298,11 +237,9 @@ td.col-loc{text-align:left;color:var(--muted);font-size:.78rem}
 .cell-grey{background:#f1f5f9;color:#94a3b8;border-radius:4px;padding:.2rem .5rem}
 .cell-na{color:#cbd5e1;font-size:.75rem}
 .badge{display:inline-block;padding:.25rem .75rem;border-radius:20px;font-size:.75rem;font-weight:700;color:#fff}
-.badge-safe{background:var(--safe)}
-.badge-mod{background:var(--mod)}
-.badge-border{background:var(--border)}
-.badge-long{background:var(--long)}
+.badge-safe{background:var(--safe)}.badge-mod{background:var(--mod)}.badge-border{background:var(--border)}.badge-long{background:var(--long)}
 .est-2025{background:linear-gradient(135deg,#dbeafe,#ede9fe);color:#1e40af;font-weight:800;border-radius:4px;padding:.2rem .5rem}
+.mock-2025{background:linear-gradient(135deg,#d1fae5,#a7f3d0);color:#065f46;font-weight:800;border-radius:4px;padding:.2rem .5rem}
 .empty-msg{text-align:center;padding:3rem 1rem;color:var(--muted);font-size:1rem}
 .legend{display:flex;flex-wrap:wrap;gap:.75rem;font-size:.78rem;margin-bottom:1rem}
 .legend-item{display:flex;align-items:center;gap:.4rem}
@@ -311,23 +248,39 @@ td.col-loc{text-align:left;color:var(--muted);font-size:.78rem}
 .disclaimer strong{color:#92400e}
 footer{text-align:center;padding:2rem 1rem;color:var(--muted);font-size:.82rem;border-top:1px solid var(--border-c);margin-top:2rem}
 footer .attr{font-weight:700;color:var(--text)}
-@media(max-width:600px){
-  header{padding:1.2rem .75rem}
-  .card{padding:1rem}
-  .btn{width:100%}
-}
+.type-tabs{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
+.tab-btn{padding:.5rem 1.2rem;border:2px solid var(--border-c);border-radius:8px;background:#fff;cursor:pointer;font-size:.9rem;font-weight:600;color:var(--muted);transition:.2s}
+.tab-btn.active{border-color:var(--grad1);background:var(--grad1);color:#fff}
+.info-badge{display:inline-block;padding:.15rem .55rem;border-radius:10px;font-size:.72rem;font-weight:700;margin-left:.4rem;background:#e0e7ff;color:#3730a3}
+@media(max-width:600px){header{padding:1.2rem .75rem}.card{padding:1rem}.btn{width:100%}}
 </style>
 </head>
 <body>
 
 <header>
+  <div class="college-header">SHRI SHARANABASAVESHWAR PU SCIENCE COLLEGE VIJAYAPURA</div>
   <h1>&#127891; KCET 2025 College Predictor</h1>
-  <p class="sub">Predict your college admission chances based on official KEA cutoff data (2022–2024)</p>
-  <div class="attribution">Created by <strong>Srishna Dhanvasageshwara</strong> &nbsp;|&nbsp;
-    Shri Sharanabasaveshwara PU Science College, Vijayapura &nbsp;|&nbsp; Department of Physics</div>
+  <p class="sub">Engineering &bull; Agriculture &amp; Farm Science &bull; Veterinary &bull; Professional Courses</p>
+  <div class="attribution">Created by <strong>Sumeet Birajadar</strong></div>
 </header>
 
 <div class="container">
+
+  <!-- Course Type Selector -->
+  <div class="card" style="padding:1rem 1.5rem">
+    <label style="margin-bottom:.6rem">Select Course Type</label>
+    <div class="type-tabs">
+      <button class="tab-btn active" onclick="switchType('engg',this)">
+        &#128187; Engineering<span class="info-badge">__ENGG_COUNT__ colleges</span>
+      </button>
+      <button class="tab-btn" onclick="switchType('agri',this)">
+        &#127807; Agriculture &amp; Farm Science<span class="info-badge">__AGRI_COUNT__ colleges</span>
+      </button>
+      <button class="tab-btn" onclick="switchType('prof',this)">
+        &#128009; Veterinary &amp; Professional<span class="info-badge">__PROF_COUNT__ colleges · 2025 Mock</span>
+      </button>
+    </div>
+  </div>
 
   <!-- Input Card -->
   <div class="card">
@@ -337,16 +290,16 @@ footer .attr{font-weight:700;color:var(--text)}
         <input type="number" id="rank" placeholder="e.g. 5000" min="1" max="200000"/>
       </div>
       <div>
-        <label for="branch">Branch / Programme</label>
+        <label for="branch" id="branch-label">Branch / Programme</label>
         <select id="branch">
           <option value="">-- Select Branch --</option>
-          BRANCH_OPTIONS_PLACEHOLDER
+          __ENGG_BRANCH_OPTS__
         </select>
       </div>
       <div>
         <label for="category">Reservation Category</label>
         <select id="category">
-          CAT_OPTIONS_PLACEHOLDER
+          __CAT_OPTS__
         </select>
       </div>
       <div>
@@ -357,176 +310,255 @@ footer .attr{font-weight:700;color:var(--text)}
 
   <!-- Legend -->
   <div class="legend">
-    <div class="legend-item"><div class="legend-dot" style="background:#dcfce7;border:1px solid #86efac"></div><span><strong>Green</strong> – Safe (rank &lt; 80% of cutoff)</span></div>
-    <div class="legend-item"><div class="legend-dot" style="background:#fef9c3;border:1px solid #fcd34d"></div><span><strong>Yellow</strong> – Moderate (rank &lt; 95% of cutoff)</span></div>
-    <div class="legend-item"><div class="legend-dot" style="background:#fee2e2;border:1px solid #fca5a5"></div><span><strong>Red</strong> – Borderline (rank &lt; 120% of cutoff)</span></div>
-    <div class="legend-item"><div class="legend-dot" style="background:#f1f5f9;border:1px solid #cbd5e1"></div><span><strong>Grey</strong> – Long Shot (rank &gt; 120% of cutoff)</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#dcfce7;border:1px solid #86efac"></div><span><strong>Green</strong> &#8211; Safe (rank &lt; 80% of cutoff)</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#fef9c3;border:1px solid #fcd34d"></div><span><strong>Yellow</strong> &#8211; Moderate (rank &lt; 95%)</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#fee2e2;border:1px solid #fca5a5"></div><span><strong>Red</strong> &#8211; Borderline (rank &lt; 120%)</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#f1f5f9;border:1px solid #cbd5e1"></div><span><strong>Grey</strong> &#8211; Long Shot</span></div>
   </div>
 
-  <!-- Results -->
   <div id="results"></div>
 
-  <!-- Disclaimer -->
   <div class="disclaimer">
-    <strong>&#9888; Disclaimer:</strong> This tool uses official KEA KCET cutoff data from 2022–2024 general counselling rounds.
-    Actual 2025 cutoffs may vary due to changes in seat availability, applicant pool, and college policies.
-    The "Est. 2025 Final" column is a <em>weighted projection</em> (2022:2023:2024 = 1:2:3) and is for reference only.
+    <strong>&#9888; Disclaimer:</strong> Engineering data: official KEA cutoffs 2022&#8211;2024 (9 rounds).
+    Agriculture data: KEA 2024 rounds 1 &amp; 2. Veterinary &amp; Professional: UGCET-2025 mock allotment data.
+    The &#8220;Est. 2025&#8221; is a weighted projection and is for reference only.
     Always verify with the official <strong>KEA Karnataka</strong> website before making decisions.
-    Data source: Official KEA published PDFs.
   </div>
 
 </div>
 
 <footer>
-  <div class="attr">Srishna Dhanvasageshwara</div>
-  <div>Shri Sharanabasaveshwara PU Science College, Vijayapura &nbsp;|&nbsp; Department of Physics</div>
-  <div style="margin-top:.4rem;color:#94a3b8">KCET 2025 College Predictor &bull; Data: Official KEA PDFs 2022&ndash;2024</div>
+  <div class="attr">SHRI SHARANABASAVESHWAR PU SCIENCE COLLEGE VIJAYAPURA</div>
+  <div>Created by <strong>Sumeet Birajadar</strong></div>
+  <div style="margin-top:.4rem;color:#94a3b8">KCET 2025 College Predictor &bull; Data: Official KEA PDFs 2022&#8211;2024</div>
 </footer>
 
 <script>
-// ── Embedded data ─────────────────────────────────────────────────────────────
-const DATA = JS_DATA_PLACEHOLDER;
+const ENGG = __ENGG_DATA__;
+const AGRI = __AGRI_DATA__;
+const PROF = __PROF_DATA__;
 
-// Round indices: 0=2022_R1,1=2022_R2,2=2022_EXT,3=2023_R1,4=2023_R2,5=2023_EXT,6=2024_R1,7=2024_R2,8=2024_EXT
-const FINAL_IDX = [2, 5, 8]; // Final/EXT rounds
-const ROUND_LABELS = ['2022 R1','2022 R2','2022 Final','2023 R1','2023 R2','2023 Final','2024 R1','2024 R2','2024 Final'];
+const ENGG_ROUNDS = ['2022 R1','2022 R2','2022 Final','2023 R1','2023 R2','2023 Final','2024 R1','2024 R2','2024 Final'];
+const AGRI_ROUNDS = ['2024 R1','2024 R2'];
+const AGRI_ROUND_KEYS = ['2024_R1','2024_R2'];
+const FINAL_IDX = [2,5,8]; // EXT rounds in engineering array
+
+const ENGG_BRANCH_OPTS = `__ENGG_BRANCH_OPTS_JS__`;
+const AGRI_BRANCH_OPTS = `__AGRI_BRANCH_OPTS_JS__`;
+const PROF_BRANCH_OPTS = `__PROF_BRANCH_OPTS_JS__`;
+
+let currentType = 'engg';
+
+function switchType(type, btn) {
+  currentType = type;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const sel = document.getElementById('branch');
+  const opts = type === 'engg' ? ENGG_BRANCH_OPTS : type === 'agri' ? AGRI_BRANCH_OPTS : PROF_BRANCH_OPTS;
+  sel.innerHTML = '<option value="">-- Select Course --</option>' + opts;
+  document.getElementById('branch-label').textContent = type === 'engg' ? 'Branch / Programme' : 'Course';
+  const rankLbl = document.querySelector('label[for="rank"]');
+  if (type === 'prof') {
+    rankLbl.textContent = 'Your UGCET Rank';
+    document.getElementById('rank').placeholder = 'e.g. 2000';
+  } else {
+    rankLbl.textContent = 'Your KCET Rank';
+    document.getElementById('rank').placeholder = 'e.g. 5000';
+  }
+  document.getElementById('results').innerHTML = '';
+}
 
 function weightedEst(arr) {
-  // weights 1:2:3 for indices 2,5,8
-  const weights = [1, 2, 3];
+  const weights = [1,2,3];
   let wsum = 0, total = 0;
-  FINAL_IDX.forEach((idx, i) => {
+  FINAL_IDX.forEach((idx,i) => {
     const v = arr[idx];
     if (v && v > 0) { wsum += v * weights[i]; total += weights[i]; }
   });
-  return total > 0 ? Math.round(wsum / total) : 0;
+  return total > 0 ? Math.round(wsum/total) : 0;
 }
 
-function getPrediction(rank, arr) {
-  const finals = FINAL_IDX.map(i => arr[i]).filter(v => v && v > 0);
-  if (finals.length === 0) return 'unknown';
-  const avg = finals.reduce((a,b)=>a+b,0) / finals.length;
-  if (rank < avg * 0.80) return 'safe';
-  if (rank < avg * 0.95) return 'moderate';
-  if (rank < avg * 1.20) return 'borderline';
+function getPrediction(rank, refVal) {
+  if (!refVal || refVal <= 0) return 'unknown';
+  if (rank < refVal * 0.80) return 'safe';
+  if (rank < refVal * 0.95) return 'moderate';
+  if (rank < refVal * 1.20) return 'borderline';
   return 'longshot';
 }
 
-function cellClass(rank, cutoff) {
-  if (!cutoff || cutoff === 0) return 'na';
-  if (rank < cutoff * 0.80) return 'green';
-  if (rank < cutoff * 0.95) return 'yellow';
-  if (rank < cutoff * 1.20) return 'red';
-  return 'grey';
-}
-
 function fmtCutoff(rank, cutoff) {
-  if (!cutoff || cutoff === 0) return '<span class="cell-na">—</span>';
-  const cls = cellClass(rank, cutoff);
+  if (!cutoff || cutoff === 0) return '<span class="cell-na">&#8212;</span>';
+  const cls = rank < cutoff*0.80 ? 'green' : rank < cutoff*0.95 ? 'yellow' : rank < cutoff*1.20 ? 'red' : 'grey';
   return '<span class="cell-' + cls + '">' + cutoff.toLocaleString() + '</span>';
 }
 
 function badgeHtml(pred) {
-  const map = {
-    safe: ['Safe','badge-safe'],
-    moderate: ['Moderate','badge-mod'],
-    borderline: ['Borderline','badge-border'],
-    longshot: ['Long Shot','badge-long'],
-    unknown: ['No Data','badge-long']
-  };
-  const [label, cls] = map[pred] || map.unknown;
-  return '<span class="badge ' + cls + '">' + label + '</span>';
+  const m = {safe:['Safe','badge-safe'],moderate:['Moderate','badge-mod'],borderline:['Borderline','badge-border'],longshot:['Long Shot','badge-long'],unknown:['No Data','badge-long']};
+  const [l,c] = m[pred]||m.unknown;
+  return '<span class="badge ' + c + '">' + l + '</span>';
 }
 
 function predict() {
-  const rank = parseInt(document.getElementById('rank').value);
+  const rank = parseFloat(document.getElementById('rank').value);
   const branch = document.getElementById('branch').value;
   const cat = document.getElementById('category').value;
-
-  if (!rank || rank < 1) { alert('Please enter a valid KCET rank.'); return; }
-  if (!branch) { alert('Please select a branch.'); return; }
+  if (!rank || rank < 1) { alert('Please enter a valid rank.'); return; }
+  if (!branch) { alert('Please select a course.'); return; }
   if (!cat) { alert('Please select a category.'); return; }
 
-  // Collect matching colleges
+  if (currentType === 'engg') predictEngg(rank, branch, cat);
+  else if (currentType === 'agri') predictAgri(rank, branch, cat);
+  else predictProf(rank, branch, cat);
+}
+
+function predictEngg(rank, branch, cat) {
   const rows = [];
-  for (const [code, college] of Object.entries(DATA)) {
-    const bData = college.b[branch];
+  for (const [code, col] of Object.entries(ENGG)) {
+    const bData = col.b[branch];
     if (!bData) continue;
-    const catArr = bData[cat];
-    if (!catArr) continue;
-    const pred = getPrediction(rank, catArr);
-    const est = weightedEst(catArr);
-    const finals = FINAL_IDX.map(i => catArr[i]).filter(v => v > 0);
+    const arr = bData[cat];
+    if (!arr) continue;
+    const finals = FINAL_IDX.map(i => arr[i]).filter(v => v > 0);
     const avgFinal = finals.length > 0 ? finals.reduce((a,b)=>a+b,0)/finals.length : Infinity;
-    rows.push({ code, name: college.n, loc: college.l, arr: catArr, pred, est, avgFinal });
+    const pred = getPrediction(rank, avgFinal === Infinity ? 0 : avgFinal);
+    rows.push({ code, name: col.n, loc: col.l, arr, pred, est: weightedEst(arr), avgFinal });
   }
-
-  if (rows.length === 0) {
-    document.getElementById('results').innerHTML =
-      '<div class="card empty-msg">No data found for <strong>' + branch + '</strong> / <strong>' + cat +
-      '</strong>.<br/>Try a different branch or category combination.</div>';
-    return;
-  }
-
-  // Sort: Safe first, then moderate, borderline, longshot/unknown; within group by avgFinal asc
-  const ORDER = { safe:0, moderate:1, borderline:2, longshot:3, unknown:4 };
-  rows.sort((a,b) => {
-    const od = ORDER[a.pred] - ORDER[b.pred];
-    if (od !== 0) return od;
-    return a.avgFinal - b.avgFinal;
-  });
-
-  // Count badges
-  const counts = { safe:0, moderate:0, borderline:0, longshot:0, unknown:0 };
-  rows.forEach(r => counts[r.pred]++);
-
-  let html = '<div class="card">';
-  html += '<div class="stats-bar">';
-  html += '<span>Showing <strong>' + rows.length + '</strong> colleges &nbsp;</span>';
-  if (counts.safe)      html += '<span class="stat-chip chip-safe">&#10003; Safe: ' + counts.safe + '</span>';
-  if (counts.moderate)  html += '<span class="stat-chip chip-mod">~ Moderate: ' + counts.moderate + '</span>';
-  if (counts.borderline)html += '<span class="stat-chip chip-border">! Borderline: ' + counts.borderline + '</span>';
-  if (counts.longshot+counts.unknown) html += '<span class="stat-chip chip-long">&#10007; Long Shot: ' + (counts.longshot+counts.unknown) + '</span>';
-  html += '</div>';
-  html += '<div class="table-wrap"><table>';
-  html += '<thead><tr>';
-  html += '<th class="col-name">#&nbsp; College Name</th>';
-  html += '<th class="col-loc">Location</th>';
-  html += '<th class="col-pred">Prediction</th>';
-  ROUND_LABELS.forEach(function(lbl){ html += '<th>' + lbl + '</th>'; });
-  html += '<th>Est.&nbsp;2025</th>';
-  html += '</tr></thead><tbody>';
-
-  rows.forEach(function(r, idx) {
-    html += '<tr>';
-    html += '<td class="col-name">' + (idx+1) + '.&nbsp;' + r.name + '</td>';
-    html += '<td class="col-loc">' + (r.loc || '—') + '</td>';
+  if (!rows.length) { showEmpty(branch,cat); return; }
+  const ORDER = {safe:0,moderate:1,borderline:2,longshot:3,unknown:4};
+  rows.sort((a,b) => (ORDER[a.pred]-ORDER[b.pred]) || (a.avgFinal-b.avgFinal));
+  const counts = countPreds(rows);
+  let html = buildStatsBar(rows.length, counts);
+  html += '<div class="table-wrap"><table><thead><tr>';
+  html += '<th class="col-name"># College</th><th class="col-loc">Location</th><th class="col-pred">Prediction</th>';
+  ENGG_ROUNDS.forEach(l => { html += '<th>' + l + '</th>'; });
+  html += '<th>Est.&nbsp;2025</th></tr></thead><tbody>';
+  rows.forEach((r,i) => {
+    html += '<tr><td class="col-name">' + (i+1) + '.&nbsp;' + r.name + '</td>';
+    html += '<td class="col-loc">' + (r.loc||'&#8212;') + '</td>';
     html += '<td>' + badgeHtml(r.pred) + '</td>';
-    r.arr.forEach(function(v) { html += '<td>' + fmtCutoff(rank, v) + '</td>'; });
-    const estVal = r.est > 0 ? '<span class="est-2025">~' + r.est.toLocaleString() + '</span>' : '<span class="cell-na">—</span>';
-    html += '<td>' + estVal + '</td>';
+    r.arr.forEach(v => { html += '<td>' + fmtCutoff(rank,v) + '</td>'; });
+    html += '<td>' + (r.est > 0 ? '<span class="est-2025">~'+r.est.toLocaleString()+'</span>' : '<span class="cell-na">&#8212;</span>') + '</td>';
     html += '</tr>';
   });
-
   html += '</tbody></table></div></div>';
+  showResults(html);
+}
+
+function predictAgri(rank, branch, cat) {
+  const rows = [];
+  for (const [code, col] of Object.entries(AGRI)) {
+    const bData = col.b[branch];
+    if (!bData) continue;
+    const vals = {};
+    AGRI_ROUND_KEYS.forEach(rk => { vals[rk] = bData.r && bData.r[rk] ? bData.r[rk][cat] : null; });
+    const r2 = vals['2024_R2'] || vals['2024_R1'];
+    if (!r2 && !vals['2024_R1']) continue;
+    const refVal = r2 || vals['2024_R1'] || 0;
+    const pred = getPrediction(rank, refVal);
+    rows.push({ code, name: col.n, loc: col.l, vals, pred, refVal });
+  }
+  if (!rows.length) { showEmpty(branch,cat); return; }
+  const ORDER = {safe:0,moderate:1,borderline:2,longshot:3,unknown:4};
+  rows.sort((a,b) => (ORDER[a.pred]-ORDER[b.pred]) || (a.refVal-b.refVal));
+  const counts = countPreds(rows);
+  let html = buildStatsBar(rows.length, counts);
+  html += '<div class="table-wrap"><table><thead><tr>';
+  html += '<th class="col-name"># College</th><th class="col-loc">Location</th><th class="col-pred">Prediction</th>';
+  AGRI_ROUNDS.forEach(l => { html += '<th>' + l + '</th>'; });
+  html += '<th>Est.&nbsp;2025</th></tr></thead><tbody>';
+  rows.forEach((r,i) => {
+    html += '<tr><td class="col-name">' + (i+1) + '.&nbsp;' + r.name + '</td>';
+    html += '<td class="col-loc">' + (r.loc||'&#8212;') + '</td>';
+    html += '<td>' + badgeHtml(r.pred) + '</td>';
+    AGRI_ROUND_KEYS.forEach(rk => { html += '<td>' + fmtCutoff(rank, r.vals[rk]||0) + '</td>'; });
+    const est = r.refVal > 0 ? '<span class="est-2025">~'+Math.round(r.refVal).toLocaleString()+'</span>' : '<span class="cell-na">&#8212;</span>';
+    html += '<td>' + est + '</td>';
+    html += '</tr>';
+  });
+  html += '</tbody></table></div></div>';
+  showResults(html);
+}
+
+function predictProf(rank, branch, cat) {
+  const rows = [];
+  for (const [code, col] of Object.entries(PROF)) {
+    const bData = col.b[branch];
+    if (!bData) continue;
+    const cutoff = bData.d ? bData.d[cat] : null;
+    if (!cutoff) continue;
+    const pred = getPrediction(rank, cutoff);
+    rows.push({ code, name: col.n, loc: col.l, cutoff, pred });
+  }
+  if (!rows.length) { showEmpty(branch,cat); return; }
+  const ORDER = {safe:0,moderate:1,borderline:2,longshot:3,unknown:4};
+  rows.sort((a,b) => (ORDER[a.pred]-ORDER[b.pred]) || (a.cutoff-b.cutoff));
+  const counts = countPreds(rows);
+  let html = buildStatsBar(rows.length, counts);
+  html += '<div class="table-wrap"><table><thead><tr>';
+  html += '<th class="col-name"># College</th><th class="col-loc">Location</th><th class="col-pred">Prediction</th>';
+  html += '<th>2025 Mock Cutoff</th></tr></thead><tbody>';
+  rows.forEach((r,i) => {
+    html += '<tr><td class="col-name">' + (i+1) + '.&nbsp;' + r.name + '</td>';
+    html += '<td class="col-loc">' + (r.loc||'&#8212;') + '</td>';
+    html += '<td>' + badgeHtml(r.pred) + '</td>';
+    html += '<td><span class="mock-2025">' + r.cutoff.toLocaleString() + '</span></td>';
+    html += '</tr>';
+  });
+  html += '</tbody></table></div></div>';
+  showResults(html);
+}
+
+function countPreds(rows) {
+  const c = {safe:0,moderate:0,borderline:0,longshot:0,unknown:0};
+  rows.forEach(r => c[r.pred]++);
+  return c;
+}
+
+function buildStatsBar(total, c) {
+  let h = '<div class="card"><div class="stats-bar">';
+  h += '<span>Showing <strong>' + total + '</strong> colleges &nbsp;</span>';
+  if (c.safe)      h += '<span class="stat-chip chip-safe">&#10003; Safe: '+c.safe+'</span>';
+  if (c.moderate)  h += '<span class="stat-chip chip-mod">~ Moderate: '+c.moderate+'</span>';
+  if (c.borderline)h += '<span class="stat-chip chip-border">! Borderline: '+c.borderline+'</span>';
+  if (c.longshot+c.unknown) h += '<span class="stat-chip chip-long">&#10007; Long Shot: '+(c.longshot+c.unknown)+'</span>';
+  h += '</div>';
+  return h;
+}
+
+function showEmpty(branch, cat) {
+  document.getElementById('results').innerHTML =
+    '<div class="card empty-msg">No data found for <strong>' + branch + '</strong> / <strong>' + cat +
+    '</strong>.<br/>Try a different course or category combination.</div>';
+}
+
+function showResults(html) {
   document.getElementById('results').innerHTML = html;
   document.getElementById('results').scrollIntoView({behavior:'smooth', block:'start'});
 }
 
-// Allow Enter key on rank input
-document.getElementById('rank').addEventListener('keydown', function(e){
-  if (e.key === 'Enter') predict();
-});
+document.getElementById('rank').addEventListener('keydown', e => { if(e.key==='Enter') predict(); });
 </script>
 </body>
 </html>'''
 
-# ── Inject dynamic parts ──────────────────────────────────────────────────────
-HTML = HTML.replace('BRANCH_OPTIONS_PLACEHOLDER', branch_options_html)
-HTML = HTML.replace('CAT_OPTIONS_PLACEHOLDER', cat_options_html)
-HTML = HTML.replace('JS_DATA_PLACEHOLDER', js_data_str)
+# Inject data
+engg_count = len(engg_js)
+agri_count = len(agri_js)
+prof_count = len(prof_js)
 
-# ── Write output ──────────────────────────────────────────────────────────────
+HTML = HTML.replace('__ENGG_COUNT__', str(engg_count))
+HTML = HTML.replace('__AGRI_COUNT__', str(agri_count))
+HTML = HTML.replace('__PROF_COUNT__', str(prof_count))
+HTML = HTML.replace('__ENGG_BRANCH_OPTS__', engg_branch_opts)
+HTML = HTML.replace('__CAT_OPTS__', cat_opts)
+HTML = HTML.replace('__ENGG_DATA__', engg_js_str)
+HTML = HTML.replace('__AGRI_DATA__', agri_js_str)
+HTML = HTML.replace('__PROF_DATA__', prof_js_str)
+# JS template literals for branch options (escape backticks)
+HTML = HTML.replace('__ENGG_BRANCH_OPTS_JS__', engg_branch_opts.replace('`','\\`'))
+HTML = HTML.replace('__AGRI_BRANCH_OPTS_JS__', agri_branch_opts.replace('`','\\`'))
+HTML = HTML.replace('__PROF_BRANCH_OPTS_JS__', prof_branch_opts.replace('`','\\`'))
+
 out_path = '/home/user/Sumeet-/kcet_college_predictor.html'
 with open(out_path, 'w', encoding='utf-8') as f:
     f.write(HTML)
@@ -534,4 +566,6 @@ with open(out_path, 'w', encoding='utf-8') as f:
 size_kb = os.path.getsize(out_path) / 1024
 print(f'Generated: {out_path}')
 print(f'File size: {size_kb:.1f} KB ({size_kb/1024:.2f} MB)')
-print('Done.')
+print(f'Engineering: {engg_count} colleges')
+print(f'Agriculture: {agri_count} colleges')
+print(f'Professional/Vet: {prof_count} colleges')

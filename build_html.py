@@ -252,6 +252,10 @@ footer .attr{font-weight:700;color:var(--text)}
 .tab-btn{padding:.5rem 1.2rem;border:2px solid var(--border-c);border-radius:8px;background:#fff;cursor:pointer;font-size:.9rem;font-weight:600;color:var(--muted);transition:.2s}
 .tab-btn.active{border-color:var(--grad1);background:var(--grad1);color:#fff}
 .info-badge{display:inline-block;padding:.15rem .55rem;border-radius:10px;font-size:.72rem;font-weight:700;margin-left:.4rem;background:#e0e7ff;color:#3730a3}
+.round-section{background:var(--card);border-radius:14px;box-shadow:0 2px 16px rgba(79,70,229,.08);margin-bottom:1.5rem;overflow:hidden}
+.round-header{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem;padding:.85rem 1.25rem;background:linear-gradient(135deg,rgba(79,70,229,.06),rgba(124,58,237,.06));border-bottom:1px solid var(--border-c)}
+.round-title{font-size:1.05rem;font-weight:800;color:var(--grad1);margin-right:.4rem}
+.round-count{font-size:.82rem;color:var(--muted);font-weight:600}
 @media(max-width:600px){header{padding:1.2rem .75rem}.card{padding:1rem}.btn{width:100%}}
 </style>
 </head>
@@ -302,21 +306,6 @@ footer .attr{font-weight:700;color:var(--text)}
           __CAT_OPTS__
         </select>
       </div>
-      <div id="round-wrap">
-        <label for="round">Round</label>
-        <select id="round">
-          <option value="8">2024 Final (Recommended)</option>
-          <option value="7">2024 Round 2</option>
-          <option value="6">2024 Round 1</option>
-          <option value="5">2023 Final</option>
-          <option value="4">2023 Round 2</option>
-          <option value="3">2023 Round 1</option>
-          <option value="2">2022 Final</option>
-          <option value="1">2022 Round 2</option>
-          <option value="0">2022 Round 1</option>
-          <option value="est">Est. 2025 (Projected)</option>
-        </select>
-      </div>
 
       <div>
         <button class="btn" onclick="predict()">&#128269; Predict Colleges</button>
@@ -365,22 +354,23 @@ const PROF_BRANCH_OPTS = `__PROF_BRANCH_OPTS_JS__`;
 
 let currentType = 'engg';
 
-const ENGG_ROUND_OPTS = `
-  <option value="8">2024 Final (Recommended)</option>
-  <option value="7">2024 Round 2</option>
-  <option value="6">2024 Round 1</option>
-  <option value="5">2023 Final</option>
-  <option value="4">2023 Round 2</option>
-  <option value="3">2023 Round 1</option>
-  <option value="2">2022 Final</option>
-  <option value="1">2022 Round 2</option>
-  <option value="0">2022 Round 1</option>
-  <option value="est">Est. 2025 (Projected)</option>`;
+// Engineering: index in the 9-element array, label, whether it's the "final" round
+const ENGG_ROUND_DEF = [
+  {idx:8, lbl:'2024 Final',  final:true},
+  {idx:7, lbl:'2024 Round 2'},
+  {idx:6, lbl:'2024 Round 1'},
+  {idx:5, lbl:'2023 Final',  final:true},
+  {idx:4, lbl:'2023 Round 2'},
+  {idx:3, lbl:'2023 Round 1'},
+  {idx:2, lbl:'2022 Final',  final:true},
+  {idx:1, lbl:'2022 Round 2'},
+  {idx:0, lbl:'2022 Round 1'},
+];
 
-const AGRI_ROUND_OPTS = `
-  <option value="2024_R2">2024 Round 2 (Latest)</option>
-  <option value="2024_R1">2024 Round 1</option>
-  <option value="est">Est. 2025 (Projected)</option>`;
+const AGRI_ROUND_DEF = [
+  {key:'2024_R2', lbl:'2024 Round 2'},
+  {key:'2024_R1', lbl:'2024 Round 1'},
+];
 
 function switchType(type, btn) {
   currentType = type;
@@ -391,25 +381,20 @@ function switchType(type, btn) {
   branchSel.innerHTML = '<option value="">-- Select Course --</option>' + opts;
   document.getElementById('branch-label').textContent = type === 'engg' ? 'Branch / Programme' : 'Course';
   const rankLbl = document.querySelector('label[for="rank"]');
-  const roundWrap = document.getElementById('round-wrap');
-  const roundSel = document.getElementById('round');
   if (type === 'prof') {
     rankLbl.textContent = 'Your UGCET Rank';
     document.getElementById('rank').placeholder = 'e.g. 2000';
-    roundWrap.style.display = 'none';
   } else {
     rankLbl.textContent = 'Your KCET Rank';
     document.getElementById('rank').placeholder = 'e.g. 5000';
-    roundWrap.style.display = '';
-    roundSel.innerHTML = type === 'engg' ? ENGG_ROUND_OPTS : AGRI_ROUND_OPTS;
   }
   document.getElementById('results').innerHTML = '';
 }
 
 function weightedEst(arr) {
-  const weights = [1,2,3];
+  const finalIdx = [2,5,8], weights = [1,2,3];
   let wsum = 0, total = 0;
-  FINAL_IDX.forEach((idx,i) => {
+  finalIdx.forEach((idx,i) => {
     const v = arr[idx];
     if (v && v > 0) { wsum += v * weights[i]; total += weights[i]; }
   });
@@ -448,82 +433,121 @@ function predict() {
   else predictProf(rank, branch, cat);
 }
 
-function roundLabel(val) {
-  const m = {'0':'2022 Round 1','1':'2022 Round 2','2':'2022 Final','3':'2023 Round 1','4':'2023 Round 2','5':'2023 Final','6':'2024 Round 1','7':'2024 Round 2','8':'2024 Final','est':'Est. 2025 (Projected)','2024_R1':'2024 Round 1','2024_R2':'2024 Round 2'};
-  return m[val] || val;
-}
-
-function buildTable(rows, rank, rndLabel, cutoffFn) {
+function buildRoundSection(rows, rank, lbl, isEst, isMock) {
   const ORDER = {safe:0,moderate:1,borderline:2,longshot:3,unknown:4};
   rows.sort((a,b) => (ORDER[a.pred]-ORDER[b.pred]) || (a.cutoff-b.cutoff));
-  const counts = countPreds(rows);
-  let html = buildStatsBar(rows.length, counts, rndLabel);
+  const counts = {safe:0,moderate:0,borderline:0,longshot:0,unknown:0};
+  rows.forEach(r => counts[r.pred]++);
+
+  let html = '<div class="round-section">';
+  html += '<div class="round-header">';
+  html += '<span class="round-title">' + lbl + '</span>';
+  html += '<span class="round-count">' + rows.length + ' colleges</span>';
+  if (counts.safe)      html += '<span class="stat-chip chip-safe">&#10003; '+counts.safe+' Safe</span>';
+  if (counts.moderate)  html += '<span class="stat-chip chip-mod">~ '+counts.moderate+' Moderate</span>';
+  if (counts.borderline)html += '<span class="stat-chip chip-border">! '+counts.borderline+' Borderline</span>';
+  if (counts.longshot+counts.unknown) html += '<span class="stat-chip chip-long">&#10007; '+(counts.longshot+counts.unknown)+' Long Shot</span>';
+  html += '</div>';
   html += '<div class="table-wrap"><table><thead><tr>';
   html += '<th class="col-name"># College</th><th class="col-loc">Location</th>';
-  html += '<th class="col-pred">Prediction</th><th>' + rndLabel + ' Cutoff</th></tr></thead><tbody>';
+  html += '<th class="col-pred">Prediction</th><th>' + lbl + ' Cutoff</th></tr></thead><tbody>';
   rows.forEach((r,i) => {
     html += '<tr><td class="col-name">' + (i+1) + '.&nbsp;' + r.name + '</td>';
     html += '<td class="col-loc">' + (r.loc||'&#8212;') + '</td>';
     html += '<td>' + badgeHtml(r.pred) + '</td>';
-    html += '<td>' + cutoffFn(rank, r.cutoff) + '</td></tr>';
+    let cell;
+    if (isMock) {
+      cell = '<span class="mock-2025">' + r.cutoff.toLocaleString() + '</span>';
+    } else if (isEst) {
+      cell = r.cutoff > 0 ? '<span class="est-2025">~' + r.cutoff.toLocaleString() + '</span>' : '<span class="cell-na">&#8212;</span>';
+    } else {
+      cell = fmtCutoff(rank, r.cutoff);
+    }
+    html += '<td>' + cell + '</td></tr>';
   });
   html += '</tbody></table></div></div>';
   return html;
 }
 
 function predictEngg(rank, branch, cat) {
-  const rndVal = document.getElementById('round').value;
-  const isEst = rndVal === 'est';
-  const rndIdx = isEst ? -1 : parseInt(rndVal);
-  const rows = [];
+  let anyFound = false;
+  let html = '';
+
+  // Est. 2025 section first
+  const estRows = [];
   for (const [code, col] of Object.entries(ENGG)) {
     const bData = col.b[branch];
     if (!bData) continue;
     const arr = bData[cat];
     if (!arr) continue;
-    let cutoff;
-    if (isEst) {
-      cutoff = weightedEst(arr);
-    } else {
-      cutoff = arr[rndIdx] || 0;
-    }
+    const cutoff = weightedEst(arr);
     if (!cutoff) continue;
-    const pred = getPrediction(rank, cutoff);
-    rows.push({ code, name: col.n, loc: col.l, cutoff, pred });
+    estRows.push({ name: col.n, loc: col.l, cutoff, pred: getPrediction(rank, cutoff) });
   }
-  if (!rows.length) { showEmpty(branch, cat, rndVal); return; }
-  const lbl = roundLabel(rndVal);
-  const fmtFn = isEst
-    ? (r, v) => v > 0 ? '<span class="est-2025">~' + v.toLocaleString() + '</span>' : '<span class="cell-na">&#8212;</span>'
-    : fmtCutoff;
-  showResults(buildTable(rows, rank, lbl, fmtFn));
+  if (estRows.length) {
+    html += buildRoundSection(estRows, rank, 'Est. 2025 (Projected)', true, false);
+    anyFound = true;
+  }
+
+  // Each historical round
+  for (const rnd of ENGG_ROUND_DEF) {
+    const rows = [];
+    for (const [code, col] of Object.entries(ENGG)) {
+      const bData = col.b[branch];
+      if (!bData) continue;
+      const arr = bData[cat];
+      if (!arr) continue;
+      const cutoff = arr[rnd.idx] || 0;
+      if (!cutoff) continue;
+      rows.push({ name: col.n, loc: col.l, cutoff, pred: getPrediction(rank, cutoff) });
+    }
+    if (rows.length) {
+      html += buildRoundSection(rows, rank, rnd.lbl, false, false);
+      anyFound = true;
+    }
+  }
+
+  if (!anyFound) { showEmpty(branch, cat); return; }
+  showResults(html);
 }
 
 function predictAgri(rank, branch, cat) {
-  const rndVal = document.getElementById('round').value;
-  const isEst = rndVal === 'est';
-  const rows = [];
+  let anyFound = false;
+  let html = '';
+
+  // Est. 2025 (from latest available round)
+  const estRows = [];
   for (const [code, col] of Object.entries(AGRI)) {
     const bData = col.b[branch];
     if (!bData || !bData.r) continue;
-    let cutoff;
-    if (isEst) {
-      const r2 = bData.r['2024_R2'] ? bData.r['2024_R2'][cat] : null;
-      const r1 = bData.r['2024_R1'] ? bData.r['2024_R1'][cat] : null;
-      cutoff = r2 || r1 || 0;
-    } else {
-      cutoff = bData.r[rndVal] ? bData.r[rndVal][cat] : null;
-    }
+    const r2 = bData.r['2024_R2'] ? bData.r['2024_R2'][cat] : null;
+    const r1 = bData.r['2024_R1'] ? bData.r['2024_R1'][cat] : null;
+    const cutoff = r2 || r1 || 0;
     if (!cutoff) continue;
-    const pred = getPrediction(rank, cutoff);
-    rows.push({ code, name: col.n, loc: col.l, cutoff, pred });
+    estRows.push({ name: col.n, loc: col.l, cutoff, pred: getPrediction(rank, cutoff) });
   }
-  if (!rows.length) { showEmpty(branch, cat, rndVal); return; }
-  const lbl = roundLabel(rndVal);
-  const fmtFn = isEst
-    ? (r, v) => v > 0 ? '<span class="est-2025">~' + Math.round(v).toLocaleString() + '</span>' : '<span class="cell-na">&#8212;</span>'
-    : fmtCutoff;
-  showResults(buildTable(rows, rank, lbl, fmtFn));
+  if (estRows.length) {
+    html += buildRoundSection(estRows, rank, 'Est. 2025 (Based on 2024)', true, false);
+    anyFound = true;
+  }
+
+  for (const rnd of AGRI_ROUND_DEF) {
+    const rows = [];
+    for (const [code, col] of Object.entries(AGRI)) {
+      const bData = col.b[branch];
+      if (!bData || !bData.r) continue;
+      const cutoff = bData.r[rnd.key] ? bData.r[rnd.key][cat] : null;
+      if (!cutoff) continue;
+      rows.push({ name: col.n, loc: col.l, cutoff, pred: getPrediction(rank, cutoff) });
+    }
+    if (rows.length) {
+      html += buildRoundSection(rows, rank, rnd.lbl, false, false);
+      anyFound = true;
+    }
+  }
+
+  if (!anyFound) { showEmpty(branch, cat); return; }
+  showResults(html);
 }
 
 function predictProf(rank, branch, cat) {
@@ -533,12 +557,10 @@ function predictProf(rank, branch, cat) {
     if (!bData || !bData.d) continue;
     const cutoff = bData.d[cat];
     if (!cutoff) continue;
-    const pred = getPrediction(rank, cutoff);
-    rows.push({ code, name: col.n, loc: col.l, cutoff, pred });
+    rows.push({ name: col.n, loc: col.l, cutoff, pred: getPrediction(rank, cutoff) });
   }
-  if (!rows.length) { showEmpty(branch, cat, 'mock'); return; }
-  const fmtFn = (r, v) => v > 0 ? '<span class="mock-2025">' + v.toLocaleString() + '</span>' : '<span class="cell-na">&#8212;</span>';
-  showResults(buildTable(rows, rank, '2025 Mock', fmtFn));
+  if (!rows.length) { showEmpty(branch, cat); return; }
+  showResults(buildRoundSection(rows, rank, '2025 Mock Allotment', false, true));
 }
 
 function countPreds(rows) {
@@ -547,18 +569,7 @@ function countPreds(rows) {
   return c;
 }
 
-function buildStatsBar(total, c, rndLabel) {
-  let h = '<div class="card"><div class="stats-bar">';
-  h += '<span>Showing <strong>' + total + '</strong> colleges for <strong>' + (rndLabel||'') + '</strong> &nbsp;</span>';
-  if (c.safe)      h += '<span class="stat-chip chip-safe">&#10003; Safe: '+c.safe+'</span>';
-  if (c.moderate)  h += '<span class="stat-chip chip-mod">~ Moderate: '+c.moderate+'</span>';
-  if (c.borderline)h += '<span class="stat-chip chip-border">! Borderline: '+c.borderline+'</span>';
-  if (c.longshot+c.unknown) h += '<span class="stat-chip chip-long">&#10007; Long Shot: '+(c.longshot+c.unknown)+'</span>';
-  h += '</div>';
-  return h;
-}
-
-function showEmpty(branch, cat, rndVal) {
+function showEmpty(branch, cat) {
   document.getElementById('results').innerHTML =
     '<div class="card empty-msg">No data found for <strong>' + branch + '</strong> / <strong>' + cat +
     '</strong>.<br/>Try a different course or category combination.</div>';

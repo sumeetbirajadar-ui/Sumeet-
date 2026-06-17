@@ -1,0 +1,5641 @@
+{
+  "agriculture": {
+    "F001": {
+      "name": "Dairy Science College",
+      "location": "Bangalore",
+      "branches": {
+        "DT": {
+          "name": "B.Tech (D.Tech)",
+          "rounds": {
+            "2024_R1": {
+              "1G": null,
+              "1K": null,
+              "1R": null,
+              "2AG": null,
+              "2AK": 54179,
+              "2AR": 12323,
+              "2BG": null,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 16534,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 12646,
+              "3BK": null,
+              "3BR": null,
+              "GM": 11058,
+              "GMK": null,
+              "GMR": 12127,
+              "SCG": 19871,
+              "SCK": 61953,
+              "SCR": 22271,
+              "STG": null,
+              "STK": null,
+              "STR": 36624
+            },
+            "2024_R2": {
+              "1G": null,
+              "1K": null,
+              "1R": null,
+              "2AG": null,
+              "2AK": 54179,
+              "2AR": 29028,
+              "2BG": null,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 29343,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 16893,
+              "3BK": null,
+              "3BR": null,
+              "GM": 13855,
+              "GMK": null,
+              "GMR": 16534,
+              "SCG": 19871,
+              "SCK": 61953,
+              "SCR": 22271,
+              "STG": null,
+              "STK": null,
+              "STR": 36624
+            }
+          }
+        }
+      }
+    },
+    "F002": {
+      "name": "Dairy Science College",
+      "location": "Kalaburagi",
+      "branches": {
+        "DT": {
+          "name": "B.Tech (D.Tech)",
+          "rounds": {
+            "2024_R1": {
+              "1G": 28135,
+              "1K": null,
+              "1R": null,
+              "2AG": null,
+              "2AK": null,
+              "2AR": null,
+              "2BG": null,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": null,
+              "3BK": null,
+              "3BR": null,
+              "GM": 16893,
+              "GMK": 23727,
+              "GMR": null,
+              "SCG": null,
+              "SCK": null,
+              "SCR": null,
+              "STG": null,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": 52249,
+              "1K": null,
+              "1R": null,
+              "2AG": null,
+              "2AK": null,
+              "2AR": null,
+              "2BG": null,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": null,
+              "3BK": null,
+              "3BR": null,
+              "GM": 28135,
+              "GMK": 52219,
+              "GMR": null,
+              "SCG": null,
+              "SCK": null,
+              "SCR": null,
+              "STG": null,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "F003": {
+      "name": "College of Agriculture",
+      "location": "Hassan",
+      "branches": {
+        "FT": {
+          "name": "B.Tech.(Food Technology)",
+          "rounds": {
+            "2024_R1": {
+              "1G": null,
+              "1K": null,
+              "1R": 32955,
+              "2AG": 35424,
+              "2AK": null,
+              "2AR": 37889,
+              "2BG": 55188,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 23912,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 28438,
+              "3BK": null,
+              "3BR": null,
+              "GM": 20687,
+              "GMK": null,
+              "GMR": 24159,
+              "SCG": 49391,
+              "SCK": 51418,
+              "SCR": null,
+              "STG": 26814,
+              "STK": 54051,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": null,
+              "1K": null,
+              "1R": 60024,
+              "2AG": 48489,
+              "2AK": null,
+              "2AR": 51795,
+              "2BG": 66387,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 43532,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 46754,
+              "3BK": null,
+              "3BR": null,
+              "GM": 39449,
+              "GMK": null,
+              "GMR": 46029,
+              "SCG": 49698,
+              "SCK": 62540,
+              "SCR": null,
+              "STG": 61916,
+              "STK": 91237,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "F004": {
+      "name": "College of Fisheries",
+      "location": "Mangalore",
+      "branches": {
+        "FH": {
+          "name": "B.Fisheries Science",
+          "rounds": {
+            "2024_R1": {
+              "1G": 20112,
+              "1K": null,
+              "1R": null,
+              "2AG": 24563,
+              "2AK": 28073,
+              "2AR": 40114,
+              "2BG": null,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 20169,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 25072,
+              "3BK": null,
+              "3BR": null,
+              "GM": 15168,
+              "GMK": null,
+              "GMR": 23823,
+              "SCG": 17900,
+              "SCK": null,
+              "SCR": 44140,
+              "STG": 30072,
+              "STK": null,
+              "STR": 35823
+            },
+            "2024_R2": {
+              "1G": 37296,
+              "1K": null,
+              "1R": null,
+              "2AG": 40114,
+              "2AK": 73439,
+              "2AR": 42259,
+              "2BG": null,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 35543,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 25072,
+              "3BK": null,
+              "3BR": null,
+              "GM": 20169,
+              "GMK": null,
+              "GMR": 34286,
+              "SCG": 26387,
+              "SCK": null,
+              "SCR": 55655,
+              "STG": 47321,
+              "STK": null,
+              "STR": 68870
+            }
+          }
+        }
+      }
+    },
+    "F005": {
+      "name": "College of Agriculture",
+      "location": "GKVK, Bangalore",
+      "branches": {
+        "AM": {
+          "name": "B.Sc.(Hons)Ag. Busi. Mng.",
+          "rounds": {
+            "2024_R1": {
+              "1G": 46633,
+              "1K": null,
+              "1R": null,
+              "2AG": 35420,
+              "2AK": 39633,
+              "2AR": null,
+              "2BG": 55373,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 30406,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 30468,
+              "3BK": null,
+              "3BR": null,
+              "GM": 28208,
+              "GMK": null,
+              "GMR": 30030,
+              "SCG": 32204,
+              "SCK": 62540,
+              "SCR": 40850,
+              "STG": 42721,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": 46633,
+              "1K": null,
+              "1R": null,
+              "2AG": 47634,
+              "2AK": 55767,
+              "2AR": null,
+              "2BG": 62386,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 44895,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 40233,
+              "3BK": null,
+              "3BR": null,
+              "GM": 30468,
+              "GMK": null,
+              "GMR": 35420,
+              "SCG": 55605,
+              "SCK": 68727,
+              "SCR": 61045,
+              "STG": 42721,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "F006": {
+      "name": "College of Community Science",
+      "location": "Dharwad",
+      "branches": {
+        "FT": {
+          "name": "B.Tech.(Food Technology)",
+          "rounds": {
+            "2024_R1": {
+              "1G": null,
+              "1K": null,
+              "1R": null,
+              "2AG": 30893,
+              "2AK": null,
+              "2AR": null,
+              "2BG": 42751,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": null,
+              "3BK": null,
+              "3BR": null,
+              "GM": 13325,
+              "GMK": null,
+              "GMR": 32352,
+              "SCG": 49652,
+              "SCK": null,
+              "SCR": null,
+              "STG": null,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": null,
+              "1K": null,
+              "1R": null,
+              "2AG": 35424,
+              "2AK": null,
+              "2AR": null,
+              "2BG": 42751,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": null,
+              "3BK": null,
+              "3BR": null,
+              "GM": 30893,
+              "GMK": null,
+              "GMR": 32352,
+              "SCG": 56206,
+              "SCK": null,
+              "SCR": null,
+              "STG": null,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "F007": {
+      "name": "College of Agriculture",
+      "location": "Dharwad",
+      "branches": {
+        "AM": {
+          "name": "B.Sc.(Hons)Ag. Busi. Mng.",
+          "rounds": {
+            "2024_R1": {
+              "1G": 38064,
+              "1K": null,
+              "1R": null,
+              "2AG": 42648,
+              "2AK": null,
+              "2AR": 48597,
+              "2BG": 45844,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 41682,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 38585,
+              "3BK": null,
+              "3BR": null,
+              "GM": 32518,
+              "GMK": 33273,
+              "GMR": 37072,
+              "SCG": 50486,
+              "SCK": null,
+              "SCR": 58511,
+              "STG": 48339,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": 60214,
+              "1K": null,
+              "1R": null,
+              "2AG": 59449,
+              "2AK": null,
+              "2AR": 66209,
+              "2BG": 74690,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 49809,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 55362,
+              "3BK": null,
+              "3BR": null,
+              "GM": 47536,
+              "GMK": 54279,
+              "GMR": 55210,
+              "SCG": 61175,
+              "SCK": null,
+              "SCR": 63938,
+              "STG": 62377,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "F027": {
+      "name": "College of Horticulture Engineering and Food Technology",
+      "location": "",
+      "branches": {
+        "FT": {
+          "name": "B.Tech.(Food Technology)",
+          "rounds": {
+            "2024_R1": {
+              "1G": 40948,
+              "1K": null,
+              "1R": null,
+              "2AG": 41067,
+              "2AK": null,
+              "2AR": 44283,
+              "2BG": 58626,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 41309,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 37587,
+              "3BK": null,
+              "3BR": null,
+              "GM": 34918,
+              "GMK": null,
+              "GMR": 36348,
+              "SCG": 51579,
+              "SCK": null,
+              "SCR": null,
+              "STG": 42814,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": 57428,
+              "1K": null,
+              "1R": null,
+              "2AG": 61492,
+              "2AK": null,
+              "2AR": 65086,
+              "2BG": 65591,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 56144,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 56340,
+              "3BK": null,
+              "3BR": null,
+              "GM": 53943,
+              "GMK": null,
+              "GMR": 54723,
+              "SCG": 59720,
+              "SCK": null,
+              "SCR": null,
+              "STG": 61935,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "N001": {
+      "name": "College of Agriculture",
+      "location": "GKVK Campus , Bangalore",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "rounds": {
+            "2024_R1": {
+              "1G": 10191,
+              "1K": null,
+              "1R": 10459,
+              "2AG": 8447,
+              "2AK": 9402,
+              "2AR": 9572,
+              "2BG": 9686,
+              "2BK": 35212,
+              "2BR": null,
+              "3AG": 7771,
+              "3AK": null,
+              "3AR": 9348,
+              "3BG": 7150,
+              "3BK": null,
+              "3BR": 8656,
+              "GM": 5239,
+              "GMK": 8403,
+              "GMR": 8249,
+              "SCG": 16298,
+              "SCK": 23566,
+              "SCR": 18866,
+              "STG": 20324,
+              "STK": null,
+              "STR": 22885
+            },
+            "2024_R2": {
+              "1G": 11157,
+              "1K": null,
+              "1R": 13028,
+              "2AG": 11876,
+              "2AK": 14935,
+              "2AR": 14470,
+              "2BG": 23756,
+              "2BK": 47045,
+              "2BR": null,
+              "3AG": 8273,
+              "3AK": null,
+              "3AR": 9867,
+              "3BG": 9235,
+              "3BK": null,
+              "3BR": 10486,
+              "GM": 7701,
+              "GMK": 9402,
+              "GMR": 9621,
+              "SCG": 16938,
+              "SCK": 23566,
+              "SCR": 18866,
+              "STG": 22885,
+              "STK": null,
+              "STR": 28534
+            }
+          }
+        },
+        "ND": {
+          "name": "B.Sc.(Hons) Nutr., Diet",
+          "rounds": {
+            "2024_R1": {
+              "1G": null,
+              "1K": null,
+              "1R": null,
+              "2AG": 22131,
+              "2AK": null,
+              "2AR": null,
+              "2BG": null,
+              "2BK": null,
+              "2BR": 62386,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 23859,
+              "3BK": null,
+              "3BR": null,
+              "GM": 20056,
+              "GMK": null,
+              "GMR": 25756,
+              "SCG": 34302,
+              "SCK": null,
+              "SCR": null,
+              "STG": 42623,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": null,
+              "1K": null,
+              "1R": null,
+              "2AG": 47794,
+              "2AK": null,
+              "2AR": null,
+              "2BG": null,
+              "2BK": null,
+              "2BR": 99994,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 48759,
+              "3BK": null,
+              "3BR": null,
+              "GM": 34302,
+              "GMK": null,
+              "GMR": 37483,
+              "SCG": 45627,
+              "SCK": null,
+              "SCR": null,
+              "STG": 42623,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "N002": {
+      "name": "College of Agriculture",
+      "location": "VC Farm, Mandya",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "rounds": {
+            "2024_R1": {
+              "1G": 15120,
+              "1K": null,
+              "1R": null,
+              "2AG": 16477,
+              "2AK": null,
+              "2AR": 16540,
+              "2BG": 23921,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 12634,
+              "3AK": null,
+              "3AR": 15275,
+              "3BG": 12178,
+              "3BK": null,
+              "3BR": null,
+              "GM": 11841,
+              "GMK": 18771,
+              "GMR": 14435,
+              "SCG": 22378,
+              "SCK": null,
+              "SCR": 29757,
+              "STG": 25715,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": 19824,
+              "1K": null,
+              "1R": null,
+              "2AG": 25298,
+              "2AK": null,
+              "2AR": 27168,
+              "2BG": 23921,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 17840,
+              "3AK": null,
+              "3AR": 19571,
+              "3BG": 19245,
+              "3BK": null,
+              "3BR": null,
+              "GM": 17258,
+              "GMK": 20297,
+              "GMR": 18234,
+              "SCG": 26546,
+              "SCK": null,
+              "SCR": 29757,
+              "STG": 30637,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "N003": {
+      "name": "College of Agriculture",
+      "location": "Hassan",
+      "branches": {
+        "AB": {
+          "name": "B.Tech (Biotechnology)",
+          "rounds": {
+            "2024_R1": {
+              "1G": 43960,
+              "1K": null,
+              "1R": null,
+              "2AG": 36347,
+              "2AK": null,
+              "2AR": null,
+              "2BG": 33781,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 34398,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 30231,
+              "3BK": null,
+              "3BR": null,
+              "GM": 29706,
+              "GMK": null,
+              "GMR": 30695,
+              "SCG": 42133,
+              "SCK": null,
+              "SCR": 46202,
+              "STG": 35795,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": 52841,
+              "1K": null,
+              "1R": null,
+              "2AG": 55001,
+              "2AK": null,
+              "2AR": null,
+              "2BG": 60990,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 49925,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 46941,
+              "3BK": null,
+              "3BR": null,
+              "GM": 46204,
+              "GMK": null,
+              "GMR": 51251,
+              "SCG": 58722,
+              "SCK": null,
+              "SCR": 63437,
+              "STG": 59257,
+              "STK": null,
+              "STR": null
+            }
+          }
+        },
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "rounds": {
+            "2024_R1": {
+              "1G": 13568,
+              "1K": null,
+              "1R": null,
+              "2AG": 16864,
+              "2AK": null,
+              "2AR": 17546,
+              "2BG": 26707,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 11820,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 11082,
+              "3BK": 20541,
+              "3BR": null,
+              "GM": 11068,
+              "GMK": 11972,
+              "GMR": 12722,
+              "SCG": 18517,
+              "SCK": null,
+              "SCR": 25036,
+              "STG": 26169,
+              "STK": null,
+              "STR": 28534
+            },
+            "2024_R2": {
+              "1G": 23801,
+              "1K": null,
+              "1R": null,
+              "2AG": 25035,
+              "2AK": null,
+              "2AR": 25645,
+              "2BG": 31920,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 20362,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 19597,
+              "3BK": 28748,
+              "3BR": null,
+              "GM": 19154,
+              "GMK": 19340,
+              "GMR": 20829,
+              "SCG": 25036,
+              "SCK": null,
+              "SCR": 29798,
+              "STG": 29268,
+              "STK": null,
+              "STR": 29467
+            }
+          }
+        }
+      }
+    },
+    "N004": {
+      "name": "Sericulture College",
+      "location": "Chikkaballapur T&D, Chintamani",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "rounds": {
+            "2024_R1": {
+              "1G": 18242,
+              "1K": 32585,
+              "1R": null,
+              "2AG": 21843,
+              "2AK": null,
+              "2AR": null,
+              "2BG": 29302,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 18105,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 19796,
+              "3BK": null,
+              "3BR": null,
+              "GM": 17051,
+              "GMK": 20297,
+              "GMR": 21619,
+              "SCG": 27628,
+              "SCK": null,
+              "SCR": 31830,
+              "STG": 30931,
+              "STK": null,
+              "STR": 33810
+            },
+            "2024_R2": {
+              "1G": 28606,
+              "1K": 32585,
+              "1R": null,
+              "2AG": 29081,
+              "2AK": null,
+              "2AR": null,
+              "2BG": 45175,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 26993,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 29127,
+              "3BK": null,
+              "3BR": null,
+              "GM": 26066,
+              "GMK": 29368,
+              "GMR": 27198,
+              "SCG": 32881,
+              "SCK": null,
+              "SCR": 41690,
+              "STG": 33810,
+              "STK": null,
+              "STR": 41016
+            }
+          }
+        },
+        "SR": {
+          "name": "B.Sc.(Hons) Sericulture",
+          "rounds": {
+            "2024_R1": {
+              "1G": null,
+              "1K": null,
+              "1R": null,
+              "2AG": 39848,
+              "2AK": null,
+              "2AR": null,
+              "2BG": null,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 35254,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 32212,
+              "3BK": null,
+              "3BR": null,
+              "GM": 32016,
+              "GMK": null,
+              "GMR": 35198,
+              "SCG": 44681,
+              "SCK": null,
+              "SCR": null,
+              "STG": 37203,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": null,
+              "1K": null,
+              "1R": null,
+              "2AG": 55553,
+              "2AK": null,
+              "2AR": null,
+              "2BG": null,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 52339,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 52729,
+              "3BK": null,
+              "3BR": null,
+              "GM": 46777,
+              "GMK": null,
+              "GMR": 47743,
+              "SCG": 57766,
+              "SCK": null,
+              "SCR": null,
+              "STG": 49911,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "N005": {
+      "name": "College of Agriculture",
+      "location": "Navile, Shimoga",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "rounds": {
+            "2024_R1": {
+              "1G": 12558,
+              "1K": null,
+              "1R": null,
+              "2AG": 13791,
+              "2AK": null,
+              "2AR": 14943,
+              "2BG": 25462,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 13653,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 12925,
+              "3BK": null,
+              "3BR": null,
+              "GM": 10540,
+              "GMK": 11824,
+              "GMR": 12150,
+              "SCG": 19072,
+              "SCK": null,
+              "SCR": 23617,
+              "STG": 26764,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": 24128,
+              "1K": null,
+              "1R": null,
+              "2AG": 18361,
+              "2AK": null,
+              "2AR": 19098,
+              "2BG": 25462,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 18838,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 16205,
+              "3BK": null,
+              "3BR": null,
+              "GM": 15959,
+              "GMK": 17848,
+              "GMR": 18778,
+              "SCG": 23069,
+              "SCK": null,
+              "SCR": 23617,
+              "STG": 26764,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "N006": {
+      "name": "College of Horticulture",
+      "location": "Bagalkot",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "rounds": {
+            "2024_R1": {
+              "1G": 21887,
+              "1K": null,
+              "1R": null,
+              "2AG": 24389,
+              "2AK": null,
+              "2AR": 24392,
+              "2BG": 37138,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": 27893,
+              "3BG": null,
+              "3BK": null,
+              "3BR": 26722,
+              "GM": 18815,
+              "GMK": 20754,
+              "GMR": 20364,
+              "SCG": 33507,
+              "SCK": null,
+              "SCR": null,
+              "STG": 38880,
+              "STK": 57202,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": 39620,
+              "1K": null,
+              "1R": null,
+              "2AG": 34461,
+              "2AK": null,
+              "2AR": 35013,
+              "2BG": 37138,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": 40486,
+              "3BG": null,
+              "3BK": null,
+              "3BR": 34430,
+              "GM": 32234,
+              "GMK": 34043,
+              "GMR": 34410,
+              "SCG": 40865,
+              "SCK": null,
+              "SCR": null,
+              "STG": 42814,
+              "STK": 57202,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "N007": {
+      "name": "College of Horticulture",
+      "location": "Bidar",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "rounds": {
+            "2024_R1": {
+              "1G": null,
+              "1K": null,
+              "1R": null,
+              "2AG": 27043,
+              "2AK": null,
+              "2AR": null,
+              "2BG": null,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 24876,
+              "3AK": null,
+              "3AR": null,
+              "3BG": null,
+              "3BK": null,
+              "3BR": null,
+              "GM": 19579,
+              "GMK": 30350,
+              "GMR": null,
+              "SCG": 30065,
+              "SCK": null,
+              "SCR": null,
+              "STG": 33835,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": null,
+              "1K": null,
+              "1R": null,
+              "2AG": 36625,
+              "2AK": null,
+              "2AR": null,
+              "2BG": null,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 36409,
+              "3AK": null,
+              "3AR": null,
+              "3BG": null,
+              "3BK": null,
+              "3BR": null,
+              "GM": 27849,
+              "GMK": 36272,
+              "GMR": null,
+              "SCG": 33507,
+              "SCK": null,
+              "SCR": null,
+              "STG": 42701,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "N008": {
+      "name": "KRC College of Horticulture",
+      "location": "Belgaum",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "rounds": {
+            "2024_R1": {
+              "1G": null,
+              "1K": null,
+              "1R": 33626,
+              "2AG": 29770,
+              "2AK": null,
+              "2AR": null,
+              "2BG": null,
+              "2BK": null,
+              "2BR": 52283,
+              "3AG": 36409,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 28029,
+              "3BK": null,
+              "3BR": null,
+              "GM": 27389,
+              "GMK": null,
+              "GMR": 29209,
+              "SCG": 38694,
+              "SCK": null,
+              "SCR": 40356,
+              "STG": 35052,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": null,
+              "1K": null,
+              "1R": 57036,
+              "2AG": 41770,
+              "2AK": null,
+              "2AR": null,
+              "2BG": null,
+              "2BK": null,
+              "2BR": 52283,
+              "3AG": 38647,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 37248,
+              "3BK": null,
+              "3BR": null,
+              "GM": 36374,
+              "GMK": null,
+              "GMR": 36849,
+              "SCG": 46722,
+              "SCK": null,
+              "SCR": 53034,
+              "STG": 46946,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "N009": {
+      "name": "College of Horticulture",
+      "location": "Kolar",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "rounds": {
+            "2024_R1": {
+              "1G": 41943,
+              "1K": null,
+              "1R": null,
+              "2AG": 34840,
+              "2AK": null,
+              "2AR": null,
+              "2BG": 49625,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 35469,
+              "3AK": null,
+              "3AR": null,
+              "3BG": null,
+              "3BK": null,
+              "3BR": 36492,
+              "GM": 30826,
+              "GMK": 34043,
+              "GMR": 34386,
+              "SCG": 35194,
+              "SCK": null,
+              "SCR": 43947,
+              "STG": 35529,
+              "STK": null,
+              "STR": 46138
+            },
+            "2024_R2": {
+              "1G": 49617,
+              "1K": null,
+              "1R": null,
+              "2AG": 44168,
+              "2AK": null,
+              "2AR": null,
+              "2BG": 58626,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 42865,
+              "3AK": null,
+              "3AR": null,
+              "3BG": null,
+              "3BK": null,
+              "3BR": 46785,
+              "GM": 42429,
+              "GMK": 43947,
+              "GMR": 45529,
+              "SCG": 47492,
+              "SCK": null,
+              "SCR": 53324,
+              "STG": 50021,
+              "STK": null,
+              "STR": 50674
+            }
+          }
+        }
+      }
+    },
+    "N010": {
+      "name": "College of Horticulture",
+      "location": "Mysore",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "rounds": {
+            "2024_R1": {
+              "1G": 34558,
+              "1K": null,
+              "1R": null,
+              "2AG": 27163,
+              "2AK": null,
+              "2AR": 35013,
+              "2BG": 45349,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 24050,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 25772,
+              "3BK": null,
+              "3BR": null,
+              "GM": 23596,
+              "GMK": 26967,
+              "GMR": 24030,
+              "SCG": 36207,
+              "SCK": null,
+              "SCR": 41385,
+              "STG": 30637,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": 45378,
+              "1K": null,
+              "1R": null,
+              "2AG": 39983,
+              "2AK": null,
+              "2AR": 46893,
+              "2BG": 49347,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 38631,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 40640,
+              "3BK": null,
+              "3BR": null,
+              "GM": 37716,
+              "GMK": 42374,
+              "GMR": 38919,
+              "SCG": 46027,
+              "SCK": null,
+              "SCR": 47727,
+              "STG": 38908,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "N011": {
+      "name": "College of Horticulture",
+      "location": "Sirsi, Utttara Kannada dist",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "rounds": {
+            "2024_R1": {
+              "1G": 39759,
+              "1K": null,
+              "1R": null,
+              "2AG": 31990,
+              "2AK": null,
+              "2AR": null,
+              "2BG": 51000,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 30237,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 29879,
+              "3BK": null,
+              "3BR": null,
+              "GM": 29006,
+              "GMK": null,
+              "GMR": 31424,
+              "SCG": 40485,
+              "SCK": 46269,
+              "SCR": null,
+              "STG": 38908,
+              "STK": null,
+              "STR": 40669
+            },
+            "2024_R2": {
+              "1G": 45760,
+              "1K": null,
+              "1R": null,
+              "2AG": 45877,
+              "2AK": null,
+              "2AR": null,
+              "2BG": 51000,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 41142,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 42507,
+              "3BK": null,
+              "3BR": null,
+              "GM": 40491,
+              "GMK": null,
+              "GMR": 45694,
+              "SCG": 51579,
+              "SCK": 53624,
+              "SCR": null,
+              "STG": 43585,
+              "STK": null,
+              "STR": 54527
+            }
+          }
+        }
+      }
+    },
+    "N012": {
+      "name": "College of Horticulture",
+      "location": "Munirabad, Koppal Dist",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "rounds": {
+            "2024_R1": {
+              "1G": null,
+              "1K": null,
+              "1R": null,
+              "2AG": 29251,
+              "2AK": null,
+              "2AR": 35906,
+              "2BG": null,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 30828,
+              "3BK": null,
+              "3BR": null,
+              "GM": 25919,
+              "GMK": null,
+              "GMR": 30894,
+              "SCG": 36935,
+              "SCK": null,
+              "SCR": null,
+              "STG": null,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": null,
+              "1K": null,
+              "1R": null,
+              "2AG": 43570,
+              "2AK": null,
+              "2AR": 52305,
+              "2BG": null,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 43012,
+              "3BK": null,
+              "3BR": null,
+              "GM": 40597,
+              "GMK": null,
+              "GMR": 46202,
+              "SCG": 46682,
+              "SCK": null,
+              "SCR": null,
+              "STG": null,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "N013": {
+      "name": "College of Horticulture",
+      "location": "Mudigere",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "rounds": {
+            "2024_R1": {
+              "1G": 39818,
+              "1K": null,
+              "1R": null,
+              "2AG": 30930,
+              "2AK": null,
+              "2AR": 36082,
+              "2BG": 50816,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 25763,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 25369,
+              "3BK": null,
+              "3BR": null,
+              "GM": 24912,
+              "GMK": 30738,
+              "GMR": 26285,
+              "SCG": 42469,
+              "SCK": null,
+              "SCR": 43717,
+              "STG": 39452,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": 41858,
+              "1K": null,
+              "1R": null,
+              "2AG": 41952,
+              "2AK": null,
+              "2AR": 44353,
+              "2BG": 58019,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 33867,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 39494,
+              "3BK": null,
+              "3BR": null,
+              "GM": 30930,
+              "GMK": 38095,
+              "GMR": 36672,
+              "SCG": 49681,
+              "SCK": null,
+              "SCR": 53468,
+              "STG": 46138,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "N014": {
+      "name": "College of Horticulture",
+      "location": "Hiriyur",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "rounds": {
+            "2024_R1": {
+              "1G": 23801,
+              "1K": null,
+              "1R": null,
+              "2AG": 23333,
+              "2AK": null,
+              "2AR": null,
+              "2BG": 29315,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 21729,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 20869,
+              "3BK": null,
+              "3BR": null,
+              "GM": 20204,
+              "GMK": 22793,
+              "GMR": 22676,
+              "SCG": 29044,
+              "SCK": null,
+              "SCR": 29798,
+              "STG": 34452,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": 30300,
+              "1K": null,
+              "1R": null,
+              "2AG": 31871,
+              "2AK": null,
+              "2AR": null,
+              "2BG": 29315,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 30985,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 29579,
+              "3BK": null,
+              "3BR": null,
+              "GM": 29006,
+              "GMK": 31956,
+              "GMR": 29026,
+              "SCG": 30258,
+              "SCK": null,
+              "SCR": 44419,
+              "STG": 34452,
+              "STK": null,
+              "STR": null
+            }
+          }
+        },
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "rounds": {
+            "2024_R1": {
+              "1G": 34956,
+              "1K": null,
+              "1R": null,
+              "2AG": 35540,
+              "2AK": null,
+              "2AR": 36326,
+              "2BG": 50490,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 30349,
+              "3BK": null,
+              "3BR": null,
+              "GM": 29127,
+              "GMK": 33168,
+              "GMR": 32513,
+              "SCG": 41618,
+              "SCK": null,
+              "SCR": 49637,
+              "STG": 40919,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": 38952,
+              "1K": null,
+              "1R": null,
+              "2AG": 45955,
+              "2AK": null,
+              "2AR": 52451,
+              "2BG": 54620,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 38412,
+              "3BK": null,
+              "3BR": null,
+              "GM": 36657,
+              "GMK": 45658,
+              "GMR": 37889,
+              "SCG": 44230,
+              "SCK": null,
+              "SCR": 53308,
+              "STG": 47807,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "N015": {
+      "name": "College of Forestry",
+      "location": "Kodagu- Dist",
+      "branches": {
+        "FR": {
+          "name": "B.Sc.(Hons) Forestry",
+          "rounds": {
+            "2024_R1": {
+              "1G": 13588,
+              "1K": null,
+              "1R": null,
+              "2AG": 17566,
+              "2AK": null,
+              "2AR": 17795,
+              "2BG": 31706,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 15754,
+              "3BK": null,
+              "3BR": null,
+              "GM": 9797,
+              "GMK": 10735,
+              "GMR": 13573,
+              "SCG": 22779,
+              "SCK": null,
+              "SCR": 27587,
+              "STG": 22838,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": 17051,
+              "1K": null,
+              "1R": null,
+              "2AG": 20937,
+              "2AK": null,
+              "2AR": 21402,
+              "2BG": 24759,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 20038,
+              "3BK": null,
+              "3BR": null,
+              "GM": 16185,
+              "GMK": 29837,
+              "GMR": 17566,
+              "SCG": 27587,
+              "SCK": null,
+              "SCR": 28649,
+              "STG": 22838,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "N016": {
+      "name": "College of Agriculture",
+      "location": "Dharwad",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "rounds": {
+            "2024_R1": {
+              "1G": 10129,
+              "1K": null,
+              "1R": 12645,
+              "2AG": 11059,
+              "2AK": 11876,
+              "2AR": 14029,
+              "2BG": 20734,
+              "2BK": null,
+              "2BR": 22777,
+              "3AG": 11199,
+              "3AK": null,
+              "3AR": 14294,
+              "3BG": 9235,
+              "3BK": 11190,
+              "3BR": 9833,
+              "GM": 8124,
+              "GMK": 8835,
+              "GMR": 9441,
+              "SCG": 19176,
+              "SCK": 27312,
+              "SCR": 21890,
+              "STG": 18714,
+              "STK": null,
+              "STR": 18967
+            },
+            "2024_R2": {
+              "1G": 14435,
+              "1K": null,
+              "1R": 14906,
+              "2AG": 15849,
+              "2AK": 16864,
+              "2AR": 17546,
+              "2BG": 20734,
+              "2BK": null,
+              "2BR": 22777,
+              "3AG": 13219,
+              "3AK": null,
+              "3AR": 14294,
+              "3BG": 12732,
+              "3BK": 15809,
+              "3BR": 12925,
+              "GM": 10879,
+              "GMK": 11227,
+              "GMR": 12659,
+              "SCG": 19176,
+              "SCK": 27312,
+              "SCR": 27314,
+              "STG": 18967,
+              "STK": null,
+              "STR": 25715
+            }
+          }
+        }
+      }
+    },
+    "N017": {
+      "name": "College of Agriculture",
+      "location": "VIJAYAPUR",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "rounds": {
+            "2024_R1": {
+              "1G": 22336,
+              "1K": null,
+              "1R": 24141,
+              "2AG": 19793,
+              "2AK": null,
+              "2AR": 22362,
+              "2BG": 16706,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 16108,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 17338,
+              "3BK": null,
+              "3BR": null,
+              "GM": 15931,
+              "GMK": 15974,
+              "GMR": 18200,
+              "SCG": 30386,
+              "SCK": null,
+              "SCR": 30892,
+              "STG": 29774,
+              "STK": null,
+              "STR": 35114
+            },
+            "2024_R2": {
+              "1G": 24500,
+              "1K": null,
+              "1R": 32513,
+              "2AG": 25919,
+              "2AK": null,
+              "2AR": 27193,
+              "2BG": 26037,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 26265,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 23727,
+              "3BK": null,
+              "3BR": null,
+              "GM": 22437,
+              "GMK": 23474,
+              "GMR": 26813,
+              "SCG": 33690,
+              "SCK": null,
+              "SCR": 34736,
+              "STG": 29774,
+              "STK": null,
+              "STR": 35589
+            }
+          }
+        }
+      }
+    },
+    "N018": {
+      "name": "College of Agriculture",
+      "location": "Hanumanamatti, Haveri-Dist",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "rounds": {
+            "2024_R1": {
+              "1G": 21327,
+              "1K": null,
+              "1R": null,
+              "2AG": 22971,
+              "2AK": null,
+              "2AR": 23386,
+              "2BG": 26037,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 23268,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 20670,
+              "3BK": null,
+              "3BR": 22176,
+              "GM": 20071,
+              "GMK": null,
+              "GMR": 21572,
+              "SCG": 30258,
+              "SCK": 39253,
+              "SCR": 34736,
+              "STG": 34696,
+              "STK": 42583,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": 28931,
+              "1K": null,
+              "1R": null,
+              "2AG": 28653,
+              "2AK": null,
+              "2AR": 33522,
+              "2BG": 28021,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 29097,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 27582,
+              "3BK": null,
+              "3BR": 29903,
+              "GM": 27194,
+              "GMK": null,
+              "GMR": 27871,
+              "SCG": 38678,
+              "SCK": 39253,
+              "SCR": 40356,
+              "STG": 39172,
+              "STK": 51121,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "N019": {
+      "name": "College of Forestry",
+      "location": "Dist- Uttarakannada",
+      "branches": {
+        "FR": {
+          "name": "B.Sc.(Hons) Forestry",
+          "rounds": {
+            "2024_R1": {
+              "1G": 11391,
+              "1K": null,
+              "1R": null,
+              "2AG": 16804,
+              "2AK": null,
+              "2AR": null,
+              "2BG": 16439,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 10135,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 10107,
+              "3BK": null,
+              "3BR": null,
+              "GM": 8707,
+              "GMK": null,
+              "GMR": 9916,
+              "SCG": 22126,
+              "SCK": null,
+              "SCR": null,
+              "STG": 10257,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": 11391,
+              "1K": null,
+              "1R": null,
+              "2AG": 17795,
+              "2AK": null,
+              "2AR": null,
+              "2BG": 16439,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 20257,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 21101,
+              "3BK": null,
+              "3BR": null,
+              "GM": 10735,
+              "GMK": null,
+              "GMR": 13009,
+              "SCG": 31083,
+              "SCK": null,
+              "SCR": null,
+              "STG": 24263,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "N020": {
+      "name": "College of Community Science",
+      "location": "Dharwad",
+      "branches": {
+        "HS": {
+          "name": "B.Sc.(Hons) Community Sc.",
+          "rounds": {
+            "2024_R1": {
+              "1G": 46255,
+              "1K": null,
+              "1R": null,
+              "2AG": 45265,
+              "2AK": 48408,
+              "2AR": null,
+              "2BG": 54620,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 38647,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 39017,
+              "3BK": null,
+              "3BR": null,
+              "GM": 32089,
+              "GMK": 35124,
+              "GMR": 38056,
+              "SCG": 41472,
+              "SCK": null,
+              "SCR": 48063,
+              "STG": 42232,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": 60198,
+              "1K": null,
+              "1R": null,
+              "2AG": 63080,
+              "2AK": 63838,
+              "2AR": null,
+              "2BG": 54991,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 57240,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 56316,
+              "3BK": null,
+              "3BR": null,
+              "GM": 48642,
+              "GMK": 54105,
+              "GMR": 52041,
+              "SCG": 59079,
+              "SCK": null,
+              "SCR": 71251,
+              "STG": 58385,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "N022": {
+      "name": "College of Agriculture",
+      "location": "Raichur",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "rounds": {
+            "2024_R1": {
+              "1G": null,
+              "1K": null,
+              "1R": null,
+              "2AG": 15609,
+              "2AK": null,
+              "2AR": null,
+              "2BG": 20855,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 10990,
+              "3BK": null,
+              "3BR": null,
+              "GM": 8171,
+              "GMK": 15313,
+              "GMR": 14906,
+              "SCG": 23674,
+              "SCK": null,
+              "SCR": null,
+              "STG": 17635,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": null,
+              "1K": null,
+              "1R": null,
+              "2AG": 20970,
+              "2AK": null,
+              "2AR": null,
+              "2BG": 20855,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 19166,
+              "3BK": null,
+              "3BR": null,
+              "GM": 16108,
+              "GMK": 18184,
+              "GMR": 19308,
+              "SCG": 27015,
+              "SCK": null,
+              "SCR": null,
+              "STG": 25711,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "N023": {
+      "name": "College of Agriculture",
+      "location": "Tq - Shahapur, Dist - Yadgiri",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "rounds": {
+            "2024_R1": {
+              "1G": 22330,
+              "1K": null,
+              "1R": null,
+              "2AG": 21662,
+              "2AK": null,
+              "2AR": null,
+              "2BG": null,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 15393,
+              "3BK": null,
+              "3BR": null,
+              "GM": 9312,
+              "GMK": 22561,
+              "GMR": 20096,
+              "SCG": 30397,
+              "SCK": null,
+              "SCR": null,
+              "STG": 22820,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": 27160,
+              "1K": null,
+              "1R": null,
+              "2AG": 27816,
+              "2AK": null,
+              "2AR": null,
+              "2BG": null,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 27072,
+              "3BK": null,
+              "3BR": null,
+              "GM": 21802,
+              "GMK": 22561,
+              "GMR": 27893,
+              "SCG": 33547,
+              "SCK": null,
+              "SCR": null,
+              "STG": 31814,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "N024": {
+      "name": "College of Agriculture",
+      "location": "KALABURAGI",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "rounds": {
+            "2024_R1": {
+              "1G": 24193,
+              "1K": null,
+              "1R": null,
+              "2AG": 22394,
+              "2AK": null,
+              "2AR": null,
+              "2BG": null,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 21849,
+              "3AK": null,
+              "3AR": null,
+              "3BG": null,
+              "3BK": null,
+              "3BR": null,
+              "GM": 12732,
+              "GMK": null,
+              "GMR": 17972,
+              "SCG": 24329,
+              "SCK": null,
+              "SCR": null,
+              "STG": null,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": 32126,
+              "1K": null,
+              "1R": null,
+              "2AG": 26657,
+              "2AK": null,
+              "2AR": null,
+              "2BG": null,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 25831,
+              "3AK": null,
+              "3AR": null,
+              "3BG": null,
+              "3BK": null,
+              "3BR": null,
+              "GM": 24329,
+              "GMK": null,
+              "GMR": 28911,
+              "SCG": 32872,
+              "SCK": null,
+              "SCR": null,
+              "STG": null,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "N026": {
+      "name": "College of Horticulture",
+      "location": "Bangalore",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "rounds": {
+            "2024_R1": {
+              "1G": null,
+              "1K": 40312,
+              "1R": null,
+              "2AG": 21827,
+              "2AK": 32820,
+              "2AR": null,
+              "2BG": 27185,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": null,
+              "3BK": 25570,
+              "3BR": null,
+              "GM": 12998,
+              "GMK": null,
+              "GMR": 23135,
+              "SCG": 28852,
+              "SCK": null,
+              "SCR": 34635,
+              "STG": 35109,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": null,
+              "1K": 48612,
+              "1R": null,
+              "2AG": 35540,
+              "2AK": 35881,
+              "2AR": null,
+              "2BG": 60551,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": null,
+              "3BK": 33168,
+              "3BR": null,
+              "GM": 27834,
+              "GMK": null,
+              "GMR": 32820,
+              "SCG": 34635,
+              "SCK": null,
+              "SCR": 49391,
+              "STG": 35529,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "N028": {
+      "name": "College of Agriculture",
+      "location": "KVK, Chamarajanagar(D)",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "rounds": {
+            "2024_R1": {
+              "1G": null,
+              "1K": null,
+              "1R": null,
+              "2AG": 21743,
+              "2AK": null,
+              "2AR": 22797,
+              "2BG": null,
+              "2BK": null,
+              "2BR": 28021,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 19245,
+              "3BK": null,
+              "3BR": null,
+              "GM": 17717,
+              "GMK": 20234,
+              "GMR": 21111,
+              "SCG": 32881,
+              "SCK": null,
+              "SCR": 38187,
+              "STG": 35589,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": null,
+              "1K": null,
+              "1R": null,
+              "2AG": 27895,
+              "2AK": null,
+              "2AR": 32979,
+              "2BG": null,
+              "2BK": null,
+              "2BR": 45470,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 29144,
+              "3BK": null,
+              "3BR": null,
+              "GM": 21743,
+              "GMK": 32439,
+              "GMR": 30026,
+              "SCG": 38694,
+              "SCK": null,
+              "SCR": 46108,
+              "STG": 38292,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "N029": {
+      "name": "College of Agriculture",
+      "location": "Iruvakki, Shimoga",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "rounds": {
+            "2024_R1": {
+              "1G": 19277,
+              "1K": null,
+              "1R": null,
+              "2AG": 19324,
+              "2AK": null,
+              "2AR": 21453,
+              "2BG": 26940,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": null,
+              "3BK": null,
+              "3BR": null,
+              "GM": 16811,
+              "GMK": 22985,
+              "GMR": 18201,
+              "SCG": 28306,
+              "SCK": null,
+              "SCR": 31959,
+              "STG": 28817,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": 28858,
+              "1K": null,
+              "1R": null,
+              "2AG": 23386,
+              "2AK": null,
+              "2AR": 24349,
+              "2BG": 26940,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": null,
+              "3BK": null,
+              "3BR": null,
+              "GM": 21069,
+              "GMK": 22985,
+              "GMR": 22128,
+              "SCG": 28306,
+              "SCK": null,
+              "SCR": 38187,
+              "STG": 33469,
+              "STK": null,
+              "STR": null
+            }
+          }
+        },
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "rounds": {
+            "2024_R1": {
+              "1G": 33180,
+              "1K": null,
+              "1R": null,
+              "2AG": 32234,
+              "2AK": null,
+              "2AR": null,
+              "2BG": 44875,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 33867,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 29579,
+              "3BK": null,
+              "3BR": null,
+              "GM": 29026,
+              "GMK": 35881,
+              "GMR": 33068,
+              "SCG": 41954,
+              "SCK": null,
+              "SCR": 45613,
+              "STG": 40003,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": 41943,
+              "1K": null,
+              "1R": null,
+              "2AG": 42648,
+              "2AK": null,
+              "2AR": null,
+              "2BG": 44875,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 42843,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 41350,
+              "3BK": null,
+              "3BR": null,
+              "GM": 39379,
+              "GMK": 39475,
+              "GMR": 40036,
+              "SCG": 44944,
+              "SCK": null,
+              "SCR": 52771,
+              "STG": 55460,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "N030": {
+      "name": "College of Agriculture",
+      "location": "Gangavathi, Koppal",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "rounds": {
+            "2024_R1": {
+              "1G": null,
+              "1K": null,
+              "1R": null,
+              "2AG": 19098,
+              "2AK": null,
+              "2AR": null,
+              "2BG": null,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 16488,
+              "3BK": null,
+              "3BR": null,
+              "GM": 15670,
+              "GMK": null,
+              "GMR": 15849,
+              "SCG": null,
+              "SCK": null,
+              "SCR": null,
+              "STG": null,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": null,
+              "1K": null,
+              "1R": null,
+              "2AG": 26978,
+              "2AK": null,
+              "2AR": null,
+              "2BG": null,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 26505,
+              "3BK": null,
+              "3BR": null,
+              "GM": 24323,
+              "GMK": null,
+              "GMR": 24770,
+              "SCG": null,
+              "SCK": null,
+              "SCR": null,
+              "STG": null,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "N031": {
+      "name": "College of Agriculture",
+      "location": "Hagari,Bellary",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "rounds": {
+            "2024_R1": {
+              "1G": null,
+              "1K": null,
+              "1R": null,
+              "2AG": null,
+              "2AK": null,
+              "2AR": null,
+              "2BG": null,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 19597,
+              "3BK": null,
+              "3BR": null,
+              "GM": 16097,
+              "GMK": null,
+              "GMR": 20946,
+              "SCG": 30629,
+              "SCK": null,
+              "SCR": null,
+              "STG": null,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": null,
+              "1K": null,
+              "1R": null,
+              "2AG": null,
+              "2AK": null,
+              "2AR": null,
+              "2BG": null,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 29955,
+              "3BK": null,
+              "3BR": null,
+              "GM": 28261,
+              "GMK": null,
+              "GMR": 28902,
+              "SCG": 36935,
+              "SCK": null,
+              "SCR": null,
+              "STG": null,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "N032": {
+      "name": "College of Forestry",
+      "location": "Iruvakki, Shimoga",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "rounds": {
+            "2024_R1": {
+              "1G": null,
+              "1K": null,
+              "1R": null,
+              "2AG": null,
+              "2AK": null,
+              "2AR": null,
+              "2BG": null,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": null,
+              "3BK": null,
+              "3BR": null,
+              "GM": null,
+              "GMK": null,
+              "GMR": null,
+              "SCG": null,
+              "SCK": null,
+              "SCR": null,
+              "STG": null,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": null,
+              "1K": null,
+              "1R": null,
+              "2AG": null,
+              "2AK": null,
+              "2AR": null,
+              "2BG": null,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": null,
+              "3BK": null,
+              "3BR": null,
+              "GM": null,
+              "GMK": null,
+              "GMR": null,
+              "SCG": null,
+              "SCK": null,
+              "SCR": null,
+              "STG": null,
+              "STK": null,
+              "STR": null
+            }
+          }
+        },
+        "FR": {
+          "name": "B.Sc.(Hons) Forestry",
+          "rounds": {
+            "2024_R1": {
+              "1G": 13367,
+              "1K": null,
+              "1R": null,
+              "2AG": 18826,
+              "2AK": null,
+              "2AR": 18985,
+              "2BG": 38299,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 14757,
+              "3BK": null,
+              "3BR": null,
+              "GM": 11311,
+              "GMK": 13009,
+              "GMR": 12287,
+              "SCG": 24798,
+              "SCK": null,
+              "SCR": 27792,
+              "STG": 12886,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": 18784,
+              "1K": null,
+              "1R": null,
+              "2AG": 25047,
+              "2AK": null,
+              "2AR": 25756,
+              "2BG": 38299,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 22720,
+              "3BK": null,
+              "3BR": null,
+              "GM": 15754,
+              "GMK": 27792,
+              "GMR": 18985,
+              "SCG": 27571,
+              "SCK": null,
+              "SCR": 27835,
+              "STG": 26293,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    },
+    "N033": {
+      "name": "COLLEGE OF HORTICULTURE",
+      "location": "ALMELA",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "rounds": {
+            "2024_R1": {
+              "1G": null,
+              "1K": null,
+              "1R": null,
+              "2AG": 35654,
+              "2AK": null,
+              "2AR": null,
+              "2BG": null,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 37839,
+              "3AK": null,
+              "3AR": null,
+              "3BG": null,
+              "3BK": null,
+              "3BR": null,
+              "GM": 32999,
+              "GMK": null,
+              "GMR": null,
+              "SCG": 42457,
+              "SCK": null,
+              "SCR": null,
+              "STG": 39770,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": null,
+              "1K": null,
+              "1R": null,
+              "2AG": 50116,
+              "2AK": null,
+              "2AR": null,
+              "2BG": null,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 47540,
+              "3AK": null,
+              "3AR": null,
+              "3BG": null,
+              "3BK": null,
+              "3BR": null,
+              "GM": 43918,
+              "GMK": null,
+              "GMR": null,
+              "SCG": 51600,
+              "SCK": null,
+              "SCR": null,
+              "STG": 61563,
+              "STK": null,
+              "STR": null
+            }
+          }
+        },
+        "EA": {
+          "name": "B.Tech(Agricultural Engg)",
+          "rounds": {
+            "2024_R1": {
+              "1G": 28816,
+              "1K": null,
+              "1R": null,
+              "2AG": 28726,
+              "2AK": null,
+              "2AR": 37250,
+              "2BG": 39673,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 26694,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 25471,
+              "3BK": null,
+              "3BR": 37248,
+              "GM": 25047,
+              "GMK": 37259,
+              "GMR": 25362,
+              "SCG": 31958,
+              "SCK": null,
+              "SCR": null,
+              "STG": 25711,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": 43517,
+              "1K": null,
+              "1R": null,
+              "2AG": 43453,
+              "2AK": null,
+              "2AR": 44046,
+              "2BG": 60516,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 36426,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 38243,
+              "3BK": null,
+              "3BR": 47439,
+              "GM": 35244,
+              "GMK": 49596,
+              "GMR": 37030,
+              "SCG": 49007,
+              "SCK": null,
+              "SCR": null,
+              "STG": 46770,
+              "STK": null,
+              "STR": null
+            }
+          }
+        },
+        "BTECHA": {
+          "name": "-- B.Tech(Agricultural Engg)",
+          "rounds": {
+            "2024_R1": {
+              "1G": null,
+              "1K": null,
+              "1R": null,
+              "2AG": 36397,
+              "2AK": null,
+              "2AR": null,
+              "2BG": 52589,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": null,
+              "3BK": null,
+              "3BR": null,
+              "GM": 22082,
+              "GMK": 38525,
+              "GMR": 35244,
+              "SCG": 38678,
+              "SCK": null,
+              "SCR": null,
+              "STG": 42429,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": null,
+              "1K": null,
+              "1R": null,
+              "2AG": 45614,
+              "2AK": null,
+              "2AR": null,
+              "2BG": 63964,
+              "2BK": null,
+              "2BR": null,
+              "3AG": null,
+              "3AK": null,
+              "3AR": null,
+              "3BG": null,
+              "3BK": null,
+              "3BR": null,
+              "GM": 41735,
+              "GMK": 45968,
+              "GMR": 45431,
+              "SCG": 47953,
+              "SCK": null,
+              "SCR": null,
+              "STG": 56993,
+              "STK": null,
+              "STR": null
+            }
+          }
+        },
+        "VS": {
+          "name": "B.V.Sc and A.H",
+          "rounds": {
+            "2024_R1": {
+              "1G": 2795,
+              "1K": null,
+              "1R": null,
+              "2AG": 1592,
+              "2AK": null,
+              "2AR": 1714,
+              "2BG": 2166,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 1360,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 1243,
+              "3BK": null,
+              "3BR": null,
+              "GM": 892,
+              "GMK": 1121,
+              "GMR": 1690,
+              "SCG": 4412,
+              "SCK": null,
+              "SCR": null,
+              "STG": 7170,
+              "STK": null,
+              "STR": null
+            },
+            "2024_R2": {
+              "1G": 2795,
+              "1K": null,
+              "1R": null,
+              "2AG": 1939,
+              "2AK": null,
+              "2AR": 2120,
+              "2BG": 2166,
+              "2BK": null,
+              "2BR": null,
+              "3AG": 1360,
+              "3AK": null,
+              "3AR": null,
+              "3BG": 1243,
+              "3BK": null,
+              "3BR": null,
+              "GM": 1131,
+              "GMK": 1465,
+              "GMR": 1714,
+              "SCG": 4412,
+              "SCK": null,
+              "SCR": null,
+              "STG": 7192,
+              "STK": null,
+              "STR": null
+            }
+          }
+        }
+      }
+    }
+  },
+  "professional": {
+    "V001": {
+      "name": "Veterinary College,KVAFSU, Hebbal Campus",
+      "location": "Bangalore",
+      "branches": {
+        "VS": {
+          "name": "B.V.Sc and A.H",
+          "data": {
+            "1G": 2402,
+            "1K": null,
+            "1R": null,
+            "2AG": 1576,
+            "2AK": 2407.5,
+            "2AR": 1984.75,
+            "2BG": 5,
+            "2BK": 1,
+            "2BR": null,
+            "3AG": 962,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 1155,
+            "3BK": null,
+            "3BR": null,
+            "GM": 882,
+            "GMK": null,
+            "GMR": 1453,
+            "SCG": 4521.88,
+            "SCK": 5,
+            "SCR": null,
+            "STG": 5431,
+            "STK": null,
+            "STR": 6291
+          }
+        }
+      }
+    },
+    "V002": {
+      "name": "Veterinary College, PB No. 06, Nandinagar",
+      "location": "Bidar",
+      "branches": {
+        "VS": {
+          "name": "B.V.Sc and A.H",
+          "data": {
+            "1G": null,
+            "1K": null,
+            "1R": null,
+            "2AG": 1826,
+            "2AK": null,
+            "2AR": null,
+            "2BG": null,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 1943,
+            "3AK": null,
+            "3AR": null,
+            "3BG": null,
+            "3BK": null,
+            "3BR": 2059,
+            "GM": 1453.5,
+            "GMK": 5,
+            "GMR": 1911,
+            "SCG": 5177.5,
+            "SCK": null,
+            "SCR": null,
+            "STG": null,
+            "STK": null,
+            "STR": 9276
+          }
+        }
+      }
+    },
+    "V003": {
+      "name": "Veterinary College,PB NO.53, Vinoba Nagar",
+      "location": "Shimoga",
+      "branches": {
+        "VS": {
+          "name": "B.V.Sc and A.H",
+          "data": {
+            "1G": 2802,
+            "1K": null,
+            "1R": null,
+            "2AG": 1961,
+            "2AK": 3632,
+            "2AR": 2424,
+            "2BG": 2156,
+            "2BK": 6,
+            "2BR": null,
+            "3AG": 1692.75,
+            "3AK": 5,
+            "3AR": null,
+            "3BG": 1810,
+            "3BK": null,
+            "3BR": null,
+            "GM": 1672,
+            "GMK": null,
+            "GMR": 2091,
+            "SCG": 6105,
+            "SCK": null,
+            "SCR": null,
+            "STG": 5602,
+            "STK": null,
+            "STR": 6469
+          }
+        }
+      }
+    },
+    "V004": {
+      "name": "Veterinary College,Gokula, Vidyanagar Post",
+      "location": "Hassan",
+      "branches": {
+        "VS": {
+          "name": "B.V.Sc and A.H",
+          "data": {
+            "1G": 2608.5,
+            "1K": null,
+            "1R": null,
+            "2AG": 2029.5,
+            "2AK": 3410,
+            "2AR": 3101,
+            "2BG": 2198,
+            "2BK": 8,
+            "2BR": null,
+            "3AG": 1791,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 2002,
+            "3BK": null,
+            "3BR": null,
+            "GM": 1770,
+            "GMK": null,
+            "GMR": 2199.88,
+            "SCG": 6406,
+            "SCK": null,
+            "SCR": null,
+            "STG": 6368,
+            "STK": null,
+            "STR": 8721
+          }
+        }
+      }
+    },
+    "V005": {
+      "name": "Veterinary College,PB No. 74, Hombal Road",
+      "location": "Gadag",
+      "branches": {
+        "VS": {
+          "name": "B.V.Sc and A.H",
+          "data": {
+            "1G": 3104,
+            "1K": null,
+            "1R": null,
+            "2AG": 2439,
+            "2AK": 4003,
+            "2AR": 3216.5,
+            "2BG": 2635,
+            "2BK": 5,
+            "2BR": null,
+            "3AG": null,
+            "3AK": null,
+            "3AR": 2691,
+            "3BG": 2496.5,
+            "3BK": null,
+            "3BR": null,
+            "GM": 2342,
+            "GMK": null,
+            "GMR": 2656,
+            "SCG": 6570,
+            "SCK": null,
+            "SCR": 7364,
+            "STG": 4,
+            "STK": null,
+            "STR": 10203
+          }
+        }
+      }
+    },
+    "V006": {
+      "name": "Sri Bahurao Deshpande Veterinary College,Athani",
+      "location": "Belagavi",
+      "branches": {
+        "VS": {
+          "name": "B.V.Sc and A.H",
+          "data": {
+            "1G": null,
+            "1K": null,
+            "1R": 4785,
+            "2AG": 2628.5,
+            "2AK": null,
+            "2AR": 3362,
+            "2BG": null,
+            "2BK": null,
+            "2BR": 5011,
+            "3AG": null,
+            "3AK": null,
+            "3AR": null,
+            "3BG": null,
+            "3BK": null,
+            "3BR": null,
+            "GM": 2500,
+            "GMK": 3191,
+            "GMR": 3068,
+            "SCG": 6801,
+            "SCK": 7658,
+            "SCR": 8,
+            "STG": 9,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "P001": {
+      "name": "College of Agriculture,University of Agricultural,Sciences,GKVK Campus",
+      "location": "Bangalore",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": 470,
+            "1K": null,
+            "1R": 511,
+            "2AG": 354,
+            "2AK": 465,
+            "2AR": 445,
+            "2BG": 728,
+            "2BK": 1390,
+            "2BR": 1284,
+            "3AG": 196,
+            "3AK": 380,
+            "3AR": null,
+            "3BG": 213,
+            "3BK": null,
+            "3BR": 299,
+            "GM": 178,
+            "GMK": 319,
+            "GMR": 252,
+            "SCG": 851,
+            "SCK": 1393.5,
+            "SCR": 5,
+            "STG": 9,
+            "STK": 946,
+            "STR": 869
+          }
+        },
+        "FND": {
+          "name": "B.Sc.(Hons) Food Nutrition and Dietetics",
+          "data": {
+            "1G": null,
+            "1K": null,
+            "1R": null,
+            "2AG": 463,
+            "2AK": null,
+            "2AR": null,
+            "2BG": 1172,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 637,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 723,
+            "3BK": null,
+            "3BR": null,
+            "GM": 416.5,
+            "GMK": 5,
+            "GMR": 574,
+            "SCG": 2196,
+            "SCK": null,
+            "SCR": null,
+            "STG": 2610,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "P002": {
+      "name": "College of Agriculture,VC Farm",
+      "location": "Mandya",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": 697,
+            "1K": null,
+            "1R": null,
+            "2AG": 714,
+            "2AK": 744,
+            "2AR": null,
+            "2BG": 1347,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 457.5,
+            "3AK": 5,
+            "3AR": null,
+            "3BG": 498,
+            "3BK": null,
+            "3BR": 581,
+            "GM": 449,
+            "GMK": 694,
+            "GMR": 471,
+            "SCG": 1632,
+            "SCK": 2947.5,
+            "SCR": 5,
+            "STG": 1,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "P003": {
+      "name": "College of Agriculture, P.B.No.39, Karekere",
+      "location": "Hassan",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": 840,
+            "1K": null,
+            "1R": null,
+            "2AG": 746,
+            "2AK": null,
+            "2AR": 873,
+            "2BG": 1546,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 577,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 550,
+            "3BK": 752,
+            "3BR": 2,
+            "GM": 519.5,
+            "GMK": 5,
+            "GMR": 603,
+            "SCG": 1633,
+            "SCK": 1983,
+            "SCR": 1758,
+            "STG": 8,
+            "STK": null,
+            "STR": 1225
+          }
+        },
+        "AB": {
+          "name": "B.Tech (Biotechnology)",
+          "data": {
+            "1G": 2766,
+            "1K": null,
+            "1R": null,
+            "2AG": 2237,
+            "2AK": null,
+            "2AR": 2417,
+            "2BG": 2246,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 1966,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 2122,
+            "3BK": null,
+            "3BR": null,
+            "GM": 1757,
+            "GMK": null,
+            "GMR": 1858,
+            "SCG": 8,
+            "SCK": null,
+            "SCR": 4662,
+            "STG": 2,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "P004": {
+      "name": "Sericulture College,PB No. 29, Kurbur Farm,Chintamani Taluk,Chikkaballapur T&D",
+      "location": "Chintamani",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": null,
+            "1K": 1298,
+            "1R": 1179,
+            "2AG": 938,
+            "2AK": null,
+            "2AR": 962,
+            "2BG": 2510,
+            "2BK": null,
+            "2BR": null,
+            "3AG": null,
+            "3AK": 1203,
+            "3AR": null,
+            "3BG": 932,
+            "3BK": null,
+            "3BR": null,
+            "GM": 825,
+            "GMK": 964,
+            "GMR": 864,
+            "SCG": 2163,
+            "SCK": null,
+            "SCR": 2169,
+            "STG": 9,
+            "STK": null,
+            "STR": 1585
+          }
+        },
+        "SR": {
+          "name": "B.Sc.(Hons) Sericulture",
+          "data": {
+            "1G": null,
+            "1K": null,
+            "1R": null,
+            "2AG": 1962,
+            "2AK": null,
+            "2AR": 2328,
+            "2BG": null,
+            "2BK": null,
+            "2BR": null,
+            "3AG": null,
+            "3AK": null,
+            "3AR": 1980,
+            "3BG": 1913,
+            "3BK": null,
+            "3BR": null,
+            "GM": 1676,
+            "GMK": null,
+            "GMR": 1805,
+            "SCG": 5,
+            "SCK": null,
+            "SCR": 2975,
+            "STG": 5,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "P005": {
+      "name": "College of Agriculture, Shivamogga",
+      "location": "Navile Campus",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": 779,
+            "1K": null,
+            "1R": null,
+            "2AG": 648,
+            "2AK": null,
+            "2AR": 658,
+            "2BG": 1006.5,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 526,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 481,
+            "3BK": null,
+            "3BR": null,
+            "GM": 448,
+            "GMK": 491,
+            "GMR": 496,
+            "SCG": 1493.5,
+            "SCK": 5,
+            "SCR": 1826,
+            "STG": 6,
+            "STK": null,
+            "STR": 1199
+          }
+        }
+      }
+    },
+    "P006": {
+      "name": "College of Horticulture,UHS,Udyanagiri, Near Simikeri,Hubli Bypass Road",
+      "location": "Bagalkot",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "data": {
+            "1G": 1137,
+            "1K": null,
+            "1R": null,
+            "2AG": 1135,
+            "2AK": 1216,
+            "2AR": null,
+            "2BG": 2527,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 1116,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 1037,
+            "3BK": null,
+            "3BR": 1159,
+            "GM": 9,
+            "GMK": null,
+            "GMR": 1101,
+            "SCG": 1,
+            "SCK": null,
+            "SCR": 2883,
+            "STG": 3,
+            "STK": null,
+            "STR": 2419
+          }
+        }
+      }
+    },
+    "P007": {
+      "name": "College of Horticulture,Halladkeri Farm,Hyderabad Road",
+      "location": "Bidar",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "data": {
+            "1G": null,
+            "1K": null,
+            "1R": null,
+            "2AG": 1672,
+            "2AK": null,
+            "2AR": null,
+            "2BG": null,
+            "2BK": null,
+            "2BR": null,
+            "3AG": null,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 1778,
+            "3BK": null,
+            "3BR": null,
+            "GM": 1618,
+            "GMK": null,
+            "GMR": 1700,
+            "SCG": 0,
+            "SCK": null,
+            "SCR": null,
+            "STG": 2121,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "P008": {
+      "name": "KRC College of Horticulture,Kittur Rani Channammma College,of Horticulture,Arabhavi, Gokak-TQ",
+      "location": "Belgaum",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "data": {
+            "1G": 2003,
+            "1K": null,
+            "1R": null,
+            "2AG": 1574,
+            "2AK": null,
+            "2AR": 1631,
+            "2BG": 1906,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 1660,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 1385,
+            "3BK": null,
+            "3BR": null,
+            "GM": 1321,
+            "GMK": 1350,
+            "GMR": 0,
+            "SCG": 8,
+            "SCK": 4963,
+            "SCR": null,
+            "STG": 2706,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "P009": {
+      "name": "College of Horticulture,NH-75, TAMAKA",
+      "location": "Kolar",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "data": {
+            "1G": null,
+            "1K": null,
+            "1R": 2334,
+            "2AG": 1898,
+            "2AK": null,
+            "2AR": null,
+            "2BG": null,
+            "2BK": null,
+            "2BR": 3971,
+            "3AG": 1881,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 1899,
+            "3BK": null,
+            "3BR": null,
+            "GM": 1770,
+            "GMK": 0,
+            "GMR": 1832,
+            "SCG": 2,
+            "SCK": 2,
+            "SCR": 3841,
+            "STG": 1,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "P010": {
+      "name": "College of Horticulture,Yelachanahalli Horticultural,Farm, Yelwala",
+      "location": "Mysore",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "data": {
+            "1G": 1912,
+            "1K": null,
+            "1R": null,
+            "2AG": 1573,
+            "2AK": 2277,
+            "2AR": null,
+            "2BG": 2741,
+            "2BK": 1,
+            "2BR": null,
+            "3AG": 1513,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 1520,
+            "3BK": null,
+            "3BR": null,
+            "GM": 1261,
+            "GMK": 1,
+            "GMR": 1368,
+            "SCG": 8,
+            "SCK": 0,
+            "SCR": 3768,
+            "STG": 8,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "P011": {
+      "name": "College of Horticulture,Banavasi ROAD,Sirsi",
+      "location": "Utttara Kannada dist",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "data": {
+            "1G": 2070,
+            "1K": null,
+            "1R": null,
+            "2AG": 1966.5,
+            "2AK": null,
+            "2AR": 2102,
+            "2BG": 3620,
+            "2BK": 0,
+            "2BR": null,
+            "3AG": null,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 1766,
+            "3BK": null,
+            "3BR": null,
+            "GM": 1744,
+            "GMK": 4,
+            "GMR": 1827,
+            "SCG": 7,
+            "SCK": 4,
+            "SCR": 3794,
+            "STG": 4,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "P012": {
+      "name": "College of Horticulture,Munirabad",
+      "location": "Koppal Dist",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "data": {
+            "1G": null,
+            "1K": null,
+            "1R": null,
+            "2AG": 1866,
+            "2AK": null,
+            "2AR": null,
+            "2BG": 3305.5,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 1620,
+            "3AK": null,
+            "3AR": null,
+            "3BG": null,
+            "3BK": null,
+            "3BR": null,
+            "GM": 1543,
+            "GMK": 3,
+            "GMR": 1594,
+            "SCG": 4,
+            "SCK": 2,
+            "SCR": null,
+            "STG": null,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "P013": {
+      "name": "College of Horticulture,Mudigere Taluk and Post,Chikmagalur Dist",
+      "location": "Mudigere",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "data": {
+            "1G": 2304,
+            "1K": null,
+            "1R": null,
+            "2AG": 1832.5,
+            "2AK": null,
+            "2AR": 2202,
+            "2BG": 2848,
+            "2BK": 8,
+            "2BR": null,
+            "3AG": 1671,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 1637,
+            "3BK": null,
+            "3BR": null,
+            "GM": 1602,
+            "GMK": 2,
+            "GMR": 1782,
+            "SCG": 2,
+            "SCK": 6,
+            "SCR": 3574,
+            "STG": 4,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "P014": {
+      "name": "College of Horticulture,Babbur Farm, Hiriyur,Chitradurga Dist",
+      "location": "Hiriyur",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": 1235,
+            "1K": null,
+            "1R": null,
+            "2AG": 1011,
+            "2AK": null,
+            "2AR": 1074,
+            "2BG": 2074,
+            "2BK": 4,
+            "2BR": null,
+            "3AG": null,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 978,
+            "3BK": null,
+            "3BR": null,
+            "GM": 937,
+            "GMK": 997,
+            "GMR": 980,
+            "SCG": 2219,
+            "SCK": 9,
+            "SCR": 2442,
+            "STG": 2,
+            "STK": null,
+            "STR": null
+          }
+        },
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "data": {
+            "1G": 1795,
+            "1K": null,
+            "1R": null,
+            "2AG": 2162,
+            "2AK": null,
+            "2AR": 2309,
+            "2BG": 3167.5,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 1847,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 1812,
+            "3BK": null,
+            "3BR": null,
+            "GM": 1771,
+            "GMK": 1,
+            "GMR": 1790,
+            "SCG": 0,
+            "SCK": 4,
+            "SCR": 4063,
+            "STG": 3,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "P015": {
+      "name": "College of Forestry,Ponnampet",
+      "location": "Kodagu- Dist",
+      "branches": {
+        "FR": {
+          "name": "B.Sc.(Hons) Forestr",
+          "data": {
+            "1G": null,
+            "1K": null,
+            "1R": null,
+            "2AG": 409,
+            "2AK": null,
+            "2AR": 431,
+            "2BG": null,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 468,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 604,
+            "3BK": null,
+            "3BR": null,
+            "GM": 282,
+            "GMK": 539.5,
+            "GMR": 5,
+            "SCG": 968,
+            "SCK": null,
+            "SCR": 1731,
+            "STG": 1,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "P016": {
+      "name": "College of Agriculture,UAS Campus, Krishinagar",
+      "location": "Dharwad",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": 301,
+            "1K": null,
+            "1R": 568,
+            "2AG": 411,
+            "2AK": 426,
+            "2AR": 441,
+            "2BG": 551.5,
+            "2BK": null,
+            "2BR": 967,
+            "3AG": 306,
+            "3AK": null,
+            "3AR": 357,
+            "3BG": 308,
+            "3BK": null,
+            "3BR": 329,
+            "GM": 239,
+            "GMK": 261,
+            "GMR": 281,
+            "SCG": 890,
+            "SCK": 1810,
+            "SCR": 0,
+            "STG": 8,
+            "STK": null,
+            "STR": 849
+          }
+        }
+      }
+    },
+    "P017": {
+      "name": "College of Agriculture,PB No. 18",
+      "location": "VIJAYAPUR",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": 858,
+            "1K": null,
+            "1R": null,
+            "2AG": 839,
+            "2AK": null,
+            "2AR": 854,
+            "2BG": 987,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 696,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 612,
+            "3BK": null,
+            "3BR": null,
+            "GM": 594,
+            "GMK": null,
+            "GMR": 747,
+            "SCG": 1938,
+            "SCK": 8,
+            "SCR": 1975,
+            "STG": 5,
+            "STK": null,
+            "STR": 1426
+          }
+        }
+      }
+    },
+    "P018": {
+      "name": "College of Agriculture,Post- Hanumanamatti,Tq- Ranebennur,Hanumanamatti",
+      "location": "Haveri-Dist",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": 973,
+            "1K": null,
+            "1R": null,
+            "2AG": 1035,
+            "2AK": null,
+            "2AR": 1107,
+            "2BG": 1097,
+            "2BK": 7,
+            "2BR": null,
+            "3AG": 1041,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 911,
+            "3BK": null,
+            "3BR": 1036,
+            "GM": 6,
+            "GMK": 887,
+            "GMR": 898,
+            "SCG": 2200,
+            "SCK": 0,
+            "SCR": 1,
+            "STG": 8,
+            "STK": 1666,
+            "STR": null
+          }
+        }
+      }
+    },
+    "P019": {
+      "name": "College of Forestry,Banavasi Road,Tq- Sirsi",
+      "location": "Dist- Uttarakannada",
+      "branches": {
+        "FR": {
+          "name": "B.Sc.(Hons) Forestr",
+          "data": {
+            "1G": 528,
+            "1K": null,
+            "1R": null,
+            "2AG": 787,
+            "2AK": null,
+            "2AR": null,
+            "2BG": 2577,
+            "2BK": 7,
+            "2BR": null,
+            "3AG": null,
+            "3AK": null,
+            "3AR": 812,
+            "3BG": 598,
+            "3BK": null,
+            "3BR": null,
+            "GM": 478,
+            "GMK": null,
+            "GMR": 486,
+            "SCG": 1188,
+            "SCK": 8,
+            "SCR": null,
+            "STG": 784,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "P020": {
+      "name": "College of Community Science,University of Agritultural,Science, Krushi Nagar",
+      "location": "Dharwad",
+      "branches": {
+        "HS": {
+          "name": "B.Sc.(Hons) Community Science",
+          "data": {
+            "1G": 2489,
+            "1K": null,
+            "1R": null,
+            "2AG": 2528,
+            "2AK": null,
+            "2AR": null,
+            "2BG": 3126,
+            "2BK": 11320,
+            "2BR": null,
+            "3AG": 1989,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 2289,
+            "3BK": null,
+            "3BR": null,
+            "GM": 1705,
+            "GMK": 5,
+            "GMR": 3,
+            "SCG": 4007,
+            "SCK": null,
+            "SCR": 4698,
+            "STG": 8,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "P022": {
+      "name": "College of Agriculture,Post Box. 329,Lingasugur Road",
+      "location": "Raichur",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": 868,
+            "1K": null,
+            "1R": null,
+            "2AG": 510,
+            "2AK": null,
+            "2AR": null,
+            "2BG": null,
+            "2BK": null,
+            "2BR": null,
+            "3AG": null,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 480,
+            "3BK": null,
+            "3BR": null,
+            "GM": 453,
+            "GMK": 455,
+            "GMR": 462,
+            "SCG": 1422,
+            "SCK": null,
+            "SCR": null,
+            "STG": 816,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "P023": {
+      "name": "College of Agriculture,Bheemaryanagudi,Post- Bheemarayanagudi,Tq - Shahapur",
+      "location": "Dist - Yadgiri",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": 1062,
+            "1K": null,
+            "1R": null,
+            "2AG": 1012,
+            "2AK": null,
+            "2AR": null,
+            "2BG": null,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 1045,
+            "3AK": null,
+            "3AR": null,
+            "3BG": null,
+            "3BK": null,
+            "3BR": null,
+            "GM": 810,
+            "GMK": 852,
+            "GMR": 871,
+            "SCG": 2241.5,
+            "SCK": 5,
+            "SCR": null,
+            "STG": 1652,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "P024": {
+      "name": "College of Agriculture,Aland Road",
+      "location": "KALABURAGI",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": 983,
+            "1K": null,
+            "1R": null,
+            "2AG": 969,
+            "2AK": null,
+            "2AR": null,
+            "2BG": null,
+            "2BK": null,
+            "2BR": null,
+            "3AG": null,
+            "3AK": null,
+            "3AR": null,
+            "3BG": null,
+            "3BK": null,
+            "3BR": null,
+            "GM": 654,
+            "GMK": 941,
+            "GMR": 763.5,
+            "SCG": 2051,
+            "SCK": null,
+            "SCR": null,
+            "STG": 1854,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "P026": {
+      "name": "College of Horticulture,GKVK - Post, UHS Campus,Near Bettahalli Layout",
+      "location": "Bangalore",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "data": {
+            "1G": 1803,
+            "1K": null,
+            "1R": null,
+            "2AG": 1249,
+            "2AK": null,
+            "2AR": 1288,
+            "2BG": 2605,
+            "2BK": null,
+            "2BR": null,
+            "3AG": null,
+            "3AK": null,
+            "3AR": null,
+            "3BG": null,
+            "3BK": null,
+            "3BR": 1497,
+            "GM": 7,
+            "GMK": 1232,
+            "GMR": 2,
+            "SCG": 5,
+            "SCK": 5014,
+            "SCR": null,
+            "STG": 1872,
+            "STK": 2729,
+            "STR": null
+          }
+        }
+      }
+    },
+    "P028": {
+      "name": "College of Agriculture,Chamarajanagar,KVK",
+      "location": "Chamarajanagar(D)",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": 972,
+            "1K": null,
+            "1R": null,
+            "2AG": 894.5,
+            "2AK": null,
+            "2AR": null,
+            "2BG": null,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 827,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 845,
+            "3BK": null,
+            "3BR": null,
+            "GM": 799,
+            "GMK": null,
+            "GMR": 954,
+            "SCG": 2292,
+            "SCK": null,
+            "SCR": 2862,
+            "STG": 2,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "P029": {
+      "name": "College of Agriculture, Shivamogga",
+      "location": "Iruvakki Campus",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": 685,
+            "1K": null,
+            "1R": null,
+            "2AG": 670,
+            "2AK": null,
+            "2AR": 847,
+            "2BG": null,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 666,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 662,
+            "3BK": null,
+            "3BR": null,
+            "GM": 592,
+            "GMK": 785,
+            "GMR": 663,
+            "SCG": 1896,
+            "SCK": null,
+            "SCR": 2001,
+            "STG": 1,
+            "STK": null,
+            "STR": null
+          }
+        },
+        "FR": {
+          "name": "B.Sc.(Hons) Forestr",
+          "data": {
+            "1G": null,
+            "1K": null,
+            "1R": null,
+            "2AG": 859,
+            "2AK": null,
+            "2AR": 870,
+            "2BG": null,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 684,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 656,
+            "3BK": null,
+            "3BR": null,
+            "GM": 619,
+            "GMK": 762,
+            "GMR": 647,
+            "SCG": 1697,
+            "SCK": null,
+            "SCR": 1787,
+            "STG": 7,
+            "STK": null,
+            "STR": null
+          }
+        },
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "data": {
+            "1G": 1450,
+            "1K": null,
+            "1R": null,
+            "2AG": 1710,
+            "2AK": null,
+            "2AR": 1718,
+            "2BG": 2844,
+            "2BK": null,
+            "2BR": null,
+            "3AG": null,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 1583,
+            "3BK": null,
+            "3BR": null,
+            "GM": 1310,
+            "GMK": 0,
+            "GMR": 3,
+            "SCG": 3343,
+            "SCK": null,
+            "SCR": 3603,
+            "STG": 3,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "P030": {
+      "name": "College of Agriculture,Gangavathi",
+      "location": "Koppal",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": null,
+            "1K": null,
+            "1R": null,
+            "2AG": 1054,
+            "2AK": null,
+            "2AR": null,
+            "2BG": null,
+            "2BK": null,
+            "2BR": null,
+            "3AG": null,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 721,
+            "3BK": null,
+            "3BR": null,
+            "GM": 683,
+            "GMK": null,
+            "GMR": 1048,
+            "SCG": null,
+            "SCK": null,
+            "SCR": null,
+            "STG": null,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "P031": {
+      "name": "College of Agriculture,Hagari",
+      "location": "Bellary",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": null,
+            "1K": null,
+            "1R": null,
+            "2AG": null,
+            "2AK": null,
+            "2AR": null,
+            "2BG": 1703,
+            "2BK": null,
+            "2BR": null,
+            "3AG": null,
+            "3AK": null,
+            "3AR": null,
+            "3BG": null,
+            "3BK": null,
+            "3BR": null,
+            "GM": 986,
+            "GMK": null,
+            "GMR": null,
+            "SCG": 2056,
+            "SCK": null,
+            "SCR": null,
+            "STG": null,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "P033": {
+      "name": "College of Horticulture Almela Dist Vijayapur UHS Bagalkot Campus",
+      "location": "",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "data": {
+            "1G": 1926,
+            "1K": null,
+            "1R": null,
+            "2AG": 1798,
+            "2AK": null,
+            "2AR": 2248,
+            "2BG": null,
+            "2BK": null,
+            "2BR": null,
+            "3AG": null,
+            "3AK": null,
+            "3AR": 2011,
+            "3BG": 1473,
+            "3BK": null,
+            "3BR": null,
+            "GM": 1421,
+            "GMK": 1,
+            "GMR": 1688,
+            "SCG": 3583.5,
+            "SCK": 5,
+            "SCR": 4234,
+            "STG": 4,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "P034": {
+      "name": "Sri. S Kariyappa College of Agriculture, Kanakapura",
+      "location": "Ramanagar District",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": 1393,
+            "1K": null,
+            "1R": null,
+            "2AG": 1612,
+            "2AK": null,
+            "2AR": 1627,
+            "2BG": 2823,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 1417,
+            "3AK": null,
+            "3AR": 1503,
+            "3BG": 1399,
+            "3BK": 1466,
+            "3BR": 6,
+            "GM": 1333,
+            "GMK": 3,
+            "GMR": 6,
+            "SCG": 2928,
+            "SCK": 4362.5,
+            "SCR": 5,
+            "STG": 4,
+            "STK": null,
+            "STR": 2488
+          }
+        }
+      }
+    },
+    "P035": {
+      "name": "Adichunchanagiri College of Agricultural Sciences, Mayasandra,Turvekere Taluk",
+      "location": "Tumkur Dist",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": 1509,
+            "1K": 1611,
+            "1R": null,
+            "2AG": 1648,
+            "2AK": null,
+            "2AR": 1656,
+            "2BG": 2962,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 1455,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 1399.5,
+            "3BK": null,
+            "3BR": 1431.5,
+            "GM": 5,
+            "GMK": 0,
+            "GMR": 6,
+            "SCG": 0,
+            "SCK": 0,
+            "SCR": 4141,
+            "STG": 1,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "N001": {
+      "name": "College of Agriculture Uniersity of Agirculture Science GKVK Campus",
+      "location": "Bangalore",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": 6249,
+            "1K": null,
+            "1R": 6611,
+            "2AG": 6260,
+            "2AK": 7493,
+            "2AR": 7816,
+            "2BG": 9457.5,
+            "2BK": null,
+            "2BR": 13614,
+            "3AG": 4956,
+            "3AK": 6203,
+            "3AR": null,
+            "3BG": 5794,
+            "3BK": null,
+            "3BR": 6140,
+            "GM": 4378,
+            "GMK": 6188,
+            "GMR": 5488,
+            "SCG": 11664.5,
+            "SCK": 14985.5,
+            "SCR": 5,
+            "STG": 12191.5,
+            "STK": null,
+            "STR": 13554
+          }
+        },
+        "FND": {
+          "name": "B.Sc.(Hons) Food Nutrition and Dietetics",
+          "data": {
+            "1G": null,
+            "1K": 29555,
+            "1R": null,
+            "2AG": 8448,
+            "2AK": null,
+            "2AR": null,
+            "2BG": null,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 10773,
+            "3AK": null,
+            "3AR": null,
+            "3BG": null,
+            "3BK": null,
+            "3BR": null,
+            "GM": 8052,
+            "GMK": 10472,
+            "GMR": null,
+            "SCG": 17590,
+            "SCK": null,
+            "SCR": 21036,
+            "STG": 18353,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "N002": {
+      "name": "College of Agriculture",
+      "location": "VC FARM MANDYA",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture                                                                                                                                                                         5",
+          "data": {
+            "1G": 10335,
+            "1K": null,
+            "1R": null,
+            "2AG": 9827,
+            "2AK": 1216.75,
+            "2AR": null,
+            "2BG": 16175,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 9632.5,
+            "3AK": 5,
+            "3AR": 9,
+            "3BG": 8778,
+            "3BK": null,
+            "3BR": 10610.5,
+            "GM": 8098,
+            "GMK": 9448.94,
+            "GMR": 9491,
+            "SCG": 13655,
+            "SCK": null,
+            "SCR": 18940,
+            "STG": 17027.5,
+            "STK": 28398,
+            "STR": null
+          }
+        }
+      }
+    },
+    "N003": {
+      "name": "College of Agriculture, P.B.No.39, Karekere",
+      "location": "Hassan",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": 11004.5,
+            "1K": null,
+            "1R": null,
+            "2AG": 10821,
+            "2AK": null,
+            "2AR": 11775.5,
+            "2BG": 5,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 9790,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 10413.5,
+            "3BK": 5,
+            "3BR": null,
+            "GM": 8728,
+            "GMK": 9544,
+            "GMR": 10115.75,
+            "SCG": 15820.5,
+            "SCK": null,
+            "SCR": 16039,
+            "STG": 16463,
+            "STK": null,
+            "STR": 22810
+          }
+        },
+        "AB": {
+          "name": "B.Tech (Biotechnology)",
+          "data": {
+            "1G": 17501,
+            "1K": null,
+            "1R": null,
+            "2AG": 19064,
+            "2AK": null,
+            "2AR": 20862.5,
+            "2BG": 5,
+            "2BK": null,
+            "2BR": null,
+            "3AG": null,
+            "3AK": null,
+            "3AR": 17064,
+            "3BG": 15272,
+            "3BK": null,
+            "3BR": null,
+            "GM": 12303,
+            "GMK": null,
+            "GMR": 16019.5,
+            "SCG": 26417,
+            "SCK": null,
+            "SCR": null,
+            "STG": 16634,
+            "STK": 30080,
+            "STR": null
+          }
+        }
+      }
+    },
+    "N004": {
+      "name": "Sericulture College",
+      "location": "pb no 29 KURBUR FARM CHINTAMANI TALUK CHIKKABALLAPUR TD CHINTAMANI",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": 13325,
+            "1K": null,
+            "1R": null,
+            "2AG": 15100,
+            "2AK": null,
+            "2AR": null,
+            "2BG": 19277,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 14257,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 12829,
+            "3BK": null,
+            "3BR": null,
+            "GM": 12714.5,
+            "GMK": 13887,
+            "GMR": 13380,
+            "SCG": 17652,
+            "SCK": null,
+            "SCR": 25313,
+            "STG": 21193,
+            "STK": null,
+            "STR": 25968
+          }
+        },
+        "SR": {
+          "name": "B.Sc.(Hons) Sericulture",
+          "data": {
+            "1G": null,
+            "1K": null,
+            "1R": 32358,
+            "2AG": 23736,
+            "2AK": null,
+            "2AR": 31065,
+            "2BG": null,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 27039,
+            "3AK": null,
+            "3AR": null,
+            "3BG": null,
+            "3BK": null,
+            "3BR": null,
+            "GM": 20822,
+            "GMK": 25091,
+            "GMR": 26082,
+            "SCG": 30893,
+            "SCK": null,
+            "SCR": null,
+            "STG": 30772,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "N005": {
+      "name": "College of Agriculture, Shivamogga",
+      "location": "Navile Campus",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": 11597,
+            "1K": null,
+            "1R": null,
+            "2AG": 10935,
+            "2AK": null,
+            "2AR": 11366,
+            "2BG": 14977,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 9915.5,
+            "3AK": 5,
+            "3AR": null,
+            "3BG": 10341,
+            "3BK": null,
+            "3BR": null,
+            "GM": 9365,
+            "GMK": 10217,
+            "GMR": 10485,
+            "SCG": 17434,
+            "SCK": null,
+            "SCR": 17474,
+            "STG": 16920,
+            "STK": null,
+            "STR": 17750
+          }
+        }
+      }
+    },
+    "N006": {
+      "name": "College of Horticulture,UHS,Udyanagiri, Near Simikeri,Hubli Bypass Road",
+      "location": "Bagalkot",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "data": {
+            "1G": null,
+            "1K": null,
+            "1R": 23091,
+            "2AG": 21326,
+            "2AK": 6322.75,
+            "2AR": null,
+            "2BG": null,
+            "2BK": null,
+            "2BR": 27927,
+            "3AG": 16125,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 16258,
+            "3BK": null,
+            "3BR": null,
+            "GM": 16025,
+            "GMK": null,
+            "GMR": 18170,
+            "SCG": 23225,
+            "SCK": 24370,
+            "SCR": 28509,
+            "STG": 23193,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "N007": {
+      "name": "College of Horticulture,Halladkeri Farm,Hyderabad Road",
+      "location": "Bidar",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "data": {
+            "1G": 23485,
+            "1K": null,
+            "1R": null,
+            "2AG": 22912,
+            "2AK": null,
+            "2AR": null,
+            "2BG": null,
+            "2BK": null,
+            "2BR": null,
+            "3AG": null,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 20612,
+            "3BK": null,
+            "3BR": null,
+            "GM": 17984,
+            "GMK": null,
+            "GMR": 18157,
+            "SCG": 21541,
+            "SCK": null,
+            "SCR": null,
+            "STG": null,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "N008": {
+      "name": "KRC College of Horticulture,Kittur Rani Channammma College,of Horticulture,Arabhavi, Gokak-TQ",
+      "location": "Belgaum",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "data": {
+            "1G": 23652,
+            "1K": null,
+            "1R": null,
+            "2AG": 24277,
+            "2AK": null,
+            "2AR": null,
+            "2BG": 28254,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 23841.5,
+            "3AK": 5,
+            "3AR": null,
+            "3BG": 22426,
+            "3BK": null,
+            "3BR": null,
+            "GM": 21019,
+            "GMK": 23499,
+            "GMR": 23506,
+            "SCG": 30898,
+            "SCK": null,
+            "SCR": 33977,
+            "STG": 24709,
+            "STK": null,
+            "STR": 29408
+          }
+        }
+      }
+    },
+    "N009": {
+      "name": "College of Horticulture,NH-75, TAMAKA",
+      "location": "Kolar",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture              5",
+          "data": {
+            "1G": 27146.87,
+            "1K": null,
+            "1R": null,
+            "2AG": 25051,
+            "2AK": null,
+            "2AR": 25390,
+            "2BG": 25298,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 23658,
+            "3AK": null,
+            "3AR": null,
+            "3BG": null,
+            "3BK": 28856,
+            "3BR": 6,
+            "GM": 22855,
+            "GMK": null,
+            "GMR": 25026,
+            "SCG": 26689,
+            "SCK": null,
+            "SCR": 29874,
+            "STG": 28529.5,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "N010": {
+      "name": "College of Horticulture,Yelachanahalli Horticultural,Farm, Yelwala",
+      "location": "Mysore",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "data": {
+            "1G": 18898,
+            "1K": null,
+            "1R": null,
+            "2AG": 22795,
+            "2AK": 28175,
+            "2AR": null,
+            "2BG": 29819,
+            "2BK": null,
+            "2BR": null,
+            "3AG": null,
+            "3AK": null,
+            "3AR": 23368,
+            "3BG": 17637.75,
+            "3BK": 5,
+            "3BR": null,
+            "GM": 17492,
+            "GMK": null,
+            "GMR": 21949,
+            "SCG": 25544,
+            "SCK": null,
+            "SCR": null,
+            "STG": 22514,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "N011": {
+      "name": "College of Horticulture,Banavasi ROAD,Sirsi",
+      "location": "Utttara Kannada dist",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "data": {
+            "1G": 24960,
+            "1K": null,
+            "1R": null,
+            "2AG": 25554,
+            "2AK": null,
+            "2AR": 28019,
+            "2BG": null,
+            "2BK": null,
+            "2BR": null,
+            "3AG": null,
+            "3AK": null,
+            "3AR": 27158,
+            "3BG": 24952,
+            "3BK": null,
+            "3BR": null,
+            "GM": 24724,
+            "GMK": 26970,
+            "GMR": 0,
+            "SCG": 29972,
+            "SCK": null,
+            "SCR": 33803,
+            "STG": 25441,
+            "STK": 34986,
+            "STR": null
+          }
+        }
+      }
+    },
+    "N012": {
+      "name": "College of Horticulture,Munirabad",
+      "location": "Koppal Dist",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "data": {
+            "1G": null,
+            "1K": null,
+            "1R": null,
+            "2AG": 23881,
+            "2AK": null,
+            "2AR": null,
+            "2BG": 20604,
+            "2BK": null,
+            "2BR": null,
+            "3AG": null,
+            "3AK": null,
+            "3AR": null,
+            "3BG": null,
+            "3BK": null,
+            "3BR": null,
+            "GM": 20328,
+            "GMK": null,
+            "GMR": 25899,
+            "SCG": 25783,
+            "SCK": null,
+            "SCR": null,
+            "STG": 29156,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "N013": {
+      "name": "College of Horticulture,Mudigere Taluk and Post,Chikmagalur Dist",
+      "location": "Mudigere",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "data": {
+            "1G": 24855,
+            "1K": null,
+            "1R": null,
+            "2AG": 26729,
+            "2AK": null,
+            "2AR": 29251,
+            "2BG": 32222,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 23354,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 22719,
+            "3BK": null,
+            "3BR": null,
+            "GM": 20789,
+            "GMK": null,
+            "GMR": 22448,
+            "SCG": 23711,
+            "SCK": null,
+            "SCR": 28608,
+            "STG": 25838,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "N014": {
+      "name": "College of Horticulture,Babbur Farm, Hiriyur,Chitradurga Dist",
+      "location": "Hiriyur",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": 15706,
+            "1K": null,
+            "1R": null,
+            "2AG": 15989,
+            "2AK": null,
+            "2AR": 16579,
+            "2BG": 20100,
+            "2BK": null,
+            "2BR": null,
+            "3AG": null,
+            "3AK": null,
+            "3AR": null,
+            "3BG": null,
+            "3BK": null,
+            "3BR": null,
+            "GM": 13430,
+            "GMK": 13974,
+            "GMR": 4,
+            "SCG": 18547,
+            "SCK": null,
+            "SCR": 18946.5,
+            "STG": 22000.5,
+            "STK": null,
+            "STR": null
+          }
+        },
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "data": {
+            "1G": 25172,
+            "1K": null,
+            "1R": null,
+            "2AG": 28103,
+            "2AK": null,
+            "2AR": 31830,
+            "2BG": 24917,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 27818,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 25917,
+            "3BK": null,
+            "3BR": null,
+            "GM": 24866,
+            "GMK": 26089,
+            "GMR": 9,
+            "SCG": 29662,
+            "SCK": null,
+            "SCR": 31022,
+            "STG": 27463,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "N015": {
+      "name": "College of Forestry,Ponnampet",
+      "location": "Kodagu- Dist",
+      "branches": {
+        "FR": {
+          "name": "B.Sc.(Hons) Forestry",
+          "data": {
+            "1G": null,
+            "1K": null,
+            "1R": null,
+            "2AG": 8201.75,
+            "2AK": null,
+            "2AR": 8433,
+            "2BG": null,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 8396,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 11361,
+            "3BK": null,
+            "3BR": null,
+            "GM": 5662,
+            "GMK": 7929,
+            "GMR": 6688,
+            "SCG": 13812,
+            "SCK": null,
+            "SCR": 15331,
+            "STG": 10892,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "N016": {
+      "name": "College of Agriculture,UAS Campus, Krishinagar",
+      "location": "Dharwad",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": 9141,
+            "1K": null,
+            "1R": 9754,
+            "2AG": 8263,
+            "2AK": 10120,
+            "2AR": 8916,
+            "2BG": 15360,
+            "2BK": null,
+            "2BR": 15782,
+            "3AG": 8606.88,
+            "3AK": 5,
+            "3AR": 10012,
+            "3BG": 6678,
+            "3BK": null,
+            "3BR": 8222,
+            "GM": 6524,
+            "GMK": 8041,
+            "GMR": 8058,
+            "SCG": 15779,
+            "SCK": 20118,
+            "SCR": 16159,
+            "STG": 14042,
+            "STK": null,
+            "STR": 14756.75
+          }
+        }
+      }
+    },
+    "N017": {
+      "name": "College of Agriculture,PB No. 18",
+      "location": "VIJAYAPUR",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": 14278,
+            "1K": null,
+            "1R": 18037,
+            "2AG": 13691,
+            "2AK": null,
+            "2AR": 13915,
+            "2BG": 15366,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 10960,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 12692,
+            "3BK": 12864,
+            "3BR": 4,
+            "GM": 10843.5,
+            "GMK": 5,
+            "GMR": 6,
+            "SCG": 20512,
+            "SCK": null,
+            "SCR": 20650,
+            "STG": 16480.5,
+            "STK": null,
+            "STR": 17974
+          }
+        }
+      }
+    },
+    "N018": {
+      "name": "College of Agriculture,Post- Hanumanamatti,Tq- Ranebennur,Hanumanamatti",
+      "location": "Haveri-Dist",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": 16448,
+            "1K": null,
+            "1R": null,
+            "2AG": 16412,
+            "2AK": null,
+            "2AR": 16860,
+            "2BG": 17544,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 14741,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 15721,
+            "3BK": null,
+            "3BR": 17100,
+            "GM": 13703,
+            "GMK": null,
+            "GMR": 15550,
+            "SCG": 21810,
+            "SCK": 27055,
+            "SCR": 23967,
+            "STG": 22433,
+            "STK": 26051,
+            "STR": null
+          }
+        }
+      }
+    },
+    "N019": {
+      "name": "College of Forestry,Banavasi Road,Tq- Sirsi",
+      "location": "Dist- Uttarakannada",
+      "branches": {
+        "FR": {
+          "name": "B.Sc.(Hons) Forestry",
+          "data": {
+            "1G": 8843,
+            "1K": null,
+            "1R": null,
+            "2AG": 10685,
+            "2AK": null,
+            "2AR": null,
+            "2BG": 15880,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 8944,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 10998,
+            "3BK": null,
+            "3BR": null,
+            "GM": 8159,
+            "GMK": null,
+            "GMR": 8854,
+            "SCG": 16212.5,
+            "SCK": 5,
+            "SCR": null,
+            "STG": 13608,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "N020": {
+      "name": "College of Community Science,University of Agritultural,Science, Krushi Nagar",
+      "location": "Dharwad",
+      "branches": {
+        "HS": {
+          "name": "B.Sc.(Hons) Community Science",
+          "data": {
+            "1G": 27483,
+            "1K": null,
+            "1R": null,
+            "2AG": 31043,
+            "2AK": null,
+            "2AR": null,
+            "2BG": 42899,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 35109,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 21832,
+            "3BK": null,
+            "3BR": null,
+            "GM": 20162,
+            "GMK": 20893,
+            "GMR": 23931,
+            "SCG": 30695,
+            "SCK": null,
+            "SCR": 34641,
+            "STG": 35699,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "N022": {
+      "name": "College of Agriculture,Post Box. 329,Lingasugur Road",
+      "location": "Raichur",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": null,
+            "1K": null,
+            "1R": null,
+            "2AG": 10170,
+            "2AK": null,
+            "2AR": null,
+            "2BG": null,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 8931.5,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 8002.5,
+            "3BK": null,
+            "3BR": null,
+            "GM": 7081,
+            "GMK": 9085,
+            "GMR": 10075.5,
+            "SCG": 16290,
+            "SCK": null,
+            "SCR": null,
+            "STG": 14443,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "N023": {
+      "name": "College of Agriculture,Bheemaryanagudi,Post- Bheemarayanagudi,Tq - Shahapur",
+      "location": "Dist - Yadgiri",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture                                                                                                                                                                    5",
+          "data": {
+            "1G": null,
+            "1K": null,
+            "1R": null,
+            "2AG": 16393,
+            "2AK": null,
+            "2AR": null,
+            "2BG": 17502.5,
+            "2BK": null,
+            "2BR": null,
+            "3AG": null,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 14023,
+            "3BK": null,
+            "3BR": null,
+            "GM": 12679,
+            "GMK": 15302.87,
+            "GMR": 13330,
+            "SCG": 20792.75,
+            "SCK": 5,
+            "SCR": null,
+            "STG": 19976,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "N024": {
+      "name": "College of Agriculture,Aland Road",
+      "location": "KALABURAGI",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": null,
+            "1K": null,
+            "1R": null,
+            "2AG": 15792,
+            "2AK": null,
+            "2AR": null,
+            "2BG": 15629,
+            "2BK": null,
+            "2BR": null,
+            "3AG": null,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 13633,
+            "3BK": null,
+            "3BR": null,
+            "GM": 10491,
+            "GMK": 15188,
+            "GMR": 14514.75,
+            "SCG": 19141,
+            "SCK": null,
+            "SCR": null,
+            "STG": null,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "N026": {
+      "name": "College of Horticulture,GKVK - Post, UHS Campus,Near Bettahalli Layout",
+      "location": "Bangalore",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "data": {
+            "1G": null,
+            "1K": null,
+            "1R": null,
+            "2AG": 16572,
+            "2AK": null,
+            "2AR": 18886,
+            "2BG": null,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 16320,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 16201,
+            "3BK": null,
+            "3BR": null,
+            "GM": 15453,
+            "GMK": 20045,
+            "GMR": 15679,
+            "SCG": 22482,
+            "SCK": 30958,
+            "SCR": 8,
+            "STG": 21275,
+            "STK": null,
+            "STR": 22647
+          }
+        }
+      }
+    },
+    "N028": {
+      "name": "College of Agriculture,Chamarajanagar,KVK",
+      "location": "Chamarajanagar(D)",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": null,
+            "1K": null,
+            "1R": null,
+            "2AG": 14917,
+            "2AK": null,
+            "2AR": null,
+            "2BG": 18949,
+            "2BK": null,
+            "2BR": null,
+            "3AG": null,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 11796,
+            "3BK": null,
+            "3BR": null,
+            "GM": 11673,
+            "GMK": null,
+            "GMR": 11893,
+            "SCG": 18715,
+            "SCK": null,
+            "SCR": null,
+            "STG": 20587,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "N029": {
+      "name": "College of Agriculture, Shivamogga",
+      "location": "Iruvakki Campus",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": 11850,
+            "1K": null,
+            "1R": null,
+            "2AG": 13142,
+            "2AK": null,
+            "2AR": 14353,
+            "2BG": null,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 12416.5,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 11169,
+            "3BK": null,
+            "3BR": null,
+            "GM": 10947,
+            "GMK": 12230,
+            "GMR": 11125,
+            "SCG": 19509,
+            "SCK": null,
+            "SCR": 19905,
+            "STG": null,
+            "STK": null,
+            "STR": null
+          }
+        },
+        "FR": {
+          "name": "B.Sc.(Hons) Forestry",
+          "data": {
+            "1G": null,
+            "1K": null,
+            "1R": null,
+            "2AG": 11441,
+            "2AK": null,
+            "2AR": 11500,
+            "2BG": null,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 10565.75,
+            "3AK": 5,
+            "3AR": null,
+            "3BG": 11618,
+            "3BK": null,
+            "3BR": null,
+            "GM": 10205,
+            "GMK": 10799,
+            "GMR": 10331,
+            "SCG": 18347,
+            "SCK": null,
+            "SCR": 19446,
+            "STG": 13206.5,
+            "STK": null,
+            "STR": null
+          }
+        },
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "data": {
+            "1G": 24743.5,
+            "1K": null,
+            "1R": null,
+            "2AG": 23953,
+            "2AK": null,
+            "2AR": 27391,
+            "2BG": 30395,
+            "2BK": null,
+            "2BR": null,
+            "3AG": null,
+            "3AK": null,
+            "3AR": null,
+            "3BG": null,
+            "3BK": null,
+            "3BR": null,
+            "GM": 20073,
+            "GMK": 21336,
+            "GMR": 21273,
+            "SCG": 26113,
+            "SCK": null,
+            "SCR": 29528,
+            "STG": 23334,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "N030": {
+      "name": "College of Agriculture,Gangavathi",
+      "location": "Koppal",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": null,
+            "1K": null,
+            "1R": null,
+            "2AG": null,
+            "2AK": null,
+            "2AR": null,
+            "2BG": null,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 12228,
+            "3AK": null,
+            "3AR": null,
+            "3BG": null,
+            "3BK": null,
+            "3BR": null,
+            "GM": 10983,
+            "GMK": null,
+            "GMR": null,
+            "SCG": 19659,
+            "SCK": null,
+            "SCR": null,
+            "STG": null,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "N031": {
+      "name": "College of Agriculture,Hagari",
+      "location": "Bellary",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": null,
+            "1K": null,
+            "1R": null,
+            "2AG": 14148,
+            "2AK": null,
+            "2AR": null,
+            "2BG": null,
+            "2BK": null,
+            "2BR": null,
+            "3AG": null,
+            "3AK": null,
+            "3AR": null,
+            "3BG": null,
+            "3BK": null,
+            "3BR": null,
+            "GM": 10580,
+            "GMK": null,
+            "GMR": null,
+            "SCG": null,
+            "SCK": null,
+            "SCR": null,
+            "STG": 17328,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "N033": {
+      "name": "College of Horticulture Almela Dist Vijayapur UHS Bagalkot Campus",
+      "location": "",
+      "branches": {
+        "HT": {
+          "name": "B.Sc.(Hons) Horticulture",
+          "data": {
+            "1G": 25530,
+            "1K": null,
+            "1R": null,
+            "2AG": 24797,
+            "2AK": null,
+            "2AR": 29192,
+            "2BG": 27805,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 25268.5,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 22470,
+            "3BK": null,
+            "3BR": null,
+            "GM": 19449,
+            "GMK": null,
+            "GMR": 24682,
+            "SCG": 29532,
+            "SCK": null,
+            "SCR": null,
+            "STG": 27966,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "N034": {
+      "name": "Sri. S Kariyappa College of Agriculture, Kanakapura",
+      "location": "Ramanagar District",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": 18568,
+            "1K": 22806,
+            "1R": null,
+            "2AG": 19429,
+            "2AK": null,
+            "2AR": 19484,
+            "2BG": 21823,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 17354,
+            "3AK": null,
+            "3AR": null,
+            "3BG": 17877,
+            "3BK": null,
+            "3BR": 19189,
+            "GM": 17158,
+            "GMK": 18188,
+            "GMR": 18320,
+            "SCG": 24852,
+            "SCK": null,
+            "SCR": 26792,
+            "STG": 23336,
+            "STK": null,
+            "STR": null
+          }
+        }
+      }
+    },
+    "N035": {
+      "name": "Adichunchanagiri College of Agricultural Sciences, Mayasandra,Turvekere Taluk",
+      "location": "Tumkur Dist",
+      "branches": {
+        "AG": {
+          "name": "B.Sc.(Hons) Agriculture",
+          "data": {
+            "1G": 20527,
+            "1K": null,
+            "1R": null,
+            "2AG": 19901,
+            "2AK": null,
+            "2AR": 19906,
+            "2BG": 22298,
+            "2BK": null,
+            "2BR": null,
+            "3AG": 18939,
+            "3AK": 9,
+            "3AR": 19474,
+            "3BG": 4,
+            "3BK": 20621,
+            "3BR": 1,
+            "GM": 17903,
+            "GMK": 3,
+            "GMR": 4,
+            "SCG": 4,
+            "SCK": 2,
+            "SCR": 4,
+            "STG": 1,
+            "STK": null,
+            "STR": 27639
+          }
+        }
+      }
+    }
+  }
+}

@@ -12,10 +12,6 @@ const config: CapacitorConfig = {
     CapacitorSQLite: {
       androidIsEncryption: false,
     },
-    LocalNotifications: {
-      smallIcon: 'ic_stat_icon',
-      iconColor: '#C9A227',
-    },
   },
 };
 

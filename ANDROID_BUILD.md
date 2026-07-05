@@ -12,14 +12,23 @@ device (SQLite on Android, IndexedDB in a browser preview).
 
 ## One-time setup
 
+The `android/` folder is already generated and committed in this repo — it's a real
+Android Studio/Gradle project, ready to open. You only need `cap add android` again if
+that folder is ever deleted.
+
 ```bash
 npm install
-npx cap add android
 ```
 
-`cap add android` generates the `android/` folder (a real Android Studio/Gradle
-project) from this web project. Commit that folder once it's generated — it's your
-native project from then on.
+## Fastest path: just open it
+
+```bash
+npx cap open android
+```
+
+This opens `android/` directly in Android Studio. Let Gradle sync (first time can take
+a few minutes while Android Studio downloads the SDK platform/build-tools if needed),
+then hit **Run ▶** on a connected phone or emulator.
 
 ## Every time you change the web code (src/, public/, package.json plugins, etc.)
 

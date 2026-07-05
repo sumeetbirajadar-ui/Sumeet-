@@ -1,20 +1,36 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Sumeet's Tracker 2.0
 
-# Run and deploy your AI Studio app
+A personal, fully offline growth app: daily habits (with identity statements, habit
+stacking, keystone habits, "never miss twice"), budget & 50/20/30 expense tracking with
+a ₹ crore corpus/SIP calculator, a 5-exam-track physics syllabus tracker (NEET, KCET,
+JEE Main, JEE Advanced, Cengage) with a per-chapter **Chapter Planning** teaching-prep
+notebook (content plan, extras/analogies/demos, scientist stories, misc notes),
+investments & insurance with due-date reminders, weekly/monthly targets with a
+GTD-style review, gratitude & evening reflection, a bucket list, a YouTube channel
+planner, and a grooming tracker — all wrapped as an Android app via Capacitor.
 
-This contains everything you need to run your app locally.
+Design system: ivory/cream background, gold accents, navy primary, Lora serif
+headings — see the full design blueprint this app implements for more context.
 
-View your app in AI Studio: https://ai.studio/apps/cb639df9-fa75-45a6-be7e-5ee3240ebb9b
+## Run locally (browser preview)
 
-## Run Locally
+```bash
+npm install
+npm run dev
+```
 
-**Prerequisites:**  Node.js
+Data is stored in IndexedDB in this preview. On Android, the same code
+automatically uses real on-disk SQLite instead — see `src/db/index.ts`.
 
+## Build & type-check
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+```bash
+npm run build      # production build to dist/
+npm run lint       # tsc --noEmit
+```
+
+## Turn this into an Android app
+
+See **[ANDROID_BUILD.md](./ANDROID_BUILD.md)** for the full step-by-step guide
+(Capacitor setup, required manifest permissions for reminders, signing a release
+build).

@@ -1,29 +1,92 @@
 @import "tailwindcss";
+@import "@fontsource/lora/400.css";
+@import "@fontsource/lora/400-italic.css";
+@import "@fontsource/lora/500.css";
+@import "@fontsource/lora/600.css";
+@import "@fontsource/lora/700.css";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Outfit", sans-serif;
+  --font-serif: "Lora", "Liberation Serif", Georgia, serif;
+
+  /* Ivory / cream / gold / navy design system */
+  --color-ivory: #fbf8f1;
+  --color-ivory-dark: #f4efe2;
+  --color-cream: #fefcf8;
+  --color-gold: #c9a227;
+  --color-gold-light: #d4af37;
+  --color-gold-soft: #f1e4bc;
+  --color-gold-pale: #f8f1dd;
+  --color-navy: #1e2a4a;
+  --color-navy-light: #3a4a6b;
+  --color-navy-pale: #eef1f7;
+  --color-amber-flag: #b8863b;
+  --color-amber-flag-soft: #f4e6cd;
 }
 
 @layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
   body {
-    @apply bg-stone-50 text-stone-900 font-sans;
+    @apply bg-ivory text-navy font-sans;
+    background-image:
+      radial-gradient(circle at 15% 8%, rgba(201, 162, 39, 0.06), transparent 40%),
+      radial-gradient(circle at 85% 92%, rgba(30, 42, 74, 0.05), transparent 45%);
+    background-attachment: fixed;
+  }
+  h1, h2, h3, .font-display {
+    font-family: var(--font-serif);
+  }
+  ::selection {
+    background: var(--color-gold-soft);
   }
 }
 
-.flow-node {
-  @apply relative flex flex-col items-center p-3 rounded-2xl border-2 transition-all duration-200 cursor-pointer;
-}
-
-.flow-connector {
-  @apply w-0.5 bg-stone-300 h-6 relative;
-}
-
-.flow-connector::after {
-  content: '';
-  @apply absolute -bottom-1 -left-[3px] border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-stone-300;
+@layer utilities {
+  .card {
+    @apply bg-cream rounded-3xl border border-gold-soft/70 shadow-[0_2px_16px_rgba(30,42,74,0.06)];
+  }
+  .hairline {
+    @apply border-gold-soft;
+  }
+  .pill {
+    @apply px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider;
+  }
+  .input-field {
+    @apply w-full bg-ivory/60 border border-gold-soft rounded-xl px-3 py-2 text-sm outline-none
+      focus:border-gold transition-colors placeholder:text-navy-light/40;
+  }
+  .btn-gold {
+    @apply bg-gold text-cream font-bold rounded-2xl px-5 py-3 shadow-sm active:scale-95 transition-all
+      hover:bg-gold-light disabled:opacity-40;
+  }
+  .btn-outline {
+    @apply border-2 border-navy/15 text-navy font-bold rounded-2xl px-5 py-3 active:scale-95 transition-all
+      hover:border-gold hover:text-gold;
+  }
+  .icon-chip {
+    @apply p-2 rounded-xl bg-gold-pale text-gold;
+  }
+  .section-eyebrow {
+    @apply px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-navy text-cream inline-block;
+  }
+  .amber-flag {
+    @apply bg-amber-flag-soft text-amber-flag border border-amber-flag/30;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-gold-soft rounded-full;
+  }
 }
 
 .planner-input {
-  @apply w-full bg-transparent border-b border-stone-200 focus:border-stone-400 outline-none py-1 transition-colors;
+  @apply w-full bg-transparent border-b border-gold-soft focus:border-gold outline-none py-1 transition-colors;
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import {
   Home, CheckSquare, Wallet, BookOpen, Grid3x3, ShieldCheck, Target as TargetIcon,
-  Heart, Compass, Youtube as YoutubeIcon, Sparkles, Settings2, X,
+  Heart, Compass, Youtube as YoutubeIcon, Sparkles, Settings2, Timer,
 } from 'lucide-react';
 import { useSettings } from './hooks/useSettings';
 import { seedIfEmpty } from './db/seedDefaults';
@@ -18,9 +18,10 @@ import { GratitudeView } from './modules/gratitude/GratitudeView';
 import { BucketListView } from './modules/bucketlist/BucketListView';
 import { YouTubeView } from './modules/youtube/YouTubeView';
 import { GroomingView } from './modules/grooming/GroomingView';
+import { PomodoroView } from './modules/pomodoro/PomodoroView';
 import { SettingsView } from './modules/settings/SettingsView';
 
-type Tab = 'home' | 'habits' | 'budget' | 'syllabus' | 'investments' | 'targets' | 'gratitude' | 'bucketlist' | 'youtube' | 'grooming' | 'settings';
+type Tab = 'home' | 'habits' | 'budget' | 'syllabus' | 'investments' | 'targets' | 'gratitude' | 'bucketlist' | 'youtube' | 'grooming' | 'pomodoro' | 'settings';
 
 const PRIMARY_TABS: { id: Tab; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
   { id: 'home', label: 'Home', icon: Home },
@@ -36,13 +37,15 @@ const MORE_TABS: { id: Tab; label: string; icon: React.ComponentType<{ className
   { id: 'bucketlist', label: 'Bucket List', icon: Compass },
   { id: 'youtube', label: 'YouTube', icon: YoutubeIcon },
   { id: 'grooming', label: 'Grooming', icon: Sparkles },
+  { id: 'pomodoro', label: 'Focus Timer', icon: Timer },
   { id: 'settings', label: 'Settings', icon: Settings2 },
 ];
 
 const VIEWS: Record<Tab, React.ComponentType<any>> = {
   home: HomeDashboard, habits: HabitsView, budget: BudgetView, syllabus: SyllabusView,
   investments: InvestmentsView, targets: TargetsView, gratitude: GratitudeView,
-  bucketlist: BucketListView, youtube: YouTubeView, grooming: GroomingView, settings: SettingsView,
+  bucketlist: BucketListView, youtube: YouTubeView, grooming: GroomingView,
+  pomodoro: PomodoroView, settings: SettingsView,
 };
 
 export default function App() {
@@ -73,12 +76,13 @@ export default function App() {
 
   const ActiveView = VIEWS[tab];
   const navigate = (t: string) => setTab(t as Tab);
+  const lock = () => { sessionStorage.removeItem('unlocked'); setUnlocked(false); };
 
   return (
     <div className="min-h-screen pb-28 px-4 pt-6">
       <AnimatePresence mode="wait">
         <motion.div key={tab} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.22 }}>
-          <ActiveView onNavigate={navigate} />
+          <ActiveView onNavigate={navigate} onLock={lock} />
         </motion.div>
       </AnimatePresence>
 

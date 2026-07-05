@@ -14,6 +14,7 @@ import { Investment } from '../types';
 
 const EVENING_REVIEW_ID = 90000;
 const DUE_ID_BASE = 100000; // + a stable offset derived from investment id hash
+const FOCUS_TIMER_ID = 95000;
 
 function hashId(id: string): number {
   let h = 0;
@@ -74,6 +75,31 @@ export async function scheduleInvestmentDueReminders(investments: Investment[]):
     ];
   });
   if (notifications.length) await LocalNotifications.schedule({ notifications });
+}
+
+/** One-shot notification so a focus session still alerts you if the app is
+ * backgrounded or the screen locks before the countdown finishes — the
+ * in-app beep only plays while this tab/app is actually open. */
+export async function scheduleFocusSessionNotification(minutesFromNow: number, label: string): Promise<void> {
+  if (!Capacitor.isNativePlatform()) return;
+  const granted = await requestNotificationPermission();
+  if (!granted) return;
+  const { LocalNotifications } = await import('@capacitor/local-notifications');
+  await LocalNotifications.cancel({ notifications: [{ id: FOCUS_TIMER_ID }] });
+  await LocalNotifications.schedule({
+    notifications: [{
+      id: FOCUS_TIMER_ID,
+      title: 'Focus session complete',
+      body: `${label} — nice work. Log it in the app.`,
+      schedule: { at: new Date(Date.now() + minutesFromNow * 60000), allowWhileIdle: true },
+    }],
+  });
+}
+
+export async function cancelFocusSessionNotification(): Promise<void> {
+  if (!Capacitor.isNativePlatform()) return;
+  const { LocalNotifications } = await import('@capacitor/local-notifications');
+  await LocalNotifications.cancel({ notifications: [{ id: FOCUS_TIMER_ID }] });
 }
 
 function ordinal(n: number): string {

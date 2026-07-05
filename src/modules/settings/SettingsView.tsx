@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Capacitor } from '@capacitor/core';
-import { Download, Upload, KeyRound, Bell, Info, CheckCircle2 } from 'lucide-react';
+import { Download, Upload, KeyRound, Bell, Info, CheckCircle2, Lock } from 'lucide-react';
 import { useSettings } from '../../hooks/useSettings';
 import { exportBackup, importBackup, nowISO } from '../../db';
 import { sha256 } from '../../utils/hash';
@@ -8,7 +8,7 @@ import { PageHeader, Card } from '../../components/ui/Layout';
 import { Field, Input } from '../../components/ui/Field';
 import { GoldDivider } from '../../components/sketches/Sketches';
 
-export const SettingsView: React.FC = () => {
+export const SettingsView: React.FC<{ onLock?: () => void }> = ({ onLock }) => {
   const { settings, update } = useSettings();
   const [newPasscode, setNewPasscode] = useState('');
   const [status, setStatus] = useState('');
@@ -83,13 +83,23 @@ export const SettingsView: React.FC = () => {
       </Card>
 
       <h3 className="text-xs font-bold uppercase tracking-widest text-navy-light/60 mb-2">Security</h3>
-      <Card className="mb-6">
-        <Field label="Set a new passcode">
+      <Card className="mb-6 space-y-4">
+        <Field label="Set a new passcode" hint="There's no fixed username/password — whatever you set here (or on first launch) is your passcode.">
           <div className="flex gap-2">
             <Input type="password" value={newPasscode} onChange={(e) => setNewPasscode(e.target.value)} placeholder="New passcode" className="flex-1" />
             <button onClick={changePasscode} className="icon-chip hover:bg-gold hover:text-cream transition-colors"><KeyRound className="w-4 h-4" /></button>
           </div>
         </Field>
+        {onLock && (
+          <div className="pt-2 border-t border-gold-soft">
+            <button onClick={onLock} className="btn-outline w-full flex items-center justify-center gap-2 text-sm"><Lock className="w-4 h-4" />Lock App</button>
+            <p className="text-[11px] text-navy-light/50 mt-2">
+              This only re-locks the passcode screen — nothing you've entered is deleted. All your habits,
+              expenses, syllabus progress etc. stay saved on this device and are exactly as you left them
+              next time you unlock.
+            </p>
+          </div>
+        )}
       </Card>
 
       <GoldDivider className="my-6" />

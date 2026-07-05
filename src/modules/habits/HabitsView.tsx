@@ -10,6 +10,7 @@ import { PageHeader, Card, EmptyState, Pill } from '../../components/ui/Layout';
 import { Modal } from '../../components/ui/Modal';
 import { Field, Input, Select, TextArea } from '../../components/ui/Field';
 import { Heatmap } from '../../components/charts/Heatmap';
+import { DateJump } from '../../components/ui/DateJump';
 import { SketchSprout } from '../../components/sketches/Sketches';
 
 function blankHabit(): Habit {
@@ -115,6 +116,7 @@ export const HabitsView: React.FC = () => {
           )}
         </div>
         <button onClick={() => setDate(addDays(date, 1))} className="p-2 rounded-full hover:bg-gold-pale text-navy-light"><ChevronRight className="w-5 h-5" /></button>
+        <DateJump value={date} onChange={setDate} />
       </div>
 
       {habits.length === 0 && (

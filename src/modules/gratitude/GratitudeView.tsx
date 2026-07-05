@@ -6,6 +6,7 @@ import { uid, nowISO, todayISO } from '../../db';
 import { addDays, formatFriendly, formatShort } from '../../utils/dates';
 import { PageHeader, Card, EmptyState } from '../../components/ui/Layout';
 import { SketchLotus, GoldDivider } from '../../components/sketches/Sketches';
+import { DateJump } from '../../components/ui/DateJump';
 
 function blankEntry(date: string): GratitudeEntry {
   return { id: uid(), date, items: [{ text: '', why: '' }, { text: '', why: '' }, { text: '', why: '' }], updatedAt: nowISO() };
@@ -44,6 +45,7 @@ export const GratitudeView: React.FC = () => {
         <button onClick={() => setDate(addDays(date, -1))} className="p-2 rounded-full hover:bg-gold-pale text-navy-light"><ChevronLeft className="w-5 h-5" /></button>
         <p className="font-bold text-navy text-sm">{formatFriendly(date)}</p>
         <button onClick={() => setDate(addDays(date, 1))} className="p-2 rounded-full hover:bg-gold-pale text-navy-light"><ChevronRight className="w-5 h-5" /></button>
+        <DateJump value={date} onChange={setDate} />
       </div>
       {streak > 0 && <p className="text-center text-xs font-bold text-amber-flag flex items-center justify-center gap-1 mb-6"><Flame className="w-3.5 h-3.5" />{streak}-day gratitude streak</p>}
 
@@ -111,7 +113,7 @@ export const GratitudeView: React.FC = () => {
       </div>
       <div className="space-y-3">
         {past.map((e) => (
-          <Card key={e.id} className="!p-3">
+          <Card key={e.id} className="!p-3 cursor-pointer hover:border-gold transition-colors" onClick={() => setDate(e.date)}>
             <p className="text-[11px] font-bold text-navy-light/50 mb-1">{formatShort(e.date)}</p>
             {e.items.filter((i) => i.text.trim()).map((i, idx) => (
               <p key={idx} className="text-sm text-navy italic">"{i.text}" {i.why && <span className="text-navy-light/50 not-italic">— {i.why}</span>}</p>

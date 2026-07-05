@@ -15,6 +15,7 @@ import { LineChart } from '../../components/charts/LineChart';
 import { Heatmap } from '../../components/charts/Heatmap';
 import { ProgressRing } from '../../components/charts/ProgressRing';
 import { SketchPiggyBank } from '../../components/sketches/Sketches';
+import { DateJump } from '../../components/ui/DateJump';
 
 function monthLabel(monthKey: string) {
   const [y, m] = monthKey.split('-').map(Number);
@@ -98,6 +99,7 @@ export const BudgetView: React.FC = () => {
         <button onClick={() => setMonth(shiftMonth(month, -1))} className="p-2 rounded-full hover:bg-gold-pale text-navy-light"><ChevronLeft className="w-5 h-5" /></button>
         <p className="font-bold text-navy text-sm">{monthLabel(month)}</p>
         <button onClick={() => setMonth(shiftMonth(month, 1))} className="p-2 rounded-full hover:bg-gold-pale text-navy-light"><ChevronRight className="w-5 h-5" /></button>
+        <DateJump value={month} onChange={setMonth} type="month" />
       </div>
 
       <div className="grid grid-cols-2 gap-3 mb-6">

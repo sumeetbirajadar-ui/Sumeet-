@@ -15,10 +15,10 @@ import {
 
 const BADGE_STYLES: Record<PredictionLevel, string> = {
   safe: 'bg-emerald-100 text-emerald-800 border-emerald-200',
-  moderate: 'bg-amber-100 text-amber-800 border-amber-200',
+  moderate: 'bg-gold-100 text-gold-800 border-gold-200',
   borderline: 'bg-orange-100 text-orange-800 border-orange-200',
   longshot: 'bg-rose-100 text-rose-800 border-rose-200',
-  unknown: 'bg-stone-100 text-stone-500 border-stone-200',
+  unknown: 'bg-ink-100 text-ink-500 border-ink-200',
 };
 
 const BADGE_LABELS: Record<PredictionLevel, string> = {
@@ -38,11 +38,11 @@ function Badge({ level }: { level: PredictionLevel }) {
 }
 
 function cellColor(rank: number, cutoff: number): string {
-  if (!cutoff) return 'text-stone-300';
+  if (!cutoff) return 'text-ink-300';
   if (rank < cutoff * 0.8) return 'text-emerald-700 font-semibold';
-  if (rank < cutoff * 0.95) return 'text-amber-700 font-semibold';
+  if (rank < cutoff * 0.95) return 'text-gold-700 font-semibold';
   if (rank < cutoff * 1.2) return 'text-orange-700 font-semibold';
-  return 'text-stone-400';
+  return 'text-ink-400';
 }
 
 export default function Predictor() {
@@ -89,19 +89,19 @@ export default function Predictor() {
     <div className="max-w-5xl mx-auto py-8 px-4">
       <header className="text-center mb-8">
         <h1 className="text-3xl font-bold tracking-tight uppercase font-display mb-2 flex items-center justify-center gap-2">
-          <GraduationCap className="w-7 h-7 text-amber-500" /> KCET College Predictor
+          <GraduationCap className="w-7 h-7 text-gold-500" /> KCET College Predictor
         </h1>
-        <p className="text-stone-500 text-sm">Karnataka CET — Engineering, Agriculture & Veterinary/Professional courses</p>
+        <p className="text-ink-500 text-sm">Karnataka CET — Engineering, Agriculture & Veterinary/Professional courses</p>
       </header>
 
-      <div className="bg-white rounded-3xl border-2 border-stone-200 shadow-sm p-6 mb-8">
+      <div className="bg-white rounded-3xl border-2 border-ink-200 shadow-sm p-6 mb-8">
         <div className="flex gap-2 mb-6">
           {(['engg', 'agri', 'prof'] as CourseType[]).map((t) => (
             <button
               key={t}
               onClick={() => handleTypeChange(t)}
               className={`px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wider transition-all ${
-                courseType === t ? 'bg-stone-800 text-white' : 'bg-stone-100 text-stone-500 hover:bg-stone-200'
+                courseType === t ? 'bg-ink-800 text-white' : 'bg-ink-100 text-ink-500 hover:bg-ink-200'
               }`}
             >
               {t === 'engg' ? 'Engineering' : t === 'agri' ? 'Agriculture' : 'Veterinary / Professional'}
@@ -111,7 +111,7 @@ export default function Predictor() {
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
           <div className="md:col-span-1">
-            <label className="text-xs font-bold text-stone-500 uppercase tracking-widest mb-1 block">
+            <label className="text-xs font-bold text-ink-500 uppercase tracking-widest mb-1 block">
               {courseType === 'prof' ? 'Your UGCET Rank' : 'Your KCET Rank'}
             </label>
             <input
@@ -120,15 +120,15 @@ export default function Predictor() {
               value={rank}
               onChange={(e) => setRank(e.target.value)}
               placeholder="e.g. 5000"
-              className="w-full border-2 border-stone-200 rounded-xl px-3 py-2 outline-none focus:border-amber-400"
+              className="w-full border-2 border-ink-200 rounded-xl px-3 py-2 outline-none focus:border-gold-400"
             />
           </div>
           <div className="md:col-span-1">
-            <label className="text-xs font-bold text-stone-500 uppercase tracking-widest mb-1 block">Category</label>
+            <label className="text-xs font-bold text-ink-500 uppercase tracking-widest mb-1 block">Category</label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full border-2 border-stone-200 rounded-xl px-3 py-2 outline-none focus:border-amber-400 bg-white"
+              className="w-full border-2 border-ink-200 rounded-xl px-3 py-2 outline-none focus:border-gold-400 bg-white"
             >
               <option value="">-- Select --</option>
               {CATEGORY_OPTIONS.map((c) => (
@@ -139,13 +139,13 @@ export default function Predictor() {
             </select>
           </div>
           <div className="md:col-span-1">
-            <label className="text-xs font-bold text-stone-500 uppercase tracking-widest mb-1 block">
+            <label className="text-xs font-bold text-ink-500 uppercase tracking-widest mb-1 block">
               {courseType === 'engg' ? 'Branch / Programme' : 'Course'}
             </label>
             <select
               value={branch}
               onChange={(e) => setBranch(e.target.value)}
-              className="w-full border-2 border-stone-200 rounded-xl px-3 py-2 outline-none focus:border-amber-400 bg-white"
+              className="w-full border-2 border-ink-200 rounded-xl px-3 py-2 outline-none focus:border-gold-400 bg-white"
             >
               <option value="">-- Select --</option>
               {branchOptions.map((b) => (
@@ -159,7 +159,7 @@ export default function Predictor() {
             <button
               type="submit"
               disabled={!valid}
-              className="w-full bg-amber-400 hover:bg-amber-300 disabled:opacity-40 disabled:cursor-not-allowed text-stone-900 font-bold py-2.5 rounded-xl shadow flex items-center justify-center gap-2"
+              className="w-full bg-gold-400 hover:bg-gold-300 disabled:opacity-40 disabled:cursor-not-allowed text-ink-900 font-bold py-2.5 rounded-xl shadow flex items-center justify-center gap-2"
             >
               <Search className="w-4 h-4" /> Predict
             </button>
@@ -167,7 +167,7 @@ export default function Predictor() {
         </form>
       </div>
 
-      <div className="flex items-start gap-2 bg-blue-50 border border-blue-100 text-blue-800 text-xs rounded-2xl px-4 py-3 mb-8">
+      <div className="flex items-start gap-2 bg-sage-50 border border-sage-100 text-sage-800 text-xs rounded-2xl px-4 py-3 mb-8">
         <Info className="w-4 h-4 mt-0.5 shrink-0" />
         <p>
           Columns for 2022–2024 are real published KEA cutoff ranks. <strong>2025 / 2026 columns are trend-based
@@ -178,19 +178,19 @@ export default function Predictor() {
       </div>
 
       {submitted && valid && rows.length === 0 && (
-        <div className="bg-white rounded-3xl border-2 border-stone-200 p-8 text-center text-stone-500">
+        <div className="bg-white rounded-3xl border-2 border-ink-200 p-8 text-center text-ink-500">
           No data found for this course / category combination. Try a different selection.
         </div>
       )}
 
       {submitted && valid && rows.length > 0 && (
-        <div className="bg-white rounded-3xl border-2 border-stone-200 shadow-sm overflow-hidden">
-          <div className="p-4 flex flex-wrap gap-3 border-b border-stone-100 text-sm">
-            <span className="text-stone-500">
+        <div className="bg-white rounded-3xl border-2 border-ink-200 shadow-sm overflow-hidden">
+          <div className="p-4 flex flex-wrap gap-3 border-b border-ink-100 text-sm">
+            <span className="text-ink-500">
               Showing <strong>{rows.length}</strong> colleges
             </span>
             {counts.safe > 0 && <span className="text-emerald-700 font-semibold">✓ Safe: {counts.safe}</span>}
-            {counts.moderate > 0 && <span className="text-amber-700 font-semibold">~ Moderate: {counts.moderate}</span>}
+            {counts.moderate > 0 && <span className="text-gold-700 font-semibold">~ Moderate: {counts.moderate}</span>}
             {counts.borderline > 0 && <span className="text-orange-700 font-semibold">! Borderline: {counts.borderline}</span>}
             {counts.longshot + counts.unknown > 0 && (
               <span className="text-rose-700 font-semibold">✗ Long Shot: {counts.longshot + counts.unknown}</span>
@@ -198,7 +198,7 @@ export default function Predictor() {
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="bg-stone-50 text-stone-500 uppercase text-xs tracking-wider">
+              <thead className="bg-ink-50 text-ink-500 uppercase text-xs tracking-wider">
                 <tr>
                   <th className="text-left px-4 py-3">College</th>
                   <th className="text-left px-4 py-3">Location</th>
@@ -220,14 +220,14 @@ export default function Predictor() {
                   <th className="text-right px-3 py-3 whitespace-nowrap">Est. 2026</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-stone-100">
+              <tbody className="divide-y divide-ink-100">
                 {courseType === 'engg' &&
                   (rows as EnggResultRow[]).map((r, i) => (
-                    <tr key={r.code} className="hover:bg-stone-50">
-                      <td className="px-4 py-3 font-medium text-stone-800">
+                    <tr key={r.code} className="hover:bg-ink-50">
+                      <td className="px-4 py-3 font-medium text-ink-800">
                         {i + 1}. {r.name}
                       </td>
-                      <td className="px-4 py-3 text-stone-500">{r.location || '—'}</td>
+                      <td className="px-4 py-3 text-ink-500">{r.location || '—'}</td>
                       <td className="px-4 py-3">
                         <Badge level={r.prediction} />
                       </td>
@@ -238,7 +238,7 @@ export default function Predictor() {
                       ))}
                       {r.projected.map((p) => (
                         <td key={p.year} className="px-3 py-3 text-right whitespace-nowrap">
-                          <span className={p.source === 'official' ? 'text-emerald-700 font-bold' : 'text-stone-400 italic'}>
+                          <span className={p.source === 'official' ? 'text-emerald-700 font-bold' : 'text-ink-400 italic'}>
                             ~{p.value ? p.value.toLocaleString() : '—'}
                           </span>
                         </td>
@@ -247,11 +247,11 @@ export default function Predictor() {
                   ))}
                 {courseType === 'agri' &&
                   (rows as AgriResultRow[]).map((r, i) => (
-                    <tr key={r.code} className="hover:bg-stone-50">
-                      <td className="px-4 py-3 font-medium text-stone-800">
+                    <tr key={r.code} className="hover:bg-ink-50">
+                      <td className="px-4 py-3 font-medium text-ink-800">
                         {i + 1}. {r.name}
                       </td>
-                      <td className="px-4 py-3 text-stone-500">{r.location || '—'}</td>
+                      <td className="px-4 py-3 text-ink-500">{r.location || '—'}</td>
                       <td className="px-4 py-3">
                         <Badge level={r.prediction} />
                       </td>
@@ -262,7 +262,7 @@ export default function Predictor() {
                       ))}
                       {r.projected.map((p) => (
                         <td key={p.year} className="px-3 py-3 text-right whitespace-nowrap">
-                          <span className={p.source === 'official' ? 'text-emerald-700 font-bold' : 'text-stone-400 italic'}>
+                          <span className={p.source === 'official' ? 'text-emerald-700 font-bold' : 'text-ink-400 italic'}>
                             ~{p.value ? p.value.toLocaleString() : '—'}
                           </span>
                         </td>
@@ -271,11 +271,11 @@ export default function Predictor() {
                   ))}
                 {courseType === 'prof' &&
                   (rows as ProfResultRow[]).map((r, i) => (
-                    <tr key={r.code} className="hover:bg-stone-50">
-                      <td className="px-4 py-3 font-medium text-stone-800">
+                    <tr key={r.code} className="hover:bg-ink-50">
+                      <td className="px-4 py-3 font-medium text-ink-800">
                         {i + 1}. {r.name}
                       </td>
-                      <td className="px-4 py-3 text-stone-500">{r.location || '—'}</td>
+                      <td className="px-4 py-3 text-ink-500">{r.location || '—'}</td>
                       <td className="px-4 py-3">
                         <Badge level={r.prediction} />
                       </td>
@@ -284,7 +284,7 @@ export default function Predictor() {
                       </td>
                       {r.projected.map((p) => (
                         <td key={p.year} className="px-3 py-3 text-right whitespace-nowrap">
-                          <span className={p.source === 'official' ? 'text-emerald-700 font-bold' : 'text-stone-400 italic'}>
+                          <span className={p.source === 'official' ? 'text-emerald-700 font-bold' : 'text-ink-400 italic'}>
                             ~{p.value ? p.value.toLocaleString() : '—'}
                           </span>
                         </td>

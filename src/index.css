@@ -2,12 +2,49 @@
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Outfit", sans-serif;
+  --font-display: "Playfair Display", "Lora", ui-serif, Georgia, serif;
+
+  /* Ink — warm charcoal/greige neutral, replaces the default cool "stone" scale */
+  --color-ink-50: #faf8f5;
+  --color-ink-100: #f1ede6;
+  --color-ink-200: #e2dcd1;
+  --color-ink-300: #c7bfb0;
+  --color-ink-400: #a69c89;
+  --color-ink-500: #877c68;
+  --color-ink-600: #6b6151;
+  --color-ink-700: #4f473b;
+  --color-ink-800: #332e27;
+  --color-ink-900: #201c17;
+  --color-ink-950: #14110d;
+
+  /* Gold — brass accent, replaces the default "amber" */
+  --color-gold-50: #fbf4e6;
+  --color-gold-100: #f5e6c4;
+  --color-gold-200: #ead196;
+  --color-gold-300: #ddb765;
+  --color-gold-400: #cc9a3e;
+  --color-gold-500: #b3822f;
+  --color-gold-600: #8f6924;
+  --color-gold-700: #6e4f1b;
+  --color-gold-800: #543a14;
+  --color-gold-900: #33240d;
+
+  /* Sage — muted eucalyptus green, replaces the default "blue" */
+  --color-sage-50: #f1f5ef;
+  --color-sage-100: #e1eade;
+  --color-sage-200: #c3d5be;
+  --color-sage-300: #9dbb96;
+  --color-sage-400: #79a070;
+  --color-sage-500: #5c8552;
+  --color-sage-600: #4a6d40;
+  --color-sage-700: #3a5432;
+  --color-sage-800: #2e4a2a;
+  --color-sage-900: #1f331c;
 }
 
 @layer base {
   body {
-    @apply bg-stone-50 text-stone-900 font-sans;
+    @apply bg-ink-50 text-ink-900 font-sans;
   }
 }
 
@@ -16,14 +53,14 @@
 }
 
 .flow-connector {
-  @apply w-0.5 bg-stone-300 h-6 relative;
+  @apply w-0.5 bg-ink-300 h-6 relative;
 }
 
 .flow-connector::after {
   content: '';
-  @apply absolute -bottom-1 -left-[3px] border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-stone-300;
+  @apply absolute -bottom-1 -left-[3px] border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-ink-300;
 }
 
 .planner-input {
-  @apply w-full bg-transparent border-b border-stone-200 focus:border-stone-400 outline-none py-1 transition-colors;
+  @apply w-full bg-transparent border-b border-ink-200 focus:border-ink-400 outline-none py-1 transition-colors;
 }

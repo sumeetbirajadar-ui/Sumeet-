@@ -16,6 +16,7 @@ import {
   listChapterResources,
 } from '../lib/lms';
 import { getOrCreateStudentId, getStudentName, getStudentBatchId, setStudentBatchId } from '../lib/studentIdentity';
+import YouTubeCard from '../components/YouTubeCard';
 
 type Tab = 'classes' | 'content' | 'pyq' | 'doubts';
 
@@ -27,12 +28,12 @@ function useForceUpdate() {
 function BatchPicker({ batches, batchId, onChange }: { batches: Batch[]; batchId: string | null; onChange: (id: string | null) => void }) {
   if (batches.length === 0) return null;
   return (
-    <div className="bg-white border-2 border-stone-200 rounded-2xl p-4 mb-6 flex items-center gap-3 flex-wrap">
-      <span className="text-xs font-bold uppercase tracking-widest text-stone-500">Your Batch</span>
+    <div className="bg-white border-2 border-ink-200 rounded-2xl p-4 mb-6 flex items-center gap-3 flex-wrap">
+      <span className="text-xs font-bold uppercase tracking-widest text-ink-500">Your Batch</span>
       <select
         value={batchId || ''}
         onChange={(e) => onChange(e.target.value || null)}
-        className="border-2 border-stone-200 rounded-xl px-3 py-1.5 text-sm bg-white"
+        className="border-2 border-ink-200 rounded-xl px-3 py-1.5 text-sm bg-white"
       >
         <option value="">Not set — showing content for all batches only</option>
         {batches.map((b) => (
@@ -58,7 +59,7 @@ function ClassesPanel({ batchId }: { batchId: string | null }) {
   }
 
   if (classes.length === 0) {
-    return <p className="text-stone-400 italic text-sm">No live classes scheduled yet.</p>;
+    return <p className="text-ink-400 italic text-sm">No live classes scheduled yet.</p>;
   }
 
   return (
@@ -66,27 +67,24 @@ function ClassesPanel({ batchId }: { batchId: string | null }) {
       {classes.map((c) => {
         const attended = attendanceForClass(c.id).some((a) => a.studentId === studentId);
         return (
-          <div key={c.id} className="bg-white border-2 border-stone-200 rounded-2xl p-4 flex items-center justify-between gap-4 flex-wrap">
-            <div>
-              <div className="flex items-center gap-2 mb-1">
-                <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full ${
-                  c.publishState === 'ended' ? 'bg-stone-100 text-stone-500' : 'bg-emerald-100 text-emerald-700'
-                }`}>
-                  {c.publishState}
-                </span>
-                <h4 className="font-bold text-stone-800">{c.title}</h4>
-              </div>
-              <p className="text-xs text-stone-500">
+          <div key={c.id} className="bg-white border-2 border-ink-200 rounded-2xl p-4">
+            <div className="flex items-center gap-2 mb-1">
+              <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full ${
+                c.publishState === 'ended' ? 'bg-ink-100 text-ink-500' : 'bg-emerald-100 text-emerald-700'
+              }`}>
+                {c.publishState}
+              </span>
+              <span className="text-xs text-ink-500">
                 {c.subject} · {c.chapter} · {new Date(c.scheduledStart).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })}
-              </p>
+              </span>
             </div>
-            <button
+            <YouTubeCard
+              url={c.joinUrl}
+              title={c.title}
+              subtitle="Tap to join the live class"
               onClick={() => handleJoin(c.id, c.joinUrl)}
-              className="bg-amber-400 hover:bg-amber-300 text-stone-900 font-bold px-4 py-2 rounded-xl flex items-center gap-2 text-sm shrink-0"
-            >
-              {attended && <CheckCircle2 className="w-4 h-4" />}
-              Join <ExternalLink className="w-3.5 h-3.5" />
-            </button>
+              badge={attended ? <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> : undefined}
+            />
           </div>
         );
       })}
@@ -96,25 +94,11 @@ function ClassesPanel({ batchId }: { batchId: string | null }) {
 
 function ContentPanel({ batchId }: { batchId: string | null }) {
   const items = useMemo(() => visibleContentForBatch(batchId), [batchId]);
-  if (items.length === 0) return <p className="text-stone-400 italic text-sm">No notes or videos published yet.</p>;
+  if (items.length === 0) return <p className="text-ink-400 italic text-sm">No notes or videos published yet.</p>;
   return (
     <div className="space-y-3">
       {items.map((item) => (
-        <a
-          key={item.id}
-          href={item.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bg-white border-2 border-stone-200 rounded-2xl p-4 flex items-center gap-4 hover:border-amber-300 transition-all"
-        >
-          <div className="p-2 bg-stone-50 rounded-xl text-amber-500 shrink-0">
-            {item.kind === 'note' ? <FileText className="w-5 h-5" /> : <Video className="w-5 h-5" />}
-          </div>
-          <div className="min-w-0">
-            <h4 className="font-bold text-stone-800 truncate">{item.title}</h4>
-            <p className="text-xs text-stone-500">{item.subject} · {item.chapter}</p>
-          </div>
-        </a>
+        <YouTubeCard key={item.id} url={item.url} title={item.title} subtitle={`${item.subject} · ${item.chapter}`} />
       ))}
     </div>
   );
@@ -123,21 +107,12 @@ function ContentPanel({ batchId }: { batchId: string | null }) {
 function ResourceLink({ label, icon, url }: { label: string; icon: React.ReactNode; url: string }) {
   if (!url) {
     return (
-      <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-stone-50 text-stone-400 text-sm">
+      <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-ink-50 text-ink-400 text-sm">
         {icon} {label} — not added yet
       </div>
     );
   }
-  return (
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="flex items-center gap-2 px-4 py-3 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 text-sm font-semibold transition-colors"
-    >
-      {icon} {label} <ExternalLink className="w-3.5 h-3.5 ml-auto" />
-    </a>
-  );
+  return <YouTubeCard url={url} title={label} />;
 }
 
 function PyqPanel() {
@@ -152,28 +127,28 @@ function PyqPanel() {
           <button
             key={t}
             onClick={() => { setTrack(t); setOpenChapter(null); }}
-            className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider ${track === t ? 'bg-stone-800 text-white' : 'bg-stone-100 text-stone-500'}`}
+            className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider ${track === t ? 'bg-ink-800 text-white' : 'bg-ink-100 text-ink-500'}`}
           >
             {t} PYQ
           </button>
         ))}
       </div>
-      <p className="text-xs text-stone-400 text-center">Physics · {chapters.length} chapters</p>
+      <p className="text-xs text-ink-400 text-center">Physics · {chapters.length} chapters</p>
 
       <div className="space-y-2">
         {chapters.map((c) => (
-          <div key={c.id} className="bg-white border-2 border-stone-200 rounded-2xl overflow-hidden">
+          <div key={c.id} className="bg-white border-2 border-ink-200 rounded-2xl overflow-hidden">
             <button
               onClick={() => setOpenChapter(openChapter === c.id ? null : c.id)}
               className="w-full flex items-center justify-between px-4 py-3 text-left"
             >
-              <span className="font-semibold text-stone-800 text-sm">
+              <span className="font-semibold text-ink-800 text-sm">
                 {c.chapterIndex}. {c.chapterName}
               </span>
-              <ChevronDown className={`w-4 h-4 text-stone-400 transition-transform ${openChapter === c.id ? 'rotate-180' : ''}`} />
+              <ChevronDown className={`w-4 h-4 text-ink-400 transition-transform ${openChapter === c.id ? 'rotate-180' : ''}`} />
             </button>
             {openChapter === c.id && (
-              <div className="px-4 pb-4 space-y-2 border-t border-stone-100 pt-3">
+              <div className="px-4 pb-4 space-y-2 border-t border-ink-100 pt-3">
                 <ResourceLink label="Notes (Drive)" icon={<FileText className="w-4 h-4" />} url={c.notesUrl} />
                 <ResourceLink label="Solved PYQ Video" icon={<Video className="w-4 h-4" />} url={c.solutionVideoUrl} />
                 <ResourceLink label="Important Topics Explained" icon={<Lightbulb className="w-4 h-4" />} url={c.conceptVideoUrl} />
@@ -214,41 +189,41 @@ function DoubtsPanel() {
 
   return (
     <div className="space-y-6">
-      <form onSubmit={handleNewThread} className="bg-white border-2 border-stone-200 rounded-2xl p-5 space-y-3">
-        <h3 className="font-bold text-stone-800">Ask a Doubt</h3>
-        <p className="text-xs text-stone-400">Only you and the admin/teacher can see this thread.</p>
+      <form onSubmit={handleNewThread} className="bg-white border-2 border-ink-200 rounded-2xl p-5 space-y-3">
+        <h3 className="font-bold text-ink-800">Ask a Doubt</h3>
+        <p className="text-xs text-ink-400">Only you and the admin/teacher can see this thread.</p>
         <input
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
           placeholder="Subject / Chapter"
-          className="w-full border-2 border-stone-200 rounded-xl px-3 py-2 text-sm"
+          className="w-full border-2 border-ink-200 rounded-xl px-3 py-2 text-sm"
         />
         <textarea
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Type your doubt..."
           rows={2}
-          className="w-full border-2 border-stone-200 rounded-xl px-3 py-2 text-sm"
+          className="w-full border-2 border-ink-200 rounded-xl px-3 py-2 text-sm"
         />
-        <button type="submit" className="bg-amber-400 hover:bg-amber-300 text-stone-900 font-bold px-4 py-2 rounded-xl text-sm flex items-center gap-2">
+        <button type="submit" className="bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold px-4 py-2 rounded-xl text-sm flex items-center gap-2">
           <Send className="w-4 h-4" /> Send
         </button>
       </form>
 
-      {threads.length === 0 && <p className="text-stone-400 italic text-sm">No doubts asked yet.</p>}
+      {threads.length === 0 && <p className="text-ink-400 italic text-sm">No doubts asked yet.</p>}
       {threads.map((t) => {
         const messages = listMessages(t.id);
         return (
-          <div key={t.id} className="bg-white border-2 border-stone-200 rounded-2xl p-5">
+          <div key={t.id} className="bg-white border-2 border-ink-200 rounded-2xl p-5">
             <div className="flex items-center gap-2 mb-3">
-              <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full ${t.status === 'resolved' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>
+              <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full ${t.status === 'resolved' ? 'bg-emerald-100 text-emerald-700' : 'bg-gold-100 text-gold-700'}`}>
                 {t.status}
               </span>
-              <h4 className="font-bold text-stone-800">{t.subject}</h4>
+              <h4 className="font-bold text-ink-800">{t.subject}</h4>
             </div>
             <div className="space-y-2 mb-3">
               {messages.map((m) => (
-                <div key={m.id} className={`text-sm px-3 py-2 rounded-xl max-w-[85%] ${m.senderRole === 'admin' ? 'bg-blue-50 text-blue-900 ml-auto text-right' : 'bg-stone-50 text-stone-700'}`}>
+                <div key={m.id} className={`text-sm px-3 py-2 rounded-xl max-w-[85%] ${m.senderRole === 'admin' ? 'bg-sage-50 text-sage-900 ml-auto text-right' : 'bg-ink-50 text-ink-700'}`}>
                   <p className="text-[10px] uppercase tracking-wider opacity-60 mb-0.5">{m.senderRole === 'admin' ? 'Teacher' : 'You'}</p>
                   {m.body}
                 </div>
@@ -259,10 +234,10 @@ function DoubtsPanel() {
                 value={reply[t.id] || ''}
                 onChange={(e) => setReply((r) => ({ ...r, [t.id]: e.target.value }))}
                 placeholder="Reply..."
-                className="flex-1 border-2 border-stone-200 rounded-xl px-3 py-1.5 text-sm"
+                className="flex-1 border-2 border-ink-200 rounded-xl px-3 py-1.5 text-sm"
               />
-              <button onClick={() => handleReply(t.id)} className="p-2 rounded-xl bg-stone-100 hover:bg-stone-200">
-                <Send className="w-4 h-4 text-stone-600" />
+              <button onClick={() => handleReply(t.id)} className="p-2 rounded-xl bg-ink-100 hover:bg-ink-200">
+                <Send className="w-4 h-4 text-ink-600" />
               </button>
             </div>
           </div>
@@ -293,7 +268,7 @@ export default function StudentLMS() {
     <div className="max-w-3xl mx-auto py-8 px-4">
       <header className="text-center mb-6">
         <h1 className="text-3xl font-bold tracking-tight uppercase font-display mb-2">Learning Hub</h1>
-        <p className="text-stone-500 text-sm">Live classes, notes, PYQs and doubts — all in one place.</p>
+        <p className="text-ink-500 text-sm">Live classes, notes, PYQs and doubts — all in one place.</p>
       </header>
 
       <BatchPicker batches={batches} batchId={batchId} onChange={handleBatchChange} />
@@ -304,7 +279,7 @@ export default function StudentLMS() {
             key={t.key}
             onClick={() => setTab(t.key)}
             className={`px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wider flex items-center gap-2 ${
-              tab === t.key ? 'bg-stone-800 text-white' : 'bg-stone-100 text-stone-500'
+              tab === t.key ? 'bg-ink-800 text-white' : 'bg-ink-100 text-ink-500'
             }`}
           >
             {t.icon} {t.label}

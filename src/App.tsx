@@ -264,12 +264,12 @@ export default function App() {
     <div className="max-w-2xl mx-auto py-8 px-4">
       <header className="text-center mb-12">
         <h1 className="text-3xl font-bold tracking-tight uppercase font-display mb-2">My Daily Journey & Routine - 2026</h1>
-        <div className="flex justify-center items-center gap-4 text-stone-500">
+        <div className="flex justify-center items-center gap-4 text-ink-500">
           <button onClick={() => {
             const d = new Date(currentDate);
             d.setDate(d.getDate() - 1);
             setCurrentDate(d.toISOString().split('T')[0]);
-          }} className="p-1 hover:bg-stone-200 rounded-full transition-colors">
+          }} className="p-1 hover:bg-ink-200 rounded-full transition-colors">
             <ChevronLeft className="w-5 h-5" />
           </button>
           <div className="flex items-center gap-2">
@@ -280,7 +280,7 @@ export default function App() {
             const d = new Date(currentDate);
             d.setDate(d.getDate() + 1);
             setCurrentDate(d.toISOString().split('T')[0]);
-          }} className="p-1 hover:bg-stone-200 rounded-full transition-colors">
+          }} className="p-1 hover:bg-ink-200 rounded-full transition-colors">
             <ChevronRight className="w-5 h-5" />
           </button>
         </div>
@@ -289,7 +289,7 @@ export default function App() {
       <div className="flex flex-col items-center space-y-6">
         {/* Morning Kickstart */}
         <div className="flex flex-col items-center w-full">
-          <div className="bg-amber-100 text-amber-900 px-6 py-2 rounded-full font-bold text-sm uppercase tracking-wider mb-6 shadow-sm border border-amber-200">
+          <div className="bg-gold-100 text-gold-900 px-6 py-2 rounded-full font-bold text-sm uppercase tracking-wider mb-6 shadow-sm border border-gold-200">
             Morning Kickstart (3:40 AM)
           </div>
           
@@ -299,7 +299,7 @@ export default function App() {
             ))}
           </div>
           
-          <div className="h-8 w-0.5 bg-stone-300 my-2"></div>
+          <div className="h-8 w-0.5 bg-ink-300 my-2"></div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
             {INITIAL_ROUTINE_TASKS.slice(3).map(task => (
@@ -309,10 +309,10 @@ export default function App() {
         </div>
 
         <div className="flex flex-col items-center py-4">
-          <div className="bg-stone-800 text-white px-6 py-2 rounded-full font-bold text-sm uppercase tracking-wider shadow-lg">
+          <div className="bg-ink-800 text-white px-6 py-2 rounded-full font-bold text-sm uppercase tracking-wider shadow-lg">
             Work Day
           </div>
-          <div className="h-12 w-0.5 bg-stone-300"></div>
+          <div className="h-12 w-0.5 bg-ink-300"></div>
           
           <div className="relative w-full max-w-md flex justify-between items-start">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-12 flex justify-center">
@@ -330,7 +330,7 @@ export default function App() {
           <div className={`flex flex-col items-center space-y-4 transition-opacity duration-300 ${arrivalPath === '730' ? 'opacity-40' : 'opacity-100'}`}>
             <button 
               onClick={() => setArrivalPath('530')}
-              className={`px-6 py-2 rounded-full font-bold text-sm uppercase tracking-wider border-2 transition-all ${arrivalPath === '530' ? 'bg-blue-100 border-blue-300 text-blue-900' : 'bg-white border-stone-200 text-stone-400'}`}
+              className={`px-6 py-2 rounded-full font-bold text-sm uppercase tracking-wider border-2 transition-all ${arrivalPath === '530' ? 'bg-sage-100 border-sage-300 text-sage-900' : 'bg-white border-ink-200 text-ink-400'}`}
             >
               Came Home at 5:30 PM
             </button>
@@ -345,7 +345,7 @@ export default function App() {
           <div className={`flex flex-col items-center space-y-4 transition-opacity duration-300 ${arrivalPath === '530' ? 'opacity-40' : 'opacity-100'}`}>
             <button 
               onClick={() => setArrivalPath('730')}
-              className={`px-6 py-2 rounded-full font-bold text-sm uppercase tracking-wider border-2 transition-all ${arrivalPath === '730' ? 'bg-orange-100 border-orange-300 text-orange-900' : 'bg-white border-stone-200 text-stone-400'}`}
+              className={`px-6 py-2 rounded-full font-bold text-sm uppercase tracking-wider border-2 transition-all ${arrivalPath === '730' ? 'bg-orange-100 border-orange-300 text-orange-900' : 'bg-white border-ink-200 text-ink-400'}`}
             >
               Came Home at 7:30 PM
             </button>
@@ -358,21 +358,21 @@ export default function App() {
         </div>
 
         {/* Daily Reflection */}
-        <div className="w-full mt-12 pt-8 border-t border-stone-200">
-          <div className="bg-stone-100 text-stone-600 px-6 py-2 rounded-full font-bold text-xs uppercase tracking-widest mb-6 inline-block">
+        <div className="w-full mt-12 pt-8 border-t border-ink-200">
+          <div className="bg-ink-100 text-ink-600 px-6 py-2 rounded-full font-bold text-xs uppercase tracking-widest mb-6 inline-block">
             Daily Reflection
           </div>
-          <div className="bg-white p-6 rounded-3xl border-2 border-stone-200 shadow-sm">
-            <p className="text-sm font-bold text-stone-700 mb-4 italic">If tasks not done (Reason):</p>
+          <div className="bg-white p-6 rounded-3xl border-2 border-ink-200 shadow-sm">
+            <p className="text-sm font-bold text-ink-700 mb-4 italic">If tasks not done (Reason):</p>
             <div className="space-y-4">
               {currentData.reflection.map((reason, i) => (
                 <div key={i} className="flex items-center gap-3">
-                  <span className="text-stone-400 font-bold">{i + 1})</span>
+                  <span className="text-ink-400 font-bold">{i + 1})</span>
                   <input 
                     type="text" 
                     value={reason}
                     onChange={(e) => updateField('reflection', i, e.target.value)}
-                    className="flex-1 border-b border-stone-200 focus:border-stone-400 outline-none py-1 transition-colors bg-transparent"
+                    className="flex-1 border-b border-ink-200 focus:border-ink-400 outline-none py-1 transition-colors bg-transparent"
                     placeholder="Type reason here..."
                   />
                 </div>
@@ -382,27 +382,27 @@ export default function App() {
         </div>
 
         {/* Weekly Maintenance */}
-        <div className="w-full mt-12 bg-stone-100 p-8 rounded-[40px] border-2 border-stone-200">
+        <div className="w-full mt-12 bg-ink-100 p-8 rounded-[40px] border-2 border-ink-200">
           <div className="text-center mb-8">
-            <div className="bg-white px-6 py-2 rounded-full font-bold text-xs uppercase tracking-widest inline-block border border-stone-200 shadow-sm">
+            <div className="bg-white px-6 py-2 rounded-full font-bold text-xs uppercase tracking-widest inline-block border border-ink-200 shadow-sm">
               Weekly Maintenance Station
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {WEEKLY_TASKS.map(task => (
-              <div key={task.id} className="flex items-center justify-between bg-white p-4 rounded-2xl border border-stone-200 shadow-sm">
+              <div key={task.id} className="flex items-center justify-between bg-white p-4 rounded-2xl border border-ink-200 shadow-sm">
                 <div className="flex items-center gap-4">
-                  <div className="p-2 bg-stone-50 rounded-xl text-stone-600">
+                  <div className="p-2 bg-ink-50 rounded-xl text-ink-600">
                     {iconMap[task.icon || '']}
                   </div>
                   <div>
-                    <p className="font-bold text-sm text-stone-800">{task.label}</p>
-                    <p className="text-xs text-stone-400 font-medium">{task.days}</p>
+                    <p className="font-bold text-sm text-ink-800">{task.label}</p>
+                    <p className="text-xs text-ink-400 font-medium">{task.days}</p>
                   </div>
                 </div>
                 <button 
                   onClick={() => toggleRoutine(task.id)}
-                  className={`w-6 h-6 rounded-md border-2 transition-all flex items-center justify-center ${currentData.routine[task.id] ? 'bg-stone-800 border-stone-800 text-white' : 'bg-white border-stone-300'}`}
+                  className={`w-6 h-6 rounded-md border-2 transition-all flex items-center justify-center ${currentData.routine[task.id] ? 'bg-ink-800 border-ink-800 text-white' : 'bg-white border-ink-300'}`}
                 >
                   {currentData.routine[task.id] && <CheckCircle2 className="w-4 h-4" />}
                 </button>
@@ -416,7 +416,7 @@ export default function App() {
 
   const PlannerView = () => (
     <div className="max-w-4xl mx-auto py-8 px-4">
-      <div className="bg-white shadow-2xl rounded-[2rem] overflow-hidden border border-stone-200 min-h-[1000px] flex flex-col relative">
+      <div className="bg-white shadow-2xl rounded-[2rem] overflow-hidden border border-ink-200 min-h-[1000px] flex flex-col relative">
         {/* Decorative Paper Clips and Plants */}
         <div className="absolute top-4 right-8 opacity-20 rotate-12">
           <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
@@ -427,15 +427,15 @@ export default function App() {
         <div className="p-12 flex-1">
           <div className="flex justify-between items-start mb-12">
             <div className="flex items-center gap-4">
-              <span className="text-stone-500 font-medium">Date:</span>
+              <span className="text-ink-500 font-medium">Date:</span>
               <input 
                 type="text" 
                 value={currentData.date}
                 onChange={(e) => updateDailyData(currentDate, { ...currentData, date: e.target.value })}
-                className="border-b-2 border-stone-200 focus:border-stone-400 outline-none px-2 py-1 font-medium text-stone-700 bg-transparent"
+                className="border-b-2 border-ink-200 focus:border-ink-400 outline-none px-2 py-1 font-medium text-ink-700 bg-transparent"
               />
             </div>
-            <div className="text-right italic text-stone-400 text-sm">
+            <div className="text-right italic text-ink-400 text-sm">
               "Gratitude turns what we have into enough."
             </div>
           </div>
@@ -443,13 +443,13 @@ export default function App() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             {/* To Do List */}
             <div className="space-y-4">
-              <div className="bg-blue-100 text-blue-900 px-4 py-2 rounded-lg font-bold text-center text-sm uppercase tracking-wider">
+              <div className="bg-sage-100 text-sage-900 px-4 py-2 rounded-lg font-bold text-center text-sm uppercase tracking-wider">
                 To do list
               </div>
               <div className="space-y-2">
                 {currentData.todo.map((item, i) => (
                   <div key={i} className="flex items-center gap-2">
-                    <span className="text-stone-300">•</span>
+                    <span className="text-ink-300">•</span>
                     <input 
                       type="text" 
                       value={item}
@@ -463,7 +463,7 @@ export default function App() {
 
             {/* Expenses */}
             <div className="space-y-4">
-              <div className="bg-blue-100 text-blue-900 px-4 py-2 rounded-lg font-bold text-center text-sm uppercase tracking-wider">
+              <div className="bg-sage-100 text-sage-900 px-4 py-2 rounded-lg font-bold text-center text-sm uppercase tracking-wider">
                 Expenses
               </div>
               <div className="space-y-2">
@@ -485,9 +485,9 @@ export default function App() {
                     />
                   </div>
                 ))}
-                <div className="pt-4 flex justify-between items-center border-t border-stone-200">
-                  <span className="font-bold text-stone-500 text-sm">Total:</span>
-                  <span className="font-bold text-stone-800 text-sm">
+                <div className="pt-4 flex justify-between items-center border-t border-ink-200">
+                  <span className="font-bold text-ink-500 text-sm">Total:</span>
+                  <span className="font-bold text-ink-800 text-sm">
                     {currentData.expenses.reduce((sum, exp) => sum + (parseFloat(exp.amount) || 0), 0).toFixed(2)}
                   </span>
                 </div>
@@ -496,7 +496,7 @@ export default function App() {
 
             {/* Reminders */}
             <div className="space-y-4">
-              <div className="bg-blue-100 text-blue-900 px-4 py-2 rounded-lg font-bold text-center text-sm uppercase tracking-wider">
+              <div className="bg-sage-100 text-sage-900 px-4 py-2 rounded-lg font-bold text-center text-sm uppercase tracking-wider">
                 Reminders
               </div>
               <div className="space-y-2">
@@ -516,7 +516,7 @@ export default function App() {
 
           {/* Daily Gratitude */}
           <div className="mb-12 space-y-4">
-            <div className="bg-blue-100 text-blue-900 px-4 py-2 rounded-lg font-bold text-center text-sm uppercase tracking-wider w-full">
+            <div className="bg-sage-100 text-sage-900 px-4 py-2 rounded-lg font-bold text-center text-sm uppercase tracking-wider w-full">
               Daily Gratitude
             </div>
             <div className="space-y-4">
@@ -549,12 +549,12 @@ export default function App() {
     <div className="max-w-4xl mx-auto py-8 px-4">
       <header className="text-center mb-12">
         <h1 className="text-3xl font-bold tracking-tight uppercase font-display mb-2">Weekly Review & Reflection</h1>
-        <div className="flex justify-center items-center gap-4 text-stone-500">
+        <div className="flex justify-center items-center gap-4 text-ink-500">
           <button onClick={() => {
             const d = new Date(currentWeekKey);
             d.setDate(d.getDate() - 7);
             setCurrentDate(d.toISOString().split('T')[0]);
-          }} className="p-1 hover:bg-stone-200 rounded-full transition-colors">
+          }} className="p-1 hover:bg-ink-200 rounded-full transition-colors">
             <ChevronLeft className="w-5 h-5" />
           </button>
           <div className="flex items-center gap-2">
@@ -565,7 +565,7 @@ export default function App() {
             const d = new Date(currentWeekKey);
             d.setDate(d.getDate() + 7);
             setCurrentDate(d.toISOString().split('T')[0]);
-          }} className="p-1 hover:bg-stone-200 rounded-full transition-colors">
+          }} className="p-1 hover:bg-ink-200 rounded-full transition-colors">
             <ChevronRight className="w-5 h-5" />
           </button>
         </div>
@@ -575,29 +575,29 @@ export default function App() {
         {/* Left Column: Stats & Highlights */}
         <div className="lg:col-span-1 space-y-8">
           {/* Routine Consistency */}
-          <div className="bg-white p-6 rounded-3xl border-2 border-stone-200 shadow-sm">
+          <div className="bg-white p-6 rounded-3xl border-2 border-ink-200 shadow-sm">
             <div className="flex items-center gap-2 mb-6">
-              <BarChart3 className="w-5 h-5 text-amber-500" />
-              <h2 className="font-bold text-sm uppercase tracking-wider text-stone-700">Routine Consistency</h2>
+              <BarChart3 className="w-5 h-5 text-gold-500" />
+              <h2 className="font-bold text-sm uppercase tracking-wider text-ink-700">Routine Consistency</h2>
             </div>
             <div className="space-y-4">
               {stats.filter(s => s.count > 0).slice(0, 5).map((stat, i) => (
                 <div key={i} className="space-y-1">
-                  <div className="flex justify-between text-xs font-bold text-stone-600">
+                  <div className="flex justify-between text-xs font-bold text-ink-600">
                     <span>{stat.label}</span>
                     <span>{stat.percentage}%</span>
                   </div>
-                  <div className="h-2 bg-stone-100 rounded-full overflow-hidden">
+                  <div className="h-2 bg-ink-100 rounded-full overflow-hidden">
                     <motion.div 
                       initial={{ width: 0 }}
                       animate={{ width: `${stat.percentage}%` }}
-                      className="h-full bg-amber-400"
+                      className="h-full bg-gold-400"
                     />
                   </div>
                 </div>
               ))}
               {stats.filter(s => s.count > 0).length === 0 && (
-                <p className="text-xs text-stone-400 italic">No routine data for this week yet.</p>
+                <p className="text-xs text-ink-400 italic">No routine data for this week yet.</p>
               )}
             </div>
           </div>
@@ -631,7 +631,7 @@ export default function App() {
 
         {/* Right Column: Review Form */}
         <div className="lg:col-span-2 space-y-8">
-          <div className="bg-white p-8 rounded-[2.5rem] border-2 border-stone-200 shadow-xl relative overflow-hidden">
+          <div className="bg-white p-8 rounded-[2.5rem] border-2 border-ink-200 shadow-xl relative overflow-hidden">
             {/* Decorative Icon */}
             <div className="absolute -top-4 -right-4 opacity-5">
               <Trophy className="w-32 h-32" />
@@ -641,15 +641,15 @@ export default function App() {
               {/* Wins Section */}
               <section>
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 bg-amber-100 rounded-xl text-amber-600">
+                  <div className="p-2 bg-gold-100 rounded-xl text-gold-600">
                     <Trophy className="w-5 h-5" />
                   </div>
-                  <h3 className="font-bold text-lg text-stone-800">Biggest Wins</h3>
+                  <h3 className="font-bold text-lg text-ink-800">Biggest Wins</h3>
                 </div>
                 <div className="space-y-3">
                   {currentWeeklyReview.wins.map((win, i) => (
                     <div key={i} className="flex items-center gap-3">
-                      <span className="text-amber-400 font-bold">#</span>
+                      <span className="text-gold-400 font-bold">#</span>
                       <input 
                         type="text" 
                         value={win}
@@ -658,7 +658,7 @@ export default function App() {
                           newWins[i] = e.target.value;
                           updateWeeklyReview(currentWeekKey, { ...currentWeeklyReview, wins: newWins });
                         }}
-                        className="flex-1 border-b border-stone-100 focus:border-amber-200 outline-none py-2 transition-colors bg-transparent text-stone-700"
+                        className="flex-1 border-b border-ink-100 focus:border-gold-200 outline-none py-2 transition-colors bg-transparent text-ink-700"
                         placeholder="What went well?"
                       />
                     </div>
@@ -669,15 +669,15 @@ export default function App() {
               {/* Challenges Section */}
               <section>
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 bg-stone-100 rounded-xl text-stone-600">
+                  <div className="p-2 bg-ink-100 rounded-xl text-ink-600">
                     <TrendingUp className="w-5 h-5" />
                   </div>
-                  <h3 className="font-bold text-lg text-stone-800">Challenges & Lessons</h3>
+                  <h3 className="font-bold text-lg text-ink-800">Challenges & Lessons</h3>
                 </div>
                 <div className="space-y-3">
                   {currentWeeklyReview.challenges.map((challenge, i) => (
                     <div key={i} className="flex items-center gap-3">
-                      <span className="text-stone-300 font-bold">!</span>
+                      <span className="text-ink-300 font-bold">!</span>
                       <input 
                         type="text" 
                         value={challenge}
@@ -686,7 +686,7 @@ export default function App() {
                           newChallenges[i] = e.target.value;
                           updateWeeklyReview(currentWeekKey, { ...currentWeeklyReview, challenges: newChallenges });
                         }}
-                        className="flex-1 border-b border-stone-100 focus:border-stone-300 outline-none py-2 transition-colors bg-transparent text-stone-700"
+                        className="flex-1 border-b border-ink-100 focus:border-ink-300 outline-none py-2 transition-colors bg-transparent text-ink-700"
                         placeholder="What was difficult?"
                       />
                     </div>
@@ -697,15 +697,15 @@ export default function App() {
               {/* Goals Section */}
               <section>
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 bg-blue-100 rounded-xl text-blue-600">
+                  <div className="p-2 bg-sage-100 rounded-xl text-sage-600">
                     <Target className="w-5 h-5" />
                   </div>
-                  <h3 className="font-bold text-lg text-stone-800">Goals for Next Week</h3>
+                  <h3 className="font-bold text-lg text-ink-800">Goals for Next Week</h3>
                 </div>
                 <div className="space-y-3">
                   {currentWeeklyReview.goalsNextWeek.map((goal, i) => (
                     <div key={i} className="flex items-center gap-3">
-                      <div className="w-2 h-2 rounded-full bg-blue-400"></div>
+                      <div className="w-2 h-2 rounded-full bg-sage-400"></div>
                       <input 
                         type="text" 
                         value={goal}
@@ -714,7 +714,7 @@ export default function App() {
                           newGoals[i] = e.target.value;
                           updateWeeklyReview(currentWeekKey, { ...currentWeeklyReview, goalsNextWeek: newGoals });
                         }}
-                        className="flex-1 border-b border-stone-100 focus:border-blue-200 outline-none py-2 transition-colors bg-transparent text-stone-700"
+                        className="flex-1 border-b border-ink-100 focus:border-sage-200 outline-none py-2 transition-colors bg-transparent text-ink-700"
                         placeholder="What's next?"
                       />
                     </div>
@@ -723,15 +723,15 @@ export default function App() {
               </section>
 
               {/* Weekly Rating */}
-              <section className="pt-8 border-t border-stone-100">
+              <section className="pt-8 border-t border-ink-100">
                 <div className="flex flex-col items-center gap-4">
-                  <h3 className="font-bold text-sm uppercase tracking-widest text-stone-400">Overall Week Rating</h3>
+                  <h3 className="font-bold text-sm uppercase tracking-widest text-ink-400">Overall Week Rating</h3>
                   <div className="flex gap-2">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button 
                         key={star}
                         onClick={() => updateWeeklyReview(currentWeekKey, { ...currentWeeklyReview, overallRating: star })}
-                        className={`p-2 transition-all ${currentWeeklyReview.overallRating >= star ? 'text-amber-400 scale-110' : 'text-stone-200 hover:text-stone-300'}`}
+                        className={`p-2 transition-all ${currentWeeklyReview.overallRating >= star ? 'text-gold-400 scale-110' : 'text-ink-200 hover:text-ink-300'}`}
                       >
                         <Star className={`w-8 h-8 ${currentWeeklyReview.overallRating >= star ? 'fill-current' : ''}`} />
                       </button>
@@ -747,7 +747,7 @@ export default function App() {
   );
 
   return (
-    <div className="h-dvh flex flex-col bg-stone-50">
+    <div className="h-dvh flex flex-col bg-ink-50">
       <div className="flex-1 min-h-0 overflow-y-auto">
         <AnimatePresence mode="wait">
           <motion.div
@@ -770,49 +770,49 @@ export default function App() {
       </div>
 
       {/* Navigation Bar */}
-      <div className="shrink-0 flex justify-center pt-2 pb-6 px-4 bg-stone-50">
-      <div className="bg-stone-900/90 backdrop-blur-md text-white px-6 py-4 rounded-full shadow-2xl flex items-center gap-6 z-50 max-w-full overflow-x-auto">
+      <div className="shrink-0 flex justify-center pt-2 pb-6 px-4 bg-ink-50">
+      <div className="bg-ink-900/90 backdrop-blur-md text-white px-6 py-4 rounded-full shadow-2xl flex items-center gap-6 z-50 max-w-full overflow-x-auto">
         {role === 'admin' && (
           <>
             <button
               onClick={() => setView('routine')}
-              className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'routine' ? 'text-amber-400' : 'text-stone-400 hover:text-white'}`}
+              className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'routine' ? 'text-gold-400' : 'text-ink-400 hover:text-white'}`}
             >
               <Layout className="w-5 h-5" />
               <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Routine</span>
             </button>
-            <div className="w-px h-6 bg-stone-700 shrink-0"></div>
+            <div className="w-px h-6 bg-ink-700 shrink-0"></div>
             <button
               onClick={() => setView('planner')}
-              className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'planner' ? 'text-blue-400' : 'text-stone-400 hover:text-white'}`}
+              className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'planner' ? 'text-sage-400' : 'text-ink-400 hover:text-white'}`}
             >
               <Calendar className="w-5 h-5" />
               <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Planner</span>
             </button>
-            <div className="w-px h-6 bg-stone-700 shrink-0"></div>
+            <div className="w-px h-6 bg-ink-700 shrink-0"></div>
             <button
               onClick={() => setView('weekly')}
-              className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'weekly' ? 'text-emerald-400' : 'text-stone-400 hover:text-white'}`}
+              className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'weekly' ? 'text-emerald-400' : 'text-ink-400 hover:text-white'}`}
             >
               <TrendingUp className="w-5 h-5" />
               <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Review</span>
             </button>
-            <div className="w-px h-6 bg-stone-700 shrink-0"></div>
+            <div className="w-px h-6 bg-ink-700 shrink-0"></div>
           </>
         )}
         {role === 'student' && (
           <>
             <button
               onClick={() => setView('home')}
-              className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'home' ? 'text-amber-400' : 'text-stone-400 hover:text-white'}`}
+              className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'home' ? 'text-gold-400' : 'text-ink-400 hover:text-white'}`}
             >
               <NavHomeIcon className="w-5 h-5" />
               <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Home</span>
             </button>
-            <div className="w-px h-6 bg-stone-700 shrink-0"></div>
+            <div className="w-px h-6 bg-ink-700 shrink-0"></div>
             <button
               onClick={() => setView('lms')}
-              className={`relative flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'lms' ? 'text-amber-400' : 'text-stone-400 hover:text-white'}`}
+              className={`relative flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'lms' ? 'text-gold-400' : 'text-ink-400 hover:text-white'}`}
             >
               <span className="relative">
                 <NavLmsIcon className="w-5 h-5" />
@@ -820,40 +820,40 @@ export default function App() {
               </span>
               <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Learn</span>
             </button>
-            <div className="w-px h-6 bg-stone-700 shrink-0"></div>
+            <div className="w-px h-6 bg-ink-700 shrink-0"></div>
           </>
         )}
         <button
           onClick={() => setView('predictor')}
-          className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'predictor' ? 'text-amber-400' : 'text-stone-400 hover:text-white'}`}
+          className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'predictor' ? 'text-gold-400' : 'text-ink-400 hover:text-white'}`}
         >
           <NavPredictorIcon className="w-5 h-5" />
           <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Predictor</span>
         </button>
-        <div className="w-px h-6 bg-stone-700 shrink-0"></div>
+        <div className="w-px h-6 bg-ink-700 shrink-0"></div>
         <button
           onClick={() => setView('career')}
-          className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'career' ? 'text-amber-400' : 'text-stone-400 hover:text-white'}`}
+          className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'career' ? 'text-gold-400' : 'text-ink-400 hover:text-white'}`}
         >
           <NavCareerIcon className="w-5 h-5" />
           <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Career</span>
         </button>
         {role === 'admin' && (
           <>
-            <div className="w-px h-6 bg-stone-700 shrink-0"></div>
+            <div className="w-px h-6 bg-ink-700 shrink-0"></div>
             <button
               onClick={() => setView('admin')}
-              className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'admin' ? 'text-amber-400' : 'text-stone-400 hover:text-white'}`}
+              className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'admin' ? 'text-gold-400' : 'text-ink-400 hover:text-white'}`}
             >
               <NavAdminIcon className="w-5 h-5" />
               <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Admin</span>
             </button>
           </>
         )}
-        <div className="w-px h-6 bg-stone-700 shrink-0"></div>
+        <div className="w-px h-6 bg-ink-700 shrink-0"></div>
         <button
           onClick={handleLogout}
-          className="text-stone-400 hover:text-rose-400 transition-colors p-2 shrink-0"
+          className="text-ink-400 hover:text-rose-400 transition-colors p-2 shrink-0"
           title="Logout"
         >
           <Trash2 className="w-5 h-5" />
@@ -902,7 +902,7 @@ const Login: React.FC<{ onLogin: (role: 'admin' | 'student') => void }> = ({ onL
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-stone-950 relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-ink-950 relative overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div 
@@ -912,7 +912,7 @@ const Login: React.FC<{ onLogin: (role: 'admin' | 'student') => void }> = ({ onL
             opacity: [0.1, 0.2, 0.1]
           }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute -top-1/4 -left-1/4 w-full h-full bg-amber-500/20 blur-[120px] rounded-full"
+          className="absolute -top-1/4 -left-1/4 w-full h-full bg-gold-500/20 blur-[120px] rounded-full"
         />
         <motion.div 
           animate={{ 
@@ -921,7 +921,7 @@ const Login: React.FC<{ onLogin: (role: 'admin' | 'student') => void }> = ({ onL
             opacity: [0.1, 0.3, 0.1]
           }}
           transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute -bottom-1/4 -right-1/4 w-full h-full bg-blue-500/20 blur-[120px] rounded-full"
+          className="absolute -bottom-1/4 -right-1/4 w-full h-full bg-sage-500/20 blur-[120px] rounded-full"
         />
       </div>
 
@@ -935,12 +935,12 @@ const Login: React.FC<{ onLogin: (role: 'admin' | 'student') => void }> = ({ onL
             <motion.div 
               initial={{ rotate: -10 }}
               animate={{ rotate: 0 }}
-              className="inline-block p-4 bg-amber-400 rounded-3xl shadow-lg mb-6"
+              className="inline-block p-4 bg-gold-400 rounded-3xl shadow-lg mb-6"
             >
-              <Layout className="w-8 h-8 text-stone-900" />
+              <Layout className="w-8 h-8 text-ink-900" />
             </motion.div>
             <h1 className="text-3xl font-bold text-white tracking-tight font-display mb-2">Welcome</h1>
-            <p className="text-stone-400 text-sm">
+            <p className="text-ink-400 text-sm">
               {mode === 'student' ? 'Sign in to your KCET prep hub' : 'Sign in to your daily journey'}
             </p>
           </div>
@@ -949,14 +949,14 @@ const Login: React.FC<{ onLogin: (role: 'admin' | 'student') => void }> = ({ onL
             <button
               type="button"
               onClick={() => { setMode('student'); setError(''); }}
-              className={`flex-1 py-2 rounded-xl text-sm font-bold uppercase tracking-wider transition-all ${mode === 'student' ? 'bg-amber-400 text-stone-900' : 'text-stone-400'}`}
+              className={`flex-1 py-2 rounded-xl text-sm font-bold uppercase tracking-wider transition-all ${mode === 'student' ? 'bg-gold-400 text-ink-900' : 'text-ink-400'}`}
             >
               Student
             </button>
             <button
               type="button"
               onClick={() => { setMode('admin'); setError(''); }}
-              className={`flex-1 py-2 rounded-xl text-sm font-bold uppercase tracking-wider transition-all ${mode === 'admin' ? 'bg-amber-400 text-stone-900' : 'text-stone-400'}`}
+              className={`flex-1 py-2 rounded-xl text-sm font-bold uppercase tracking-wider transition-all ${mode === 'admin' ? 'bg-gold-400 text-ink-900' : 'text-ink-400'}`}
             >
               Admin
             </button>
@@ -965,14 +965,14 @@ const Login: React.FC<{ onLogin: (role: 'admin' | 'student') => void }> = ({ onL
           <form onSubmit={handleSubmit} className="space-y-6">
             {mode === 'student' ? (
               <div className="space-y-2">
-                <label className="text-xs font-bold text-stone-400 uppercase tracking-widest ml-1">Your Name</label>
+                <label className="text-xs font-bold text-ink-400 uppercase tracking-widest ml-1">Your Name</label>
                 <div className="relative">
-                  <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-500" />
+                  <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-500" />
                   <input
                     type="text"
                     value={studentName}
                     onChange={(e) => setStudentName(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white outline-none focus:border-amber-400/50 focus:bg-white/10 transition-all"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white outline-none focus:border-gold-400/50 focus:bg-white/10 transition-all"
                     placeholder="Enter your name"
                     required
                   />
@@ -981,14 +981,14 @@ const Login: React.FC<{ onLogin: (role: 'admin' | 'student') => void }> = ({ onL
             ) : (
               <>
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-stone-400 uppercase tracking-widest ml-1">Username</label>
+                  <label className="text-xs font-bold text-ink-400 uppercase tracking-widest ml-1">Username</label>
                   <div className="relative">
-                    <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-500" />
+                    <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-500" />
                     <input
                       type="text"
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white outline-none focus:border-amber-400/50 focus:bg-white/10 transition-all"
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white outline-none focus:border-gold-400/50 focus:bg-white/10 transition-all"
                       placeholder="Enter username"
                       required
                     />
@@ -996,14 +996,14 @@ const Login: React.FC<{ onLogin: (role: 'admin' | 'student') => void }> = ({ onL
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-stone-400 uppercase tracking-widest ml-1">Password</label>
+                  <label className="text-xs font-bold text-ink-400 uppercase tracking-widest ml-1">Password</label>
                   <div className="relative">
-                    <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-500" />
+                    <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-500" />
                     <input
                       type="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white outline-none focus:border-amber-400/50 focus:bg-white/10 transition-all"
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white outline-none focus:border-gold-400/50 focus:bg-white/10 transition-all"
                       placeholder="Enter password"
                       required
                     />
@@ -1025,10 +1025,10 @@ const Login: React.FC<{ onLogin: (role: 'admin' | 'student') => void }> = ({ onL
             <button 
               type="submit"
               disabled={isLoading}
-              className="w-full bg-amber-400 hover:bg-amber-300 text-stone-900 font-bold py-4 rounded-2xl shadow-lg shadow-amber-400/20 transition-all active:scale-95 flex items-center justify-center gap-2 group"
+              className="w-full bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold py-4 rounded-2xl shadow-lg shadow-gold-400/20 transition-all active:scale-95 flex items-center justify-center gap-2 group"
             >
               {isLoading ? (
-                <div className="w-5 h-5 border-2 border-stone-900/30 border-t-stone-900 rounded-full animate-spin" />
+                <div className="w-5 h-5 border-2 border-ink-900/30 border-t-ink-900 rounded-full animate-spin" />
               ) : (
                 <>
                   <span>Sign In</span>
@@ -1039,9 +1039,9 @@ const Login: React.FC<{ onLogin: (role: 'admin' | 'student') => void }> = ({ onL
           </form>
 
           <div className="mt-10 text-center">
-            <p className="text-stone-500 text-xs">
+            <p className="text-ink-500 text-xs">
               {mode === 'admin' ? (
-                <>Secure access for <span className="text-amber-400/80 font-bold">Sumeet</span> only</>
+                <>Secure access for <span className="text-gold-400/80 font-bold">Sumeet</span> only</>
               ) : (
                 'Open access for all students'
               )}
@@ -1063,13 +1063,13 @@ const RoutineNode: React.FC<{ task: any, completed: boolean, onToggle: () => voi
         <div className="p-1.5 bg-white rounded-lg shadow-sm">
           {iconMap[task.icon || '']}
         </div>
-        <div className={`w-5 h-5 rounded border-2 transition-all flex items-center justify-center ${completed ? 'bg-stone-800 border-stone-800 text-white' : 'bg-white border-stone-300'}`}>
+        <div className={`w-5 h-5 rounded border-2 transition-all flex items-center justify-center ${completed ? 'bg-ink-800 border-ink-800 text-white' : 'bg-white border-ink-300'}`}>
           {completed && <CheckCircle2 className="w-3 h-3" />}
         </div>
       </div>
       <div className="text-center">
-        <p className="text-xs font-bold text-stone-800 leading-tight mb-1">{task.label}</p>
-        {task.time && <p className="text-[10px] font-bold text-stone-500 uppercase tracking-tighter">{task.time}</p>}
+        <p className="text-xs font-bold text-ink-800 leading-tight mb-1">{task.label}</p>
+        {task.time && <p className="text-[10px] font-bold text-ink-500 uppercase tracking-tighter">{task.time}</p>}
       </div>
     </div>
   );
@@ -1077,8 +1077,8 @@ const RoutineNode: React.FC<{ task: any, completed: boolean, onToggle: () => voi
 
 const AcademicSection: React.FC<{ title: string, items: string[], onUpdate: (i: number, v: string) => void }> = ({ title, items, onUpdate }) => {
   return (
-    <div className="space-y-4 border border-stone-200 rounded-2xl overflow-hidden">
-      <div className="bg-blue-100 text-blue-900 px-4 py-2 font-bold text-center text-sm uppercase tracking-wider">
+    <div className="space-y-4 border border-ink-200 rounded-2xl overflow-hidden">
+      <div className="bg-sage-100 text-sage-900 px-4 py-2 font-bold text-center text-sm uppercase tracking-wider">
         {title}
       </div>
       <div className="p-4 space-y-2">

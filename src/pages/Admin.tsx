@@ -439,7 +439,7 @@ function ClassesAdminPanel() {
           <BatchMultiSelect batches={batches} selected={batchIds} onChange={setBatchIds} />
         </div>
         <button type="submit" className="bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold px-5 py-2 rounded-2xl flex items-center gap-2">
-          <Plus className="w-4 h-4" /> Save as Draft
+          <Plus className="w-4 h-4" /> Schedule Class (students see it immediately)
         </button>
       </form>
 
@@ -538,7 +538,7 @@ function ContentAdminPanel() {
           <BatchMultiSelect batches={batches} selected={batchIds} onChange={setBatchIds} />
         </div>
         <button type="submit" className="bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold px-5 py-2 rounded-2xl flex items-center gap-2">
-          <Plus className="w-4 h-4" /> Add as Draft
+          <Plus className="w-4 h-4" /> Publish (students see it immediately)
         </button>
       </form>
 

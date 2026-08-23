@@ -61,7 +61,9 @@ export function subscribeClasses(onData: (items: LiveClass[]) => void): () => vo
 
 export async function createClass(data: Omit<LiveClass, 'id' | 'createdAt' | 'updatedAt' | 'publishState'>): Promise<void> {
   const now = new Date().toISOString();
-  await addDocument(CLASSES_COLLECTION, { ...data, publishState: 'draft', createdAt: now, updatedAt: now });
+  // Scheduling a class already means "this is happening" — go straight to
+  // visible rather than a hidden draft the admin has to remember to flip.
+  await addDocument(CLASSES_COLLECTION, { ...data, publishState: 'scheduled', createdAt: now, updatedAt: now });
 }
 
 export async function updateClass(id: string, patch: Partial<LiveClass>): Promise<void> {
@@ -102,7 +104,9 @@ export function subscribeContent(onData: (items: ContentItem[]) => void): () => 
 
 export async function createContent(data: Omit<ContentItem, 'id' | 'createdAt' | 'updatedAt' | 'publishState'>): Promise<void> {
   const now = new Date().toISOString();
-  await addDocument(CONTENT_COLLECTION, { ...data, publishState: 'draft', createdAt: now, updatedAt: now });
+  // Same reasoning as createClass: publish immediately, no hidden draft step
+  // to remember. The publish/unpublish toggle is still there to hide it again.
+  await addDocument(CONTENT_COLLECTION, { ...data, publishState: 'published', createdAt: now, updatedAt: now });
 }
 
 export async function updateContent(id: string, patch: Partial<ContentItem>): Promise<void> {

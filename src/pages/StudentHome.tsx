@@ -1,11 +1,11 @@
 import React from 'react';
-import { Megaphone, GraduationCap, Compass, Video, ClipboardCheck, Sparkles, MessageSquareText, BookOpenCheck, Flame } from 'lucide-react';
+import { Megaphone, GraduationCap, Compass, Video, ClipboardCheck, Sparkles, MessageSquareText, BookOpenCheck, Flame, Target } from 'lucide-react';
 import { listPublished } from '../lib/announcements';
 import { latestActivityAt } from '../lib/lms';
 import { getLmsLastSeen, getOrCreateStudentId } from '../lib/studentIdentity';
 import { examProgressSummary } from '../lib/syllabusTracker';
 
-type Dest = 'predictor' | 'career' | 'lms' | 'counselling' | 'assistant' | 'tracker' | 'habitsFocus';
+type Dest = 'predictor' | 'career' | 'lms' | 'counselling' | 'assistant' | 'tracker' | 'habitsFocus' | 'performance';
 
 function FeatureCard({
   onClick,
@@ -76,6 +76,13 @@ export default function StudentHome({ onNavigate }: { onNavigate: (view: Dest) =
           badgeClass="bg-clay-50"
           title="Habits & Focus"
           description="Build daily discipline with identity habits and a multi-mode focus timer."
+        />
+        <FeatureCard
+          onClick={() => onNavigate('performance')}
+          icon={<Target className="w-6 h-6 text-gold-600" />}
+          badgeClass="bg-gold-50"
+          title="Performance"
+          description="Log mock tests and mistakes — see your trend and weakest chapters."
         />
         <FeatureCard
           onClick={() => onNavigate('assistant')}

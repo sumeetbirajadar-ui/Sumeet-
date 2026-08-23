@@ -88,7 +88,7 @@ export default function Predictor() {
   return (
     <div className="max-w-5xl mx-auto py-8 px-4">
       <header className="text-center mb-8">
-        <h1 className="text-3xl font-bold tracking-tight uppercase font-display mb-2 flex items-center justify-center gap-2">
+        <h1 className="text-3xl font-bold tracking-tight font-display mb-2 flex items-center justify-center gap-2">
           <GraduationCap className="w-7 h-7 text-gold-500" /> KCET College Predictor
         </h1>
         <p className="text-ink-500 text-sm">Karnataka CET — Engineering, Agriculture & Veterinary/Professional courses</p>
@@ -120,7 +120,7 @@ export default function Predictor() {
               value={rank}
               onChange={(e) => setRank(e.target.value)}
               placeholder="e.g. 5000"
-              className="w-full border-2 border-ink-200 rounded-xl px-3 py-2 outline-none focus:border-gold-400"
+              className="w-full border-2 border-ink-200 rounded-2xl px-3 py-2 outline-none focus:border-gold-400"
             />
           </div>
           <div className="md:col-span-1">
@@ -128,7 +128,7 @@ export default function Predictor() {
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full border-2 border-ink-200 rounded-xl px-3 py-2 outline-none focus:border-gold-400 bg-white"
+              className="w-full border-2 border-ink-200 rounded-2xl px-3 py-2 outline-none focus:border-gold-400 bg-white"
             >
               <option value="">-- Select --</option>
               {CATEGORY_OPTIONS.map((c) => (
@@ -145,7 +145,7 @@ export default function Predictor() {
             <select
               value={branch}
               onChange={(e) => setBranch(e.target.value)}
-              className="w-full border-2 border-ink-200 rounded-xl px-3 py-2 outline-none focus:border-gold-400 bg-white"
+              className="w-full border-2 border-ink-200 rounded-2xl px-3 py-2 outline-none focus:border-gold-400 bg-white"
             >
               <option value="">-- Select --</option>
               {branchOptions.map((b) => (
@@ -159,7 +159,7 @@ export default function Predictor() {
             <button
               type="submit"
               disabled={!valid}
-              className="w-full bg-gold-400 hover:bg-gold-300 disabled:opacity-40 disabled:cursor-not-allowed text-ink-900 font-bold py-2.5 rounded-xl shadow flex items-center justify-center gap-2"
+              className="w-full bg-gold-400 hover:bg-gold-300 disabled:opacity-40 disabled:cursor-not-allowed text-ink-900 font-bold py-2.5 rounded-2xl shadow flex items-center justify-center gap-2"
             >
               <Search className="w-4 h-4" /> Predict
             </button>
@@ -167,7 +167,7 @@ export default function Predictor() {
         </form>
       </div>
 
-      <div className="flex items-start gap-2 bg-sage-50 border border-sage-100 text-sage-800 text-xs rounded-2xl px-4 py-3 mb-8">
+      <div className="flex items-start gap-2 bg-sage-50 border border-sage-100 text-sage-800 text-xs rounded-3xl px-4 py-3 mb-8">
         <Info className="w-4 h-4 mt-0.5 shrink-0" />
         <p>
           Columns for 2022–2024 are real published KEA cutoff ranks. <strong>2025 / 2026 columns are trend-based

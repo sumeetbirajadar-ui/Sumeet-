@@ -59,12 +59,13 @@ import {
   ClipboardCheck as NavCounsellingIcon,
 } from 'lucide-react';
 import Counselling from './pages/Counselling';
+import AiAssistant from './pages/AiAssistant';
 import PomodoroTimer from './components/PomodoroTimer';
 import { latestActivityAt } from './lib/lms';
 import { getLmsLastSeen, markLmsSeen, getOrCreateStudentId } from './lib/studentIdentity';
 
 type Role = 'admin' | 'student';
-type View = 'home' | 'routine' | 'planner' | 'weekly' | 'predictor' | 'career' | 'admin' | 'lms' | 'counselling';
+type View = 'home' | 'routine' | 'planner' | 'weekly' | 'predictor' | 'career' | 'admin' | 'lms' | 'counselling' | 'assistant';
 
 const iconMap: Record<string, React.ReactNode> = {
   Sun: <Sun className="w-5 h-5" />,
@@ -275,7 +276,7 @@ export default function App() {
   const RoutineView = () => (
     <div className="max-w-2xl mx-auto py-8 px-4">
       <header className="text-center mb-12">
-        <h1 className="text-3xl font-bold tracking-tight uppercase font-display mb-2">My Daily Journey & Routine - 2026</h1>
+        <h1 className="text-3xl font-bold tracking-tight font-display mb-2">My Daily Journey & Routine - 2026</h1>
         <div className="flex justify-center items-center gap-4 text-ink-500">
           <button onClick={() => {
             const d = new Date(currentDate);
@@ -402,9 +403,9 @@ export default function App() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {WEEKLY_TASKS.map(task => (
-              <div key={task.id} className="flex items-center justify-between bg-white p-4 rounded-2xl border border-ink-200 shadow-sm">
+              <div key={task.id} className="flex items-center justify-between bg-white p-4 rounded-3xl border border-ink-200 shadow-sm">
                 <div className="flex items-center gap-4">
-                  <div className="p-2 bg-ink-50 rounded-xl text-ink-600">
+                  <div className="p-2 bg-ink-50 rounded-2xl text-ink-600">
                     {iconMap[task.icon || '']}
                   </div>
                   <div>
@@ -564,7 +565,7 @@ export default function App() {
   const WeeklyReviewView = () => (
     <div className="max-w-4xl mx-auto py-8 px-4">
       <header className="text-center mb-12">
-        <h1 className="text-3xl font-bold tracking-tight uppercase font-display mb-2">Weekly Review & Reflection</h1>
+        <h1 className="text-3xl font-bold tracking-tight font-display mb-2">Weekly Review & Reflection</h1>
         <div className="flex justify-center items-center gap-4 text-ink-500">
           <button onClick={() => {
             const d = new Date(currentWeekKey);
@@ -657,7 +658,7 @@ export default function App() {
               {/* Wins Section */}
               <section>
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 bg-gold-100 rounded-xl text-gold-600">
+                  <div className="p-2 bg-gold-100 rounded-2xl text-gold-600">
                     <Trophy className="w-5 h-5" />
                   </div>
                   <h3 className="font-bold text-lg text-ink-800">Biggest Wins</h3>
@@ -685,7 +686,7 @@ export default function App() {
               {/* Challenges Section */}
               <section>
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 bg-ink-100 rounded-xl text-ink-600">
+                  <div className="p-2 bg-ink-100 rounded-2xl text-ink-600">
                     <TrendingUp className="w-5 h-5" />
                   </div>
                   <h3 className="font-bold text-lg text-ink-800">Challenges & Lessons</h3>
@@ -713,7 +714,7 @@ export default function App() {
               {/* Goals Section */}
               <section>
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 bg-sage-100 rounded-xl text-sage-600">
+                  <div className="p-2 bg-sage-100 rounded-2xl text-sage-600">
                     <Target className="w-5 h-5" />
                   </div>
                   <h3 className="font-bold text-lg text-ink-800">Goals for Next Week</h3>
@@ -782,6 +783,7 @@ export default function App() {
             {effectiveView === 'admin' && <Admin />}
             {effectiveView === 'lms' && <StudentLMS />}
             {effectiveView === 'counselling' && <Counselling />}
+            {effectiveView === 'assistant' && <AiAssistant />}
           </motion.div>
         </AnimatePresence>
       </div>
@@ -966,18 +968,18 @@ const Login: React.FC<{ onLogin: (role: 'admin' | 'student') => void }> = ({ onL
             </p>
           </div>
 
-          <div className="flex gap-2 mb-8 bg-white/5 p-1 rounded-2xl">
+          <div className="flex gap-2 mb-8 bg-white/5 p-1 rounded-3xl">
             <button
               type="button"
               onClick={() => { setMode('student'); setError(''); }}
-              className={`flex-1 py-2 rounded-xl text-sm font-bold uppercase tracking-wider transition-all ${mode === 'student' ? 'bg-gold-400 text-ink-900' : 'text-ink-400'}`}
+              className={`flex-1 py-2 rounded-2xl text-sm font-bold uppercase tracking-wider transition-all ${mode === 'student' ? 'bg-gold-400 text-ink-900' : 'text-ink-400'}`}
             >
               Student
             </button>
             <button
               type="button"
               onClick={() => { setMode('admin'); setError(''); }}
-              className={`flex-1 py-2 rounded-xl text-sm font-bold uppercase tracking-wider transition-all ${mode === 'admin' ? 'bg-gold-400 text-ink-900' : 'text-ink-400'}`}
+              className={`flex-1 py-2 rounded-2xl text-sm font-bold uppercase tracking-wider transition-all ${mode === 'admin' ? 'bg-gold-400 text-ink-900' : 'text-ink-400'}`}
             >
               Admin
             </button>
@@ -993,7 +995,7 @@ const Login: React.FC<{ onLogin: (role: 'admin' | 'student') => void }> = ({ onL
                     type="text"
                     value={studentName}
                     onChange={(e) => setStudentName(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white outline-none focus:border-gold-400/50 focus:bg-white/10 transition-all"
+                    className="w-full bg-white/5 border border-white/10 rounded-3xl py-4 pl-12 pr-4 text-white outline-none focus:border-gold-400/50 focus:bg-white/10 transition-all"
                     placeholder="Enter your name"
                     required
                   />
@@ -1009,7 +1011,7 @@ const Login: React.FC<{ onLogin: (role: 'admin' | 'student') => void }> = ({ onL
                       type="text"
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white outline-none focus:border-gold-400/50 focus:bg-white/10 transition-all"
+                      className="w-full bg-white/5 border border-white/10 rounded-3xl py-4 pl-12 pr-4 text-white outline-none focus:border-gold-400/50 focus:bg-white/10 transition-all"
                       placeholder="Enter username"
                       required
                     />
@@ -1024,7 +1026,7 @@ const Login: React.FC<{ onLogin: (role: 'admin' | 'student') => void }> = ({ onL
                       type="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white outline-none focus:border-gold-400/50 focus:bg-white/10 transition-all"
+                      className="w-full bg-white/5 border border-white/10 rounded-3xl py-4 pl-12 pr-4 text-white outline-none focus:border-gold-400/50 focus:bg-white/10 transition-all"
                       placeholder="Enter password"
                       required
                     />
@@ -1046,7 +1048,7 @@ const Login: React.FC<{ onLogin: (role: 'admin' | 'student') => void }> = ({ onL
             <button 
               type="submit"
               disabled={isLoading}
-              className="w-full bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold py-4 rounded-2xl shadow-lg shadow-gold-400/20 transition-all active:scale-95 flex items-center justify-center gap-2 group"
+              className="w-full bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold py-4 rounded-3xl shadow-lg shadow-gold-400/20 transition-all active:scale-95 flex items-center justify-center gap-2 group"
             >
               {isLoading ? (
                 <div className="w-5 h-5 border-2 border-ink-900/30 border-t-ink-900 rounded-full animate-spin" />
@@ -1098,7 +1100,7 @@ const RoutineNode: React.FC<{ task: any, completed: boolean, onToggle: () => voi
 
 const AcademicSection: React.FC<{ title: string, items: string[], onUpdate: (i: number, v: string) => void }> = ({ title, items, onUpdate }) => {
   return (
-    <div className="space-y-4 border border-ink-200 rounded-2xl overflow-hidden">
+    <div className="space-y-4 border border-ink-200 rounded-3xl overflow-hidden">
       <div className="bg-sage-100 text-sage-900 px-4 py-2 font-bold text-center text-sm uppercase tracking-wider">
         {title}
       </div>

@@ -23,9 +23,9 @@ const YouTubeCard: React.FC<{
         target="_blank"
         rel="noopener noreferrer"
         onClick={onClick}
-        className="flex items-center gap-3 p-3 rounded-2xl border border-ink-200 bg-white hover:border-gold-300 hover:shadow-md transition-all"
+        className="flex items-center gap-3 p-3 rounded-3xl border border-ink-200 bg-white hover:border-gold-300 hover:shadow-md transition-all"
       >
-        <div className="w-10 h-10 rounded-xl bg-gold-50 text-gold-600 flex items-center justify-center shrink-0">
+        <div className="w-10 h-10 rounded-2xl bg-gold-50 text-gold-600 flex items-center justify-center shrink-0">
           <FileText className="w-5 h-5" />
         </div>
         <div className="min-w-0 flex-1">
@@ -44,9 +44,9 @@ const YouTubeCard: React.FC<{
       target="_blank"
       rel="noopener noreferrer"
       onClick={onClick}
-      className="group flex items-center gap-3 p-2 rounded-2xl border border-ink-200 bg-white hover:border-gold-300 hover:shadow-md transition-all"
+      className="group flex items-center gap-3 p-2 rounded-3xl border border-ink-200 bg-white hover:border-gold-300 hover:shadow-md transition-all"
     >
-      <div className="relative w-28 h-16 rounded-xl overflow-hidden shrink-0 bg-ink-100">
+      <div className="relative w-28 h-16 rounded-2xl overflow-hidden shrink-0 bg-ink-100">
         <img src={youtubeThumbnail(videoId)} alt="" className="w-full h-full object-cover" loading="lazy" />
         <div className="absolute inset-0 flex items-center justify-center bg-ink-900/20 group-hover:bg-ink-900/35 transition-colors">
           <div className="w-8 h-8 rounded-full bg-white/90 flex items-center justify-center shadow">

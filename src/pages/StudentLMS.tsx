@@ -28,12 +28,12 @@ function useForceUpdate() {
 function BatchPicker({ batches, batchId, onChange }: { batches: Batch[]; batchId: string | null; onChange: (id: string | null) => void }) {
   if (batches.length === 0) return null;
   return (
-    <div className="bg-white border-2 border-ink-200 rounded-2xl p-4 mb-6 flex items-center gap-3 flex-wrap">
+    <div className="bg-white border-2 border-ink-200 rounded-3xl p-4 mb-6 flex items-center gap-3 flex-wrap">
       <span className="text-xs font-bold uppercase tracking-widest text-ink-500">Your Batch</span>
       <select
         value={batchId || ''}
         onChange={(e) => onChange(e.target.value || null)}
-        className="border-2 border-ink-200 rounded-xl px-3 py-1.5 text-sm bg-white"
+        className="border-2 border-ink-200 rounded-2xl px-3 py-1.5 text-sm bg-white"
       >
         <option value="">Not set — showing content for all batches only</option>
         {batches.map((b) => (
@@ -67,7 +67,7 @@ function ClassesPanel({ batchId }: { batchId: string | null }) {
       {classes.map((c) => {
         const attended = attendanceForClass(c.id).some((a) => a.studentId === studentId);
         return (
-          <div key={c.id} className="bg-white border-2 border-ink-200 rounded-2xl p-4">
+          <div key={c.id} className="bg-white border-2 border-ink-200 rounded-3xl p-4">
             <div className="flex items-center gap-2 mb-1">
               <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full ${
                 c.publishState === 'ended' ? 'bg-ink-100 text-ink-500' : 'bg-emerald-100 text-emerald-700'
@@ -107,7 +107,7 @@ function ContentPanel({ batchId }: { batchId: string | null }) {
 function ResourceLink({ label, icon, url }: { label: string; icon: React.ReactNode; url: string }) {
   if (!url) {
     return (
-      <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-ink-50 text-ink-400 text-sm">
+      <div className="flex items-center gap-2 px-4 py-3 rounded-2xl bg-ink-50 text-ink-400 text-sm">
         {icon} {label} — not added yet
       </div>
     );
@@ -137,7 +137,7 @@ function PyqPanel() {
 
       <div className="space-y-2">
         {chapters.map((c) => (
-          <div key={c.id} className="bg-white border-2 border-ink-200 rounded-2xl overflow-hidden">
+          <div key={c.id} className="bg-white border-2 border-ink-200 rounded-3xl overflow-hidden">
             <button
               onClick={() => setOpenChapter(openChapter === c.id ? null : c.id)}
               className="w-full flex items-center justify-between px-4 py-3 text-left"
@@ -190,23 +190,23 @@ function DoubtsPanel() {
 
   return (
     <div className="space-y-6">
-      <form onSubmit={handleNewThread} className="bg-white border-2 border-ink-200 rounded-2xl p-5 space-y-3">
+      <form onSubmit={handleNewThread} className="bg-white border-2 border-ink-200 rounded-3xl p-5 space-y-3">
         <h3 className="font-bold text-ink-800">Ask a Doubt</h3>
         <p className="text-xs text-ink-400">Only you and the admin/teacher can see this thread.</p>
         <input
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
           placeholder="Subject / Chapter"
-          className="w-full border-2 border-ink-200 rounded-xl px-3 py-2 text-sm"
+          className="w-full border-2 border-ink-200 rounded-2xl px-3 py-2 text-sm"
         />
         <textarea
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Type your doubt..."
           rows={2}
-          className="w-full border-2 border-ink-200 rounded-xl px-3 py-2 text-sm"
+          className="w-full border-2 border-ink-200 rounded-2xl px-3 py-2 text-sm"
         />
-        <button type="submit" className="bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold px-4 py-2 rounded-xl text-sm flex items-center gap-2">
+        <button type="submit" className="bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold px-4 py-2 rounded-2xl text-sm flex items-center gap-2">
           <Send className="w-4 h-4" /> Send
         </button>
       </form>
@@ -215,7 +215,7 @@ function DoubtsPanel() {
       {threads.map((t) => {
         const messages = listMessages(t.id);
         return (
-          <div key={t.id} className="bg-white border-2 border-ink-200 rounded-2xl p-5">
+          <div key={t.id} className="bg-white border-2 border-ink-200 rounded-3xl p-5">
             <div className="flex items-center gap-2 mb-3">
               <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full ${t.status === 'resolved' ? 'bg-emerald-100 text-emerald-700' : 'bg-gold-100 text-gold-700'}`}>
                 {t.status}
@@ -224,7 +224,7 @@ function DoubtsPanel() {
             </div>
             <div className="space-y-2 mb-3">
               {messages.map((m) => (
-                <div key={m.id} className={`text-sm px-3 py-2 rounded-xl max-w-[85%] ${m.senderRole === 'admin' ? 'bg-sage-50 text-sage-900 ml-auto text-right' : 'bg-ink-50 text-ink-700'}`}>
+                <div key={m.id} className={`text-sm px-3 py-2 rounded-2xl max-w-[85%] ${m.senderRole === 'admin' ? 'bg-sage-50 text-sage-900 ml-auto text-right' : 'bg-ink-50 text-ink-700'}`}>
                   <p className="text-[10px] uppercase tracking-wider opacity-60 mb-0.5">{m.senderRole === 'admin' ? 'Teacher' : 'You'}</p>
                   {m.body}
                 </div>
@@ -235,9 +235,9 @@ function DoubtsPanel() {
                 value={reply[t.id] || ''}
                 onChange={(e) => setReply((r) => ({ ...r, [t.id]: e.target.value }))}
                 placeholder="Reply..."
-                className="flex-1 border-2 border-ink-200 rounded-xl px-3 py-1.5 text-sm"
+                className="flex-1 border-2 border-ink-200 rounded-2xl px-3 py-1.5 text-sm"
               />
-              <button onClick={() => handleReply(t.id)} className="p-2 rounded-xl bg-ink-100 hover:bg-ink-200">
+              <button onClick={() => handleReply(t.id)} className="p-2 rounded-2xl bg-ink-100 hover:bg-ink-200">
                 <Send className="w-4 h-4 text-ink-600" />
               </button>
             </div>
@@ -268,7 +268,7 @@ export default function StudentLMS() {
   return (
     <div className="max-w-3xl mx-auto py-8 px-4">
       <header className="text-center mb-6">
-        <h1 className="text-3xl font-bold tracking-tight uppercase font-display mb-2">Learning Hub</h1>
+        <h1 className="text-3xl font-bold tracking-tight font-display mb-2">Learning Hub</h1>
         <p className="text-ink-500 text-sm">Live classes, notes, PYQs and doubts — all in one place.</p>
       </header>
 

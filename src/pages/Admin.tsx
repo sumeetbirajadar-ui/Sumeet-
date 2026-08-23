@@ -86,17 +86,17 @@ function AnnouncementsPanel() {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Title"
-          className="w-full border-2 border-ink-200 rounded-xl px-3 py-2 outline-none focus:border-gold-400"
+          className="w-full border-2 border-ink-200 rounded-2xl px-3 py-2 outline-none focus:border-gold-400"
         />
         <textarea
           value={body}
           onChange={(e) => setBody(e.target.value)}
           placeholder="Details for students..."
           rows={3}
-          className="w-full border-2 border-ink-200 rounded-xl px-3 py-2 outline-none focus:border-gold-400"
+          className="w-full border-2 border-ink-200 rounded-2xl px-3 py-2 outline-none focus:border-gold-400"
         />
         <div className="flex gap-2">
-          <button type="submit" className="bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold px-5 py-2 rounded-xl flex items-center gap-2">
+          <button type="submit" className="bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold px-5 py-2 rounded-2xl flex items-center gap-2">
             <Plus className="w-4 h-4" /> {editingId ? 'Save Changes' : 'Add Draft'}
           </button>
           {editingId && (
@@ -107,7 +107,7 @@ function AnnouncementsPanel() {
                 setTitle('');
                 setBody('');
               }}
-              className="px-5 py-2 rounded-xl text-ink-500 hover:bg-ink-100"
+              className="px-5 py-2 rounded-2xl text-ink-500 hover:bg-ink-100"
             >
               Cancel
             </button>
@@ -118,7 +118,7 @@ function AnnouncementsPanel() {
       <div className="space-y-3">
         {items.length === 0 && <p className="text-ink-400 text-sm italic">No announcements yet.</p>}
         {items.map((a) => (
-          <div key={a.id} className="bg-white rounded-2xl border-2 border-ink-200 p-4 flex items-start justify-between gap-4">
+          <div key={a.id} className="bg-white rounded-3xl border-2 border-ink-200 p-4 flex items-start justify-between gap-4">
             <div className="min-w-0">
               <div className="flex items-center gap-2 mb-1">
                 <span
@@ -205,7 +205,7 @@ function CutoffOverridesPanel() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-sage-50 border border-sage-100 text-sage-800 text-xs rounded-2xl px-4 py-3">
+      <div className="bg-sage-50 border border-sage-100 text-sage-800 text-xs rounded-3xl px-4 py-3">
         Enter a real, officially published cutoff for 2025/2026 here once KEA releases it. It will show as
         "Official" in the predictor instead of the trend-based estimate. Never enter a figure you haven't verified
         against the official KEA cutoff PDF.
@@ -221,13 +221,13 @@ function CutoffOverridesPanel() {
               setCollegeCode('');
               setBranch('');
             }}
-            className="border-2 border-ink-200 rounded-xl px-3 py-2 bg-white"
+            className="border-2 border-ink-200 rounded-2xl px-3 py-2 bg-white"
           >
             <option value="engg">Engineering</option>
             <option value="agri">Agriculture</option>
             <option value="prof">Veterinary / Professional</option>
           </select>
-          <select value={collegeCode} onChange={(e) => setCollegeCode(e.target.value)} className="border-2 border-ink-200 rounded-xl px-3 py-2 bg-white">
+          <select value={collegeCode} onChange={(e) => setCollegeCode(e.target.value)} className="border-2 border-ink-200 rounded-2xl px-3 py-2 bg-white">
             <option value="">-- College --</option>
             {colleges.map((c) => (
               <option key={c.code} value={c.code}>
@@ -235,7 +235,7 @@ function CutoffOverridesPanel() {
               </option>
             ))}
           </select>
-          <select value={branch} onChange={(e) => setBranch(e.target.value)} className="border-2 border-ink-200 rounded-xl px-3 py-2 bg-white">
+          <select value={branch} onChange={(e) => setBranch(e.target.value)} className="border-2 border-ink-200 rounded-2xl px-3 py-2 bg-white">
             <option value="">-- Branch / Course --</option>
             {branches.map((b) => (
               <option key={b.value} value={b.value}>
@@ -243,7 +243,7 @@ function CutoffOverridesPanel() {
               </option>
             ))}
           </select>
-          <select value={category} onChange={(e) => setCategory(e.target.value)} className="border-2 border-ink-200 rounded-xl px-3 py-2 bg-white">
+          <select value={category} onChange={(e) => setCategory(e.target.value)} className="border-2 border-ink-200 rounded-2xl px-3 py-2 bg-white">
             <option value="">-- Category --</option>
             {CATEGORY_OPTIONS.map((c) => (
               <option key={c.value} value={c.value}>
@@ -251,7 +251,7 @@ function CutoffOverridesPanel() {
               </option>
             ))}
           </select>
-          <select value={year} onChange={(e) => setYear(parseInt(e.target.value, 10))} className="border-2 border-ink-200 rounded-xl px-3 py-2 bg-white">
+          <select value={year} onChange={(e) => setYear(parseInt(e.target.value, 10))} className="border-2 border-ink-200 rounded-2xl px-3 py-2 bg-white">
             <option value={2025}>2025</option>
             <option value={2026}>2026</option>
           </select>
@@ -260,16 +260,16 @@ function CutoffOverridesPanel() {
             value={cutoff}
             onChange={(e) => setCutoff(e.target.value)}
             placeholder="Closing rank"
-            className="border-2 border-ink-200 rounded-xl px-3 py-2"
+            className="border-2 border-ink-200 rounded-2xl px-3 py-2"
           />
         </div>
         <input
           value={note}
           onChange={(e) => setNote(e.target.value)}
           placeholder="Source note (e.g. 'KEA Round 2 PDF, 12 Aug 2026')"
-          className="w-full border-2 border-ink-200 rounded-xl px-3 py-2"
+          className="w-full border-2 border-ink-200 rounded-2xl px-3 py-2"
         />
-        <button type="submit" className="bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold px-5 py-2 rounded-xl flex items-center gap-2">
+        <button type="submit" className="bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold px-5 py-2 rounded-2xl flex items-center gap-2">
           <Plus className="w-4 h-4" /> Save
         </button>
       </form>
@@ -348,16 +348,16 @@ function BatchesPanel() {
       <form onSubmit={handleCreate} className="bg-white rounded-3xl border-2 border-ink-200 p-6 space-y-4">
         <h3 className="font-bold text-lg text-ink-800">New Batch</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Batch name (e.g. PUC-II Science A)" className="border-2 border-ink-200 rounded-xl px-3 py-2" />
-          <select value={examTrack} onChange={(e) => setExamTrack(e.target.value as Batch['examTrack'])} className="border-2 border-ink-200 rounded-xl px-3 py-2 bg-white">
+          <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Batch name (e.g. PUC-II Science A)" className="border-2 border-ink-200 rounded-2xl px-3 py-2" />
+          <select value={examTrack} onChange={(e) => setExamTrack(e.target.value as Batch['examTrack'])} className="border-2 border-ink-200 rounded-2xl px-3 py-2 bg-white">
             <option value="KCET">KCET</option>
             <option value="NEET">NEET</option>
             <option value="JEE">JEE</option>
             <option value="Other">Other</option>
           </select>
-          <input type="number" value={year} onChange={(e) => setYear(parseInt(e.target.value, 10))} className="border-2 border-ink-200 rounded-xl px-3 py-2" />
+          <input type="number" value={year} onChange={(e) => setYear(parseInt(e.target.value, 10))} className="border-2 border-ink-200 rounded-2xl px-3 py-2" />
         </div>
-        <button type="submit" className="bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold px-5 py-2 rounded-xl flex items-center gap-2">
+        <button type="submit" className="bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold px-5 py-2 rounded-2xl flex items-center gap-2">
           <Plus className="w-4 h-4" /> Add Batch
         </button>
       </form>
@@ -365,7 +365,7 @@ function BatchesPanel() {
       <div className="space-y-3">
         {batches.length === 0 && <p className="text-ink-400 italic text-sm">No batches yet — content without a batch is visible to all students.</p>}
         {batches.map((b) => (
-          <div key={b.id} className="bg-white border-2 border-ink-200 rounded-2xl p-4 flex items-center justify-between">
+          <div key={b.id} className="bg-white border-2 border-ink-200 rounded-3xl p-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Users className="w-4 h-4 text-ink-400" />
               <span className="font-bold text-ink-800">{b.name}</span>
@@ -437,22 +437,22 @@ function ClassesAdminPanel() {
       <form onSubmit={handleCreate} className="bg-white rounded-3xl border-2 border-ink-200 p-6 space-y-4">
         <h3 className="font-bold text-lg text-ink-800">Schedule a Live Class</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Class title" className="border-2 border-ink-200 rounded-xl px-3 py-2" />
-          <input type="datetime-local" value={scheduledStart} onChange={(e) => setScheduledStart(e.target.value)} className="border-2 border-ink-200 rounded-xl px-3 py-2" />
-          <input value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="Subject" className="border-2 border-ink-200 rounded-xl px-3 py-2" />
-          <input value={chapter} onChange={(e) => setChapter(e.target.value)} placeholder="Chapter" className="border-2 border-ink-200 rounded-xl px-3 py-2" />
+          <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Class title" className="border-2 border-ink-200 rounded-2xl px-3 py-2" />
+          <input type="datetime-local" value={scheduledStart} onChange={(e) => setScheduledStart(e.target.value)} className="border-2 border-ink-200 rounded-2xl px-3 py-2" />
+          <input value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="Subject" className="border-2 border-ink-200 rounded-2xl px-3 py-2" />
+          <input value={chapter} onChange={(e) => setChapter(e.target.value)} placeholder="Chapter" className="border-2 border-ink-200 rounded-2xl px-3 py-2" />
         </div>
         <input
           value={joinUrl}
           onChange={(e) => setJoinUrl(e.target.value)}
           placeholder="Join link (Google Meet / YouTube / Zoom URL)"
-          className="w-full border-2 border-ink-200 rounded-xl px-3 py-2"
+          className="w-full border-2 border-ink-200 rounded-2xl px-3 py-2"
         />
         <div>
           <label className="text-xs font-bold text-ink-500 uppercase tracking-widest mb-2 block">Target Batches</label>
           <BatchMultiSelect batches={batches} selected={batchIds} onChange={setBatchIds} />
         </div>
-        <button type="submit" className="bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold px-5 py-2 rounded-xl flex items-center gap-2">
+        <button type="submit" className="bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold px-5 py-2 rounded-2xl flex items-center gap-2">
           <Plus className="w-4 h-4" /> Save as Draft
         </button>
       </form>
@@ -462,7 +462,7 @@ function ClassesAdminPanel() {
         {classes.map((c) => {
           const attendance = attendanceForClass(c.id);
           return (
-            <div key={c.id} className="bg-white border-2 border-ink-200 rounded-2xl p-4">
+            <div key={c.id} className="bg-white border-2 border-ink-200 rounded-3xl p-4">
               <div className="flex items-start justify-between gap-4 flex-wrap">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
@@ -541,21 +541,21 @@ function ContentAdminPanel() {
           ))}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title" className="border-2 border-ink-200 rounded-xl px-3 py-2" />
-          <input value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="Subject" className="border-2 border-ink-200 rounded-xl px-3 py-2" />
-          <input value={chapter} onChange={(e) => setChapter(e.target.value)} placeholder="Chapter" className="border-2 border-ink-200 rounded-xl px-3 py-2" />
+          <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title" className="border-2 border-ink-200 rounded-2xl px-3 py-2" />
+          <input value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="Subject" className="border-2 border-ink-200 rounded-2xl px-3 py-2" />
+          <input value={chapter} onChange={(e) => setChapter(e.target.value)} placeholder="Chapter" className="border-2 border-ink-200 rounded-2xl px-3 py-2" />
           <input
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder={kind === 'note' ? 'PDF link (Drive/R2/etc.)' : 'Video link (YouTube/Drive/etc.)'}
-            className="border-2 border-ink-200 rounded-xl px-3 py-2"
+            className="border-2 border-ink-200 rounded-2xl px-3 py-2"
           />
         </div>
         <div>
           <label className="text-xs font-bold text-ink-500 uppercase tracking-widest mb-2 block">Target Batches</label>
           <BatchMultiSelect batches={batches} selected={batchIds} onChange={setBatchIds} />
         </div>
-        <button type="submit" className="bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold px-5 py-2 rounded-xl flex items-center gap-2">
+        <button type="submit" className="bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold px-5 py-2 rounded-2xl flex items-center gap-2">
           <Plus className="w-4 h-4" /> Add as Draft
         </button>
       </form>
@@ -563,7 +563,7 @@ function ContentAdminPanel() {
       <div className="space-y-3">
         {items.length === 0 && <p className="text-ink-400 italic text-sm">Nothing published yet.</p>}
         {items.map((item) => (
-          <div key={item.id} className="bg-white border-2 border-ink-200 rounded-2xl p-4 flex items-center justify-between gap-4 flex-wrap">
+          <div key={item.id} className="bg-white border-2 border-ink-200 rounded-3xl p-4 flex items-center justify-between gap-4 flex-wrap">
             <div className="flex items-center gap-3">
               {item.kind === 'note' ? <FileText className="w-5 h-5 text-ink-400" /> : <Video className="w-5 h-5 text-ink-400" />}
               <div>
@@ -624,7 +624,7 @@ function ChapterResourcesPanel() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-sage-50 border border-sage-100 text-sage-800 text-xs rounded-2xl px-4 py-3">
+      <div className="bg-sage-50 border border-sage-100 text-sage-800 text-xs rounded-3xl px-4 py-3">
         For each chapter, paste your Drive notes link, YouTube solved-PYQ video, YouTube "important topics" video,
         and the official Digital NCERT chapter link. Students see exactly what's filled in — leave a field blank to
         hide it.
@@ -646,7 +646,7 @@ function ChapterResourcesPanel() {
         {chapters.map((c) => {
           const d = draftFor(c);
           return (
-            <div key={c.id} className="bg-white border-2 border-ink-200 rounded-2xl p-4">
+            <div key={c.id} className="bg-white border-2 border-ink-200 rounded-3xl p-4">
               <div className="flex items-center justify-between mb-3">
                 <h4 className="font-bold text-ink-800 text-sm">
                   {c.chapterIndex}. {c.chapterName}
@@ -661,28 +661,28 @@ function ChapterResourcesPanel() {
                   onChange={(e) => setDraftField(c, 'notesUrl', e.target.value)}
                   onBlur={() => commitField(c, 'notesUrl')}
                   placeholder="Drive notes link"
-                  className="border-2 border-ink-200 rounded-xl px-3 py-1.5 text-sm"
+                  className="border-2 border-ink-200 rounded-2xl px-3 py-1.5 text-sm"
                 />
                 <input
                   value={d.solutionVideoUrl}
                   onChange={(e) => setDraftField(c, 'solutionVideoUrl', e.target.value)}
                   onBlur={() => commitField(c, 'solutionVideoUrl')}
                   placeholder="YouTube — solved PYQs"
-                  className="border-2 border-ink-200 rounded-xl px-3 py-1.5 text-sm"
+                  className="border-2 border-ink-200 rounded-2xl px-3 py-1.5 text-sm"
                 />
                 <input
                   value={d.conceptVideoUrl}
                   onChange={(e) => setDraftField(c, 'conceptVideoUrl', e.target.value)}
                   onBlur={() => commitField(c, 'conceptVideoUrl')}
                   placeholder="YouTube — important topics"
-                  className="border-2 border-ink-200 rounded-xl px-3 py-1.5 text-sm"
+                  className="border-2 border-ink-200 rounded-2xl px-3 py-1.5 text-sm"
                 />
                 <input
                   value={d.ncertUrl}
                   onChange={(e) => setDraftField(c, 'ncertUrl', e.target.value)}
                   onBlur={() => commitField(c, 'ncertUrl')}
                   placeholder="Digital NCERT chapter link"
-                  className="border-2 border-ink-200 rounded-xl px-3 py-1.5 text-sm"
+                  className="border-2 border-ink-200 rounded-2xl px-3 py-1.5 text-sm"
                 />
               </div>
             </div>
@@ -695,9 +695,9 @@ function ChapterResourcesPanel() {
           value={newChapterName}
           onChange={(e) => setNewChapterName(e.target.value)}
           placeholder={`Add another ${track} chapter...`}
-          className="flex-1 border-2 border-ink-200 rounded-xl px-3 py-2 text-sm"
+          className="flex-1 border-2 border-ink-200 rounded-2xl px-3 py-2 text-sm"
         />
-        <button type="submit" className="bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold px-4 py-2 rounded-xl flex items-center gap-2 text-sm">
+        <button type="submit" className="bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold px-4 py-2 rounded-2xl flex items-center gap-2 text-sm">
           <Plus className="w-4 h-4" /> Add Chapter
         </button>
       </form>
@@ -725,7 +725,7 @@ function DoubtsInboxPanel() {
       {threads.map((t) => {
         const messages = listMessages(t.id);
         return (
-          <div key={t.id} className="bg-white border-2 border-ink-200 rounded-2xl p-5">
+          <div key={t.id} className="bg-white border-2 border-ink-200 rounded-3xl p-5">
             <div className="flex items-center justify-between gap-2 mb-3 flex-wrap">
               <div className="flex items-center gap-2">
                 <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full ${t.status === 'resolved' ? 'bg-emerald-100 text-emerald-700' : 'bg-gold-100 text-gold-700'}`}>
@@ -742,7 +742,7 @@ function DoubtsInboxPanel() {
             </div>
             <div className="space-y-2 mb-3">
               {messages.map((m) => (
-                <div key={m.id} className={`text-sm px-3 py-2 rounded-xl max-w-[85%] ${m.senderRole === 'admin' ? 'bg-sage-50 text-sage-900 ml-auto text-right' : 'bg-ink-50 text-ink-700'}`}>
+                <div key={m.id} className={`text-sm px-3 py-2 rounded-2xl max-w-[85%] ${m.senderRole === 'admin' ? 'bg-sage-50 text-sage-900 ml-auto text-right' : 'bg-ink-50 text-ink-700'}`}>
                   <p className="text-[10px] uppercase tracking-wider opacity-60 mb-0.5">{m.senderRole === 'admin' ? 'You' : t.studentName}</p>
                   {m.body}
                 </div>
@@ -753,9 +753,9 @@ function DoubtsInboxPanel() {
                 value={reply[t.id] || ''}
                 onChange={(e) => setReply((r) => ({ ...r, [t.id]: e.target.value }))}
                 placeholder="Reply..."
-                className="flex-1 border-2 border-ink-200 rounded-xl px-3 py-1.5 text-sm"
+                className="flex-1 border-2 border-ink-200 rounded-2xl px-3 py-1.5 text-sm"
               />
-              <button onClick={() => handleReply(t.id)} className="p-2 rounded-xl bg-ink-100 hover:bg-ink-200">
+              <button onClick={() => handleReply(t.id)} className="p-2 rounded-2xl bg-ink-100 hover:bg-ink-200">
                 <Send className="w-4 h-4 text-ink-600" />
               </button>
             </div>
@@ -786,7 +786,7 @@ function CounsellingDatesPanel() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-sage-50 border border-sage-100 text-sage-800 text-xs rounded-2xl px-4 py-3">
+      <div className="bg-sage-50 border border-sage-100 text-sage-800 text-xs rounded-3xl px-4 py-3">
         Add each counselling milestone as KEA/NTA publishes it — registration, HLC verification, option entry,
         mock allotment, Round 1/2, mop-up. Students see a live countdown and an urgency flag inside 3 days.
       </div>
@@ -806,11 +806,11 @@ function CounsellingDatesPanel() {
       <form onSubmit={handleAdd} className="bg-white rounded-3xl border-2 border-ink-200 p-6 space-y-4">
         <h3 className="font-bold text-lg text-ink-800">Add {track} Counselling Date</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Milestone (e.g. Option Entry Opens)" className="border-2 border-ink-200 rounded-xl px-3 py-2" />
-          <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="border-2 border-ink-200 rounded-xl px-3 py-2" />
+          <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Milestone (e.g. Option Entry Opens)" className="border-2 border-ink-200 rounded-2xl px-3 py-2" />
+          <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="border-2 border-ink-200 rounded-2xl px-3 py-2" />
         </div>
-        <input value={note} onChange={(e) => setNote(e.target.value)} placeholder="Optional note" className="w-full border-2 border-ink-200 rounded-xl px-3 py-2" />
-        <button type="submit" className="bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold px-5 py-2 rounded-xl flex items-center gap-2">
+        <input value={note} onChange={(e) => setNote(e.target.value)} placeholder="Optional note" className="w-full border-2 border-ink-200 rounded-2xl px-3 py-2" />
+        <button type="submit" className="bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold px-5 py-2 rounded-2xl flex items-center gap-2">
           <Plus className="w-4 h-4" /> Add
         </button>
       </form>
@@ -818,7 +818,7 @@ function CounsellingDatesPanel() {
       <div className="space-y-3">
         {events.length === 0 && <p className="text-ink-400 italic text-sm">No dates added yet for {track}.</p>}
         {events.map((e) => (
-          <div key={e.id} className="bg-white border-2 border-ink-200 rounded-2xl p-4 flex items-center justify-between">
+          <div key={e.id} className="bg-white border-2 border-ink-200 rounded-3xl p-4 flex items-center justify-between">
             <div>
               <h4 className="font-bold text-ink-800">{e.title}</h4>
               <p className="text-xs text-ink-500">
@@ -842,7 +842,7 @@ export default function Admin() {
   return (
     <div className="max-w-5xl mx-auto py-8 px-4">
       <header className="text-center mb-8">
-        <h1 className="text-3xl font-bold tracking-tight uppercase font-display mb-2 flex items-center justify-center gap-2">
+        <h1 className="text-3xl font-bold tracking-tight font-display mb-2 flex items-center justify-center gap-2">
           <ShieldCheck className="w-7 h-7 text-gold-500" /> Admin
         </h1>
         <p className="text-ink-500 text-sm">Publish content students see, and correct the predictor with real cutoffs as they're released.</p>

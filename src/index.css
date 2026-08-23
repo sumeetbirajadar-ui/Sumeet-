@@ -2,44 +2,54 @@
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Playfair Display", "Lora", ui-serif, Georgia, serif;
+  --font-display: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
 
-  /* Ink — warm charcoal/greige neutral, replaces the default cool "stone" scale */
-  --color-ink-50: #faf8f5;
-  --color-ink-100: #f1ede6;
-  --color-ink-200: #e2dcd1;
-  --color-ink-300: #c7bfb0;
-  --color-ink-400: #a69c89;
-  --color-ink-500: #877c68;
-  --color-ink-600: #6b6151;
-  --color-ink-700: #4f473b;
-  --color-ink-800: #332e27;
-  --color-ink-900: #201c17;
-  --color-ink-950: #14110d;
+  /* Ink — deep forest-green-tinted neutral (headings, nav, borders) */
+  --color-ink-50: #f4f7f4;
+  --color-ink-100: #e6ede7;
+  --color-ink-200: #cbdace;
+  --color-ink-300: #a3bda8;
+  --color-ink-400: #74967d;
+  --color-ink-500: #517159;
+  --color-ink-600: #3c5842;
+  --color-ink-700: #2c4232;
+  --color-ink-800: #16302a;
+  --color-ink-900: #0c211d;
+  --color-ink-950: #071613;
 
-  /* Gold — brass accent, replaces the default "amber" */
-  --color-gold-50: #fbf4e6;
-  --color-gold-100: #f5e6c4;
-  --color-gold-200: #ead196;
-  --color-gold-300: #ddb765;
-  --color-gold-400: #cc9a3e;
-  --color-gold-500: #b3822f;
-  --color-gold-600: #8f6924;
-  --color-gold-700: #6e4f1b;
-  --color-gold-800: #543a14;
-  --color-gold-900: #33240d;
+  /* Gold — vivid warm amber accent, replaces the muted brass */
+  --color-gold-50: #fff8e6;
+  --color-gold-100: #ffecb8;
+  --color-gold-200: #ffdd80;
+  --color-gold-300: #ffc947;
+  --color-gold-400: #ffba00;
+  --color-gold-500: #e8a300;
+  --color-gold-600: #c28400;
+  --color-gold-700: #966500;
+  --color-gold-800: #6b4900;
+  --color-gold-900: #4a3300;
 
-  /* Sage — muted eucalyptus green, replaces the default "blue" */
-  --color-sage-50: #f1f5ef;
-  --color-sage-100: #e1eade;
-  --color-sage-200: #c3d5be;
-  --color-sage-300: #9dbb96;
-  --color-sage-400: #79a070;
-  --color-sage-500: #5c8552;
-  --color-sage-600: #4a6d40;
-  --color-sage-700: #3a5432;
-  --color-sage-800: #2e4a2a;
-  --color-sage-900: #1f331c;
+  /* Sage — soft muted green, secondary accent */
+  --color-sage-50: #f3f7f2;
+  --color-sage-100: #e2ebe0;
+  --color-sage-200: #c3d6c0;
+  --color-sage-300: #9dbe98;
+  --color-sage-400: #7fa578;
+  --color-sage-500: #6d9773;
+  --color-sage-600: #547a5b;
+  --color-sage-700: #3f5f46;
+  --color-sage-800: #2d4633;
+  --color-sage-900: #1e3022;
+
+  /* Clay — burnt amber, a fourth accent used sparingly for icon badges/variety */
+  --color-clay-50: #fbf1e6;
+  --color-clay-100: #f3dcb8;
+  --color-clay-200: #e6bb7c;
+  --color-clay-300: #d69742;
+  --color-clay-400: #b46617;
+  --color-clay-500: #955313;
+  --color-clay-600: #78420f;
+  --color-clay-700: #5a310b;
 }
 
 @layer base {

@@ -5,7 +5,7 @@ export default function CareerGuidance() {
   return (
     <div className="max-w-5xl mx-auto py-8 px-4 h-full flex flex-col">
       <header className="text-center mb-6">
-        <h1 className="text-3xl font-bold tracking-tight uppercase font-display mb-2 flex items-center justify-center gap-2">
+        <h1 className="text-3xl font-bold tracking-tight font-display mb-2 flex items-center justify-center gap-2">
           <Compass className="w-7 h-7 text-gold-500" /> Career Guidance
         </h1>
         <p className="text-ink-500 text-sm">

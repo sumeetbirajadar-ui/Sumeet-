@@ -37,7 +37,7 @@ function DocumentsPanel({ studentId }: { studentId: string }) {
             toggleDocument(studentId, doc);
             forceUpdate();
           }}
-          className="w-full flex items-center gap-3 bg-white border-2 border-ink-200 rounded-2xl px-4 py-3 text-left hover:border-gold-300 transition-all"
+          className="w-full flex items-center gap-3 bg-white border-2 border-ink-200 rounded-3xl px-4 py-3 text-left hover:border-gold-300 transition-all"
         >
           <div
             className={`w-5 h-5 rounded-md border-2 flex items-center justify-center shrink-0 transition-all ${
@@ -79,7 +79,7 @@ function TimelinePanel() {
           return (
             <div
               key={e.id}
-              className={`bg-white border-2 rounded-2xl p-4 flex items-center justify-between gap-4 ${urgent ? 'border-rose-300' : 'border-ink-200'}`}
+              className={`bg-white border-2 rounded-3xl p-4 flex items-center justify-between gap-4 ${urgent ? 'border-rose-300' : 'border-ink-200'}`}
             >
               <div>
                 <h4 className="font-bold text-ink-800">{e.title}</h4>
@@ -129,30 +129,30 @@ function AllotmentsPanel({ studentId }: { studentId: string }) {
 
   return (
     <div className="space-y-6">
-      <form onSubmit={handleAdd} className="bg-white border-2 border-ink-200 rounded-2xl p-5 space-y-3">
+      <form onSubmit={handleAdd} className="bg-white border-2 border-ink-200 rounded-3xl p-5 space-y-3">
         <h3 className="font-bold text-ink-800">Log an Allotment Result</h3>
         <p className="text-xs text-ink-400">Keep your own record of what you were allotted each round.</p>
         <div className="grid grid-cols-2 gap-2">
-          <select value={examTrack} onChange={(e) => setExamTrack(e.target.value as ExamTrack)} className="border-2 border-ink-200 rounded-xl px-3 py-2 text-sm bg-white">
+          <select value={examTrack} onChange={(e) => setExamTrack(e.target.value as ExamTrack)} className="border-2 border-ink-200 rounded-2xl px-3 py-2 text-sm bg-white">
             {EXAM_TRACKS.map((t) => (
               <option key={t} value={t}>
                 {t}
               </option>
             ))}
           </select>
-          <select value={round} onChange={(e) => setRound(e.target.value)} className="border-2 border-ink-200 rounded-xl px-3 py-2 text-sm bg-white">
+          <select value={round} onChange={(e) => setRound(e.target.value)} className="border-2 border-ink-200 rounded-2xl px-3 py-2 text-sm bg-white">
             {['Mock', 'Round 1', 'Round 2', 'Mop-up'].map((r) => (
               <option key={r} value={r}>
                 {r}
               </option>
             ))}
           </select>
-          <input value={rank} onChange={(e) => setRank(e.target.value)} placeholder="Your rank" className="border-2 border-ink-200 rounded-xl px-3 py-2 text-sm" />
-          <input value={category} onChange={(e) => setCategory(e.target.value)} placeholder="Category" className="border-2 border-ink-200 rounded-xl px-3 py-2 text-sm" />
+          <input value={rank} onChange={(e) => setRank(e.target.value)} placeholder="Your rank" className="border-2 border-ink-200 rounded-2xl px-3 py-2 text-sm" />
+          <input value={category} onChange={(e) => setCategory(e.target.value)} placeholder="Category" className="border-2 border-ink-200 rounded-2xl px-3 py-2 text-sm" />
         </div>
-        <input value={college} onChange={(e) => setCollege(e.target.value)} placeholder="College allotted" className="w-full border-2 border-ink-200 rounded-xl px-3 py-2 text-sm" />
-        <input value={branch} onChange={(e) => setBranch(e.target.value)} placeholder="Branch / Course" className="w-full border-2 border-ink-200 rounded-xl px-3 py-2 text-sm" />
-        <button type="submit" className="bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold px-4 py-2 rounded-xl text-sm flex items-center gap-2">
+        <input value={college} onChange={(e) => setCollege(e.target.value)} placeholder="College allotted" className="w-full border-2 border-ink-200 rounded-2xl px-3 py-2 text-sm" />
+        <input value={branch} onChange={(e) => setBranch(e.target.value)} placeholder="Branch / Course" className="w-full border-2 border-ink-200 rounded-2xl px-3 py-2 text-sm" />
+        <button type="submit" className="bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold px-4 py-2 rounded-2xl text-sm flex items-center gap-2">
           <Plus className="w-4 h-4" /> Save
         </button>
       </form>
@@ -160,7 +160,7 @@ function AllotmentsPanel({ studentId }: { studentId: string }) {
       {records.length === 0 && <p className="text-ink-400 italic text-sm text-center">No allotment results logged yet.</p>}
       <div className="space-y-3">
         {records.map((r) => (
-          <div key={r.id} className="bg-white border-2 border-ink-200 rounded-2xl p-4 flex items-center justify-between gap-4">
+          <div key={r.id} className="bg-white border-2 border-ink-200 rounded-3xl p-4 flex items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-ink-100 text-ink-600">
@@ -195,7 +195,7 @@ export default function Counselling() {
   return (
     <div className="max-w-2xl mx-auto py-8 px-4">
       <header className="text-center mb-6">
-        <h1 className="text-3xl font-bold tracking-tight uppercase font-display mb-2">Counselling Companion</h1>
+        <h1 className="text-3xl font-bold tracking-tight font-display mb-2">Counselling Companion</h1>
         <p className="text-ink-500 text-sm">Documents, dates, and your seat-allotment history — for KCET, NEET and JEE counselling.</p>
       </header>
 

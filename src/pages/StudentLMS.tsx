@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Video, FileText, BookOpenCheck, MessageCircle, Send, CheckCircle2, ExternalLink, ChevronDown, Lightbulb } from 'lucide-react';
+import { Video, FileText, BookOpenCheck, MessageCircle, Send, CheckCircle2, ExternalLink, ChevronDown, Lightbulb, Library, Plus, Trash2 } from 'lucide-react';
 import {
   Batch,
   listBatches,
@@ -17,8 +17,9 @@ import {
 } from '../lib/lms';
 import { getOrCreateStudentId, getStudentName, getStudentBatchId, setStudentBatchId } from '../lib/studentIdentity';
 import YouTubeCard from '../components/YouTubeCard';
+import { ResourceStatus, BookRef, listAllBooks, addCustomBook, deleteCustomBook, getProgress, updateProgress, progressSummary } from '../lib/resources';
 
-type Tab = 'classes' | 'content' | 'pyq' | 'doubts';
+type Tab = 'classes' | 'content' | 'pyq' | 'doubts' | 'resources';
 
 function useForceUpdate() {
   const [, setTick] = useState(0);
@@ -248,6 +249,145 @@ function DoubtsPanel() {
   );
 }
 
+const RESOURCE_STATUS_META: Record<ResourceStatus, { label: string; badge: string }> = {
+  not_started: { label: 'Not Started', badge: 'bg-white border-2 border-ink-300 text-ink-500' },
+  in_progress: { label: 'In Progress', badge: 'bg-gold-400 text-ink-900' },
+  done: { label: 'Done', badge: 'bg-sage-500 text-white' },
+};
+
+const BookCard: React.FC<{ book: BookRef; studentId: string; onChange: () => void }> = ({ book, studentId, onChange }) => {
+  const [open, setOpen] = useState(false);
+  const progress = getProgress(studentId, book.id);
+  const [notes, setNotes] = useState(progress.notes);
+
+  function setStatus(status: ResourceStatus) {
+    updateProgress(studentId, book.id, { status });
+    onChange();
+  }
+
+  return (
+    <div className="bg-white border-2 border-ink-100 rounded-3xl overflow-hidden">
+      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between gap-3 px-4 py-3 text-left">
+        <div className="min-w-0 flex-1">
+          <p className="font-semibold text-ink-900 text-sm truncate">{book.title}</p>
+          <p className="text-xs text-ink-400">{book.author} &middot; {book.subject}</p>
+        </div>
+        <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shrink-0 ${RESOURCE_STATUS_META[progress.status].badge}`}>
+          {RESOURCE_STATUS_META[progress.status].label}
+        </span>
+      </button>
+      {open && (
+        <div className="px-4 pb-4 pt-1 border-t border-ink-100 space-y-3">
+          <div className="flex flex-wrap gap-2">
+            {(['not_started', 'in_progress', 'done'] as ResourceStatus[]).map((s) => (
+              <button
+                key={s}
+                onClick={() => setStatus(s)}
+                className={`text-xs font-bold px-3 py-1.5 rounded-full transition-all ${progress.status === s ? RESOURCE_STATUS_META[s].badge : 'bg-ink-50 text-ink-500'}`}
+              >
+                {RESOURCE_STATUS_META[s].label}
+              </button>
+            ))}
+          </div>
+          <textarea
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            onBlur={() => updateProgress(studentId, book.id, { notes })}
+            placeholder="Notes (chapters covered, where you left off...)"
+            rows={2}
+            className="w-full border-2 border-ink-200 rounded-2xl px-3 py-2 text-sm"
+          />
+          {book.custom && (
+            <button
+              onClick={() => { deleteCustomBook(studentId, book.id); onChange(); }}
+              className="text-xs font-bold text-rose-400 flex items-center gap-1"
+            >
+              <Trash2 className="w-3.5 h-3.5" /> Remove
+            </button>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
+function ResourcesPanel() {
+  const forceUpdate = useForceUpdate();
+  const studentId = getOrCreateStudentId();
+  const [showForm, setShowForm] = useState(false);
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [subject, setSubject] = useState('Physics');
+
+  const books = listAllBooks(studentId);
+  const summary = progressSummary(studentId);
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!title.trim()) return;
+    addCustomBook(studentId, { title: title.trim(), author: author.trim(), subject });
+    setTitle('');
+    setAuthor('');
+    setShowForm(false);
+    forceUpdate();
+  }
+
+  return (
+    <div className="space-y-6">
+      <div className="grid grid-cols-3 gap-3">
+        <div className="bg-white border-2 border-ink-100 rounded-3xl p-3 text-center">
+          <p className="text-xl font-bold font-display text-sage-600">{summary.done}</p>
+          <p className="text-[10px] text-ink-500 uppercase tracking-wider mt-0.5">Done</p>
+        </div>
+        <div className="bg-white border-2 border-ink-100 rounded-3xl p-3 text-center">
+          <p className="text-xl font-bold font-display text-gold-600">{summary.inProgress}</p>
+          <p className="text-[10px] text-ink-500 uppercase tracking-wider mt-0.5">In Progress</p>
+        </div>
+        <div className="bg-white border-2 border-ink-100 rounded-3xl p-3 text-center">
+          <p className="text-xl font-bold font-display text-ink-900">{summary.total}</p>
+          <p className="text-[10px] text-ink-500 uppercase tracking-wider mt-0.5">Total Books</p>
+        </div>
+      </div>
+
+      {!showForm ? (
+        <button
+          onClick={() => setShowForm(true)}
+          className="w-full flex items-center justify-center gap-2 border-2 border-dashed border-ink-200 rounded-3xl py-3 text-ink-500 font-semibold hover:border-gold-300"
+        >
+          <Plus className="w-4 h-4" /> Add a Book
+        </button>
+      ) : (
+        <form onSubmit={handleSubmit} className="bg-white border-2 border-ink-100 rounded-3xl p-4 space-y-2">
+          <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Book title" className="w-full border-2 border-ink-200 rounded-2xl px-3 py-2 text-sm" />
+          <div className="grid grid-cols-2 gap-2">
+            <input value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="Author" className="border-2 border-ink-200 rounded-2xl px-3 py-2 text-sm" />
+            <select value={subject} onChange={(e) => setSubject(e.target.value)} className="border-2 border-ink-200 rounded-2xl px-3 py-2 text-sm bg-white">
+              <option>Physics</option>
+              <option>Chemistry</option>
+              <option>Maths</option>
+              <option>Biology</option>
+            </select>
+          </div>
+          <div className="flex gap-2">
+            <button type="submit" className="bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold px-4 py-2 rounded-2xl text-sm">
+              Save
+            </button>
+            <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 rounded-2xl text-ink-500 hover:bg-ink-100 text-sm">
+              Cancel
+            </button>
+          </div>
+        </form>
+      )}
+
+      <div className="space-y-2">
+        {books.map((b) => (
+          <BookCard key={b.id} book={b} studentId={studentId} onChange={forceUpdate} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function StudentLMS() {
   const [tab, setTab] = useState<Tab>('classes');
   const [batchId, setBatchId] = useState<string | null>(() => getStudentBatchId());
@@ -263,6 +403,7 @@ export default function StudentLMS() {
     { key: 'content', label: 'Notes & Videos', icon: <FileText className="w-4 h-4" /> },
     { key: 'pyq', label: 'PYQ (KCET/NEET/JEE)', icon: <BookOpenCheck className="w-4 h-4" /> },
     { key: 'doubts', label: 'My Doubts', icon: <MessageCircle className="w-4 h-4" /> },
+    { key: 'resources', label: 'Books & Resources', icon: <Library className="w-4 h-4" /> },
   ];
 
   return (
@@ -292,6 +433,7 @@ export default function StudentLMS() {
       {tab === 'content' && <ContentPanel batchId={batchId} />}
       {tab === 'pyq' && <PyqPanel />}
       {tab === 'doubts' && <DoubtsPanel />}
+      {tab === 'resources' && <ResourcesPanel />}
     </div>
   );
 }

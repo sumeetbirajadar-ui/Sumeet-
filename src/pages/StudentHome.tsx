@@ -1,11 +1,13 @@
 import React from 'react';
-import { Megaphone, GraduationCap, Compass, Video, ClipboardCheck, Sparkles, MessageSquareText, BookOpenCheck, Flame, Target, Flag, HeartHandshake } from 'lucide-react';
+import { Megaphone, GraduationCap, Compass, Video, ClipboardCheck, Sparkles, MessageSquareText, BookOpenCheck, Flame, Target, Flag, HeartHandshake, FileBarChart, Settings as SettingsIcon, CalendarClock } from 'lucide-react';
 import { listPublished } from '../lib/announcements';
 import { latestActivityAt } from '../lib/lms';
 import { getLmsLastSeen, getOrCreateStudentId } from '../lib/studentIdentity';
-import { examProgressSummary } from '../lib/syllabusTracker';
+import { examProgressSummary, getDueRevisions } from '../lib/syllabusTracker';
+import { prepScore } from '../lib/prepScore';
+import { getQuoteOfDay } from '../lib/quotes';
 
-type Dest = 'predictor' | 'career' | 'lms' | 'counselling' | 'assistant' | 'tracker' | 'habitsFocus' | 'performance' | 'targetsGoals' | 'wellbeingCare';
+type Dest = 'predictor' | 'career' | 'lms' | 'counselling' | 'assistant' | 'tracker' | 'habitsFocus' | 'performance' | 'targetsGoals' | 'wellbeingCare' | 'reports' | 'settingsBackup';
 
 function FeatureCard({
   onClick,
@@ -35,10 +37,38 @@ function FeatureCard({
   );
 }
 
+const PrepScoreRing: React.FC<{ score: number }> = ({ score }) => {
+  const r = 30;
+  const circumference = 2 * Math.PI * r;
+  return (
+    <div className="relative w-16 h-16 shrink-0">
+      <svg viewBox="0 0 72 72" className="w-full h-full -rotate-90">
+        <circle cx="36" cy="36" r={r} fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="7" />
+        <circle
+          cx="36"
+          cy="36"
+          r={r}
+          fill="none"
+          stroke="var(--color-gold-400)"
+          strokeWidth="7"
+          strokeLinecap="round"
+          strokeDasharray={circumference}
+          strokeDashoffset={circumference * (1 - score / 100)}
+        />
+      </svg>
+      <div className="absolute inset-0 flex items-center justify-center font-bold text-white font-display text-sm">{score}</div>
+    </div>
+  );
+};
+
 export default function StudentHome({ onNavigate }: { onNavigate: (view: Dest) => void }) {
   const announcements = listPublished();
   const hasLmsUpdates = latestActivityAt() > getLmsLastSeen();
-  const syllabusPct = examProgressSummary(getOrCreateStudentId())[0]?.avgCompletionPct ?? 0;
+  const studentId = getOrCreateStudentId();
+  const syllabusPct = examProgressSummary(studentId)[0]?.avgCompletionPct ?? 0;
+  const score = prepScore(studentId);
+  const dueRevisionCount = getDueRevisions(studentId).length;
+  const quote = getQuoteOfDay();
 
   return (
     <div className="max-w-3xl mx-auto py-8 px-4 space-y-8">
@@ -46,11 +76,23 @@ export default function StudentHome({ onNavigate }: { onNavigate: (view: Dest) =
         <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-gold-400/20" />
         <div className="absolute bottom-0 right-16 w-16 h-16 rounded-full bg-sage-400/20" />
         <div className="relative">
-          <span className="inline-flex items-center gap-1.5 bg-white/10 text-gold-300 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-4">
-            <Sparkles className="w-3.5 h-3.5" /> KCET · NEET · JEE
-          </span>
+          <div className="flex items-start justify-between gap-4 mb-4">
+            <span className="inline-flex items-center gap-1.5 bg-white/10 text-gold-300 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">
+              <Sparkles className="w-3.5 h-3.5" /> KCET · NEET · JEE
+            </span>
+            <button onClick={() => onNavigate('reports')} className="flex items-center gap-2 text-left">
+              <PrepScoreRing score={score} />
+              <span className="text-[10px] uppercase tracking-widest text-ink-300 hidden sm:block">Prep<br />Score</span>
+            </button>
+          </div>
           <h1 className="text-3xl font-bold tracking-tight font-display mb-2">Welcome back</h1>
-          <p className="text-ink-200 text-sm max-w-sm">Everything for your prep and college decision, in one place.</p>
+          <p className="text-ink-200 text-sm max-w-sm mb-4">Everything for your prep and college decision, in one place.</p>
+          <p className="text-sm text-gold-200 italic max-w-md">"{quote.text}" <span className="text-ink-300 not-italic">— {quote.author}</span></p>
+          {dueRevisionCount > 0 && (
+            <button onClick={() => onNavigate('tracker')} className="mt-4 inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-gold-200 text-xs font-bold px-3 py-1.5 rounded-full">
+              <CalendarClock className="w-3.5 h-3.5" /> {dueRevisionCount} revision{dueRevisionCount > 1 ? 's' : ''} due today
+            </button>
+          )}
         </div>
       </div>
 
@@ -125,6 +167,20 @@ export default function StudentHome({ onNavigate }: { onNavigate: (view: Dest) =
           badgeClass="bg-gold-50"
           title="Counselling Companion"
           description="Documents, dates, and your seat-allotment history."
+        />
+        <FeatureCard
+          onClick={() => onNavigate('reports')}
+          icon={<FileBarChart className="w-6 h-6 text-sage-600" />}
+          badgeClass="bg-sage-50"
+          title="Reports"
+          description="A printable weekly or monthly summary of your Prep Score and progress."
+        />
+        <FeatureCard
+          onClick={() => onNavigate('settingsBackup')}
+          icon={<SettingsIcon className="w-6 h-6 text-ink-600" />}
+          badgeClass="bg-ink-100"
+          title="Settings & Backup"
+          description="Export or restore all your tracker data as a JSON file."
         />
       </div>
 

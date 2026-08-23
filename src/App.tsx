@@ -65,12 +65,14 @@ import HabitsFocus from './pages/HabitsFocus';
 import Performance from './pages/Performance';
 import TargetsGoals from './pages/TargetsGoals';
 import WellbeingCare from './pages/WellbeingCare';
+import ReportsPage from './pages/ReportsPage';
+import SettingsBackup from './pages/SettingsBackup';
 import PomodoroTimer from './components/PomodoroTimer';
 import { latestActivityAt } from './lib/lms';
 import { getLmsLastSeen, markLmsSeen, getOrCreateStudentId } from './lib/studentIdentity';
 
 type Role = 'admin' | 'student';
-type View = 'home' | 'routine' | 'planner' | 'weekly' | 'predictor' | 'career' | 'admin' | 'lms' | 'counselling' | 'assistant' | 'tracker' | 'habitsFocus' | 'performance' | 'targetsGoals' | 'wellbeingCare';
+type View = 'home' | 'routine' | 'planner' | 'weekly' | 'predictor' | 'career' | 'admin' | 'lms' | 'counselling' | 'assistant' | 'tracker' | 'habitsFocus' | 'performance' | 'targetsGoals' | 'wellbeingCare' | 'reports' | 'settingsBackup';
 
 const iconMap: Record<string, React.ReactNode> = {
   Sun: <Sun className="w-5 h-5" />,
@@ -794,6 +796,8 @@ export default function App() {
             {effectiveView === 'performance' && <Performance />}
             {effectiveView === 'targetsGoals' && <TargetsGoals />}
             {effectiveView === 'wellbeingCare' && <WellbeingCare />}
+            {effectiveView === 'reports' && <ReportsPage />}
+            {effectiveView === 'settingsBackup' && <SettingsBackup />}
           </motion.div>
         </AnimatePresence>
       </div>
@@ -965,12 +969,12 @@ const Login: React.FC<{ onLogin: (role: 'admin' | 'student') => void }> = ({ onL
       >
         <div className="bg-white/10 backdrop-blur-2xl p-10 rounded-[3rem] border border-white/20 shadow-2xl">
           <div className="text-center mb-10">
-            <motion.div 
+            <motion.div
               initial={{ rotate: -10 }}
               animate={{ rotate: 0 }}
-              className="inline-block p-4 bg-gold-400 rounded-3xl shadow-lg mb-6"
+              className="inline-block w-20 h-20 rounded-full overflow-hidden shadow-lg mb-6 bg-white"
             >
-              <Layout className="w-8 h-8 text-ink-900" />
+              <img src="/branding/science-monk-logo.png" alt="Science Monk Academy" className="w-full h-full object-cover" />
             </motion.div>
             <h1 className="text-3xl font-bold text-white tracking-tight font-display mb-2">Welcome</h1>
             <p className="text-ink-400 text-sm">
@@ -1078,6 +1082,15 @@ const Login: React.FC<{ onLogin: (role: 'admin' | 'student') => void }> = ({ onL
               ) : (
                 'Open access for all students'
               )}
+            </p>
+          </div>
+
+          <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-center gap-3">
+            <img src="/branding/founder-photo.png" alt="Founder, Science Monk" className="w-9 h-9 rounded-full object-cover shrink-0" />
+            <p className="text-ink-500 text-[11px] leading-tight text-left">
+              A <span className="text-ink-300 font-semibold">Science Monk</span> creation
+              <br />
+              Storytelling &amp; content by its founder
             </p>
           </div>
         </div>

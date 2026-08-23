@@ -76,6 +76,14 @@ export function recentStressTrend(studentId: string, days = 7): StressPoint[] {
   return out;
 }
 
+/** Average mood over the most recent entries, scaled to 0-100. Null (not 0) until the student has logged at least one check-in — never punish for not having journaled yet. */
+export function recentMoodScore(studentId: string, maxEntries = 7): number | null {
+  const entries = listEntries(studentId).slice(0, maxEntries);
+  if (entries.length === 0) return null;
+  const avgMood = entries.reduce((sum, e) => sum + e.mood, 0) / entries.length;
+  return Math.round(((avgMood - 1) / 4) * 100);
+}
+
 const DISTRESS_KEYWORDS = [
   'suicide', 'kill myself', 'end it all', 'end my life', 'want to die',
   'no point living', 'no point in living', 'self harm', 'self-harm', 'hopeless', 'worthless',

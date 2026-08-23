@@ -66,7 +66,7 @@ export default function StudentHome({ onNavigate }: { onNavigate: (view: Dest) =
           icon={<MessageSquareText className="w-6 h-6 text-sage-600" />}
           badgeClass="bg-sage-50"
           title="Ask the AI Assistant"
-          description="Doubt-solving help — works fully offline, no setup needed."
+          description="Doubt-solving and counselling help, grounded in current search results."
         />
         <FeatureCard
           onClick={() => onNavigate('predictor')}

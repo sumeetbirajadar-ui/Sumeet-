@@ -26,7 +26,10 @@ export function subscribePublished(onData: (items: Announcement[]) => void): () 
 
 export async function createAnnouncement(title: string, body: string): Promise<void> {
   const now = new Date().toISOString();
-  await addDocument(COLLECTION, { title, body, status: 'draft', createdAt: now, updatedAt: now });
+  // Same reasoning as live classes and content: publish immediately, no
+  // hidden draft step to remember — the publish/unpublish toggle is still
+  // there afterward if it needs to come down.
+  await addDocument(COLLECTION, { title, body, status: 'published', createdAt: now, updatedAt: now });
 }
 
 export async function updateAnnouncement(id: string, patch: Partial<Pick<Announcement, 'title' | 'body' | 'status'>>): Promise<void> {

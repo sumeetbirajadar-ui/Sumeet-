@@ -98,7 +98,7 @@ function AnnouncementsPanel() {
         />
         <div className="flex gap-2">
           <button type="submit" className="bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold px-5 py-2 rounded-2xl flex items-center gap-2">
-            <Plus className="w-4 h-4" /> {editingId ? 'Save Changes' : 'Add Draft'}
+            <Plus className="w-4 h-4" /> {editingId ? 'Save Changes' : 'Publish (students see it immediately)'}
           </button>
           {editingId && (
             <button

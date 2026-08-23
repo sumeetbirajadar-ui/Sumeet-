@@ -49,10 +49,17 @@ import Predictor from './pages/Predictor';
 import CareerGuidance from './pages/CareerGuidance';
 import Admin from './pages/Admin';
 import StudentHome from './pages/StudentHome';
-import { GraduationCap as NavPredictorIcon, Compass as NavCareerIcon, ShieldCheck as NavAdminIcon, Home as NavHomeIcon } from 'lucide-react';
+import StudentLMS from './pages/StudentLMS';
+import {
+  GraduationCap as NavPredictorIcon,
+  Compass as NavCareerIcon,
+  ShieldCheck as NavAdminIcon,
+  Home as NavHomeIcon,
+  Video as NavLmsIcon,
+} from 'lucide-react';
 
 type Role = 'admin' | 'student';
-type View = 'home' | 'routine' | 'planner' | 'weekly' | 'predictor' | 'career' | 'admin';
+type View = 'home' | 'routine' | 'planner' | 'weekly' | 'predictor' | 'career' | 'admin' | 'lms';
 
 const iconMap: Record<string, React.ReactNode> = {
   Sun: <Sun className="w-5 h-5" />,
@@ -749,6 +756,7 @@ export default function App() {
           {effectiveView === 'predictor' && <Predictor />}
           {effectiveView === 'career' && <CareerGuidance />}
           {effectiveView === 'admin' && <Admin />}
+          {effectiveView === 'lms' && <StudentLMS />}
         </motion.div>
       </AnimatePresence>
 
@@ -790,6 +798,14 @@ export default function App() {
             >
               <NavHomeIcon className="w-5 h-5" />
               <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Home</span>
+            </button>
+            <div className="w-px h-6 bg-stone-700 shrink-0"></div>
+            <button
+              onClick={() => setView('lms')}
+              className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'lms' ? 'text-amber-400' : 'text-stone-400 hover:text-white'}`}
+            >
+              <NavLmsIcon className="w-5 h-5" />
+              <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Learn</span>
             </button>
             <div className="w-px h-6 bg-stone-700 shrink-0"></div>
           </>

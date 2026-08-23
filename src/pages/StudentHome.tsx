@@ -1,8 +1,8 @@
 import React from 'react';
-import { Megaphone, GraduationCap, Compass } from 'lucide-react';
+import { Megaphone, GraduationCap, Compass, Video } from 'lucide-react';
 import { listPublished } from '../lib/announcements';
 
-export default function StudentHome({ onNavigate }: { onNavigate: (view: 'predictor' | 'career') => void }) {
+export default function StudentHome({ onNavigate }: { onNavigate: (view: 'predictor' | 'career' | 'lms') => void }) {
   const announcements = listPublished();
 
   return (
@@ -12,7 +12,15 @@ export default function StudentHome({ onNavigate }: { onNavigate: (view: 'predic
         <p className="text-stone-500 text-sm">Everything for your KCET prep and college decision, in one place.</p>
       </header>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <button
+          onClick={() => onNavigate('lms')}
+          className="bg-white border-2 border-stone-200 rounded-3xl p-6 text-left hover:border-amber-300 hover:shadow-md transition-all"
+        >
+          <Video className="w-8 h-8 text-amber-500 mb-3" />
+          <h3 className="font-bold text-lg text-stone-800 mb-1">Learning Hub</h3>
+          <p className="text-sm text-stone-500">Live classes, notes, videos, PYQs and your doubts thread.</p>
+        </button>
         <button
           onClick={() => onNavigate('predictor')}
           className="bg-white border-2 border-stone-200 rounded-3xl p-6 text-left hover:border-amber-300 hover:shadow-md transition-all"

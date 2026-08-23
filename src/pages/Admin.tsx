@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
-import { ShieldCheck, Plus, Trash2, Eye, EyeOff, Pencil, Users, Video, FileText, BookOpenCheck, MessageCircle, Send } from 'lucide-react';
+import { ShieldCheck, Plus, Trash2, Eye, EyeOff, Pencil, Users, Video, FileText, BookOpenCheck, MessageCircle, Send, CalendarClock } from 'lucide-react';
+import { listTimelineEvents, addTimelineEvent, deleteTimelineEvent } from '../lib/counselling';
 import {
   Announcement,
   listAnnouncements,
@@ -596,17 +597,17 @@ function ChapterResourcesPanel() {
   const chapters = listChapterResources(track);
 
   // Local text buffers so typing doesn't write to localStorage on every keystroke.
-  const [drafts, setDrafts] = useState<Record<string, { notesUrl: string; solutionVideoUrl: string; conceptVideoUrl: string }>>({});
+  const [drafts, setDrafts] = useState<Record<string, { notesUrl: string; solutionVideoUrl: string; conceptVideoUrl: string; ncertUrl: string }>>({});
 
   function draftFor(c: ChapterResource) {
-    return drafts[c.id] || { notesUrl: c.notesUrl, solutionVideoUrl: c.solutionVideoUrl, conceptVideoUrl: c.conceptVideoUrl };
+    return drafts[c.id] || { notesUrl: c.notesUrl, solutionVideoUrl: c.solutionVideoUrl, conceptVideoUrl: c.conceptVideoUrl, ncertUrl: c.ncertUrl };
   }
 
-  function setDraftField(c: ChapterResource, field: 'notesUrl' | 'solutionVideoUrl' | 'conceptVideoUrl', value: string) {
+  function setDraftField(c: ChapterResource, field: 'notesUrl' | 'solutionVideoUrl' | 'conceptVideoUrl' | 'ncertUrl', value: string) {
     setDrafts((d) => ({ ...d, [c.id]: { ...draftFor(c), [field]: value } }));
   }
 
-  function commitField(c: ChapterResource, field: 'notesUrl' | 'solutionVideoUrl' | 'conceptVideoUrl') {
+  function commitField(c: ChapterResource, field: 'notesUrl' | 'solutionVideoUrl' | 'conceptVideoUrl' | 'ncertUrl') {
     const value = draftFor(c)[field];
     if (value === c[field]) return;
     updateChapterResource(c.id, { [field]: value });
@@ -624,8 +625,9 @@ function ChapterResourcesPanel() {
   return (
     <div className="space-y-6">
       <div className="bg-sage-50 border border-sage-100 text-sage-800 text-xs rounded-2xl px-4 py-3">
-        For each chapter, paste your Google Drive notes link, your YouTube solved-PYQ video link, and your YouTube
-        "important topics" video link. Students see exactly what's filled in — leave a field blank to hide it.
+        For each chapter, paste your Drive notes link, YouTube solved-PYQ video, YouTube "important topics" video,
+        and the official Digital NCERT chapter link. Students see exactly what's filled in — leave a field blank to
+        hide it.
       </div>
 
       <div className="flex gap-2 justify-center">
@@ -653,7 +655,7 @@ function ChapterResourcesPanel() {
                   <Trash2 className="w-4 h-4" />
                 </button>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 <input
                   value={d.notesUrl}
                   onChange={(e) => setDraftField(c, 'notesUrl', e.target.value)}
@@ -673,6 +675,13 @@ function ChapterResourcesPanel() {
                   onChange={(e) => setDraftField(c, 'conceptVideoUrl', e.target.value)}
                   onBlur={() => commitField(c, 'conceptVideoUrl')}
                   placeholder="YouTube — important topics"
+                  className="border-2 border-ink-200 rounded-xl px-3 py-1.5 text-sm"
+                />
+                <input
+                  value={d.ncertUrl}
+                  onChange={(e) => setDraftField(c, 'ncertUrl', e.target.value)}
+                  onBlur={() => commitField(c, 'ncertUrl')}
+                  placeholder="Digital NCERT chapter link"
                   className="border-2 border-ink-200 rounded-xl px-3 py-1.5 text-sm"
                 />
               </div>
@@ -757,8 +766,78 @@ function DoubtsInboxPanel() {
   );
 }
 
+function CounsellingDatesPanel() {
+  const forceUpdate = useForceUpdate();
+  const [track, setTrack] = useState<ExamTrack>('KCET');
+  const [title, setTitle] = useState('');
+  const [date, setDate] = useState('');
+  const [note, setNote] = useState('');
+  const events = listTimelineEvents(track);
+
+  function handleAdd(e: React.FormEvent) {
+    e.preventDefault();
+    if (!title.trim() || !date) return;
+    addTimelineEvent(track, title.trim(), date, note.trim() || undefined);
+    setTitle('');
+    setDate('');
+    setNote('');
+    forceUpdate();
+  }
+
+  return (
+    <div className="space-y-6">
+      <div className="bg-sage-50 border border-sage-100 text-sage-800 text-xs rounded-2xl px-4 py-3">
+        Add each counselling milestone as KEA/NTA publishes it — registration, HLC verification, option entry,
+        mock allotment, Round 1/2, mop-up. Students see a live countdown and an urgency flag inside 3 days.
+      </div>
+
+      <div className="flex gap-2 justify-center">
+        {EXAM_TRACKS.map((t) => (
+          <button
+            key={t}
+            onClick={() => setTrack(t)}
+            className={`px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wider ${track === t ? 'bg-ink-800 text-white' : 'bg-ink-100 text-ink-500'}`}
+          >
+            {t}
+          </button>
+        ))}
+      </div>
+
+      <form onSubmit={handleAdd} className="bg-white rounded-3xl border-2 border-ink-200 p-6 space-y-4">
+        <h3 className="font-bold text-lg text-ink-800">Add {track} Counselling Date</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Milestone (e.g. Option Entry Opens)" className="border-2 border-ink-200 rounded-xl px-3 py-2" />
+          <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="border-2 border-ink-200 rounded-xl px-3 py-2" />
+        </div>
+        <input value={note} onChange={(e) => setNote(e.target.value)} placeholder="Optional note" className="w-full border-2 border-ink-200 rounded-xl px-3 py-2" />
+        <button type="submit" className="bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold px-5 py-2 rounded-xl flex items-center gap-2">
+          <Plus className="w-4 h-4" /> Add
+        </button>
+      </form>
+
+      <div className="space-y-3">
+        {events.length === 0 && <p className="text-ink-400 italic text-sm">No dates added yet for {track}.</p>}
+        {events.map((e) => (
+          <div key={e.id} className="bg-white border-2 border-ink-200 rounded-2xl p-4 flex items-center justify-between">
+            <div>
+              <h4 className="font-bold text-ink-800">{e.title}</h4>
+              <p className="text-xs text-ink-500">
+                {new Date(e.date).toLocaleDateString('en-IN', { dateStyle: 'medium' })}
+                {e.note ? ` · ${e.note}` : ''}
+              </p>
+            </div>
+            <button onClick={() => { deleteTimelineEvent(e.id); forceUpdate(); }} className="p-1.5 rounded-lg hover:bg-rose-50 text-rose-500">
+              <Trash2 className="w-4 h-4" />
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Admin() {
-  const [tab, setTab] = useState<'announcements' | 'cutoffs' | 'batches' | 'classes' | 'content' | 'pyq' | 'doubts'>('announcements');
+  const [tab, setTab] = useState<'announcements' | 'cutoffs' | 'batches' | 'classes' | 'content' | 'pyq' | 'doubts' | 'counselling'>('announcements');
 
   return (
     <div className="max-w-5xl mx-auto py-8 px-4">
@@ -779,6 +858,7 @@ export default function Admin() {
             ['content', 'Notes & Videos'],
             ['pyq', 'PYQ / Chapters'],
             ['doubts', 'Doubts Inbox'],
+            ['counselling', 'Counselling Dates'],
           ] as const
         ).map(([key, label]) => (
           <button
@@ -800,6 +880,7 @@ export default function Admin() {
       {tab === 'content' && <ContentAdminPanel />}
       {tab === 'pyq' && <ChapterResourcesPanel />}
       {tab === 'doubts' && <DoubtsInboxPanel />}
+      {tab === 'counselling' && <CounsellingDatesPanel />}
     </div>
   );
 }

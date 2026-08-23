@@ -56,12 +56,15 @@ import {
   ShieldCheck as NavAdminIcon,
   Home as NavHomeIcon,
   Video as NavLmsIcon,
+  ClipboardCheck as NavCounsellingIcon,
 } from 'lucide-react';
+import Counselling from './pages/Counselling';
+import PomodoroTimer from './components/PomodoroTimer';
 import { latestActivityAt } from './lib/lms';
-import { getLmsLastSeen, markLmsSeen } from './lib/studentIdentity';
+import { getLmsLastSeen, markLmsSeen, getOrCreateStudentId } from './lib/studentIdentity';
 
 type Role = 'admin' | 'student';
-type View = 'home' | 'routine' | 'planner' | 'weekly' | 'predictor' | 'career' | 'admin' | 'lms';
+type View = 'home' | 'routine' | 'planner' | 'weekly' | 'predictor' | 'career' | 'admin' | 'lms' | 'counselling';
 
 const iconMap: Record<string, React.ReactNode> = {
   Sun: <Sun className="w-5 h-5" />,
@@ -93,15 +96,24 @@ export default function App() {
   });
   const [arrivalPath, setArrivalPath] = useState<'530' | '730'>('530');
   const [currentDate, setCurrentDate] = useState(new Date().toISOString().split('T')[0]);
-  
-  const [state, setState] = useState<AppState>(() => {
-    const saved = localStorage.getItem('daily_tracker_app_state');
+
+  // Each student (and the admin) gets their own routine/planner/review data —
+  // this used to be a single shared record when the app only served Sumeet.
+  const identityKey = role === 'admin' ? 'admin' : getOrCreateStudentId();
+  const stateStorageKey = `daily_tracker_app_state_${identityKey}`;
+
+  const loadState = (key: string): AppState => {
+    const saved = localStorage.getItem(key);
     if (saved) return JSON.parse(saved);
-    return {
-      daily: {},
-      weekly: {}
-    };
-  });
+    return { daily: {}, weekly: {} };
+  };
+
+  const [state, setState] = useState<AppState>(() => loadState(stateStorageKey));
+
+  useEffect(() => {
+    setState(loadState(stateStorageKey));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stateStorageKey]);
 
   const handleLogin = (nextRole: Role) => {
     setIsAuthenticated(true);
@@ -138,8 +150,8 @@ export default function App() {
   const currentData = getDayData(currentDate);
 
   useEffect(() => {
-    localStorage.setItem('daily_tracker_app_state', JSON.stringify(state));
-  }, [state]);
+    localStorage.setItem(stateStorageKey, JSON.stringify(state));
+  }, [state, stateStorageKey]);
 
   useEffect(() => {
     if (role === 'student' && view === 'lms') markLmsSeen();
@@ -256,7 +268,7 @@ export default function App() {
     return <Login onLogin={handleLogin} />;
   }
 
-  const adminOnlyViews: View[] = ['routine', 'planner', 'weekly', 'admin'];
+  const adminOnlyViews: View[] = ['admin'];
   const effectiveView: View = role === 'student' && adminOnlyViews.includes(view) ? 'home' : view;
   const hasLmsUpdates = role === 'student' && latestActivityAt() > getLmsLastSeen();
 
@@ -438,6 +450,10 @@ export default function App() {
             <div className="text-right italic text-ink-400 text-sm">
               "Gratitude turns what we have into enough."
             </div>
+          </div>
+
+          <div className="mb-12 flex justify-center">
+            <PomodoroTimer storageKey={`pomodoro_sessions_${identityKey}`} />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
@@ -765,6 +781,7 @@ export default function App() {
             {effectiveView === 'career' && <CareerGuidance />}
             {effectiveView === 'admin' && <Admin />}
             {effectiveView === 'lms' && <StudentLMS />}
+            {effectiveView === 'counselling' && <Counselling />}
           </motion.div>
         </AnimatePresence>
       </div>
@@ -772,34 +789,6 @@ export default function App() {
       {/* Navigation Bar */}
       <div className="shrink-0 flex justify-center pt-2 pb-6 px-4 bg-ink-50">
       <div className="bg-ink-900/90 backdrop-blur-md text-white px-6 py-4 rounded-full shadow-2xl flex items-center gap-6 z-50 max-w-full overflow-x-auto">
-        {role === 'admin' && (
-          <>
-            <button
-              onClick={() => setView('routine')}
-              className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'routine' ? 'text-gold-400' : 'text-ink-400 hover:text-white'}`}
-            >
-              <Layout className="w-5 h-5" />
-              <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Routine</span>
-            </button>
-            <div className="w-px h-6 bg-ink-700 shrink-0"></div>
-            <button
-              onClick={() => setView('planner')}
-              className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'planner' ? 'text-sage-400' : 'text-ink-400 hover:text-white'}`}
-            >
-              <Calendar className="w-5 h-5" />
-              <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Planner</span>
-            </button>
-            <div className="w-px h-6 bg-ink-700 shrink-0"></div>
-            <button
-              onClick={() => setView('weekly')}
-              className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'weekly' ? 'text-emerald-400' : 'text-ink-400 hover:text-white'}`}
-            >
-              <TrendingUp className="w-5 h-5" />
-              <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Review</span>
-            </button>
-            <div className="w-px h-6 bg-ink-700 shrink-0"></div>
-          </>
-        )}
         {role === 'student' && (
           <>
             <button
@@ -821,8 +810,40 @@ export default function App() {
               <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Learn</span>
             </button>
             <div className="w-px h-6 bg-ink-700 shrink-0"></div>
+            <button
+              onClick={() => setView('counselling')}
+              className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'counselling' ? 'text-gold-400' : 'text-ink-400 hover:text-white'}`}
+            >
+              <NavCounsellingIcon className="w-5 h-5" />
+              <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Counselling</span>
+            </button>
+            <div className="w-px h-6 bg-ink-700 shrink-0"></div>
           </>
         )}
+        <button
+          onClick={() => setView('routine')}
+          className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'routine' ? 'text-gold-400' : 'text-ink-400 hover:text-white'}`}
+        >
+          <Layout className="w-5 h-5" />
+          <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">My Day</span>
+        </button>
+        <div className="w-px h-6 bg-ink-700 shrink-0"></div>
+        <button
+          onClick={() => setView('planner')}
+          className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'planner' ? 'text-sage-400' : 'text-ink-400 hover:text-white'}`}
+        >
+          <Calendar className="w-5 h-5" />
+          <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Planner</span>
+        </button>
+        <div className="w-px h-6 bg-ink-700 shrink-0"></div>
+        <button
+          onClick={() => setView('weekly')}
+          className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'weekly' ? 'text-emerald-400' : 'text-ink-400 hover:text-white'}`}
+        >
+          <TrendingUp className="w-5 h-5" />
+          <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Review</span>
+        </button>
+        <div className="w-px h-6 bg-ink-700 shrink-0"></div>
         <button
           onClick={() => setView('predictor')}
           className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'predictor' ? 'text-gold-400' : 'text-ink-400 hover:text-white'}`}

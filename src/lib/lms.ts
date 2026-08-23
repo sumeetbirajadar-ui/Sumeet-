@@ -192,6 +192,7 @@ export interface ChapterResource {
   notesUrl: string; // Google Drive (or any) link to notes
   solutionVideoUrl: string; // YouTube link — solved PYQs for this chapter
   conceptVideoUrl: string; // YouTube link — important topics/sub-topics explained
+  ncertUrl: string; // Official NCERT chapter link
   updatedAt: string;
 }
 
@@ -206,6 +207,7 @@ function seedChapterResources(examTrack: ExamTrack, subject: string): ChapterRes
     notesUrl: '',
     solutionVideoUrl: '',
     conceptVideoUrl: '',
+    ncertUrl: '',
     updatedAt: now,
   }));
 }
@@ -221,7 +223,7 @@ export function listChapterResources(examTrack: ExamTrack, subject = 'Physics'):
   return seeded;
 }
 
-export function updateChapterResource(id: string, patch: Partial<Pick<ChapterResource, 'chapterName' | 'notesUrl' | 'solutionVideoUrl' | 'conceptVideoUrl'>>) {
+export function updateChapterResource(id: string, patch: Partial<Pick<ChapterResource, 'chapterName' | 'notesUrl' | 'solutionVideoUrl' | 'conceptVideoUrl' | 'ncertUrl'>>) {
   const all = load<ChapterResource>(CHAPTER_RESOURCES_KEY);
   const items = all.map((c) => (c.id === id ? { ...c, ...patch, updatedAt: new Date().toISOString() } : c));
   save(CHAPTER_RESOURCES_KEY, items);
@@ -240,6 +242,7 @@ export function addChapter(examTrack: ExamTrack, subject: string, chapterName: s
     notesUrl: '',
     solutionVideoUrl: '',
     conceptVideoUrl: '',
+    ncertUrl: '',
     updatedAt: new Date().toISOString(),
   };
   save(CHAPTER_RESOURCES_KEY, [...all, chapter]);
@@ -260,7 +263,7 @@ export function latestActivityAt(): string {
     .filter((c) => c.publishState === 'published')
     .forEach((c) => timestamps.push(c.updatedAt));
   load<ChapterResource>(CHAPTER_RESOURCES_KEY)
-    .filter((c) => c.notesUrl || c.solutionVideoUrl || c.conceptVideoUrl)
+    .filter((c) => c.notesUrl || c.solutionVideoUrl || c.conceptVideoUrl || c.ncertUrl)
     .forEach((c) => timestamps.push(c.updatedAt));
   return timestamps.sort().pop() || '';
 }

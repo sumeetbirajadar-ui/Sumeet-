@@ -152,6 +152,7 @@ function PyqPanel() {
                 <ResourceLink label="Notes (Drive)" icon={<FileText className="w-4 h-4" />} url={c.notesUrl} />
                 <ResourceLink label="Solved PYQ Video" icon={<Video className="w-4 h-4" />} url={c.solutionVideoUrl} />
                 <ResourceLink label="Important Topics Explained" icon={<Lightbulb className="w-4 h-4" />} url={c.conceptVideoUrl} />
+                <ResourceLink label="Digital NCERT Chapter" icon={<BookOpenCheck className="w-4 h-4" />} url={c.ncertUrl} />
               </div>
             )}
           </div>

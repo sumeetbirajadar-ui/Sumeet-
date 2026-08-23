@@ -29,6 +29,9 @@ import {
   deleteContent,
   ExamTrack,
   EXAM_TRACKS,
+  Subject,
+  SUBJECTS,
+  SUBJECT_EXAM_TRACKS,
   ChapterResource,
   listChapterResources,
   updateChapterResource,
@@ -592,9 +595,17 @@ function ContentAdminPanel() {
 
 function ChapterResourcesPanel() {
   const forceUpdate = useForceUpdate();
+  const [subject, setSubject] = useState<Subject>('Physics');
   const [track, setTrack] = useState<ExamTrack>('KCET');
   const [newChapterName, setNewChapterName] = useState('');
-  const chapters = listChapterResources(track);
+  const validTracks = SUBJECT_EXAM_TRACKS[subject];
+  const activeTrack = validTracks.includes(track) ? track : validTracks[0];
+  const chapters = listChapterResources(activeTrack, subject);
+
+  function handleSubjectChange(s: Subject) {
+    setSubject(s);
+    if (!SUBJECT_EXAM_TRACKS[s].includes(track)) setTrack(SUBJECT_EXAM_TRACKS[s][0]);
+  }
 
   // Local text buffers so typing doesn't write to localStorage on every keystroke.
   const [drafts, setDrafts] = useState<Record<string, { notesUrl: string; solutionVideoUrl: string; conceptVideoUrl: string; ncertUrl: string }>>({});
@@ -617,7 +628,7 @@ function ChapterResourcesPanel() {
   function handleAddChapter(e: React.FormEvent) {
     e.preventDefault();
     if (!newChapterName.trim()) return;
-    addChapter(track, 'Physics', newChapterName.trim());
+    addChapter(activeTrack, subject, newChapterName.trim());
     setNewChapterName('');
     forceUpdate();
   }
@@ -630,12 +641,24 @@ function ChapterResourcesPanel() {
         hide it.
       </div>
 
+      <div className="flex gap-2 justify-center flex-wrap">
+        {SUBJECTS.map((s) => (
+          <button
+            key={s}
+            onClick={() => handleSubjectChange(s)}
+            className={`px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wider ${subject === s ? 'bg-gold-400 text-ink-900' : 'bg-ink-100 text-ink-500'}`}
+          >
+            {s}
+          </button>
+        ))}
+      </div>
+
       <div className="flex gap-2 justify-center">
-        {EXAM_TRACKS.map((t) => (
+        {validTracks.map((t) => (
           <button
             key={t}
             onClick={() => setTrack(t)}
-            className={`px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wider ${track === t ? 'bg-ink-800 text-white' : 'bg-ink-100 text-ink-500'}`}
+            className={`px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wider ${activeTrack === t ? 'bg-ink-800 text-white' : 'bg-ink-100 text-ink-500'}`}
           >
             {t} PYQ
           </button>

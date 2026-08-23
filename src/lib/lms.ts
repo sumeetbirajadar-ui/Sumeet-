@@ -183,6 +183,129 @@ export const DEFAULT_PHYSICS_CHAPTERS = [
   'Semiconductor Electronics',
 ];
 
+// Standard combined 11th+12th PUC/NCERT Chemistry chapter list.
+export const DEFAULT_CHEMISTRY_CHAPTERS = [
+  'Some Basic Concepts of Chemistry',
+  'Structure of Atom',
+  'Classification of Elements and Periodicity',
+  'Chemical Bonding and Molecular Structure',
+  'States of Matter',
+  'Thermodynamics (Chemistry)',
+  'Equilibrium',
+  'Redox Reactions',
+  'Hydrogen',
+  'The s-Block Elements',
+  'The p-Block Elements (Groups 13 & 14)',
+  'Organic Chemistry — Basic Principles and Techniques',
+  'Hydrocarbons',
+  'Environmental Chemistry',
+  'Solid State',
+  'Solutions',
+  'Electrochemistry',
+  'Chemical Kinetics',
+  'Surface Chemistry',
+  'General Principles of Isolation of Elements',
+  'The p-Block Elements (Groups 15-18)',
+  'The d and f Block Elements',
+  'Coordination Compounds',
+  'Haloalkanes and Haloarenes',
+  'Alcohols, Phenols and Ethers',
+  'Aldehydes, Ketones and Carboxylic Acids',
+  'Amines',
+  'Biomolecules (Chemistry)',
+  'Polymers',
+  'Chemistry in Everyday Life',
+];
+
+// Standard combined 11th+12th PUC/NCERT Biology chapter list.
+export const DEFAULT_BIOLOGY_CHAPTERS = [
+  'The Living World',
+  'Biological Classification',
+  'Plant Kingdom',
+  'Animal Kingdom',
+  'Morphology of Flowering Plants',
+  'Anatomy of Flowering Plants',
+  'Structural Organisation in Animals',
+  'Cell: The Unit of Life',
+  'Biomolecules (Biology)',
+  'Cell Cycle and Cell Division',
+  'Transport in Plants',
+  'Mineral Nutrition',
+  'Photosynthesis in Higher Plants',
+  'Respiration in Plants',
+  'Plant Growth and Development',
+  'Digestion and Absorption',
+  'Breathing and Exchange of Gases',
+  'Body Fluids and Circulation',
+  'Excretory Products and their Elimination',
+  'Locomotion and Movement',
+  'Neural Control and Coordination',
+  'Chemical Coordination and Integration',
+  'Reproduction in Organisms',
+  'Sexual Reproduction in Flowering Plants',
+  'Human Reproduction',
+  'Reproductive Health',
+  'Principles of Inheritance and Variation',
+  'Molecular Basis of Inheritance',
+  'Evolution',
+  'Human Health and Disease',
+  'Microbes in Human Welfare',
+  'Biotechnology: Principles and Processes',
+  'Biotechnology and its Applications',
+  'Organisms and Populations',
+  'Ecosystem',
+  'Biodiversity and Conservation',
+];
+
+// Standard combined 11th+12th PUC/NCERT Maths chapter list.
+export const DEFAULT_MATHS_CHAPTERS = [
+  'Sets',
+  'Relations and Functions',
+  'Trigonometric Functions',
+  'Complex Numbers and Quadratic Equations',
+  'Linear Inequalities',
+  'Permutations and Combinations',
+  'Binomial Theorem',
+  'Sequences and Series',
+  'Straight Lines',
+  'Conic Sections',
+  'Introduction to Three Dimensional Geometry',
+  'Limits and Derivatives',
+  'Statistics',
+  'Probability',
+  'Relations and Functions (Inverse Trigonometric Functions)',
+  'Matrices',
+  'Determinants',
+  'Continuity and Differentiability',
+  'Applications of Derivatives',
+  'Integrals',
+  'Applications of Integrals',
+  'Differential Equations',
+  'Vector Algebra',
+  'Three Dimensional Geometry',
+  'Linear Programming',
+  'Probability (Class 12)',
+];
+
+export const SUBJECTS = ['Physics', 'Chemistry', 'Biology', 'Maths'] as const;
+export type Subject = (typeof SUBJECTS)[number];
+
+export const SUBJECT_CHAPTERS: Record<Subject, string[]> = {
+  Physics: DEFAULT_PHYSICS_CHAPTERS,
+  Chemistry: DEFAULT_CHEMISTRY_CHAPTERS,
+  Biology: DEFAULT_BIOLOGY_CHAPTERS,
+  Maths: DEFAULT_MATHS_CHAPTERS,
+};
+
+// Which exams actually examine each subject — Maths has no NEET paper,
+// Biology has no JEE paper. Physics and Chemistry are common to all three.
+export const SUBJECT_EXAM_TRACKS: Record<Subject, ExamTrack[]> = {
+  Physics: ['KCET', 'NEET', 'JEE'],
+  Chemistry: ['KCET', 'NEET', 'JEE'],
+  Maths: ['KCET', 'JEE'],
+  Biology: ['KCET', 'NEET'],
+};
+
 export interface ChapterResource {
   id: string;
   examTrack: ExamTrack;
@@ -196,9 +319,9 @@ export interface ChapterResource {
   updatedAt: string;
 }
 
-function seedChapterResources(examTrack: ExamTrack, subject: string): ChapterResource[] {
+function seedChapterResources(examTrack: ExamTrack, subject: Subject): ChapterResource[] {
   const now = new Date().toISOString();
-  return DEFAULT_PHYSICS_CHAPTERS.map((name, i) => ({
+  return SUBJECT_CHAPTERS[subject].map((name, i) => ({
     id: uid('chres'),
     examTrack,
     subject,
@@ -212,12 +335,12 @@ function seedChapterResources(examTrack: ExamTrack, subject: string): ChapterRes
   }));
 }
 
-export function listChapterResources(examTrack: ExamTrack, subject = 'Physics'): ChapterResource[] {
+export function listChapterResources(examTrack: ExamTrack, subject: Subject = 'Physics'): ChapterResource[] {
+  if (!SUBJECT_EXAM_TRACKS[subject].includes(examTrack)) return [];
   const all = load<ChapterResource>(CHAPTER_RESOURCES_KEY);
   const existing = all.filter((c) => c.examTrack === examTrack && c.subject === subject);
   if (existing.length > 0) return existing.sort((a, b) => a.chapterIndex - b.chapterIndex);
-  if (subject !== 'Physics') return [];
-  // First visit to this track: auto-seed the standard Physics chapter list.
+  // First visit to this track/subject: auto-seed the standard chapter list.
   const seeded = seedChapterResources(examTrack, subject);
   save(CHAPTER_RESOURCES_KEY, [...all, ...seeded]);
   return seeded;

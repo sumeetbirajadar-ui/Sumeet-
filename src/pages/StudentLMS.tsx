@@ -11,8 +11,10 @@ import {
   listMessages,
   createThread,
   postMessage,
-  EXAM_TRACKS,
   ExamTrack,
+  Subject,
+  SUBJECTS,
+  SUBJECT_EXAM_TRACKS,
   listChapterResources,
 } from '../lib/lms';
 import { getOrCreateStudentId, getStudentName, getStudentBatchId, setStudentBatchId } from '../lib/studentIdentity';
@@ -117,24 +119,44 @@ function ResourceLink({ label, icon, url }: { label: string; icon: React.ReactNo
 }
 
 function PyqPanel() {
+  const [subject, setSubject] = useState<Subject>('Physics');
   const [track, setTrack] = useState<ExamTrack>('KCET');
   const [openChapter, setOpenChapter] = useState<string | null>(null);
-  const chapters = useMemo(() => listChapterResources(track), [track]);
+  const validTracks = SUBJECT_EXAM_TRACKS[subject];
+  const activeTrack = validTracks.includes(track) ? track : validTracks[0];
+  const chapters = useMemo(() => listChapterResources(activeTrack, subject), [activeTrack, subject]);
+
+  function handleSubjectChange(s: Subject) {
+    setSubject(s);
+    setOpenChapter(null);
+    if (!SUBJECT_EXAM_TRACKS[s].includes(track)) setTrack(SUBJECT_EXAM_TRACKS[s][0]);
+  }
 
   return (
     <div className="space-y-4">
+      <div className="flex gap-2 justify-center flex-wrap">
+        {SUBJECTS.map((s) => (
+          <button
+            key={s}
+            onClick={() => handleSubjectChange(s)}
+            className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider ${subject === s ? 'bg-gold-400 text-ink-900' : 'bg-ink-100 text-ink-500'}`}
+          >
+            {s}
+          </button>
+        ))}
+      </div>
       <div className="flex gap-2 justify-center">
-        {EXAM_TRACKS.map((t) => (
+        {validTracks.map((t) => (
           <button
             key={t}
             onClick={() => { setTrack(t); setOpenChapter(null); }}
-            className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider ${track === t ? 'bg-ink-800 text-white' : 'bg-ink-100 text-ink-500'}`}
+            className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider ${activeTrack === t ? 'bg-ink-800 text-white' : 'bg-ink-100 text-ink-500'}`}
           >
             {t} PYQ
           </button>
         ))}
       </div>
-      <p className="text-xs text-ink-400 text-center">Physics · {chapters.length} chapters</p>
+      <p className="text-xs text-ink-400 text-center">{subject} · {chapters.length} chapters</p>
 
       <div className="space-y-2">
         {chapters.map((c) => (

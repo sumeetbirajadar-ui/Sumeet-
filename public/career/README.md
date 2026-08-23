@@ -1,4 +1,4 @@
-# SSBPUC Career Compass · Paris Edition
+# Career Compass · Paris Edition
 
 A visually rich, mobile-first career-guidance app for the 132 entrance exams of
 2026–27, designed in a Paris-boutique aesthetic — cream parchment, champagne
@@ -83,9 +83,6 @@ work — can't be done from static HTML alone.
 career-app-paris/
 ├── index.html          ← Single-file app (53 KB)
 ├── data.js             ← All 132 exams (96 KB)
-├── college_logo.png    ← Official SSBPUC seal
-├── chairperson.jpg     ← Administrator photo
-├── principal.jpg       ← Administrator photo
 ├── Lora.ttf            ← Display serif
 ├── Lora-Italic.ttf
 ├── Poppins-Light.ttf   ← UI sans-serif
@@ -145,7 +142,7 @@ Bookmarks and visited-state persist in `localStorage` between visits.
 
 ```bash
 npm install -g @capacitor/cli
-npx cap init "Career Compass" "in.ssbpuc.compass"
+npx cap init "Career Compass" "academy.sciencemonk.compass"
 # Place files in www/
 npx cap add android
 npx cap open android
@@ -156,7 +153,7 @@ styling, and clean app icons.
 
 ### C. Trusted Web Activity (premium, ongoing updates)
 
-Host on a real domain (`careers.ssbpuc.in`), add a web manifest and service
+Host on a real domain (e.g. `careers.yourdomain.com`), add a web manifest and service
 worker, wrap with `@bubblewrap/cli`. Result: Play Store ships a thin shell that
 loads from your domain — push updates to the app simply by updating the website.
 
@@ -175,4 +172,4 @@ Let me know which to prioritise.
 
 ---
 
-*Curated by the Department of Physics & Examination Cell · Shri Sharanabasaveshwar PU Science College · Vijayapura · Karnataka*
+*Curated by Science Monk Academy*

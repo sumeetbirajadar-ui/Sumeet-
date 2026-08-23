@@ -1,10 +1,12 @@
 // Syllabus Completion Tracker — the "track a chapter once, it counts toward
 // every exam that shares it" system. Chapter progress is stored once per
-// student (not per exam track), since KCET/NEET/JEE all draw on the same
-// NCERT Physics syllabus we already seed in lms.ts — mark a chapter done and
-// it counts toward all three at once, matching how a student actually studies.
+// student (not per exam track) across all four subjects, since a chapter
+// counts toward every exam that actually examines that subject (see
+// SUBJECT_EXAM_TRACKS in lms.ts — Maths has no NEET paper, Biology no JEE
+// paper) — mark a chapter done and it counts toward every relevant exam at
+// once, matching how a student actually studies.
 
-import { EXAM_TRACKS, ExamTrack, DEFAULT_PHYSICS_CHAPTERS } from './lms';
+import { EXAM_TRACKS, ExamTrack, Subject, SUBJECTS, SUBJECT_CHAPTERS, SUBJECT_EXAM_TRACKS } from './lms';
 
 export type ChapterStatus = 'not_started' | 'in_progress' | 'done';
 
@@ -44,18 +46,24 @@ function revisionKey(studentId: string) {
 
 function defaultProgress(): ChapterProgress[] {
   const now = new Date().toISOString();
-  return DEFAULT_PHYSICS_CHAPTERS.map((name, i) => ({
-    chapterName: name,
-    chapterIndex: i + 1,
-    subject: 'Physics',
-    status: 'not_started' as ChapterStatus,
-    completionPct: 0,
-    confidence: 0,
-    questionsPracticed: 0,
-    targetDate: '',
-    notes: '',
-    updatedAt: now,
-  }));
+  const items: ChapterProgress[] = [];
+  SUBJECTS.forEach((subject) => {
+    SUBJECT_CHAPTERS[subject].forEach((name, i) => {
+      items.push({
+        chapterName: name,
+        chapterIndex: i + 1,
+        subject,
+        status: 'not_started' as ChapterStatus,
+        completionPct: 0,
+        confidence: 0,
+        questionsPracticed: 0,
+        targetDate: '',
+        notes: '',
+        updatedAt: now,
+      });
+    });
+  });
+  return items;
 }
 
 export function listChapterProgress(studentId: string): ChapterProgress[] {
@@ -142,6 +150,15 @@ export function markRevisionDone(studentId: string, chapterName: string, cycleNo
   return items;
 }
 
+/** % of revision cycles that have come due so far that were actually reviewed. Null (not 0) until at least one cycle has come due — never punish a student for a queue that hasn't started yet. */
+export function revisionAdherencePct(studentId: string): number | null {
+  const today = new Date().toISOString().split('T')[0];
+  const dueSoFar = listRevisions(studentId).filter((r) => r.dueDate <= today);
+  if (dueSoFar.length === 0) return null;
+  const done = dueSoFar.filter((r) => r.done).length;
+  return Math.round((done / dueSoFar.length) * 100);
+}
+
 export interface ExamProgress {
   examTrack: ExamTrack;
   totalChapters: number;
@@ -150,20 +167,16 @@ export interface ExamProgress {
   avgCompletionPct: number;
 }
 
-// Every exam track currently shares the same seeded Physics chapter list, so
-// a chapter counts toward all three — this is exactly the cross-exam overlap
-// the tracker is built around. If tracks ever diverge (e.g. a chapter added
-// only to one), this naturally narrows since it reads the canonical list.
+// A chapter counts toward every exam that actually examines its subject —
+// Physics and Chemistry count toward all three, Maths toward KCET/JEE only,
+// Biology toward KCET/NEET only (see SUBJECT_EXAM_TRACKS in lms.ts).
 export function examProgressSummary(studentId: string): ExamProgress[] {
   const progress = listChapterProgress(studentId);
-  const doneChapters = progress.filter((c) => c.status === 'done').length;
-  const inProgressChapters = progress.filter((c) => c.status === 'in_progress').length;
-  const avgCompletionPct = progress.length > 0 ? Math.round(progress.reduce((sum, c) => sum + c.completionPct, 0) / progress.length) : 0;
-  return EXAM_TRACKS.map((examTrack) => ({
-    examTrack,
-    totalChapters: progress.length,
-    doneChapters,
-    inProgressChapters,
-    avgCompletionPct,
-  }));
+  return EXAM_TRACKS.map((examTrack) => {
+    const relevant = progress.filter((c) => SUBJECT_EXAM_TRACKS[c.subject as Subject]?.includes(examTrack));
+    const doneChapters = relevant.filter((c) => c.status === 'done').length;
+    const inProgressChapters = relevant.filter((c) => c.status === 'in_progress').length;
+    const avgCompletionPct = relevant.length > 0 ? Math.round(relevant.reduce((sum, c) => sum + c.completionPct, 0) / relevant.length) : 0;
+    return { examTrack, totalChapters: relevant.length, doneChapters, inProgressChapters, avgCompletionPct };
+  });
 }

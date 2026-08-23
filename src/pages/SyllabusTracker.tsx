@@ -10,6 +10,7 @@ import {
   markRevisionDone,
 } from '../lib/syllabusTracker';
 import { getOrCreateStudentId } from '../lib/studentIdentity';
+import { Subject, SUBJECTS, SUBJECT_EXAM_TRACKS } from '../lib/lms';
 
 function useForceUpdate() {
   const [, setTick] = useState(0);
@@ -194,7 +195,7 @@ const ChapterRow: React.FC<{ chapter: ChapterProgress; studentId: string; onChan
 
           <div className="flex flex-wrap gap-1.5">
             <span className="text-xs text-ink-400">Counts toward:</span>
-            {['KCET', 'NEET', 'JEE'].map((t) => (
+            {SUBJECT_EXAM_TRACKS[chapter.subject as Subject]?.map((t) => (
               <span key={t} className="text-xs font-bold px-2 py-0.5 rounded-full bg-ink-100 text-ink-600">
                 {t}
               </span>
@@ -211,12 +212,14 @@ type Filter = 'all' | ChapterStatus;
 export default function SyllabusTracker() {
   const forceUpdate = useForceUpdate();
   const studentId = getOrCreateStudentId();
+  const [subject, setSubject] = useState<Subject>('Physics');
   const [filter, setFilter] = useState<Filter>('all');
   const chapters = listChapterProgress(studentId);
   const examSummaries = examProgressSummary(studentId);
   const dueRevisions = getDueRevisions(studentId);
 
-  const filtered = useMemo(() => (filter === 'all' ? chapters : chapters.filter((c) => c.status === filter)), [chapters, filter]);
+  const bySubject = useMemo(() => chapters.filter((c) => c.subject === subject), [chapters, subject]);
+  const filtered = useMemo(() => (filter === 'all' ? bySubject : bySubject.filter((c) => c.status === filter)), [bySubject, filter]);
 
   function handleReview(chapterName: string, cycleNo: number) {
     markRevisionDone(studentId, chapterName, cycleNo);
@@ -230,13 +233,25 @@ export default function SyllabusTracker() {
           <BookOpenCheck className="w-7 h-7 text-gold-500" /> Syllabus Tracker
         </h1>
         <p className="text-ink-500 text-sm max-w-md mx-auto">
-          Track each Physics chapter once — since KCET, NEET and JEE all draw on the same syllabus, your progress updates all three at once.
+          Track each chapter once — KCET, NEET and JEE all draw on overlapping syllabi, so your progress updates every exam that shares it.
         </p>
       </header>
 
       <div className="flex gap-3 mb-6">
         {examSummaries.map((e) => (
           <ExamRing key={e.examTrack} label={e.examTrack} pct={e.avgCompletionPct} />
+        ))}
+      </div>
+
+      <div className="flex gap-2 mb-6 flex-wrap justify-center">
+        {SUBJECTS.map((s) => (
+          <button
+            key={s}
+            onClick={() => setSubject(s)}
+            className={`px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wider ${subject === s ? 'bg-gold-400 text-ink-900' : 'bg-ink-100 text-ink-500'}`}
+          >
+            {s}
+          </button>
         ))}
       </div>
 

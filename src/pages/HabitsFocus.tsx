@@ -15,7 +15,7 @@ import {
 } from '../lib/habits';
 import { FOCUS_MODES, FocusMode, StudySession, listSessions, logSession, subjectDistribution, minutesToday, minutesThisWeek } from '../lib/focus';
 import { getOrCreateStudentId } from '../lib/studentIdentity';
-import { DEFAULT_PHYSICS_CHAPTERS } from '../lib/lms';
+import { Subject, SUBJECTS, SUBJECT_CHAPTERS } from '../lib/lms';
 
 function useForceUpdate() {
   const [, setTick] = useState(0);
@@ -198,7 +198,7 @@ function FocusPanel() {
   const modeConfig = FOCUS_MODES.find((m) => m.value === mode)!;
   const [secondsLeft, setSecondsLeft] = useState(modeConfig.workMin * 60);
   const [running, setRunning] = useState(false);
-  const [subject, setSubject] = useState('Physics');
+  const [subject, setSubject] = useState<Subject>('Physics');
   const [chapterName, setChapterName] = useState('');
   const [distractions, setDistractions] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -272,15 +272,20 @@ function FocusPanel() {
         </div>
 
         <div className="grid grid-cols-2 gap-2 w-full max-w-xs">
-          <select value={subject} onChange={(e) => setSubject(e.target.value)} className="border-2 border-ink-200 rounded-2xl px-3 py-2 text-sm bg-white">
-            <option value="Physics">Physics</option>
-            <option value="Chemistry">Chemistry</option>
-            <option value="Maths">Maths</option>
-            <option value="Biology">Biology</option>
+          <select
+            value={subject}
+            onChange={(e) => { setSubject(e.target.value as Subject); setChapterName(''); }}
+            className="border-2 border-ink-200 rounded-2xl px-3 py-2 text-sm bg-white"
+          >
+            {SUBJECTS.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
           </select>
           <select value={chapterName} onChange={(e) => setChapterName(e.target.value)} className="border-2 border-ink-200 rounded-2xl px-3 py-2 text-sm bg-white">
             <option value="">Any chapter</option>
-            {DEFAULT_PHYSICS_CHAPTERS.map((c) => (
+            {SUBJECT_CHAPTERS[subject].map((c) => (
               <option key={c} value={c}>
                 {c}
               </option>

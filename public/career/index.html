@@ -4,10 +4,10 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="theme-color" content="#3C5066" />
-<title>SSBPUC · Career Compass</title>
+<title>Science Monk · Career Compass</title>
 <style>
 /* =========================================================================
-   SSBPUC Career Compass — Parisian editorial design
+   Career Compass — Parisian editorial design
    Cream · Champagne · Sage · Powder Blue · Aubergine · No red, no burgundy
    ========================================================================= */
 @font-face { font-family:'Lora'; src:url('Lora.ttf'); font-weight:400; font-display:swap; }
@@ -997,10 +997,10 @@ img { display:block; max-width:100%; }
   <header class="topbar" id="topbar">
     <button class="back" id="back-btn" aria-label="Back">←</button>
     <div class="brand">
-      <img src="college_logo.png" alt="SSBPUC" />
+      <img src="../branding/science-monk-logo.png" alt="Science Monk Academy" />
       <div class="meta">
         <h1 id="topbar-title">Career Compass</h1>
-        <small id="topbar-sub">SSBPU SCIENCE COLLEGE</small>
+        <small id="topbar-sub">SCIENCE MONK ACADEMY</small>
       </div>
     </div>
   </header>
@@ -1267,7 +1267,7 @@ img { display:block; max-width:100%; }
 <script src="data.js"></script>
 <script>
 /* ============================================================
-   SSBPUC Career Compass — Paris edition · Application logic
+   Career Compass — Paris edition · Application logic
    ============================================================ */
 
 const $ = id => document.getElementById(id);
@@ -1330,7 +1330,7 @@ function dayOfYear() {
 }
 
 // Bookmark store
-const BK_KEY = 'ssbpuc_paris_bookmarks';
+const BK_KEY = 'career_compass_bookmarks';
 const Bookmarks = {
   get() { try { return new Set(JSON.parse(localStorage.getItem(BK_KEY) || '[]')); } catch(e) { return new Set(); } },
   has(id) { return this.get().has(id); },
@@ -1620,7 +1620,7 @@ function route() {
   const topbar = $('topbar');
   topbar.classList.remove('has-back');
   $('topbar-title').textContent = 'Career Compass';
-  $('topbar-sub').textContent = 'SSBPU SCIENCE COLLEGE';
+  $('topbar-sub').textContent = 'SCIENCE MONK ACADEMY';
 
   if (view === 'home') {
     $('view-home').classList.add('active');

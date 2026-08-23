@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { GraduationCap, Search, Info } from 'lucide-react';
 import { ENGG_BRANCH_OPTIONS, AGRI_BRANCH_OPTIONS, PROF_BRANCH_OPTIONS } from '../data/kcet/branchOptions';
 import { CATEGORY_OPTIONS, ENGG_ROUNDS, AGRI_ROUNDS, CourseType } from '../data/kcet/meta';
@@ -12,6 +12,7 @@ import {
   AgriResultRow,
   ProfResultRow,
 } from '../lib/kcetPredictor';
+import { OverrideStore, subscribeOverrideStore } from '../lib/adminOverrides';
 
 const BADGE_STYLES: Record<PredictionLevel, string> = {
   safe: 'bg-emerald-100 text-emerald-800 border-emerald-200',
@@ -57,17 +58,20 @@ export default function Predictor() {
   const rankNum = parseFloat(rank);
   const valid = !!rankNum && rankNum > 0 && !!branch && !!category;
 
+  const [overrides, setOverrides] = useState<OverrideStore>({ engg: {}, agri: {}, prof: {} });
+  useEffect(() => subscribeOverrideStore(setOverrides), []);
+
   const enggRows = useMemo<EnggResultRow[]>(
-    () => (submitted && valid && courseType === 'engg' ? predictEngg(rankNum, branch, category) : []),
-    [submitted, valid, courseType, rankNum, branch, category]
+    () => (submitted && valid && courseType === 'engg' ? predictEngg(rankNum, branch, category, overrides) : []),
+    [submitted, valid, courseType, rankNum, branch, category, overrides]
   );
   const agriRows = useMemo<AgriResultRow[]>(
-    () => (submitted && valid && courseType === 'agri' ? predictAgri(rankNum, branch, category) : []),
-    [submitted, valid, courseType, rankNum, branch, category]
+    () => (submitted && valid && courseType === 'agri' ? predictAgri(rankNum, branch, category, overrides) : []),
+    [submitted, valid, courseType, rankNum, branch, category, overrides]
   );
   const profRows = useMemo<ProfResultRow[]>(
-    () => (submitted && valid && courseType === 'prof' ? predictProf(rankNum, branch, category) : []),
-    [submitted, valid, courseType, rankNum, branch, category]
+    () => (submitted && valid && courseType === 'prof' ? predictProf(rankNum, branch, category, overrides) : []),
+    [submitted, valid, courseType, rankNum, branch, category, overrides]
   );
 
   const rows = courseType === 'engg' ? enggRows : courseType === 'agri' ? agriRows : profRows;

@@ -1,6 +1,6 @@
 import { ENGG, AGRI, PROF } from '../data/kcet';
 import { ENGG_ROUNDS, FINAL_IDX, AGRI_ROUNDS, AGRI_ROUND_KEYS, CourseType } from '../data/kcet/meta';
-import { getOverride } from './adminOverrides';
+import { OverrideStore, getOverrideFrom } from './adminOverrides';
 
 export type PredictionLevel = 'safe' | 'moderate' | 'borderline' | 'longshot' | 'unknown';
 
@@ -69,17 +69,17 @@ export interface EnggResultRow {
   projected: YearFigure[]; // 2025, 2026 (override-aware)
 }
 
-function projectedYearsForEngg(code: string, branch: string, category: string, arr: number[]): YearFigure[] {
+function projectedYearsForEngg(overrides: OverrideStore, code: string, branch: string, category: string, arr: number[]): YearFigure[] {
   const finals = FINAL_IDX.map((i) => arr[i] || 0);
   const [est2025, est2026] = estimateFutureYears(finals, 2);
   return [2025, 2026].map((year, idx) => {
-    const override = getOverride('engg', code, branch, category, year);
+    const override = getOverrideFrom(overrides, 'engg', code, branch, category, year);
     if (override) return { year, value: override.cutoff, source: 'official' };
     return { year, value: idx === 0 ? est2025 : est2026, source: 'estimated' };
   });
 }
 
-export function predictEngg(rank: number, branch: string, category: string): EnggResultRow[] {
+export function predictEngg(rank: number, branch: string, category: string, overrides: OverrideStore): EnggResultRow[] {
   const rows: EnggResultRow[] = [];
   for (const [code, college] of Object.entries(ENGG)) {
     const branchData = college.b[branch];
@@ -96,7 +96,7 @@ export function predictEngg(rank: number, branch: string, category: string): Eng
       rounds: arr,
       prediction,
       avgFinal,
-      projected: projectedYearsForEngg(code, branch, category, arr),
+      projected: projectedYearsForEngg(overrides, code, branch, category, arr),
     });
   }
   rows.sort((a, b) => PREDICTION_ORDER[a.prediction] - PREDICTION_ORDER[b.prediction] || a.avgFinal - b.avgFinal);
@@ -113,7 +113,7 @@ export interface AgriResultRow {
   projected: YearFigure[];
 }
 
-export function predictAgri(rank: number, branch: string, category: string): AgriResultRow[] {
+export function predictAgri(rank: number, branch: string, category: string, overrides: OverrideStore): AgriResultRow[] {
   const rows: AgriResultRow[] = [];
   for (const [code, college] of Object.entries(AGRI)) {
     const branchData = college.b[branch];
@@ -129,7 +129,7 @@ export function predictAgri(rank: number, branch: string, category: string): Agr
     // multi-year trend to project from; carry the last known figure forward
     // as a flat reference unless the admin has entered a real later-year cutoff.
     const projected: YearFigure[] = [2025, 2026].map((year) => {
-      const override = getOverride('agri', code, branch, category, year);
+      const override = getOverrideFrom(overrides, 'agri', code, branch, category, year);
       if (override) return { year, value: override.cutoff, source: 'official' as const };
       return { year, value: refVal, source: 'reference' as const };
     });
@@ -148,7 +148,7 @@ export interface ProfResultRow {
   projected: YearFigure[];
 }
 
-export function predictProf(rank: number, branch: string, category: string): ProfResultRow[] {
+export function predictProf(rank: number, branch: string, category: string, overrides: OverrideStore): ProfResultRow[] {
   const rows: ProfResultRow[] = [];
   for (const [code, college] of Object.entries(PROF)) {
     const branchData = college.b[branch];
@@ -157,7 +157,7 @@ export function predictProf(rank: number, branch: string, category: string): Pro
     if (!cutoff) continue;
     const prediction = getPrediction(rank, cutoff);
     const projected: YearFigure[] = [2025, 2026].map((year) => {
-      const override = getOverride('prof', code, branch, category, year);
+      const override = getOverrideFrom(overrides, 'prof', code, branch, category, year);
       if (override) return { year, value: override.cutoff, source: 'official' as const };
       return { year, value: cutoff, source: 'reference' as const };
     });

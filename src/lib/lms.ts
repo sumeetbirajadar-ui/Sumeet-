@@ -3,29 +3,16 @@
 // "Vijaya Live Classes & LMS" architecture spec's own recommended prototype
 // scope (schedule -> publish -> student receives -> attendance/doubts),
 // minus anything that needs a paid vendor (real DRM streaming, FCM push,
-// signed URLs). Local-storage backed for now; every function here is the
-// seam to swap for Firestore reads/writes later without touching callers.
+// signed URLs). Firestore-backed: this is admin-authored (or admin-visible)
+// content shared across every student's device, unlike the personal
+// tracker data (habits, journal, mock tests, etc.) which stays local.
 
-function uid(prefix: string) {
-  return `${prefix}_${Date.now()}_${Math.round(Math.random() * 1e6)}`;
-}
-
-function load<T>(key: string): T[] {
-  try {
-    const raw = localStorage.getItem(key);
-    return raw ? (JSON.parse(raw) as T[]) : [];
-  } catch {
-    return [];
-  }
-}
-
-function save<T>(key: string, items: T[]) {
-  localStorage.setItem(key, JSON.stringify(items));
-}
+import { subscribeCollection, addDocument, updateDocument, deleteDocument, db } from './firebase';
+import { collection, doc, getDocs, query, where, writeBatch } from 'firebase/firestore';
 
 // ---------------------------------------------------------------- Batches --
 
-const BATCHES_KEY = 'lms_batches_v1';
+const BATCHES_COLLECTION = 'lms_batches';
 
 export interface Batch {
   id: string;
@@ -35,23 +22,23 @@ export interface Batch {
   createdAt: string;
 }
 
-export function listBatches(): Batch[] {
-  return load<Batch>(BATCHES_KEY);
+export function subscribeBatches(onData: (items: Batch[]) => void): () => void {
+  return subscribeCollection<Omit<Batch, 'id'>>(BATCHES_COLLECTION, (items) => {
+    onData([...items].sort((a, b) => b.createdAt.localeCompare(a.createdAt)));
+  });
 }
 
-export function createBatch(name: string, examTrack: Batch['examTrack'], year: number): Batch {
-  const batch: Batch = { id: uid('batch'), name, examTrack, year, createdAt: new Date().toISOString() };
-  save(BATCHES_KEY, [batch, ...listBatches()]);
-  return batch;
+export async function createBatch(name: string, examTrack: Batch['examTrack'], year: number): Promise<void> {
+  await addDocument(BATCHES_COLLECTION, { name, examTrack, year, createdAt: new Date().toISOString() });
 }
 
-export function deleteBatch(id: string) {
-  save(BATCHES_KEY, listBatches().filter((b) => b.id !== id));
+export async function deleteBatch(id: string): Promise<void> {
+  await deleteDocument(BATCHES_COLLECTION, id);
 }
 
 // ------------------------------------------------------------ Live classes --
 
-const CLASSES_KEY = 'lms_classes_v1';
+const CLASSES_COLLECTION = 'lms_classes';
 
 export type PublishState = 'draft' | 'scheduled' | 'published' | 'ended';
 
@@ -68,29 +55,25 @@ export interface LiveClass {
   updatedAt: string;
 }
 
-export function listClasses(): LiveClass[] {
-  return load<LiveClass>(CLASSES_KEY);
+export function subscribeClasses(onData: (items: LiveClass[]) => void): () => void {
+  return subscribeCollection<Omit<LiveClass, 'id'>>(CLASSES_COLLECTION, onData);
 }
 
-export function createClass(data: Omit<LiveClass, 'id' | 'createdAt' | 'updatedAt' | 'publishState'>): LiveClass {
+export async function createClass(data: Omit<LiveClass, 'id' | 'createdAt' | 'updatedAt' | 'publishState'>): Promise<void> {
   const now = new Date().toISOString();
-  const item: LiveClass = { ...data, id: uid('class'), publishState: 'draft', createdAt: now, updatedAt: now };
-  save(CLASSES_KEY, [item, ...listClasses()]);
-  return item;
+  await addDocument(CLASSES_COLLECTION, { ...data, publishState: 'draft', createdAt: now, updatedAt: now });
 }
 
-export function updateClass(id: string, patch: Partial<LiveClass>) {
-  const items = listClasses().map((c) => (c.id === id ? { ...c, ...patch, updatedAt: new Date().toISOString() } : c));
-  save(CLASSES_KEY, items);
-  return items;
+export async function updateClass(id: string, patch: Partial<LiveClass>): Promise<void> {
+  await updateDocument(CLASSES_COLLECTION, id, { ...patch, updatedAt: new Date().toISOString() });
 }
 
-export function deleteClass(id: string) {
-  save(CLASSES_KEY, listClasses().filter((c) => c.id !== id));
+export async function deleteClass(id: string): Promise<void> {
+  await deleteDocument(CLASSES_COLLECTION, id);
 }
 
-export function visibleClassesForBatch(batchId: string | null): LiveClass[] {
-  return listClasses()
+export function visibleClassesForBatch(classes: LiveClass[], batchId: string | null): LiveClass[] {
+  return classes
     .filter((c) => c.publishState === 'scheduled' || c.publishState === 'published' || c.publishState === 'ended')
     .filter((c) => c.batchIds.length === 0 || (batchId && c.batchIds.includes(batchId)))
     .sort((a, b) => a.scheduledStart.localeCompare(b.scheduledStart));
@@ -98,7 +81,7 @@ export function visibleClassesForBatch(batchId: string | null): LiveClass[] {
 
 // --------------------------------------------------------- Content items --
 
-const CONTENT_KEY = 'lms_content_v1';
+const CONTENT_COLLECTION = 'lms_content';
 
 export interface ContentItem {
   id: string;
@@ -113,29 +96,25 @@ export interface ContentItem {
   updatedAt: string;
 }
 
-export function listContent(): ContentItem[] {
-  return load<ContentItem>(CONTENT_KEY);
+export function subscribeContent(onData: (items: ContentItem[]) => void): () => void {
+  return subscribeCollection<Omit<ContentItem, 'id'>>(CONTENT_COLLECTION, onData);
 }
 
-export function createContent(data: Omit<ContentItem, 'id' | 'createdAt' | 'updatedAt' | 'publishState'>): ContentItem {
+export async function createContent(data: Omit<ContentItem, 'id' | 'createdAt' | 'updatedAt' | 'publishState'>): Promise<void> {
   const now = new Date().toISOString();
-  const item: ContentItem = { ...data, id: uid('content'), publishState: 'draft', createdAt: now, updatedAt: now };
-  save(CONTENT_KEY, [item, ...listContent()]);
-  return item;
+  await addDocument(CONTENT_COLLECTION, { ...data, publishState: 'draft', createdAt: now, updatedAt: now });
 }
 
-export function updateContent(id: string, patch: Partial<ContentItem>) {
-  const items = listContent().map((c) => (c.id === id ? { ...c, ...patch, updatedAt: new Date().toISOString() } : c));
-  save(CONTENT_KEY, items);
-  return items;
+export async function updateContent(id: string, patch: Partial<ContentItem>): Promise<void> {
+  await updateDocument(CONTENT_COLLECTION, id, { ...patch, updatedAt: new Date().toISOString() });
 }
 
-export function deleteContent(id: string) {
-  save(CONTENT_KEY, listContent().filter((c) => c.id !== id));
+export async function deleteContent(id: string): Promise<void> {
+  await deleteDocument(CONTENT_COLLECTION, id);
 }
 
-export function visibleContentForBatch(batchId: string | null): ContentItem[] {
-  return listContent()
+export function visibleContentForBatch(items: ContentItem[], batchId: string | null): ContentItem[] {
+  return items
     .filter((c) => c.publishState === 'published')
     .filter((c) => c.batchIds.length === 0 || (batchId && c.batchIds.includes(batchId)))
     .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
@@ -319,82 +298,88 @@ export interface ChapterResource {
   updatedAt: string;
 }
 
-function seedChapterResources(examTrack: ExamTrack, subject: Subject): ChapterResource[] {
+const CHAPTER_RESOURCES_COLLECTION = 'lms_chapter_resources';
+
+/** Live-subscribes to one exam/subject's chapters, auto-seeding the standard list the first time anyone opens a track/subject that has no chapters yet. */
+export function subscribeChapterResources(examTrack: ExamTrack, subject: Subject, onData: (items: ChapterResource[]) => void): () => void {
+  if (!SUBJECT_EXAM_TRACKS[subject].includes(examTrack)) {
+    onData([]);
+    return () => {};
+  }
+  let seeded = false;
+  return subscribeCollection<Omit<ChapterResource, 'id'>>(
+    CHAPTER_RESOURCES_COLLECTION,
+    (items) => {
+      const forTrack = items.filter((c) => c.examTrack === examTrack && c.subject === subject);
+      if (forTrack.length === 0 && !seeded) {
+        seeded = true;
+        ensureChapterResourcesSeeded(examTrack, subject);
+      }
+      onData(forTrack.sort((a, b) => a.chapterIndex - b.chapterIndex));
+    },
+    where('examTrack', '==', examTrack),
+    where('subject', '==', subject)
+  );
+}
+
+async function ensureChapterResourcesSeeded(examTrack: ExamTrack, subject: Subject): Promise<void> {
+  if (!db) return;
+  const q = query(collection(db, CHAPTER_RESOURCES_COLLECTION), where('examTrack', '==', examTrack), where('subject', '==', subject));
+  const existing = await getDocs(q);
+  if (!existing.empty) return; // someone else already seeded it just now
   const now = new Date().toISOString();
-  return SUBJECT_CHAPTERS[subject].map((name, i) => ({
-    id: uid('chres'),
+  const batch = writeBatch(db);
+  SUBJECT_CHAPTERS[subject].forEach((name, i) => {
+    const ref = doc(collection(db!, CHAPTER_RESOURCES_COLLECTION));
+    batch.set(ref, {
+      examTrack,
+      subject,
+      chapterIndex: i + 1,
+      chapterName: name,
+      notesUrl: '',
+      solutionVideoUrl: '',
+      conceptVideoUrl: '',
+      ncertUrl: '',
+      updatedAt: now,
+    });
+  });
+  await batch.commit();
+}
+
+export async function updateChapterResource(id: string, patch: Partial<Pick<ChapterResource, 'chapterName' | 'notesUrl' | 'solutionVideoUrl' | 'conceptVideoUrl' | 'ncertUrl'>>): Promise<void> {
+  await updateDocument(CHAPTER_RESOURCES_COLLECTION, id, { ...patch, updatedAt: new Date().toISOString() });
+}
+
+export async function addChapter(examTrack: ExamTrack, subject: string, chapterName: string, currentCount: number): Promise<void> {
+  await addDocument(CHAPTER_RESOURCES_COLLECTION, {
     examTrack,
     subject,
-    chapterIndex: i + 1,
-    chapterName: name,
-    notesUrl: '',
-    solutionVideoUrl: '',
-    conceptVideoUrl: '',
-    ncertUrl: '',
-    updatedAt: now,
-  }));
-}
-
-export function listChapterResources(examTrack: ExamTrack, subject: Subject = 'Physics'): ChapterResource[] {
-  if (!SUBJECT_EXAM_TRACKS[subject].includes(examTrack)) return [];
-  const all = load<ChapterResource>(CHAPTER_RESOURCES_KEY);
-  const existing = all.filter((c) => c.examTrack === examTrack && c.subject === subject);
-  if (existing.length > 0) return existing.sort((a, b) => a.chapterIndex - b.chapterIndex);
-  // First visit to this track/subject: auto-seed the standard chapter list.
-  const seeded = seedChapterResources(examTrack, subject);
-  save(CHAPTER_RESOURCES_KEY, [...all, ...seeded]);
-  return seeded;
-}
-
-export function updateChapterResource(id: string, patch: Partial<Pick<ChapterResource, 'chapterName' | 'notesUrl' | 'solutionVideoUrl' | 'conceptVideoUrl' | 'ncertUrl'>>) {
-  const all = load<ChapterResource>(CHAPTER_RESOURCES_KEY);
-  const items = all.map((c) => (c.id === id ? { ...c, ...patch, updatedAt: new Date().toISOString() } : c));
-  save(CHAPTER_RESOURCES_KEY, items);
-  return items;
-}
-
-export function addChapter(examTrack: ExamTrack, subject: string, chapterName: string): ChapterResource {
-  const all = load<ChapterResource>(CHAPTER_RESOURCES_KEY);
-  const forTrack = all.filter((c) => c.examTrack === examTrack && c.subject === subject);
-  const chapter: ChapterResource = {
-    id: uid('chres'),
-    examTrack,
-    subject,
-    chapterIndex: forTrack.length + 1,
+    chapterIndex: currentCount + 1,
     chapterName,
     notesUrl: '',
     solutionVideoUrl: '',
     conceptVideoUrl: '',
     ncertUrl: '',
     updatedAt: new Date().toISOString(),
-  };
-  save(CHAPTER_RESOURCES_KEY, [...all, chapter]);
-  return chapter;
+  });
 }
 
-export function deleteChapter(id: string) {
-  save(CHAPTER_RESOURCES_KEY, load<ChapterResource>(CHAPTER_RESOURCES_KEY).filter((c) => c.id !== id));
+export async function deleteChapter(id: string): Promise<void> {
+  await deleteDocument(CHAPTER_RESOURCES_COLLECTION, id);
 }
 
-/** Latest timestamp across anything a student would care about seeing — used to show a "new" badge. */
-export function latestActivityAt(): string {
+/** Latest timestamp across the classes/content arrays a caller already has subscribed to — used to show a "new" badge on the Learning Hub card. */
+export function latestActivityAt(classes: LiveClass[], content: ContentItem[]): string {
   const timestamps: string[] = [];
-  listClasses()
-    .filter((c) => c.publishState === 'scheduled' || c.publishState === 'published')
-    .forEach((c) => timestamps.push(c.updatedAt));
-  listContent()
-    .filter((c) => c.publishState === 'published')
-    .forEach((c) => timestamps.push(c.updatedAt));
-  load<ChapterResource>(CHAPTER_RESOURCES_KEY)
-    .filter((c) => c.notesUrl || c.solutionVideoUrl || c.conceptVideoUrl || c.ncertUrl)
-    .forEach((c) => timestamps.push(c.updatedAt));
+  classes.filter((c) => c.publishState === 'scheduled' || c.publishState === 'published').forEach((c) => timestamps.push(c.updatedAt));
+  content.filter((c) => c.publishState === 'published').forEach((c) => timestamps.push(c.updatedAt));
   return timestamps.sort().pop() || '';
 }
 
 // -------------------------------------------------------------- Doubts --
 
-const DOUBT_THREADS_KEY = 'lms_doubt_threads_v1';
-const DOUBT_MESSAGES_KEY = 'lms_doubt_messages_v1';
+const DOUBT_THREADS_COLLECTION = 'lms_doubt_threads';
+const DOUBT_MESSAGES_COLLECTION = 'lms_doubt_messages';
 
 export interface DoubtThread {
   id: string;
@@ -414,52 +399,47 @@ export interface DoubtMessage {
   createdAt: string;
 }
 
-export function listThreads(): DoubtThread[] {
-  return load<DoubtThread>(DOUBT_THREADS_KEY);
+export function subscribeThreadsForStudent(studentId: string, onData: (items: DoubtThread[]) => void): () => void {
+  return subscribeCollection<Omit<DoubtThread, 'id'>>(
+    DOUBT_THREADS_COLLECTION,
+    (items) => onData([...items].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))),
+    where('studentId', '==', studentId)
+  );
 }
 
-export function listThreadsForStudent(studentId: string): DoubtThread[] {
-  return listThreads()
-    .filter((t) => t.studentId === studentId)
-    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+export function subscribeAllThreadsGrouped(onData: (items: DoubtThread[]) => void): () => void {
+  return subscribeCollection<Omit<DoubtThread, 'id'>>(DOUBT_THREADS_COLLECTION, (items) =>
+    onData([...items].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)))
+  );
 }
 
-export function listAllThreadsGrouped(): DoubtThread[] {
-  return listThreads().sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+export function subscribeMessages(threadId: string, onData: (items: DoubtMessage[]) => void): () => void {
+  return subscribeCollection<Omit<DoubtMessage, 'id'>>(
+    DOUBT_MESSAGES_COLLECTION,
+    (items) => onData([...items].sort((a, b) => a.createdAt.localeCompare(b.createdAt))),
+    where('threadId', '==', threadId)
+  );
 }
 
-export function listMessages(threadId: string): DoubtMessage[] {
-  return load<DoubtMessage>(DOUBT_MESSAGES_KEY)
-    .filter((m) => m.threadId === threadId)
-    .sort((a, b) => a.createdAt.localeCompare(b.createdAt));
-}
-
-export function createThread(studentId: string, studentName: string, subject: string, firstMessage: string): DoubtThread {
+export async function createThread(studentId: string, studentName: string, subject: string, firstMessage: string): Promise<void> {
   const now = new Date().toISOString();
-  const thread: DoubtThread = { id: uid('thread'), studentId, studentName, subject, status: 'open', createdAt: now, updatedAt: now };
-  save(DOUBT_THREADS_KEY, [thread, ...listThreads()]);
-  postMessage(thread.id, 'student', firstMessage);
-  return thread;
+  const threadId = await addDocument(DOUBT_THREADS_COLLECTION, { studentId, studentName, subject, status: 'open', createdAt: now, updatedAt: now });
+  await postMessage(threadId, 'student', firstMessage);
 }
 
-export function postMessage(threadId: string, senderRole: 'student' | 'admin', body: string): DoubtMessage {
-  const msg: DoubtMessage = { id: uid('msg'), threadId, senderRole, body, createdAt: new Date().toISOString() };
-  const all = load<DoubtMessage>(DOUBT_MESSAGES_KEY);
-  save(DOUBT_MESSAGES_KEY, [...all, msg]);
-  const threads = listThreads().map((t) => (t.id === threadId ? { ...t, updatedAt: msg.createdAt } : t));
-  save(DOUBT_THREADS_KEY, threads);
-  return msg;
+export async function postMessage(threadId: string, senderRole: 'student' | 'admin', body: string): Promise<void> {
+  const now = new Date().toISOString();
+  await addDocument(DOUBT_MESSAGES_COLLECTION, { threadId, senderRole, body, createdAt: now });
+  await updateDocument(DOUBT_THREADS_COLLECTION, threadId, { updatedAt: now });
 }
 
-export function setThreadStatus(threadId: string, status: DoubtThread['status']) {
-  const threads = listThreads().map((t) => (t.id === threadId ? { ...t, status, updatedAt: new Date().toISOString() } : t));
-  save(DOUBT_THREADS_KEY, threads);
-  return threads;
+export async function setThreadStatus(threadId: string, status: DoubtThread['status']): Promise<void> {
+  await updateDocument(DOUBT_THREADS_COLLECTION, threadId, { status, updatedAt: new Date().toISOString() });
 }
 
 // ---------------------------------------------------------- Attendance --
 
-const ATTENDANCE_KEY = 'lms_attendance_v1';
+const ATTENDANCE_COLLECTION = 'lms_attendance';
 
 export interface AttendanceRecord {
   id: string;
@@ -469,17 +449,14 @@ export interface AttendanceRecord {
   joinedAt: string;
 }
 
-export function recordAttendance(classId: string, studentId: string, studentName: string): AttendanceRecord {
-  const record: AttendanceRecord = { id: uid('att'), classId, studentId, studentName, joinedAt: new Date().toISOString() };
-  const all = load<AttendanceRecord>(ATTENDANCE_KEY);
-  save(ATTENDANCE_KEY, [record, ...all]);
-  return record;
+export async function recordAttendance(classId: string, studentId: string, studentName: string): Promise<void> {
+  await addDocument(ATTENDANCE_COLLECTION, { classId, studentId, studentName, joinedAt: new Date().toISOString() });
 }
 
-export function attendanceForClass(classId: string): AttendanceRecord[] {
-  return load<AttendanceRecord>(ATTENDANCE_KEY).filter((a) => a.classId === classId);
+export function subscribeAttendanceForClass(classId: string, onData: (items: AttendanceRecord[]) => void): () => void {
+  return subscribeCollection<Omit<AttendanceRecord, 'id'>>(ATTENDANCE_COLLECTION, onData, where('classId', '==', classId));
 }
 
-export function listAttendance(): AttendanceRecord[] {
-  return load<AttendanceRecord>(ATTENDANCE_KEY);
+export function subscribeAllAttendance(onData: (items: AttendanceRecord[]) => void): () => void {
+  return subscribeCollection<Omit<AttendanceRecord, 'id'>>(ATTENDANCE_COLLECTION, onData);
 }

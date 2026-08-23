@@ -68,7 +68,7 @@ import WellbeingCare from './pages/WellbeingCare';
 import ReportsPage from './pages/ReportsPage';
 import SettingsBackup from './pages/SettingsBackup';
 import PomodoroTimer from './components/PomodoroTimer';
-import { latestActivityAt } from './lib/lms';
+import { latestActivityAt, subscribeClasses, subscribeContent, LiveClass, ContentItem } from './lib/lms';
 import { getLmsLastSeen, markLmsSeen, getOrCreateStudentId } from './lib/studentIdentity';
 
 type Role = 'admin' | 'student';
@@ -122,6 +122,11 @@ export default function App() {
     setState(loadState(stateStorageKey));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stateStorageKey]);
+
+  const [lmsClasses, setLmsClasses] = useState<LiveClass[]>([]);
+  const [lmsContent, setLmsContent] = useState<ContentItem[]>([]);
+  useEffect(() => subscribeClasses(setLmsClasses), []);
+  useEffect(() => subscribeContent(setLmsContent), []);
 
   const handleLogin = (nextRole: Role) => {
     setIsAuthenticated(true);
@@ -278,7 +283,7 @@ export default function App() {
 
   const adminOnlyViews: View[] = ['admin'];
   const effectiveView: View = role === 'student' && adminOnlyViews.includes(view) ? 'home' : view;
-  const hasLmsUpdates = role === 'student' && latestActivityAt() > getLmsLastSeen();
+  const hasLmsUpdates = role === 'student' && latestActivityAt(lmsClasses, lmsContent) > getLmsLastSeen();
 
   const RoutineView = () => (
     <div className="max-w-2xl mx-auto py-8 px-4">

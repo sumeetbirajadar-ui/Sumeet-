@@ -1,9 +1,9 @@
 // Admin-authored announcements/content notices shown to students.
-// Local-storage backed for now (single-device demo); swap the storage calls
-// here for Firestore reads/writes once a Firebase project is wired up, the
-// rest of the app doesn't need to change.
+// Firestore-backed so an admin's publish reaches every student's device live.
 
-const STORAGE_KEY = 'admin_announcements_v1';
+import { subscribeCollection, addDocument, updateDocument, deleteDocument } from './firebase';
+
+const COLLECTION = 'announcements';
 
 export interface Announcement {
   id: string;
@@ -14,50 +14,25 @@ export interface Announcement {
   updatedAt: string;
 }
 
-export function listAnnouncements(): Announcement[] {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return [];
-    return JSON.parse(raw) as Announcement[];
-  } catch {
-    return [];
-  }
+export function subscribeAnnouncements(onData: (items: Announcement[]) => void): () => void {
+  return subscribeCollection<Omit<Announcement, 'id'>>(COLLECTION, (items) => {
+    onData([...items].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)));
+  });
 }
 
-export function listPublished(): Announcement[] {
-  return listAnnouncements()
-    .filter((a) => a.status === 'published')
-    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+export function subscribePublished(onData: (items: Announcement[]) => void): () => void {
+  return subscribeAnnouncements((items) => onData(items.filter((a) => a.status === 'published')));
 }
 
-function save(items: Announcement[]) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-}
-
-export function createAnnouncement(title: string, body: string): Announcement {
+export async function createAnnouncement(title: string, body: string): Promise<void> {
   const now = new Date().toISOString();
-  const item: Announcement = {
-    id: `a_${Date.now()}_${Math.round(Math.random() * 1e6)}`,
-    title,
-    body,
-    status: 'draft',
-    createdAt: now,
-    updatedAt: now,
-  };
-  save([item, ...listAnnouncements()]);
-  return item;
+  await addDocument(COLLECTION, { title, body, status: 'draft', createdAt: now, updatedAt: now });
 }
 
-export function updateAnnouncement(id: string, patch: Partial<Pick<Announcement, 'title' | 'body' | 'status'>>) {
-  const items = listAnnouncements().map((a) =>
-    a.id === id ? { ...a, ...patch, updatedAt: new Date().toISOString() } : a
-  );
-  save(items);
-  return items;
+export async function updateAnnouncement(id: string, patch: Partial<Pick<Announcement, 'title' | 'body' | 'status'>>): Promise<void> {
+  await updateDocument(COLLECTION, id, { ...patch, updatedAt: new Date().toISOString() });
 }
 
-export function deleteAnnouncement(id: string) {
-  const items = listAnnouncements().filter((a) => a.id !== id);
-  save(items);
-  return items;
+export async function deleteAnnouncement(id: string): Promise<void> {
+  await deleteDocument(COLLECTION, id);
 }

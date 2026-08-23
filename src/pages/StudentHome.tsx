@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Megaphone, GraduationCap, Compass, Video, ClipboardCheck, Sparkles, MessageSquareText, BookOpenCheck, Flame, Target, Flag, HeartHandshake, FileBarChart, Settings as SettingsIcon, CalendarClock } from 'lucide-react';
-import { listPublished } from '../lib/announcements';
-import { latestActivityAt } from '../lib/lms';
+import { Announcement, subscribePublished } from '../lib/announcements';
+import { latestActivityAt, subscribeClasses, subscribeContent, LiveClass, ContentItem } from '../lib/lms';
 import { getLmsLastSeen, getOrCreateStudentId } from '../lib/studentIdentity';
 import { examProgressSummary, getDueRevisions } from '../lib/syllabusTracker';
 import { prepScore } from '../lib/prepScore';
@@ -62,8 +62,13 @@ const PrepScoreRing: React.FC<{ score: number }> = ({ score }) => {
 };
 
 export default function StudentHome({ onNavigate }: { onNavigate: (view: Dest) => void }) {
-  const announcements = listPublished();
-  const hasLmsUpdates = latestActivityAt() > getLmsLastSeen();
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+  useEffect(() => subscribePublished(setAnnouncements), []);
+  const [lmsClasses, setLmsClasses] = useState<LiveClass[]>([]);
+  const [lmsContent, setLmsContent] = useState<ContentItem[]>([]);
+  useEffect(() => subscribeClasses(setLmsClasses), []);
+  useEffect(() => subscribeContent(setLmsContent), []);
+  const hasLmsUpdates = latestActivityAt(lmsClasses, lmsContent) > getLmsLastSeen();
   const studentId = getOrCreateStudentId();
   const syllabusPct = examProgressSummary(studentId)[0]?.avgCompletionPct ?? 0;
   const score = prepScore(studentId);

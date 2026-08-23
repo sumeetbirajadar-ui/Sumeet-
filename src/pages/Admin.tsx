@@ -1,9 +1,9 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { ShieldCheck, Plus, Trash2, Eye, EyeOff, Pencil, Users, Video, FileText, BookOpenCheck, MessageCircle, Send, CalendarClock } from 'lucide-react';
-import { listTimelineEvents, addTimelineEvent, deleteTimelineEvent } from '../lib/counselling';
+import { TimelineEvent, subscribeTimelineEvents, addTimelineEvent, deleteTimelineEvent } from '../lib/counselling';
 import {
   Announcement,
-  listAnnouncements,
+  subscribeAnnouncements,
   createAnnouncement,
   updateAnnouncement,
   deleteAnnouncement,
@@ -11,19 +11,19 @@ import {
 import { ENGG, AGRI, PROF } from '../data/kcet';
 import { ENGG_BRANCH_OPTIONS, AGRI_BRANCH_OPTIONS, PROF_BRANCH_OPTIONS } from '../data/kcet/branchOptions';
 import { CATEGORY_OPTIONS, CourseType } from '../data/kcet/meta';
-import { listOverrides, setOverride, removeOverride } from '../lib/adminOverrides';
+import { OverrideStore, subscribeOverrideStore, listOverridesFrom, setOverride, removeOverride } from '../lib/adminOverrides';
 import {
   Batch,
-  listBatches,
+  subscribeBatches,
   createBatch,
   deleteBatch,
   LiveClass,
-  listClasses,
+  subscribeClasses,
   createClass,
   updateClass,
   deleteClass,
   ContentItem,
-  listContent,
+  subscribeContent,
   createContent,
   updateContent,
   deleteContent,
@@ -33,15 +33,18 @@ import {
   SUBJECTS,
   SUBJECT_EXAM_TRACKS,
   ChapterResource,
-  listChapterResources,
+  subscribeChapterResources,
   updateChapterResource,
   addChapter,
   deleteChapter,
-  listAllThreadsGrouped,
-  listMessages,
+  DoubtThread,
+  DoubtMessage,
+  subscribeAllThreadsGrouped,
+  subscribeMessages,
   postMessage,
   setThreadStatus,
-  attendanceForClass,
+  AttendanceRecord,
+  subscribeAllAttendance,
 } from '../lib/lms';
 
 function useForceUpdate() {
@@ -50,16 +53,12 @@ function useForceUpdate() {
 }
 
 function AnnouncementsPanel() {
-  const forceUpdate = useForceUpdate();
-  const [items, setItems] = useState<Announcement[]>(() => listAnnouncements());
+  const [items, setItems] = useState<Announcement[]>([]);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [editingId, setEditingId] = useState<string | null>(null);
 
-  function refresh() {
-    setItems(listAnnouncements());
-    forceUpdate();
-  }
+  React.useEffect(() => subscribeAnnouncements(setItems), []);
 
   function handleCreate(e: React.FormEvent) {
     e.preventDefault();
@@ -72,7 +71,6 @@ function AnnouncementsPanel() {
     }
     setTitle('');
     setBody('');
-    refresh();
   }
 
   function startEdit(a: Announcement) {
@@ -138,10 +136,7 @@ function AnnouncementsPanel() {
             <div className="flex items-center gap-1 shrink-0">
               <button
                 title={a.status === 'published' ? 'Unpublish' : 'Publish'}
-                onClick={() => {
-                  updateAnnouncement(a.id, { status: a.status === 'published' ? 'draft' : 'published' });
-                  refresh();
-                }}
+                onClick={() => updateAnnouncement(a.id, { status: a.status === 'published' ? 'draft' : 'published' })}
                 className="p-2 rounded-lg hover:bg-ink-100 text-ink-500"
               >
                 {a.status === 'published' ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -150,10 +145,7 @@ function AnnouncementsPanel() {
                 <Pencil className="w-4 h-4" />
               </button>
               <button
-                onClick={() => {
-                  deleteAnnouncement(a.id);
-                  refresh();
-                }}
+                onClick={() => deleteAnnouncement(a.id)}
                 className="p-2 rounded-lg hover:bg-rose-50 text-rose-500"
               >
                 <Trash2 className="w-4 h-4" />
@@ -178,7 +170,6 @@ function branchOptionsFor(courseType: CourseType) {
 }
 
 function CutoffOverridesPanel() {
-  const forceUpdate = useForceUpdate();
   const [courseType, setCourseType] = useState<CourseType>('engg');
   const [collegeCode, setCollegeCode] = useState('');
   const [branch, setBranch] = useState('');
@@ -186,19 +177,21 @@ function CutoffOverridesPanel() {
   const [year, setYear] = useState(2025);
   const [cutoff, setCutoff] = useState('');
   const [note, setNote] = useState('');
+  const [store, setStore] = useState<OverrideStore>({ engg: {}, agri: {}, prof: {} });
+
+  useEffect(() => subscribeOverrideStore(setStore), []);
 
   const colleges = useMemo(() => collegeList(courseType), [courseType]);
   const branches = branchOptionsFor(courseType);
-  const overrides = listOverrides(courseType);
+  const overrides = listOverridesFrom(store, courseType);
 
   function handleAdd(e: React.FormEvent) {
     e.preventDefault();
     const val = parseFloat(cutoff);
     if (!collegeCode || !branch || !category || !val) return;
-    setOverride(courseType, collegeCode, branch, category, year, val, note || undefined);
+    setOverride(store, courseType, collegeCode, branch, category, year, val, note || undefined);
     setCutoff('');
     setNote('');
-    forceUpdate();
   }
 
   function collegeName(code: string) {
@@ -308,10 +301,7 @@ function CutoffOverridesPanel() {
                 <td className="px-4 py-3 text-ink-500">{o.entry.note || '—'}</td>
                 <td className="px-4 py-3 text-right">
                   <button
-                    onClick={() => {
-                      removeOverride(courseType, o.collegeCode, o.branch, o.category, o.entry.year);
-                      forceUpdate();
-                    }}
+                    onClick={() => removeOverride(store, courseType, o.collegeCode, o.branch, o.category, o.entry.year)}
                     className="p-1.5 rounded-lg hover:bg-rose-50 text-rose-500"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -327,23 +317,18 @@ function CutoffOverridesPanel() {
 }
 
 function BatchesPanel() {
-  const forceUpdate = useForceUpdate();
-  const [batches, setBatches] = useState<Batch[]>(() => listBatches());
+  const [batches, setBatches] = useState<Batch[]>([]);
   const [name, setName] = useState('');
   const [examTrack, setExamTrack] = useState<Batch['examTrack']>('KCET');
   const [year, setYear] = useState(new Date().getFullYear());
 
-  function refresh() {
-    setBatches(listBatches());
-    forceUpdate();
-  }
+  useEffect(() => subscribeBatches(setBatches), []);
 
   function handleCreate(e: React.FormEvent) {
     e.preventDefault();
     if (!name.trim()) return;
     createBatch(name.trim(), examTrack, year);
     setName('');
-    refresh();
   }
 
   return (
@@ -374,7 +359,7 @@ function BatchesPanel() {
               <span className="font-bold text-ink-800">{b.name}</span>
               <span className="text-xs text-ink-500">{b.examTrack} · {b.year}</span>
             </div>
-            <button onClick={() => { deleteBatch(b.id); refresh(); }} className="p-1.5 rounded-lg hover:bg-rose-50 text-rose-500">
+            <button onClick={() => deleteBatch(b.id)} className="p-1.5 rounded-lg hover:bg-rose-50 text-rose-500">
               <Trash2 className="w-4 h-4" />
             </button>
           </div>
@@ -408,9 +393,9 @@ function BatchMultiSelect({ batches, selected, onChange }: { batches: Batch[]; s
 }
 
 function ClassesAdminPanel() {
-  const forceUpdate = useForceUpdate();
-  const batches = listBatches();
-  const [classes, setClasses] = useState<LiveClass[]>(() => listClasses());
+  const [batches, setBatches] = useState<Batch[]>([]);
+  const [classes, setClasses] = useState<LiveClass[]>([]);
+  const [attendance, setAttendance] = useState<AttendanceRecord[]>([]);
   const [title, setTitle] = useState('');
   const [subject, setSubject] = useState('');
   const [chapter, setChapter] = useState('');
@@ -418,10 +403,9 @@ function ClassesAdminPanel() {
   const [joinUrl, setJoinUrl] = useState('');
   const [batchIds, setBatchIds] = useState<string[]>([]);
 
-  function refresh() {
-    setClasses(listClasses());
-    forceUpdate();
-  }
+  useEffect(() => subscribeBatches(setBatches), []);
+  useEffect(() => subscribeClasses(setClasses), []);
+  useEffect(() => subscribeAllAttendance(setAttendance), []);
 
   function handleCreate(e: React.FormEvent) {
     e.preventDefault();
@@ -432,7 +416,6 @@ function ClassesAdminPanel() {
     setChapter('');
     setJoinUrl('');
     setBatchIds([]);
-    refresh();
   }
 
   return (
@@ -463,7 +446,7 @@ function ClassesAdminPanel() {
       <div className="space-y-3">
         {classes.length === 0 && <p className="text-ink-400 italic text-sm">No classes scheduled yet.</p>}
         {classes.map((c) => {
-          const attendance = attendanceForClass(c.id);
+          const attendedCount = attendance.filter((a) => a.classId === c.id).length;
           return (
             <div key={c.id} className="bg-white border-2 border-ink-200 rounded-3xl p-4">
               <div className="flex items-start justify-between gap-4 flex-wrap">
@@ -474,13 +457,13 @@ function ClassesAdminPanel() {
                   </div>
                   <p className="text-xs text-ink-500">
                     {c.subject} · {c.chapter} · {new Date(c.scheduledStart).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })} ·{' '}
-                    {attendance.length} attended
+                    {attendedCount} attended
                   </p>
                 </div>
                 <div className="flex items-center gap-1">
                   <select
                     value={c.publishState}
-                    onChange={(e) => { updateClass(c.id, { publishState: e.target.value as LiveClass['publishState'] }); refresh(); }}
+                    onChange={(e) => updateClass(c.id, { publishState: e.target.value as LiveClass['publishState'] })}
                     className="text-xs border-2 border-ink-200 rounded-lg px-2 py-1 bg-white"
                   >
                     <option value="draft">Draft</option>
@@ -488,7 +471,7 @@ function ClassesAdminPanel() {
                     <option value="published">Published</option>
                     <option value="ended">Ended</option>
                   </select>
-                  <button onClick={() => { deleteClass(c.id); refresh(); }} className="p-1.5 rounded-lg hover:bg-rose-50 text-rose-500">
+                  <button onClick={() => deleteClass(c.id)} className="p-1.5 rounded-lg hover:bg-rose-50 text-rose-500">
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
@@ -502,9 +485,8 @@ function ClassesAdminPanel() {
 }
 
 function ContentAdminPanel() {
-  const forceUpdate = useForceUpdate();
-  const batches = listBatches();
-  const [items, setItems] = useState<ContentItem[]>(() => listContent());
+  const [batches, setBatches] = useState<Batch[]>([]);
+  const [items, setItems] = useState<ContentItem[]>([]);
   const [kind, setKind] = useState<ContentItem['kind']>('note');
   const [title, setTitle] = useState('');
   const [subject, setSubject] = useState('');
@@ -512,10 +494,8 @@ function ContentAdminPanel() {
   const [url, setUrl] = useState('');
   const [batchIds, setBatchIds] = useState<string[]>([]);
 
-  function refresh() {
-    setItems(listContent());
-    forceUpdate();
-  }
+  useEffect(() => subscribeBatches(setBatches), []);
+  useEffect(() => subscribeContent(setItems), []);
 
   function handleCreate(e: React.FormEvent) {
     e.preventDefault();
@@ -524,7 +504,6 @@ function ContentAdminPanel() {
     setTitle('');
     setUrl('');
     setBatchIds([]);
-    refresh();
   }
 
   return (
@@ -576,13 +555,13 @@ function ContentAdminPanel() {
             </div>
             <div className="flex items-center gap-1">
               <button
-                onClick={() => { updateContent(item.id, { publishState: item.publishState === 'published' ? 'draft' : 'published' }); refresh(); }}
+                onClick={() => updateContent(item.id, { publishState: item.publishState === 'published' ? 'draft' : 'published' })}
                 className="p-2 rounded-lg hover:bg-ink-100 text-ink-500"
                 title={item.publishState === 'published' ? 'Unpublish' : 'Publish'}
               >
                 {item.publishState === 'published' ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
-              <button onClick={() => { deleteContent(item.id); refresh(); }} className="p-2 rounded-lg hover:bg-rose-50 text-rose-500">
+              <button onClick={() => deleteContent(item.id)} className="p-2 rounded-lg hover:bg-rose-50 text-rose-500">
                 <Trash2 className="w-4 h-4" />
               </button>
             </div>
@@ -594,13 +573,14 @@ function ContentAdminPanel() {
 }
 
 function ChapterResourcesPanel() {
-  const forceUpdate = useForceUpdate();
   const [subject, setSubject] = useState<Subject>('Physics');
   const [track, setTrack] = useState<ExamTrack>('KCET');
   const [newChapterName, setNewChapterName] = useState('');
+  const [chapters, setChapters] = useState<ChapterResource[]>([]);
   const validTracks = SUBJECT_EXAM_TRACKS[subject];
   const activeTrack = validTracks.includes(track) ? track : validTracks[0];
-  const chapters = listChapterResources(activeTrack, subject);
+
+  useEffect(() => subscribeChapterResources(activeTrack, subject, setChapters), [activeTrack, subject]);
 
   function handleSubjectChange(s: Subject) {
     setSubject(s);
@@ -622,15 +602,13 @@ function ChapterResourcesPanel() {
     const value = draftFor(c)[field];
     if (value === c[field]) return;
     updateChapterResource(c.id, { [field]: value });
-    forceUpdate();
   }
 
   function handleAddChapter(e: React.FormEvent) {
     e.preventDefault();
     if (!newChapterName.trim()) return;
-    addChapter(activeTrack, subject, newChapterName.trim());
+    addChapter(activeTrack, subject, newChapterName.trim(), chapters.length);
     setNewChapterName('');
-    forceUpdate();
   }
 
   return (
@@ -674,7 +652,7 @@ function ChapterResourcesPanel() {
                 <h4 className="font-bold text-ink-800 text-sm">
                   {c.chapterIndex}. {c.chapterName}
                 </h4>
-                <button onClick={() => { deleteChapter(c.id); forceUpdate(); }} className="p-1.5 rounded-lg hover:bg-rose-50 text-rose-500">
+                <button onClick={() => deleteChapter(c.id)} className="p-1.5 rounded-lg hover:bg-rose-50 text-rose-500">
                   <Trash2 className="w-4 h-4" />
                 </button>
               </div>
@@ -728,63 +706,69 @@ function ChapterResourcesPanel() {
   );
 }
 
-function DoubtsInboxPanel() {
-  const forceUpdate = useForceUpdate();
-  const threads = listAllThreadsGrouped();
-  const [reply, setReply] = useState<Record<string, string>>({});
+const AdminThreadCard: React.FC<{ thread: DoubtThread }> = ({ thread: t }) => {
+  const [messages, setMessages] = useState<DoubtMessage[]>([]);
+  const [reply, setReply] = useState('');
 
-  function handleReply(threadId: string) {
-    const body = (reply[threadId] || '').trim();
+  useEffect(() => subscribeMessages(t.id, setMessages), [t.id]);
+
+  function handleReply() {
+    const body = reply.trim();
     if (!body) return;
-    postMessage(threadId, 'admin', body);
-    setReply((r) => ({ ...r, [threadId]: '' }));
-    forceUpdate();
+    postMessage(t.id, 'admin', body);
+    setReply('');
   }
+
+  return (
+    <div className="bg-white border-2 border-ink-200 rounded-3xl p-5">
+      <div className="flex items-center justify-between gap-2 mb-3 flex-wrap">
+        <div className="flex items-center gap-2">
+          <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full ${t.status === 'resolved' ? 'bg-emerald-100 text-emerald-700' : 'bg-gold-100 text-gold-700'}`}>
+            {t.status}
+          </span>
+          <h4 className="font-bold text-ink-800">{t.studentName} — {t.subject}</h4>
+        </div>
+        <button
+          onClick={() => setThreadStatus(t.id, t.status === 'resolved' ? 'open' : 'resolved')}
+          className="text-xs font-bold uppercase tracking-wider text-ink-500 hover:text-ink-700"
+        >
+          Mark {t.status === 'resolved' ? 'Open' : 'Resolved'}
+        </button>
+      </div>
+      <div className="space-y-2 mb-3">
+        {messages.map((m) => (
+          <div key={m.id} className={`text-sm px-3 py-2 rounded-2xl max-w-[85%] ${m.senderRole === 'admin' ? 'bg-sage-50 text-sage-900 ml-auto text-right' : 'bg-ink-50 text-ink-700'}`}>
+            <p className="text-[10px] uppercase tracking-wider opacity-60 mb-0.5">{m.senderRole === 'admin' ? 'You' : t.studentName}</p>
+            {m.body}
+          </div>
+        ))}
+      </div>
+      <div className="flex gap-2">
+        <input
+          value={reply}
+          onChange={(e) => setReply(e.target.value)}
+          placeholder="Reply..."
+          className="flex-1 border-2 border-ink-200 rounded-2xl px-3 py-1.5 text-sm"
+        />
+        <button onClick={handleReply} className="p-2 rounded-2xl bg-ink-100 hover:bg-ink-200">
+          <Send className="w-4 h-4 text-ink-600" />
+        </button>
+      </div>
+    </div>
+  );
+};
+
+function DoubtsInboxPanel() {
+  const [threads, setThreads] = useState<DoubtThread[]>([]);
+  useEffect(() => subscribeAllThreadsGrouped(setThreads), []);
 
   if (threads.length === 0) return <p className="text-ink-400 italic text-sm">No doubts asked yet.</p>;
 
   return (
     <div className="space-y-4">
-      {threads.map((t) => {
-        const messages = listMessages(t.id);
-        return (
-          <div key={t.id} className="bg-white border-2 border-ink-200 rounded-3xl p-5">
-            <div className="flex items-center justify-between gap-2 mb-3 flex-wrap">
-              <div className="flex items-center gap-2">
-                <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full ${t.status === 'resolved' ? 'bg-emerald-100 text-emerald-700' : 'bg-gold-100 text-gold-700'}`}>
-                  {t.status}
-                </span>
-                <h4 className="font-bold text-ink-800">{t.studentName} — {t.subject}</h4>
-              </div>
-              <button
-                onClick={() => { setThreadStatus(t.id, t.status === 'resolved' ? 'open' : 'resolved'); forceUpdate(); }}
-                className="text-xs font-bold uppercase tracking-wider text-ink-500 hover:text-ink-700"
-              >
-                Mark {t.status === 'resolved' ? 'Open' : 'Resolved'}
-              </button>
-            </div>
-            <div className="space-y-2 mb-3">
-              {messages.map((m) => (
-                <div key={m.id} className={`text-sm px-3 py-2 rounded-2xl max-w-[85%] ${m.senderRole === 'admin' ? 'bg-sage-50 text-sage-900 ml-auto text-right' : 'bg-ink-50 text-ink-700'}`}>
-                  <p className="text-[10px] uppercase tracking-wider opacity-60 mb-0.5">{m.senderRole === 'admin' ? 'You' : t.studentName}</p>
-                  {m.body}
-                </div>
-              ))}
-            </div>
-            <div className="flex gap-2">
-              <input
-                value={reply[t.id] || ''}
-                onChange={(e) => setReply((r) => ({ ...r, [t.id]: e.target.value }))}
-                placeholder="Reply..."
-                className="flex-1 border-2 border-ink-200 rounded-2xl px-3 py-1.5 text-sm"
-              />
-              <button onClick={() => handleReply(t.id)} className="p-2 rounded-2xl bg-ink-100 hover:bg-ink-200">
-                <Send className="w-4 h-4 text-ink-600" />
-              </button>
-            </div>
-          </div>
-        );
-      })}
+      {threads.map((t) => (
+        <AdminThreadCard key={t.id} thread={t} />
+      ))}
     </div>
   );
 }
@@ -795,7 +779,9 @@ function CounsellingDatesPanel() {
   const [title, setTitle] = useState('');
   const [date, setDate] = useState('');
   const [note, setNote] = useState('');
-  const events = listTimelineEvents(track);
+  const [events, setEvents] = useState<TimelineEvent[]>([]);
+
+  useEffect(() => subscribeTimelineEvents(setEvents, track), [track]);
 
   function handleAdd(e: React.FormEvent) {
     e.preventDefault();
@@ -804,7 +790,6 @@ function CounsellingDatesPanel() {
     setTitle('');
     setDate('');
     setNote('');
-    forceUpdate();
   }
 
   return (
@@ -849,7 +834,7 @@ function CounsellingDatesPanel() {
                 {e.note ? ` · ${e.note}` : ''}
               </p>
             </div>
-            <button onClick={() => { deleteTimelineEvent(e.id); forceUpdate(); }} className="p-1.5 rounded-lg hover:bg-rose-50 text-rose-500">
+            <button onClick={() => deleteTimelineEvent(e.id)} className="p-1.5 rounded-lg hover:bg-rose-50 text-rose-500">
               <Trash2 className="w-4 h-4" />
             </button>
           </div>

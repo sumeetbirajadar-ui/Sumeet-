@@ -1,21 +1,29 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Video, FileText, BookOpenCheck, MessageCircle, Send, CheckCircle2, ExternalLink, ChevronDown, Lightbulb, Library, Plus, Trash2 } from 'lucide-react';
 import {
   Batch,
-  listBatches,
+  subscribeBatches,
+  LiveClass,
+  ContentItem,
+  subscribeClasses,
+  subscribeContent,
   visibleClassesForBatch,
   visibleContentForBatch,
   recordAttendance,
-  attendanceForClass,
-  listThreadsForStudent,
-  listMessages,
+  AttendanceRecord,
+  subscribeAllAttendance,
+  DoubtThread,
+  DoubtMessage,
+  subscribeThreadsForStudent,
+  subscribeMessages,
   createThread,
   postMessage,
   ExamTrack,
   Subject,
   SUBJECTS,
   SUBJECT_EXAM_TRACKS,
-  listChapterResources,
+  ChapterResource,
+  subscribeChapterResources,
 } from '../lib/lms';
 import { getOrCreateStudentId, getStudentName, getStudentBatchId, setStudentBatchId } from '../lib/studentIdentity';
 import YouTubeCard from '../components/YouTubeCard';
@@ -50,14 +58,16 @@ function BatchPicker({ batches, batchId, onChange }: { batches: Batch[]; batchId
 }
 
 function ClassesPanel({ batchId }: { batchId: string | null }) {
-  const forceUpdate = useForceUpdate();
   const studentId = getOrCreateStudentId();
   const studentName = getStudentName();
-  const classes = useMemo(() => visibleClassesForBatch(batchId), [batchId]);
+  const [allClasses, setAllClasses] = useState<LiveClass[]>([]);
+  const [attendance, setAttendance] = useState<AttendanceRecord[]>([]);
+  useEffect(() => subscribeClasses(setAllClasses), []);
+  useEffect(() => subscribeAllAttendance(setAttendance), []);
+  const classes = useMemo(() => visibleClassesForBatch(allClasses, batchId), [allClasses, batchId]);
 
   function handleJoin(classId: string, url: string) {
     recordAttendance(classId, studentId, studentName);
-    forceUpdate();
     window.open(url, '_blank', 'noopener,noreferrer');
   }
 
@@ -68,7 +78,7 @@ function ClassesPanel({ batchId }: { batchId: string | null }) {
   return (
     <div className="space-y-3">
       {classes.map((c) => {
-        const attended = attendanceForClass(c.id).some((a) => a.studentId === studentId);
+        const attended = attendance.some((a) => a.classId === c.id && a.studentId === studentId);
         return (
           <div key={c.id} className="bg-white border-2 border-ink-200 rounded-3xl p-4">
             <div className="flex items-center gap-2 mb-1">
@@ -96,7 +106,9 @@ function ClassesPanel({ batchId }: { batchId: string | null }) {
 }
 
 function ContentPanel({ batchId }: { batchId: string | null }) {
-  const items = useMemo(() => visibleContentForBatch(batchId), [batchId]);
+  const [allContent, setAllContent] = useState<ContentItem[]>([]);
+  useEffect(() => subscribeContent(setAllContent), []);
+  const items = useMemo(() => visibleContentForBatch(allContent, batchId), [allContent, batchId]);
   if (items.length === 0) return <p className="text-ink-400 italic text-sm">No notes or videos published yet.</p>;
   return (
     <div className="space-y-3">
@@ -124,7 +136,8 @@ function PyqPanel() {
   const [openChapter, setOpenChapter] = useState<string | null>(null);
   const validTracks = SUBJECT_EXAM_TRACKS[subject];
   const activeTrack = validTracks.includes(track) ? track : validTracks[0];
-  const chapters = useMemo(() => listChapterResources(activeTrack, subject), [activeTrack, subject]);
+  const [chapters, setChapters] = useState<ChapterResource[]>([]);
+  useEffect(() => subscribeChapterResources(activeTrack, subject, setChapters), [activeTrack, subject]);
 
   function handleSubjectChange(s: Subject) {
     setSubject(s);
@@ -185,14 +198,57 @@ function PyqPanel() {
   );
 }
 
+const StudentThreadCard: React.FC<{ thread: DoubtThread }> = ({ thread: t }) => {
+  const [messages, setMessages] = useState<DoubtMessage[]>([]);
+  const [reply, setReply] = useState('');
+
+  useEffect(() => subscribeMessages(t.id, setMessages), [t.id]);
+
+  function handleReply() {
+    const body = reply.trim();
+    if (!body) return;
+    postMessage(t.id, 'student', body);
+    setReply('');
+  }
+
+  return (
+    <div className="bg-white border-2 border-ink-200 rounded-3xl p-5">
+      <div className="flex items-center gap-2 mb-3">
+        <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full ${t.status === 'resolved' ? 'bg-emerald-100 text-emerald-700' : 'bg-gold-100 text-gold-700'}`}>
+          {t.status}
+        </span>
+        <h4 className="font-bold text-ink-800">{t.subject}</h4>
+      </div>
+      <div className="space-y-2 mb-3">
+        {messages.map((m) => (
+          <div key={m.id} className={`text-sm px-3 py-2 rounded-2xl max-w-[85%] ${m.senderRole === 'admin' ? 'bg-sage-50 text-sage-900 ml-auto text-right' : 'bg-ink-50 text-ink-700'}`}>
+            <p className="text-[10px] uppercase tracking-wider opacity-60 mb-0.5">{m.senderRole === 'admin' ? 'Teacher' : 'You'}</p>
+            {m.body}
+          </div>
+        ))}
+      </div>
+      <div className="flex gap-2">
+        <input
+          value={reply}
+          onChange={(e) => setReply(e.target.value)}
+          placeholder="Reply..."
+          className="flex-1 border-2 border-ink-200 rounded-2xl px-3 py-1.5 text-sm"
+        />
+        <button onClick={handleReply} className="p-2 rounded-2xl bg-ink-100 hover:bg-ink-200">
+          <Send className="w-4 h-4 text-ink-600" />
+        </button>
+      </div>
+    </div>
+  );
+};
+
 function DoubtsPanel() {
-  const forceUpdate = useForceUpdate();
   const studentId = getOrCreateStudentId();
   const studentName = getStudentName();
-  const threads = listThreadsForStudent(studentId);
+  const [threads, setThreads] = useState<DoubtThread[]>([]);
+  useEffect(() => subscribeThreadsForStudent(studentId, setThreads), [studentId]);
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
-  const [reply, setReply] = useState<Record<string, string>>({});
 
   function handleNewThread(e: React.FormEvent) {
     e.preventDefault();
@@ -200,15 +256,6 @@ function DoubtsPanel() {
     createThread(studentId, studentName, subject.trim(), message.trim());
     setSubject('');
     setMessage('');
-    forceUpdate();
-  }
-
-  function handleReply(threadId: string) {
-    const body = (reply[threadId] || '').trim();
-    if (!body) return;
-    postMessage(threadId, 'student', body);
-    setReply((r) => ({ ...r, [threadId]: '' }));
-    forceUpdate();
   }
 
   return (
@@ -235,38 +282,9 @@ function DoubtsPanel() {
       </form>
 
       {threads.length === 0 && <p className="text-ink-400 italic text-sm">No doubts asked yet.</p>}
-      {threads.map((t) => {
-        const messages = listMessages(t.id);
-        return (
-          <div key={t.id} className="bg-white border-2 border-ink-200 rounded-3xl p-5">
-            <div className="flex items-center gap-2 mb-3">
-              <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full ${t.status === 'resolved' ? 'bg-emerald-100 text-emerald-700' : 'bg-gold-100 text-gold-700'}`}>
-                {t.status}
-              </span>
-              <h4 className="font-bold text-ink-800">{t.subject}</h4>
-            </div>
-            <div className="space-y-2 mb-3">
-              {messages.map((m) => (
-                <div key={m.id} className={`text-sm px-3 py-2 rounded-2xl max-w-[85%] ${m.senderRole === 'admin' ? 'bg-sage-50 text-sage-900 ml-auto text-right' : 'bg-ink-50 text-ink-700'}`}>
-                  <p className="text-[10px] uppercase tracking-wider opacity-60 mb-0.5">{m.senderRole === 'admin' ? 'Teacher' : 'You'}</p>
-                  {m.body}
-                </div>
-              ))}
-            </div>
-            <div className="flex gap-2">
-              <input
-                value={reply[t.id] || ''}
-                onChange={(e) => setReply((r) => ({ ...r, [t.id]: e.target.value }))}
-                placeholder="Reply..."
-                className="flex-1 border-2 border-ink-200 rounded-2xl px-3 py-1.5 text-sm"
-              />
-              <button onClick={() => handleReply(t.id)} className="p-2 rounded-2xl bg-ink-100 hover:bg-ink-200">
-                <Send className="w-4 h-4 text-ink-600" />
-              </button>
-            </div>
-          </div>
-        );
-      })}
+      {threads.map((t) => (
+        <StudentThreadCard key={t.id} thread={t} />
+      ))}
     </div>
   );
 }
@@ -413,7 +431,8 @@ function ResourcesPanel() {
 export default function StudentLMS() {
   const [tab, setTab] = useState<Tab>('classes');
   const [batchId, setBatchId] = useState<string | null>(() => getStudentBatchId());
-  const batches = listBatches();
+  const [batches, setBatches] = useState<Batch[]>([]);
+  useEffect(() => subscribeBatches(setBatches), []);
 
   function handleBatchChange(id: string | null) {
     setStudentBatchId(id);

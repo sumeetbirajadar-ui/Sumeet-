@@ -4,6 +4,8 @@
 // local-storage backed, same pattern as the rest of the LMS layer.
 
 import { ExamTrack } from './lms';
+import { subscribeCollection, addDocument, deleteDocument } from './firebase';
+import { where } from 'firebase/firestore';
 
 function uid(prefix: string) {
   return `${prefix}_${Date.now()}_${Math.round(Math.random() * 1e6)}`;
@@ -56,8 +58,9 @@ export function toggleDocument(studentId: string, doc: string) {
 }
 
 // ---------------------------------------------------------------- Timeline --
+// Admin-authored counselling dates, shared across every student's device.
 
-const TIMELINE_KEY = 'counselling_timeline_v1';
+const TIMELINE_COLLECTION = 'counselling_timeline';
 
 export interface TimelineEvent {
   id: string;
@@ -67,20 +70,21 @@ export interface TimelineEvent {
   note?: string;
 }
 
-export function listTimelineEvents(examTrack?: ExamTrack): TimelineEvent[] {
-  const all = load<TimelineEvent>(TIMELINE_KEY);
-  const filtered = examTrack ? all.filter((e) => e.examTrack === examTrack) : all;
-  return filtered.sort((a, b) => a.date.localeCompare(b.date));
+export function subscribeTimelineEvents(onData: (items: TimelineEvent[]) => void, examTrack?: ExamTrack): () => void {
+  const constraints = examTrack ? [where('examTrack', '==', examTrack)] : [];
+  return subscribeCollection<Omit<TimelineEvent, 'id'>>(
+    TIMELINE_COLLECTION,
+    (items) => onData([...items].sort((a, b) => a.date.localeCompare(b.date))),
+    ...constraints
+  );
 }
 
-export function addTimelineEvent(examTrack: ExamTrack, title: string, date: string, note?: string): TimelineEvent {
-  const event: TimelineEvent = { id: uid('tl'), examTrack, title, date, note };
-  save(TIMELINE_KEY, [...load<TimelineEvent>(TIMELINE_KEY), event]);
-  return event;
+export async function addTimelineEvent(examTrack: ExamTrack, title: string, date: string, note?: string): Promise<void> {
+  await addDocument(TIMELINE_COLLECTION, { examTrack, title, date, note: note ?? null });
 }
 
-export function deleteTimelineEvent(id: string) {
-  save(TIMELINE_KEY, load<TimelineEvent>(TIMELINE_KEY).filter((e) => e.id !== id));
+export async function deleteTimelineEvent(id: string): Promise<void> {
+  await deleteDocument(TIMELINE_COLLECTION, id);
 }
 
 export function daysUntil(dateStr: string): number {

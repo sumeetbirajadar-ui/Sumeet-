@@ -2,9 +2,14 @@
 // cover (2025, 2026...). Kept separate from the bundled dataset so the app's
 // own predictions are never silently overwritten — an override is only ever
 // something an admin typed in on purpose, and it's always labelled as such
-// (vs. a computed "Estimated" figure) in the predictor UI.
+// (vs. a computed "Estimated" figure) in the predictor UI. Firestore-backed
+// as a single config document, since the whole store is always read/written
+// together and every student's predictor needs to see the same overrides.
 
-const STORAGE_KEY = 'kcet_admin_overrides_v1';
+import { subscribeDoc, setDocument } from './firebase';
+
+const CONFIG_COLLECTION = 'admin_config';
+const OVERRIDES_DOC_ID = 'kcet_overrides';
 
 export type CourseType = 'engg' | 'agri' | 'prof';
 
@@ -25,22 +30,12 @@ function emptyStore(): OverrideStore {
   return { engg: {}, agri: {}, prof: {} };
 }
 
-export function loadOverrides(): OverrideStore {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return emptyStore();
-    const parsed = JSON.parse(raw);
-    return { ...emptyStore(), ...parsed };
-  } catch {
-    return emptyStore();
-  }
+export function subscribeOverrideStore(onData: (store: OverrideStore) => void): () => void {
+  return subscribeDoc<OverrideStore>(CONFIG_COLLECTION, OVERRIDES_DOC_ID, (data) => onData({ ...emptyStore(), ...(data || {}) }));
 }
 
-export function saveOverrides(store: OverrideStore) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
-}
-
-export function setOverride(
+export async function setOverride(
+  store: OverrideStore,
   courseType: CourseType,
   collegeCode: string,
   branch: string,
@@ -48,52 +43,43 @@ export function setOverride(
   year: number,
   cutoff: number,
   note?: string
-) {
-  const store = loadOverrides();
-  store[courseType][collegeCode] ??= {};
-  store[courseType][collegeCode][branch] ??= {};
-  store[courseType][collegeCode][branch][category] ??= {};
-  store[courseType][collegeCode][branch][category][year] = {
-    year,
-    cutoff,
-    note,
-    updatedAt: new Date().toISOString(),
-  };
-  saveOverrides(store);
-  return store;
+): Promise<void> {
+  const next: OverrideStore = structuredClone(store);
+  next[courseType][collegeCode] ??= {};
+  next[courseType][collegeCode][branch] ??= {};
+  next[courseType][collegeCode][branch][category] ??= {};
+  next[courseType][collegeCode][branch][category][year] = { year, cutoff, note, updatedAt: new Date().toISOString() };
+  await setDocument(CONFIG_COLLECTION, OVERRIDES_DOC_ID, next);
 }
 
-export function removeOverride(
+export async function removeOverride(
+  store: OverrideStore,
   courseType: CourseType,
   collegeCode: string,
   branch: string,
   category: string,
   year: number
-) {
-  const store = loadOverrides();
-  delete store[courseType]?.[collegeCode]?.[branch]?.[category]?.[year];
-  saveOverrides(store);
-  return store;
+): Promise<void> {
+  const next: OverrideStore = structuredClone(store);
+  delete next[courseType]?.[collegeCode]?.[branch]?.[category]?.[year];
+  await setDocument(CONFIG_COLLECTION, OVERRIDES_DOC_ID, next);
 }
 
-export function getOverride(
+export function getOverrideFrom(
+  store: OverrideStore,
   courseType: CourseType,
   collegeCode: string,
   branch: string,
   category: string,
   year: number
 ): OverrideEntry | undefined {
-  const store = loadOverrides();
   return store[courseType]?.[collegeCode]?.[branch]?.[category]?.[year];
 }
 
-export function listOverrides(courseType: CourseType): Array<{
-  collegeCode: string;
-  branch: string;
-  category: string;
-  entry: OverrideEntry;
-}> {
-  const store = loadOverrides();
+export function listOverridesFrom(
+  store: OverrideStore,
+  courseType: CourseType
+): Array<{ collegeCode: string; branch: string; category: string; entry: OverrideEntry }> {
   const out: Array<{ collegeCode: string; branch: string; category: string; entry: OverrideEntry }> = [];
   const forCourse = store[courseType] || {};
   for (const collegeCode of Object.keys(forCourse)) {

@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ClipboardCheck, CalendarClock, ListChecks, Plus, Trash2, AlertTriangle } from 'lucide-react';
 import { EXAM_TRACKS, ExamTrack } from '../lib/lms';
 import {
   STANDARD_DOCUMENTS,
   getDocumentChecklist,
   toggleDocument,
-  listTimelineEvents,
+  TimelineEvent,
+  subscribeTimelineEvents,
   daysUntil,
   listAllotments,
   addAllotment,
@@ -55,7 +56,8 @@ function DocumentsPanel({ studentId }: { studentId: string }) {
 
 function TimelinePanel() {
   const [track, setTrack] = useState<ExamTrack>('KCET');
-  const events = listTimelineEvents(track);
+  const [events, setEvents] = useState<TimelineEvent[]>([]);
+  useEffect(() => subscribeTimelineEvents(setEvents, track), [track]);
 
   return (
     <div className="space-y-4">

@@ -57,6 +57,8 @@ import {
   Home as NavHomeIcon,
   Video as NavLmsIcon,
 } from 'lucide-react';
+import { latestActivityAt } from './lib/lms';
+import { getLmsLastSeen, markLmsSeen } from './lib/studentIdentity';
 
 type Role = 'admin' | 'student';
 type View = 'home' | 'routine' | 'planner' | 'weekly' | 'predictor' | 'career' | 'admin' | 'lms';
@@ -138,6 +140,10 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('daily_tracker_app_state', JSON.stringify(state));
   }, [state]);
+
+  useEffect(() => {
+    if (role === 'student' && view === 'lms') markLmsSeen();
+  }, [role, view]);
 
   const updateDailyData = (date: string, newData: DailyData) => {
     setState(prev => ({
@@ -252,6 +258,7 @@ export default function App() {
 
   const adminOnlyViews: View[] = ['routine', 'planner', 'weekly', 'admin'];
   const effectiveView: View = role === 'student' && adminOnlyViews.includes(view) ? 'home' : view;
+  const hasLmsUpdates = role === 'student' && latestActivityAt() > getLmsLastSeen();
 
   const RoutineView = () => (
     <div className="max-w-2xl mx-auto py-8 px-4">
@@ -802,9 +809,12 @@ export default function App() {
             <div className="w-px h-6 bg-stone-700 shrink-0"></div>
             <button
               onClick={() => setView('lms')}
-              className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'lms' ? 'text-amber-400' : 'text-stone-400 hover:text-white'}`}
+              className={`relative flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'lms' ? 'text-amber-400' : 'text-stone-400 hover:text-white'}`}
             >
-              <NavLmsIcon className="w-5 h-5" />
+              <span className="relative">
+                <NavLmsIcon className="w-5 h-5" />
+                {hasLmsUpdates && <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-rose-500" />}
+              </span>
               <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Learn</span>
             </button>
             <div className="w-px h-6 bg-stone-700 shrink-0"></div>

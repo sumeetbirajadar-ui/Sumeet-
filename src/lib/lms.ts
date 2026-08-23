@@ -141,36 +141,128 @@ export function visibleContentForBatch(batchId: string | null): ContentItem[] {
     .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
 }
 
-// -------------------------------------------------------------- PYQ bank --
+// ------------------------------------------------------ PYQ chapter hub --
 
-const PYQ_KEY = 'lms_pyq_v1';
+const CHAPTER_RESOURCES_KEY = 'lms_chapter_resources_v1';
 
-export interface PyqQuestion {
+export type ExamTrack = 'KCET' | 'NEET' | 'JEE';
+
+export const EXAM_TRACKS: ExamTrack[] = ['KCET', 'NEET', 'JEE'];
+
+// Standard combined 11th+12th PUC/NCERT Physics chapter list (28 chapters).
+// Seeded automatically the first time a track is opened; admin can rename,
+// add or remove chapters afterwards, and add other subjects later.
+export const DEFAULT_PHYSICS_CHAPTERS = [
+  'Physical World',
+  'Units and Measurements',
+  'Motion in a Straight Line',
+  'Motion in a Plane',
+  'Laws of Motion',
+  'Work, Energy and Power',
+  'System of Particles and Rotational Motion',
+  'Gravitation',
+  'Mechanical Properties of Solids',
+  'Mechanical Properties of Fluids',
+  'Thermal Properties of Matter',
+  'Thermodynamics',
+  'Kinetic Theory of Gases',
+  'Oscillations and Waves',
+  'Electric Charges and Fields',
+  'Electrostatic Potential and Capacitance',
+  'Current Electricity',
+  'Moving Charges and Magnetism',
+  'Magnetism and Matter',
+  'Electromagnetic Induction',
+  'Alternating Current',
+  'Electromagnetic Waves',
+  'Ray Optics and Optical Instruments',
+  'Wave Optics',
+  'Dual Nature of Radiation and Matter',
+  'Atoms',
+  'Nuclei',
+  'Semiconductor Electronics',
+];
+
+export interface ChapterResource {
   id: string;
-  exam: string;
-  year: number;
+  examTrack: ExamTrack;
   subject: string;
-  chapter: string;
-  question: string;
-  options: string[];
-  answerIndex: number;
-  createdAt: string;
+  chapterIndex: number;
+  chapterName: string;
+  notesUrl: string; // Google Drive (or any) link to notes
+  solutionVideoUrl: string; // YouTube link — solved PYQs for this chapter
+  conceptVideoUrl: string; // YouTube link — important topics/sub-topics explained
+  updatedAt: string;
 }
 
-export function listPyq(): PyqQuestion[] {
-  return load<PyqQuestion>(PYQ_KEY);
-}
-
-export function addPyqQuestions(questions: Array<Omit<PyqQuestion, 'id' | 'createdAt'>>): PyqQuestion[] {
+function seedChapterResources(examTrack: ExamTrack, subject: string): ChapterResource[] {
   const now = new Date().toISOString();
-  const withIds = questions.map((q) => ({ ...q, id: uid('pyq'), createdAt: now }));
-  const items = [...withIds, ...listPyq()];
-  save(PYQ_KEY, items);
+  return DEFAULT_PHYSICS_CHAPTERS.map((name, i) => ({
+    id: uid('chres'),
+    examTrack,
+    subject,
+    chapterIndex: i + 1,
+    chapterName: name,
+    notesUrl: '',
+    solutionVideoUrl: '',
+    conceptVideoUrl: '',
+    updatedAt: now,
+  }));
+}
+
+export function listChapterResources(examTrack: ExamTrack, subject = 'Physics'): ChapterResource[] {
+  const all = load<ChapterResource>(CHAPTER_RESOURCES_KEY);
+  const existing = all.filter((c) => c.examTrack === examTrack && c.subject === subject);
+  if (existing.length > 0) return existing.sort((a, b) => a.chapterIndex - b.chapterIndex);
+  if (subject !== 'Physics') return [];
+  // First visit to this track: auto-seed the standard Physics chapter list.
+  const seeded = seedChapterResources(examTrack, subject);
+  save(CHAPTER_RESOURCES_KEY, [...all, ...seeded]);
+  return seeded;
+}
+
+export function updateChapterResource(id: string, patch: Partial<Pick<ChapterResource, 'chapterName' | 'notesUrl' | 'solutionVideoUrl' | 'conceptVideoUrl'>>) {
+  const all = load<ChapterResource>(CHAPTER_RESOURCES_KEY);
+  const items = all.map((c) => (c.id === id ? { ...c, ...patch, updatedAt: new Date().toISOString() } : c));
+  save(CHAPTER_RESOURCES_KEY, items);
   return items;
 }
 
-export function deletePyq(id: string) {
-  save(PYQ_KEY, listPyq().filter((q) => q.id !== id));
+export function addChapter(examTrack: ExamTrack, subject: string, chapterName: string): ChapterResource {
+  const all = load<ChapterResource>(CHAPTER_RESOURCES_KEY);
+  const forTrack = all.filter((c) => c.examTrack === examTrack && c.subject === subject);
+  const chapter: ChapterResource = {
+    id: uid('chres'),
+    examTrack,
+    subject,
+    chapterIndex: forTrack.length + 1,
+    chapterName,
+    notesUrl: '',
+    solutionVideoUrl: '',
+    conceptVideoUrl: '',
+    updatedAt: new Date().toISOString(),
+  };
+  save(CHAPTER_RESOURCES_KEY, [...all, chapter]);
+  return chapter;
+}
+
+export function deleteChapter(id: string) {
+  save(CHAPTER_RESOURCES_KEY, load<ChapterResource>(CHAPTER_RESOURCES_KEY).filter((c) => c.id !== id));
+}
+
+/** Latest timestamp across anything a student would care about seeing — used to show a "new" badge. */
+export function latestActivityAt(): string {
+  const timestamps: string[] = [];
+  listClasses()
+    .filter((c) => c.publishState === 'scheduled' || c.publishState === 'published')
+    .forEach((c) => timestamps.push(c.updatedAt));
+  listContent()
+    .filter((c) => c.publishState === 'published')
+    .forEach((c) => timestamps.push(c.updatedAt));
+  load<ChapterResource>(CHAPTER_RESOURCES_KEY)
+    .filter((c) => c.notesUrl || c.solutionVideoUrl || c.conceptVideoUrl)
+    .forEach((c) => timestamps.push(c.updatedAt));
+  return timestamps.sort().pop() || '';
 }
 
 // -------------------------------------------------------------- Doubts --

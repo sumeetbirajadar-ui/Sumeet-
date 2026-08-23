@@ -1,17 +1,19 @@
 import React, { useMemo, useState } from 'react';
-import { Video, FileText, BookOpenCheck, MessageCircle, Send, CheckCircle2, ExternalLink } from 'lucide-react';
+import { Video, FileText, BookOpenCheck, MessageCircle, Send, CheckCircle2, ExternalLink, ChevronDown, Lightbulb } from 'lucide-react';
 import {
   Batch,
   listBatches,
   visibleClassesForBatch,
   visibleContentForBatch,
-  listPyq,
   recordAttendance,
   attendanceForClass,
   listThreadsForStudent,
   listMessages,
   createThread,
   postMessage,
+  EXAM_TRACKS,
+  ExamTrack,
+  listChapterResources,
 } from '../lib/lms';
 import { getOrCreateStudentId, getStudentName, getStudentBatchId, setStudentBatchId } from '../lib/studentIdentity';
 
@@ -118,54 +120,68 @@ function ContentPanel({ batchId }: { batchId: string | null }) {
   );
 }
 
+function ResourceLink({ label, icon, url }: { label: string; icon: React.ReactNode; url: string }) {
+  if (!url) {
+    return (
+      <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-stone-50 text-stone-400 text-sm">
+        {icon} {label} — not added yet
+      </div>
+    );
+  }
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex items-center gap-2 px-4 py-3 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 text-sm font-semibold transition-colors"
+    >
+      {icon} {label} <ExternalLink className="w-3.5 h-3.5 ml-auto" />
+    </a>
+  );
+}
+
 function PyqPanel() {
-  const questions = listPyq();
-  const [examFilter, setExamFilter] = useState('');
-  const [revealed, setRevealed] = useState<Record<string, boolean>>({});
-
-  const exams = useMemo(() => Array.from(new Set(questions.map((q) => q.exam))).sort(), [questions]);
-  const filtered = examFilter ? questions.filter((q) => q.exam === examFilter) : questions;
-
-  if (questions.length === 0) return <p className="text-stone-400 italic text-sm">No PYQ questions added yet.</p>;
+  const [track, setTrack] = useState<ExamTrack>('KCET');
+  const [openChapter, setOpenChapter] = useState<string | null>(null);
+  const chapters = useMemo(() => listChapterResources(track), [track]);
 
   return (
     <div className="space-y-4">
-      <select value={examFilter} onChange={(e) => setExamFilter(e.target.value)} className="border-2 border-stone-200 rounded-xl px-3 py-2 bg-white text-sm">
-        <option value="">All exams</option>
-        {exams.map((e) => (
-          <option key={e} value={e}>
-            {e}
-          </option>
-        ))}
-      </select>
-      {filtered.map((q, idx) => (
-        <div key={q.id} className="bg-white border-2 border-stone-200 rounded-2xl p-5">
-          <p className="text-xs text-stone-400 mb-2">
-            {q.exam} {q.year} · {q.subject} · {q.chapter}
-          </p>
-          <p className="font-semibold text-stone-800 mb-3">
-            {idx + 1}. {q.question}
-          </p>
-          <div className="space-y-1.5 mb-3">
-            {q.options.map((opt, i) => (
-              <div
-                key={i}
-                className={`text-sm px-3 py-1.5 rounded-lg border ${
-                  revealed[q.id] && i === q.answerIndex ? 'bg-emerald-50 border-emerald-300 text-emerald-800 font-semibold' : 'border-stone-200 text-stone-600'
-                }`}
-              >
-                {String.fromCharCode(65 + i)}. {opt}
-              </div>
-            ))}
-          </div>
+      <div className="flex gap-2 justify-center">
+        {EXAM_TRACKS.map((t) => (
           <button
-            onClick={() => setRevealed((r) => ({ ...r, [q.id]: !r[q.id] }))}
-            className="text-xs font-bold uppercase tracking-wider text-amber-600 hover:text-amber-700"
+            key={t}
+            onClick={() => { setTrack(t); setOpenChapter(null); }}
+            className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider ${track === t ? 'bg-stone-800 text-white' : 'bg-stone-100 text-stone-500'}`}
           >
-            {revealed[q.id] ? 'Hide Answer' : 'Show Answer'}
+            {t} PYQ
           </button>
-        </div>
-      ))}
+        ))}
+      </div>
+      <p className="text-xs text-stone-400 text-center">Physics · {chapters.length} chapters</p>
+
+      <div className="space-y-2">
+        {chapters.map((c) => (
+          <div key={c.id} className="bg-white border-2 border-stone-200 rounded-2xl overflow-hidden">
+            <button
+              onClick={() => setOpenChapter(openChapter === c.id ? null : c.id)}
+              className="w-full flex items-center justify-between px-4 py-3 text-left"
+            >
+              <span className="font-semibold text-stone-800 text-sm">
+                {c.chapterIndex}. {c.chapterName}
+              </span>
+              <ChevronDown className={`w-4 h-4 text-stone-400 transition-transform ${openChapter === c.id ? 'rotate-180' : ''}`} />
+            </button>
+            {openChapter === c.id && (
+              <div className="px-4 pb-4 space-y-2 border-t border-stone-100 pt-3">
+                <ResourceLink label="Notes (Drive)" icon={<FileText className="w-4 h-4" />} url={c.notesUrl} />
+                <ResourceLink label="Solved PYQ Video" icon={<Video className="w-4 h-4" />} url={c.solutionVideoUrl} />
+                <ResourceLink label="Important Topics Explained" icon={<Lightbulb className="w-4 h-4" />} url={c.conceptVideoUrl} />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -269,7 +285,7 @@ export default function StudentLMS() {
   const tabs: Array<{ key: Tab; label: string; icon: React.ReactNode }> = [
     { key: 'classes', label: 'Live Classes', icon: <Video className="w-4 h-4" /> },
     { key: 'content', label: 'Notes & Videos', icon: <FileText className="w-4 h-4" /> },
-    { key: 'pyq', label: 'PYQ Bank', icon: <BookOpenCheck className="w-4 h-4" /> },
+    { key: 'pyq', label: 'PYQ (KCET/NEET/JEE)', icon: <BookOpenCheck className="w-4 h-4" /> },
     { key: 'doubts', label: 'My Doubts', icon: <MessageCircle className="w-4 h-4" /> },
   ];
 

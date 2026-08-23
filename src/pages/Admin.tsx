@@ -11,7 +11,6 @@ import { ENGG, AGRI, PROF } from '../data/kcet';
 import { ENGG_BRANCH_OPTIONS, AGRI_BRANCH_OPTIONS, PROF_BRANCH_OPTIONS } from '../data/kcet/branchOptions';
 import { CATEGORY_OPTIONS, CourseType } from '../data/kcet/meta';
 import { listOverrides, setOverride, removeOverride } from '../lib/adminOverrides';
-import { parseCsv } from '../lib/csv';
 import {
   Batch,
   listBatches,
@@ -27,9 +26,13 @@ import {
   createContent,
   updateContent,
   deleteContent,
-  listPyq,
-  addPyqQuestions,
-  deletePyq,
+  ExamTrack,
+  EXAM_TRACKS,
+  ChapterResource,
+  listChapterResources,
+  updateChapterResource,
+  addChapter,
+  deleteChapter,
   listAllThreadsGrouped,
   listMessages,
   postMessage,
@@ -586,97 +589,109 @@ function ContentAdminPanel() {
   );
 }
 
-function PyqImportPanel() {
+function ChapterResourcesPanel() {
   const forceUpdate = useForceUpdate();
-  const [questions, setQuestions] = useState(() => listPyq());
-  const [csvText, setCsvText] = useState('');
-  const [importMsg, setImportMsg] = useState('');
+  const [track, setTrack] = useState<ExamTrack>('KCET');
+  const [newChapterName, setNewChapterName] = useState('');
+  const chapters = listChapterResources(track);
 
-  function refresh() {
-    setQuestions(listPyq());
+  // Local text buffers so typing doesn't write to localStorage on every keystroke.
+  const [drafts, setDrafts] = useState<Record<string, { notesUrl: string; solutionVideoUrl: string; conceptVideoUrl: string }>>({});
+
+  function draftFor(c: ChapterResource) {
+    return drafts[c.id] || { notesUrl: c.notesUrl, solutionVideoUrl: c.solutionVideoUrl, conceptVideoUrl: c.conceptVideoUrl };
+  }
+
+  function setDraftField(c: ChapterResource, field: 'notesUrl' | 'solutionVideoUrl' | 'conceptVideoUrl', value: string) {
+    setDrafts((d) => ({ ...d, [c.id]: { ...draftFor(c), [field]: value } }));
+  }
+
+  function commitField(c: ChapterResource, field: 'notesUrl' | 'solutionVideoUrl' | 'conceptVideoUrl') {
+    const value = draftFor(c)[field];
+    if (value === c[field]) return;
+    updateChapterResource(c.id, { [field]: value });
     forceUpdate();
   }
 
-  function handleImport(e: React.FormEvent) {
+  function handleAddChapter(e: React.FormEvent) {
     e.preventDefault();
-    const rows = parseCsv(csvText);
-    const parsed = rows
-      .map((r) => {
-        const [exam, year, subject, chapter, question, opt1, opt2, opt3, opt4, answerIndex] = r;
-        if (!exam || !question) return null;
-        return {
-          exam: exam.trim(),
-          year: parseInt(year, 10) || new Date().getFullYear(),
-          subject: (subject || '').trim(),
-          chapter: (chapter || '').trim(),
-          question: question.trim(),
-          options: [opt1, opt2, opt3, opt4].map((o) => (o || '').trim()),
-          answerIndex: Math.max(0, Math.min(3, parseInt(answerIndex, 10) || 0)),
-        };
-      })
-      .filter((q): q is NonNullable<typeof q> => q !== null);
-    if (parsed.length === 0) {
-      setImportMsg('No valid rows found. Expected columns: exam,year,subject,chapter,question,option1,option2,option3,option4,answerIndex(0-3)');
-      return;
-    }
-    addPyqQuestions(parsed);
-    setImportMsg(`Imported ${parsed.length} question(s).`);
-    setCsvText('');
-    refresh();
+    if (!newChapterName.trim()) return;
+    addChapter(track, 'Physics', newChapterName.trim());
+    setNewChapterName('');
+    forceUpdate();
   }
 
   return (
     <div className="space-y-6">
-      <form onSubmit={handleImport} className="bg-white rounded-3xl border-2 border-stone-200 p-6 space-y-4">
-        <h3 className="font-bold text-lg text-stone-800">Bulk Import PYQ (CSV)</h3>
-        <p className="text-xs text-stone-500">
-          One question per line: <code>exam,year,subject,chapter,question,option1,option2,option3,option4,answerIndex</code> — wrap
-          any field containing a comma in double quotes. answerIndex is 0-3 (0 = option1).
-        </p>
-        <textarea
-          value={csvText}
-          onChange={(e) => setCsvText(e.target.value)}
-          rows={6}
-          placeholder={'KCET,2024,Physics,Kinematics,"A ball is thrown at 45°, what is its range?",R,2R,R/2,4R,0'}
-          className="w-full border-2 border-stone-200 rounded-xl px-3 py-2 font-mono text-xs"
+      <div className="bg-blue-50 border border-blue-100 text-blue-800 text-xs rounded-2xl px-4 py-3">
+        For each chapter, paste your Google Drive notes link, your YouTube solved-PYQ video link, and your YouTube
+        "important topics" video link. Students see exactly what's filled in — leave a field blank to hide it.
+      </div>
+
+      <div className="flex gap-2 justify-center">
+        {EXAM_TRACKS.map((t) => (
+          <button
+            key={t}
+            onClick={() => setTrack(t)}
+            className={`px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wider ${track === t ? 'bg-stone-800 text-white' : 'bg-stone-100 text-stone-500'}`}
+          >
+            {t} PYQ
+          </button>
+        ))}
+      </div>
+
+      <div className="space-y-3">
+        {chapters.map((c) => {
+          const d = draftFor(c);
+          return (
+            <div key={c.id} className="bg-white border-2 border-stone-200 rounded-2xl p-4">
+              <div className="flex items-center justify-between mb-3">
+                <h4 className="font-bold text-stone-800 text-sm">
+                  {c.chapterIndex}. {c.chapterName}
+                </h4>
+                <button onClick={() => { deleteChapter(c.id); forceUpdate(); }} className="p-1.5 rounded-lg hover:bg-rose-50 text-rose-500">
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                <input
+                  value={d.notesUrl}
+                  onChange={(e) => setDraftField(c, 'notesUrl', e.target.value)}
+                  onBlur={() => commitField(c, 'notesUrl')}
+                  placeholder="Drive notes link"
+                  className="border-2 border-stone-200 rounded-xl px-3 py-1.5 text-sm"
+                />
+                <input
+                  value={d.solutionVideoUrl}
+                  onChange={(e) => setDraftField(c, 'solutionVideoUrl', e.target.value)}
+                  onBlur={() => commitField(c, 'solutionVideoUrl')}
+                  placeholder="YouTube — solved PYQs"
+                  className="border-2 border-stone-200 rounded-xl px-3 py-1.5 text-sm"
+                />
+                <input
+                  value={d.conceptVideoUrl}
+                  onChange={(e) => setDraftField(c, 'conceptVideoUrl', e.target.value)}
+                  onBlur={() => commitField(c, 'conceptVideoUrl')}
+                  placeholder="YouTube — important topics"
+                  className="border-2 border-stone-200 rounded-xl px-3 py-1.5 text-sm"
+                />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <form onSubmit={handleAddChapter} className="flex gap-2">
+        <input
+          value={newChapterName}
+          onChange={(e) => setNewChapterName(e.target.value)}
+          placeholder={`Add another ${track} chapter...`}
+          className="flex-1 border-2 border-stone-200 rounded-xl px-3 py-2 text-sm"
         />
-        {importMsg && <p className="text-sm text-blue-700">{importMsg}</p>}
-        <button type="submit" className="bg-amber-400 hover:bg-amber-300 text-stone-900 font-bold px-5 py-2 rounded-xl flex items-center gap-2">
-          <Plus className="w-4 h-4" /> Import
+        <button type="submit" className="bg-amber-400 hover:bg-amber-300 text-stone-900 font-bold px-4 py-2 rounded-xl flex items-center gap-2 text-sm">
+          <Plus className="w-4 h-4" /> Add Chapter
         </button>
       </form>
-
-      <div className="bg-white rounded-3xl border-2 border-stone-200 overflow-hidden">
-        <table className="w-full text-sm">
-          <thead className="bg-stone-50 text-stone-500 uppercase text-xs">
-            <tr>
-              <th className="text-left px-4 py-3">Exam</th>
-              <th className="text-left px-4 py-3">Subject / Chapter</th>
-              <th className="text-left px-4 py-3">Question</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-stone-100">
-            {questions.length === 0 && (
-              <tr>
-                <td colSpan={4} className="text-center text-stone-400 italic py-6">No questions yet.</td>
-              </tr>
-            )}
-            {questions.map((q) => (
-              <tr key={q.id}>
-                <td className="px-4 py-3">{q.exam} {q.year}</td>
-                <td className="px-4 py-3 text-stone-500">{q.subject} / {q.chapter}</td>
-                <td className="px-4 py-3 truncate max-w-xs">{q.question}</td>
-                <td className="px-4 py-3 text-right">
-                  <button onClick={() => { deletePyq(q.id); refresh(); }} className="p-1.5 rounded-lg hover:bg-rose-50 text-rose-500">
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
     </div>
   );
 }
@@ -762,7 +777,7 @@ export default function Admin() {
             ['batches', 'Batches'],
             ['classes', 'Live Classes'],
             ['content', 'Notes & Videos'],
-            ['pyq', 'PYQ Import'],
+            ['pyq', 'PYQ / Chapters'],
             ['doubts', 'Doubts Inbox'],
           ] as const
         ).map(([key, label]) => (
@@ -783,7 +798,7 @@ export default function Admin() {
       {tab === 'batches' && <BatchesPanel />}
       {tab === 'classes' && <ClassesAdminPanel />}
       {tab === 'content' && <ContentAdminPanel />}
-      {tab === 'pyq' && <PyqImportPanel />}
+      {tab === 'pyq' && <ChapterResourcesPanel />}
       {tab === 'doubts' && <DoubtsInboxPanel />}
     </div>
   );

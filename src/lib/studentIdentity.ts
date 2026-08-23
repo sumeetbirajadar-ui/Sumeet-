@@ -4,6 +4,7 @@
 
 const ID_KEY = 'student_id';
 const BATCH_KEY = 'student_batch_id';
+const LMS_SEEN_KEY = 'student_lms_last_seen';
 
 export function getOrCreateStudentId(): string {
   let id = localStorage.getItem(ID_KEY);
@@ -25,4 +26,12 @@ export function getStudentBatchId(): string | null {
 export function setStudentBatchId(batchId: string | null) {
   if (batchId) localStorage.setItem(BATCH_KEY, batchId);
   else localStorage.removeItem(BATCH_KEY);
+}
+
+export function getLmsLastSeen(): string {
+  return localStorage.getItem(LMS_SEEN_KEY) || '';
+}
+
+export function markLmsSeen() {
+  localStorage.setItem(LMS_SEEN_KEY, new Date().toISOString());
 }

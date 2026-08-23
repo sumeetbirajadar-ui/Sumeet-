@@ -1,9 +1,12 @@
 import React from 'react';
 import { Megaphone, GraduationCap, Compass, Video } from 'lucide-react';
 import { listPublished } from '../lib/announcements';
+import { latestActivityAt } from '../lib/lms';
+import { getLmsLastSeen } from '../lib/studentIdentity';
 
 export default function StudentHome({ onNavigate }: { onNavigate: (view: 'predictor' | 'career' | 'lms') => void }) {
   const announcements = listPublished();
+  const hasLmsUpdates = latestActivityAt() > getLmsLastSeen();
 
   return (
     <div className="max-w-3xl mx-auto py-10 px-4 space-y-8">
@@ -15,8 +18,9 @@ export default function StudentHome({ onNavigate }: { onNavigate: (view: 'predic
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <button
           onClick={() => onNavigate('lms')}
-          className="bg-white border-2 border-stone-200 rounded-3xl p-6 text-left hover:border-amber-300 hover:shadow-md transition-all"
+          className="relative bg-white border-2 border-stone-200 rounded-3xl p-6 text-left hover:border-amber-300 hover:shadow-md transition-all"
         >
+          {hasLmsUpdates && <span className="absolute top-4 right-4 w-2.5 h-2.5 rounded-full bg-rose-500" />}
           <Video className="w-8 h-8 text-amber-500 mb-3" />
           <h3 className="font-bold text-lg text-stone-800 mb-1">Learning Hub</h3>
           <p className="text-sm text-stone-500">Live classes, notes, videos, PYQs and your doubts thread.</p>

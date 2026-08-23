@@ -92,15 +92,36 @@ const iconMap: Record<string, React.ReactNode> = {
   Phone: <Phone className="w-5 h-5" />,
 };
 
+// The same deployment serves three ways depending on ?mode= in the URL, so
+// wrapping this site in two separate Android WebView shells later gives two
+// genuinely separate apps without needing two separate web deployments:
+// ?mode=admin -> admin-only login, no student option at all
+// ?mode=student -> student-only login, no admin option at all
+// (no param) -> today's combined login with both options, for this trial
+export type AppMode = 'admin' | 'student' | 'combined';
+
+function getAppMode(): AppMode {
+  const param = new URLSearchParams(window.location.search).get('mode');
+  return param === 'admin' || param === 'student' ? param : 'combined';
+}
+
 export default function App() {
+  const [appMode] = useState<AppMode>(() => getAppMode());
+  // A locked mode (?mode=admin / ?mode=student) never honours a stale session
+  // for the other role — e.g. someone who once logged into the combined
+  // trial link as admin must still get the student-only login on ?mode=student.
+  const storedRole = localStorage.getItem('app_role') as Role | null;
+  const roleMatchesMode = appMode === 'combined' || storedRole === appMode;
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return localStorage.getItem('is_authenticated') === 'true';
+    return roleMatchesMode && localStorage.getItem('is_authenticated') === 'true';
   });
   const [role, setRole] = useState<Role>(() => {
-    return (localStorage.getItem('app_role') as Role) || 'student';
+    if (appMode !== 'combined') return appMode;
+    return storedRole || 'student';
   });
   const [view, setView] = useState<View>(() => {
-    return ((localStorage.getItem('app_role') as Role) || 'student') === 'admin' ? 'routine' : 'home';
+    const initialRole = appMode !== 'combined' ? appMode : storedRole || 'student';
+    return initialRole === 'admin' ? 'routine' : 'home';
   });
   const [arrivalPath, setArrivalPath] = useState<'530' | '730'>('530');
   const [currentDate, setCurrentDate] = useState(new Date().toISOString().split('T')[0]);
@@ -278,11 +299,17 @@ export default function App() {
   const { stats, totalExpenses, gratitudeHighlights } = getWeeklyStats();
 
   if (!isAuthenticated) {
-    return <Login onLogin={handleLogin} />;
+    return <Login mode={appMode} onLogin={handleLogin} />;
   }
 
-  const adminOnlyViews: View[] = ['admin'];
-  const effectiveView: View = role === 'student' && adminOnlyViews.includes(view) ? 'home' : view;
+  const adminOnlyViews: View[] = ['admin', 'routine', 'planner', 'weekly'];
+  const studentOnlyViews: View[] = ['predictor', 'career'];
+  const effectiveView: View =
+    role === 'student' && adminOnlyViews.includes(view)
+      ? 'home'
+      : role === 'admin' && studentOnlyViews.includes(view)
+        ? 'routine'
+        : view;
   const hasLmsUpdates = role === 'student' && latestActivityAt(lmsClasses, lmsContent) > getLmsLastSeen();
 
   const RoutineView = () => (
@@ -841,47 +868,31 @@ export default function App() {
             <div className="w-px h-6 bg-ink-700 shrink-0"></div>
           </>
         )}
-        <button
-          onClick={() => setView('routine')}
-          className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'routine' ? 'text-gold-400' : 'text-ink-400 hover:text-white'}`}
-        >
-          <Layout className="w-5 h-5" />
-          <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">My Day</span>
-        </button>
-        <div className="w-px h-6 bg-ink-700 shrink-0"></div>
-        <button
-          onClick={() => setView('planner')}
-          className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'planner' ? 'text-sage-400' : 'text-ink-400 hover:text-white'}`}
-        >
-          <Calendar className="w-5 h-5" />
-          <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Planner</span>
-        </button>
-        <div className="w-px h-6 bg-ink-700 shrink-0"></div>
-        <button
-          onClick={() => setView('weekly')}
-          className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'weekly' ? 'text-emerald-400' : 'text-ink-400 hover:text-white'}`}
-        >
-          <TrendingUp className="w-5 h-5" />
-          <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Review</span>
-        </button>
-        <div className="w-px h-6 bg-ink-700 shrink-0"></div>
-        <button
-          onClick={() => setView('predictor')}
-          className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'predictor' ? 'text-gold-400' : 'text-ink-400 hover:text-white'}`}
-        >
-          <NavPredictorIcon className="w-5 h-5" />
-          <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Predictor</span>
-        </button>
-        <div className="w-px h-6 bg-ink-700 shrink-0"></div>
-        <button
-          onClick={() => setView('career')}
-          className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'career' ? 'text-gold-400' : 'text-ink-400 hover:text-white'}`}
-        >
-          <NavCareerIcon className="w-5 h-5" />
-          <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Career</span>
-        </button>
         {role === 'admin' && (
           <>
+            <button
+              onClick={() => setView('routine')}
+              className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'routine' ? 'text-gold-400' : 'text-ink-400 hover:text-white'}`}
+            >
+              <Layout className="w-5 h-5" />
+              <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">My Day</span>
+            </button>
+            <div className="w-px h-6 bg-ink-700 shrink-0"></div>
+            <button
+              onClick={() => setView('planner')}
+              className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'planner' ? 'text-sage-400' : 'text-ink-400 hover:text-white'}`}
+            >
+              <Calendar className="w-5 h-5" />
+              <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Planner</span>
+            </button>
+            <div className="w-px h-6 bg-ink-700 shrink-0"></div>
+            <button
+              onClick={() => setView('weekly')}
+              className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'weekly' ? 'text-emerald-400' : 'text-ink-400 hover:text-white'}`}
+            >
+              <TrendingUp className="w-5 h-5" />
+              <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Review</span>
+            </button>
             <div className="w-px h-6 bg-ink-700 shrink-0"></div>
             <button
               onClick={() => setView('admin')}
@@ -889,6 +900,25 @@ export default function App() {
             >
               <NavAdminIcon className="w-5 h-5" />
               <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Admin</span>
+            </button>
+          </>
+        )}
+        {role === 'student' && (
+          <>
+            <button
+              onClick={() => setView('predictor')}
+              className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'predictor' ? 'text-gold-400' : 'text-ink-400 hover:text-white'}`}
+            >
+              <NavPredictorIcon className="w-5 h-5" />
+              <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Predictor</span>
+            </button>
+            <div className="w-px h-6 bg-ink-700 shrink-0"></div>
+            <button
+              onClick={() => setView('career')}
+              className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'career' ? 'text-gold-400' : 'text-ink-400 hover:text-white'}`}
+            >
+              <NavCareerIcon className="w-5 h-5" />
+              <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Career</span>
             </button>
           </>
         )}
@@ -906,8 +936,9 @@ export default function App() {
   );
 }
 
-const Login: React.FC<{ onLogin: (role: 'admin' | 'student') => void }> = ({ onLogin }) => {
-  const [mode, setMode] = useState<'admin' | 'student'>('student');
+const Login: React.FC<{ mode: AppMode; onLogin: (role: 'admin' | 'student') => void }> = ({ mode: lockedMode, onLogin }) => {
+  const [mode, setMode] = useState<'admin' | 'student'>(lockedMode === 'admin' ? 'admin' : 'student');
+  const showToggle = lockedMode === 'combined';
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [studentName, setStudentName] = useState('');
@@ -987,22 +1018,31 @@ const Login: React.FC<{ onLogin: (role: 'admin' | 'student') => void }> = ({ onL
             </p>
           </div>
 
-          <div className="flex gap-2 mb-8 bg-white/5 p-1 rounded-3xl">
-            <button
-              type="button"
-              onClick={() => { setMode('student'); setError(''); }}
-              className={`flex-1 py-2 rounded-2xl text-sm font-bold uppercase tracking-wider transition-all ${mode === 'student' ? 'bg-gold-400 text-ink-900' : 'text-ink-400'}`}
-            >
-              Student
-            </button>
-            <button
-              type="button"
-              onClick={() => { setMode('admin'); setError(''); }}
-              className={`flex-1 py-2 rounded-2xl text-sm font-bold uppercase tracking-wider transition-all ${mode === 'admin' ? 'bg-gold-400 text-ink-900' : 'text-ink-400'}`}
-            >
-              Admin
-            </button>
-          </div>
+          {showToggle && (
+            <div className="flex gap-2 mb-8 bg-white/5 p-1 rounded-3xl">
+              <button
+                type="button"
+                onClick={() => { setMode('student'); setError(''); }}
+                className={`flex-1 py-2 rounded-2xl text-sm font-bold uppercase tracking-wider transition-all ${mode === 'student' ? 'bg-gold-400 text-ink-900' : 'text-ink-400'}`}
+              >
+                Student
+              </button>
+              <button
+                type="button"
+                onClick={() => { setMode('admin'); setError(''); }}
+                className={`flex-1 py-2 rounded-2xl text-sm font-bold uppercase tracking-wider transition-all ${mode === 'admin' ? 'bg-gold-400 text-ink-900' : 'text-ink-400'}`}
+              >
+                Admin
+              </button>
+            </div>
+          )}
+          {!showToggle && (
+            <div className="mb-8 text-center">
+              <span className="inline-flex items-center gap-1.5 bg-white/5 text-ink-300 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">
+                {mode === 'admin' ? 'Admin App' : 'Student App'}
+              </span>
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {mode === 'student' ? (

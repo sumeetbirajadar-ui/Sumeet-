@@ -1,11 +1,11 @@
 import React from 'react';
-import { Megaphone, GraduationCap, Compass, Video, ClipboardCheck, Sparkles, MessageSquareText, BookOpenCheck } from 'lucide-react';
+import { Megaphone, GraduationCap, Compass, Video, ClipboardCheck, Sparkles, MessageSquareText, BookOpenCheck, Flame } from 'lucide-react';
 import { listPublished } from '../lib/announcements';
 import { latestActivityAt } from '../lib/lms';
 import { getLmsLastSeen, getOrCreateStudentId } from '../lib/studentIdentity';
 import { examProgressSummary } from '../lib/syllabusTracker';
 
-type Dest = 'predictor' | 'career' | 'lms' | 'counselling' | 'assistant' | 'tracker';
+type Dest = 'predictor' | 'career' | 'lms' | 'counselling' | 'assistant' | 'tracker' | 'habitsFocus';
 
 function FeatureCard({
   onClick,
@@ -69,6 +69,13 @@ export default function StudentHome({ onNavigate }: { onNavigate: (view: Dest) =
           title="Learning Hub"
           description="Live classes, notes, videos, PYQs and your doubts thread."
           dot={hasLmsUpdates}
+        />
+        <FeatureCard
+          onClick={() => onNavigate('habitsFocus')}
+          icon={<Flame className="w-6 h-6 text-clay-500" />}
+          badgeClass="bg-clay-50"
+          title="Habits & Focus"
+          description="Build daily discipline with identity habits and a multi-mode focus timer."
         />
         <FeatureCard
           onClick={() => onNavigate('assistant')}

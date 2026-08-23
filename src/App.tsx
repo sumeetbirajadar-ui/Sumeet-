@@ -60,12 +60,13 @@ import {
 } from 'lucide-react';
 import Counselling from './pages/Counselling';
 import AiAssistant from './pages/AiAssistant';
+import SyllabusTracker from './pages/SyllabusTracker';
 import PomodoroTimer from './components/PomodoroTimer';
 import { latestActivityAt } from './lib/lms';
 import { getLmsLastSeen, markLmsSeen, getOrCreateStudentId } from './lib/studentIdentity';
 
 type Role = 'admin' | 'student';
-type View = 'home' | 'routine' | 'planner' | 'weekly' | 'predictor' | 'career' | 'admin' | 'lms' | 'counselling' | 'assistant';
+type View = 'home' | 'routine' | 'planner' | 'weekly' | 'predictor' | 'career' | 'admin' | 'lms' | 'counselling' | 'assistant' | 'tracker';
 
 const iconMap: Record<string, React.ReactNode> = {
   Sun: <Sun className="w-5 h-5" />,
@@ -784,6 +785,7 @@ export default function App() {
             {effectiveView === 'lms' && <StudentLMS />}
             {effectiveView === 'counselling' && <Counselling />}
             {effectiveView === 'assistant' && <AiAssistant />}
+            {effectiveView === 'tracker' && <SyllabusTracker />}
           </motion.div>
         </AnimatePresence>
       </div>

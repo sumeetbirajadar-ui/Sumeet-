@@ -1,10 +1,11 @@
 import React from 'react';
-import { Megaphone, GraduationCap, Compass, Video, ClipboardCheck, Sparkles, MessageSquareText } from 'lucide-react';
+import { Megaphone, GraduationCap, Compass, Video, ClipboardCheck, Sparkles, MessageSquareText, BookOpenCheck } from 'lucide-react';
 import { listPublished } from '../lib/announcements';
 import { latestActivityAt } from '../lib/lms';
-import { getLmsLastSeen } from '../lib/studentIdentity';
+import { getLmsLastSeen, getOrCreateStudentId } from '../lib/studentIdentity';
+import { examProgressSummary } from '../lib/syllabusTracker';
 
-type Dest = 'predictor' | 'career' | 'lms' | 'counselling' | 'assistant';
+type Dest = 'predictor' | 'career' | 'lms' | 'counselling' | 'assistant' | 'tracker';
 
 function FeatureCard({
   onClick,
@@ -37,6 +38,7 @@ function FeatureCard({
 export default function StudentHome({ onNavigate }: { onNavigate: (view: Dest) => void }) {
   const announcements = listPublished();
   const hasLmsUpdates = latestActivityAt() > getLmsLastSeen();
+  const syllabusPct = examProgressSummary(getOrCreateStudentId())[0]?.avgCompletionPct ?? 0;
 
   return (
     <div className="max-w-3xl mx-auto py-8 px-4 space-y-8">
@@ -53,6 +55,13 @@ export default function StudentHome({ onNavigate }: { onNavigate: (view: Dest) =
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <FeatureCard
+          onClick={() => onNavigate('tracker')}
+          icon={<BookOpenCheck className="w-6 h-6 text-sage-600" />}
+          badgeClass="bg-sage-50"
+          title="Syllabus Tracker"
+          description={`${syllabusPct}% complete — one chapter tracked once, counts toward KCET, NEET and JEE.`}
+        />
         <FeatureCard
           onClick={() => onNavigate('lms')}
           icon={<Video className="w-6 h-6 text-gold-600" />}

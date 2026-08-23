@@ -11,6 +11,7 @@ interface ChatMessage {
   role: 'user' | 'assistant';
   text: string;
   sources?: GroundingSource[];
+  groundingSkipped?: boolean;
 }
 
 const SYSTEM_INSTRUCTION = `You are a friendly, precise assistant inside a Karnataka student-prep app for KCET, NEET and JEE. You help with:
@@ -30,20 +31,33 @@ const SUGGESTIONS = [
 // process.env.GEMINI_API_KEY is statically replaced at build time (see vite.config.ts).
 const API_KEY: string | undefined = (typeof process !== 'undefined' && (process as any).env?.GEMINI_API_KEY) || undefined;
 
-let chatSingleton: any = null;
+const MODEL = 'gemini-3.6-flash';
 
-async function getChat() {
-  if (chatSingleton) return chatSingleton;
+let clientSingleton: any = null;
+
+async function getClient() {
+  if (clientSingleton) return clientSingleton;
   const { GoogleGenAI } = await import('@google/genai');
-  const ai = new GoogleGenAI({ apiKey: API_KEY });
-  chatSingleton = ai.chats.create({
-    model: 'gemini-2.0-flash',
+  clientSingleton = new GoogleGenAI({ apiKey: API_KEY });
+  return clientSingleton;
+}
+
+function isQuotaError(e: any): boolean {
+  const msg = String(e?.message || e);
+  return msg.includes('RESOURCE_EXHAUSTED') || msg.includes('429') || msg.toLowerCase().includes('quota');
+}
+
+/** Calls the model once, optionally with Google Search grounding. */
+async function callModel(contents: any[], useGrounding: boolean) {
+  const ai = await getClient();
+  return ai.models.generateContent({
+    model: MODEL,
+    contents,
     config: {
       systemInstruction: SYSTEM_INSTRUCTION,
-      tools: [{ googleSearch: {} }],
+      ...(useGrounding ? { tools: [{ googleSearch: {} }] } : {}),
     },
   });
-  return chatSingleton;
 }
 
 export default function AiAssistant() {
@@ -62,18 +76,32 @@ export default function AiAssistant() {
     if (!trimmed || loading) return;
     setError('');
     setInput('');
+    const history = messages.map((m) => ({
+      role: m.role === 'user' ? 'user' : 'model',
+      parts: [{ text: m.text }],
+    }));
+    const contents = [...history, { role: 'user', parts: [{ text: trimmed }] }];
     setMessages((m) => [...m, { id: `u_${Date.now()}`, role: 'user', text: trimmed }]);
     setLoading(true);
     try {
-      const chat = await getChat();
-      const response = await chat.sendMessage({ message: trimmed });
+      let response;
+      let groundingSkipped = false;
+      try {
+        response = await callModel(contents, true);
+      } catch (groundedError) {
+        if (!isQuotaError(groundedError)) throw groundedError;
+        // Search grounding hit a quota/billing limit — fall back to an ungrounded answer
+        // rather than failing outright.
+        groundingSkipped = true;
+        response = await callModel(contents, false);
+      }
       const sources: GroundingSource[] =
         response.candidates?.[0]?.groundingMetadata?.groundingChunks
           ?.map((c: any) => c.web && { title: c.web.title || c.web.uri, uri: c.web.uri })
           .filter(Boolean) || [];
       setMessages((m) => [
         ...m,
-        { id: `a_${Date.now()}`, role: 'assistant', text: response.text || '(No response text)', sources },
+        { id: `a_${Date.now()}`, role: 'assistant', text: response.text || '(No response text)', sources, groundingSkipped },
       ]);
     } catch (e: any) {
       setError(e?.message || 'Something went wrong reaching the AI assistant.');
@@ -131,6 +159,11 @@ export default function AiAssistant() {
               }`}
             >
               {m.text}
+              {m.groundingSkipped && (
+                <p className="mt-2 text-[11px] text-clay-500 italic">
+                  Answered without live search — today's grounding limit was reached.
+                </p>
+              )}
               {m.sources && m.sources.length > 0 && (
                 <div className="mt-3 pt-3 border-t border-ink-100 space-y-1">
                   <p className="text-[10px] font-bold uppercase tracking-wider text-ink-400">Sources</p>

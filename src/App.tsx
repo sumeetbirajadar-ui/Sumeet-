@@ -64,12 +64,13 @@ import SyllabusTracker from './pages/SyllabusTracker';
 import HabitsFocus from './pages/HabitsFocus';
 import Performance from './pages/Performance';
 import TargetsGoals from './pages/TargetsGoals';
+import WellbeingCare from './pages/WellbeingCare';
 import PomodoroTimer from './components/PomodoroTimer';
 import { latestActivityAt } from './lib/lms';
 import { getLmsLastSeen, markLmsSeen, getOrCreateStudentId } from './lib/studentIdentity';
 
 type Role = 'admin' | 'student';
-type View = 'home' | 'routine' | 'planner' | 'weekly' | 'predictor' | 'career' | 'admin' | 'lms' | 'counselling' | 'assistant' | 'tracker' | 'habitsFocus' | 'performance' | 'targetsGoals';
+type View = 'home' | 'routine' | 'planner' | 'weekly' | 'predictor' | 'career' | 'admin' | 'lms' | 'counselling' | 'assistant' | 'tracker' | 'habitsFocus' | 'performance' | 'targetsGoals' | 'wellbeingCare';
 
 const iconMap: Record<string, React.ReactNode> = {
   Sun: <Sun className="w-5 h-5" />,
@@ -792,6 +793,7 @@ export default function App() {
             {effectiveView === 'habitsFocus' && <HabitsFocus />}
             {effectiveView === 'performance' && <Performance />}
             {effectiveView === 'targetsGoals' && <TargetsGoals />}
+            {effectiveView === 'wellbeingCare' && <WellbeingCare />}
           </motion.div>
         </AnimatePresence>
       </div>

@@ -1,11 +1,11 @@
 import React from 'react';
-import { Megaphone, GraduationCap, Compass, Video, ClipboardCheck, Sparkles, MessageSquareText, BookOpenCheck, Flame, Target } from 'lucide-react';
+import { Megaphone, GraduationCap, Compass, Video, ClipboardCheck, Sparkles, MessageSquareText, BookOpenCheck, Flame, Target, Flag } from 'lucide-react';
 import { listPublished } from '../lib/announcements';
 import { latestActivityAt } from '../lib/lms';
 import { getLmsLastSeen, getOrCreateStudentId } from '../lib/studentIdentity';
 import { examProgressSummary } from '../lib/syllabusTracker';
 
-type Dest = 'predictor' | 'career' | 'lms' | 'counselling' | 'assistant' | 'tracker' | 'habitsFocus' | 'performance';
+type Dest = 'predictor' | 'career' | 'lms' | 'counselling' | 'assistant' | 'tracker' | 'habitsFocus' | 'performance' | 'targetsGoals';
 
 function FeatureCard({
   onClick,
@@ -83,6 +83,13 @@ export default function StudentHome({ onNavigate }: { onNavigate: (view: Dest) =
           badgeClass="bg-gold-50"
           title="Performance"
           description="Log mock tests and mistakes — see your trend and weakest chapters."
+        />
+        <FeatureCard
+          onClick={() => onNavigate('targetsGoals')}
+          icon={<Flag className="w-6 h-6 text-sage-600" />}
+          badgeClass="bg-sage-50"
+          title="Targets & Goals"
+          description="Set weekly and monthly targets, and keep your dream board in view."
         />
         <FeatureCard
           onClick={() => onNavigate('assistant')}

@@ -63,12 +63,13 @@ import AiAssistant from './pages/AiAssistant';
 import SyllabusTracker from './pages/SyllabusTracker';
 import HabitsFocus from './pages/HabitsFocus';
 import Performance from './pages/Performance';
+import TargetsGoals from './pages/TargetsGoals';
 import PomodoroTimer from './components/PomodoroTimer';
 import { latestActivityAt } from './lib/lms';
 import { getLmsLastSeen, markLmsSeen, getOrCreateStudentId } from './lib/studentIdentity';
 
 type Role = 'admin' | 'student';
-type View = 'home' | 'routine' | 'planner' | 'weekly' | 'predictor' | 'career' | 'admin' | 'lms' | 'counselling' | 'assistant' | 'tracker' | 'habitsFocus' | 'performance';
+type View = 'home' | 'routine' | 'planner' | 'weekly' | 'predictor' | 'career' | 'admin' | 'lms' | 'counselling' | 'assistant' | 'tracker' | 'habitsFocus' | 'performance' | 'targetsGoals';
 
 const iconMap: Record<string, React.ReactNode> = {
   Sun: <Sun className="w-5 h-5" />,
@@ -790,6 +791,7 @@ export default function App() {
             {effectiveView === 'tracker' && <SyllabusTracker />}
             {effectiveView === 'habitsFocus' && <HabitsFocus />}
             {effectiveView === 'performance' && <Performance />}
+            {effectiveView === 'targetsGoals' && <TargetsGoals />}
           </motion.div>
         </AnimatePresence>
       </div>

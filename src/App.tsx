@@ -747,28 +747,31 @@ export default function App() {
   );
 
   return (
-    <div className="min-h-screen bg-stone-50 pb-24">
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={effectiveView}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.3 }}
-        >
-          {effectiveView === 'home' && <StudentHome onNavigate={(v) => setView(v)} />}
-          {effectiveView === 'routine' && <RoutineView />}
-          {effectiveView === 'planner' && <PlannerView />}
-          {effectiveView === 'weekly' && <WeeklyReviewView />}
-          {effectiveView === 'predictor' && <Predictor />}
-          {effectiveView === 'career' && <CareerGuidance />}
-          {effectiveView === 'admin' && <Admin />}
-          {effectiveView === 'lms' && <StudentLMS />}
-        </motion.div>
-      </AnimatePresence>
+    <div className="h-dvh flex flex-col bg-stone-50">
+      <div className="flex-1 min-h-0 overflow-y-auto">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={effectiveView}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            {effectiveView === 'home' && <StudentHome onNavigate={(v) => setView(v)} />}
+            {effectiveView === 'routine' && <RoutineView />}
+            {effectiveView === 'planner' && <PlannerView />}
+            {effectiveView === 'weekly' && <WeeklyReviewView />}
+            {effectiveView === 'predictor' && <Predictor />}
+            {effectiveView === 'career' && <CareerGuidance />}
+            {effectiveView === 'admin' && <Admin />}
+            {effectiveView === 'lms' && <StudentLMS />}
+          </motion.div>
+        </AnimatePresence>
+      </div>
 
       {/* Navigation Bar */}
-      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 bg-stone-900/90 backdrop-blur-md text-white px-6 py-4 rounded-full shadow-2xl flex items-center gap-6 z-50 max-w-[95vw] overflow-x-auto">
+      <div className="shrink-0 flex justify-center pt-2 pb-6 px-4 bg-stone-50">
+      <div className="bg-stone-900/90 backdrop-blur-md text-white px-6 py-4 rounded-full shadow-2xl flex items-center gap-6 z-50 max-w-full overflow-x-auto">
         {role === 'admin' && (
           <>
             <button
@@ -855,6 +858,7 @@ export default function App() {
         >
           <Trash2 className="w-5 h-5" />
         </button>
+      </div>
       </div>
     </div>
   );

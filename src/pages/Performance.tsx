@@ -174,7 +174,7 @@ function MockTestsPanel() {
             <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="border-2 border-ink-200 rounded-2xl px-3 py-2 text-sm" />
           </div>
           <p className="text-xs text-ink-400">{scheme.note}</p>
-          <input value={testName} onChange={(e) => setTestName(e.target.value)} placeholder="Test name (e.g. Allen Test Series #4)" className="w-full border-2 border-ink-200 rounded-2xl px-3 py-2 text-sm" />
+          <input value={testName} onChange={(e) => setTestName(e.target.value)} placeholder="Test name (e.g. Weekly Mock Test #4)" className="w-full border-2 border-ink-200 rounded-2xl px-3 py-2 text-sm" />
           <div className="grid grid-cols-2 gap-2">
             <input
               type="number"

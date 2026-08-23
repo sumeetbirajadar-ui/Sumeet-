@@ -25,35 +25,107 @@ function save<T>(key: string, items: T[]) {
 }
 
 // ------------------------------------------------------- Document checklist --
+// Researched against KEA (KCET), MCC/NTA (NEET UG) and NTA (JEE Main) official
+// requirements. Application docs (needed to fill the online form) and
+// counselling docs (needed to carry in person for verification/seat
+// confirmation) are genuinely different lists, so they're kept separate.
 
-export const STANDARD_DOCUMENTS = [
-  'SSLC / 10th marks card',
-  '2nd PUC / 12th marks card',
-  'Study certificate (BEO/DDPI countersigned)',
-  'Category certificate (if applicable)',
-  'Income certificate (if applicable)',
-  'Fee payment receipt',
-  'KCET application printout',
-  'Passport-size photographs',
+export type DocumentCategory = 'kcetApplication' | 'kcetCounselling' | 'neetApplication' | 'neetCounselling' | 'jeeApplication';
+
+export const DOCUMENT_CATEGORIES: { key: DocumentCategory; label: string; hint: string }[] = [
+  { key: 'kcetApplication', label: 'KCET Application', hint: 'To fill the KEA online application form' },
+  { key: 'kcetCounselling', label: 'KCET Counselling', hint: 'To carry for document verification & seat allotment' },
+  { key: 'neetApplication', label: 'NEET Application', hint: 'To fill the NTA NEET (UG) online form' },
+  { key: 'neetCounselling', label: 'NEET Counselling', hint: 'For MCC / state counselling verification & admission' },
+  { key: 'jeeApplication', label: 'JEE Main Application', hint: 'To fill the NTA JEE Main online form' },
 ];
 
-function checklistKey(studentId: string) {
-  return `counselling_documents_v1_${studentId}`;
+export const DOCUMENTS_BY_CATEGORY: Record<DocumentCategory, string[]> = {
+  kcetApplication: [
+    'Aadhaar card (for Aadhaar-based verification)',
+    'SSLC / 10th marks card (date of birth & marks)',
+    '2nd PUC / 12th marks card (or admit card, if result awaited)',
+    'Recent passport-size photograph — JPG, white background, under 50 KB',
+    "Scanned signature — JPG, under 50 KB",
+    'Left thumb impression (scanned)',
+    "Parent/guardian's signature or thumb impression",
+    'Category/caste certificate with RD number (if claiming reservation)',
+    'Income certificate with RD number (if claiming reservation)',
+    'Rural study / Kannada medium (Gadinadu/Horanadu Kannadiga) certificate, if claiming that benefit',
+    'Active mobile number & email ID for OTP verification',
+  ],
+  kcetCounselling: [
+    'KCET admit card (hall ticket)',
+    'KCET rank card / scorecard',
+    'KCET application form printout',
+    'Aadhaar card',
+    'SSLC / 10th marks card & certificate',
+    '2nd PUC / 12th marks card & certificate',
+    '7-year study certificate (Karnataka domicile proof)',
+    'Transfer certificate (TC)',
+    'Caste certificate with RD number (if applicable)',
+    'Income certificate with RD number (if applicable)',
+    'Rural study / Kannada medium certificate, if claimed',
+    '6-8 passport-size photographs',
+    'Fee payment receipt / DD as instructed by KEA',
+    'Originals plus 2-3 self-attested photocopy sets of every document',
+  ],
+  neetApplication: [
+    'Aadhaar card (or other NTA-accepted photo ID)',
+    'Class 10 marksheet & certificate (date of birth proof)',
+    'Class 12 marksheet & certificate (or admit card, if appearing)',
+    'Recent passport-size photograph as per NTA size/format spec',
+    'Scanned signature as per NTA size/format spec',
+    'Left thumb impression (scanned)',
+    'Category certificate — SC/ST/OBC-NCL/EWS, if applicable',
+    'PwBD certificate, if applicable',
+    'Present & permanent address proof, merged into a single PDF',
+    'Nationality/citizenship proof, for NRI/OCI/foreign national candidates',
+  ],
+  neetCounselling: [
+    'NEET admit card',
+    'NEET UG scorecard / rank letter',
+    'Provisional seat allotment letter (MCC or state portal printout, current round only)',
+    'Class 10 marksheet & certificate',
+    'Class 12 marksheet & certificate',
+    'Category certificate — SC/ST/OBC-NCL/EWS, if applicable',
+    'Domicile / state-eligibility certificate, for state-quota seats',
+    'NRI/OCI sponsorship affidavit & supporting proof, if applicable',
+    'PwBD certificate, if applicable',
+    '6-8 passport-size photographs',
+    'Valid photo ID proof (Aadhaar/passport)',
+    'Migration certificate, if the admitting college requires it',
+    'Originals plus 3-5 self-attested photocopy sets of every document',
+  ],
+  jeeApplication: [
+    'Aadhaar card (or other NTA-accepted photo ID)',
+    'Class 10 marksheet & certificate (date of birth proof)',
+    'Class 12 marksheet & certificate (or admit card, if appearing)',
+    'Passport-size photograph — JPEG, 10-200 KB, white background, 80% face visible',
+    'Scanned signature — JPEG, 4-50 KB, 3.5cm x 1.5cm, on white paper',
+    'Category certificate — SC/ST/OBC-NCL/EWS, if applicable',
+    'PwD certificate, if applicable',
+    'Active mobile number & email ID for OTP verification',
+  ],
+};
+
+function checklistKey(studentId: string, category: DocumentCategory) {
+  return `counselling_documents_v2_${category}_${studentId}`;
 }
 
-export function getDocumentChecklist(studentId: string): Record<string, boolean> {
+export function getDocumentChecklist(studentId: string, category: DocumentCategory): Record<string, boolean> {
   try {
-    const raw = localStorage.getItem(checklistKey(studentId));
+    const raw = localStorage.getItem(checklistKey(studentId, category));
     return raw ? JSON.parse(raw) : {};
   } catch {
     return {};
   }
 }
 
-export function toggleDocument(studentId: string, doc: string) {
-  const checklist = getDocumentChecklist(studentId);
+export function toggleDocument(studentId: string, category: DocumentCategory, doc: string) {
+  const checklist = getDocumentChecklist(studentId, category);
   checklist[doc] = !checklist[doc];
-  localStorage.setItem(checklistKey(studentId), JSON.stringify(checklist));
+  localStorage.setItem(checklistKey(studentId, category), JSON.stringify(checklist));
   return checklist;
 }
 

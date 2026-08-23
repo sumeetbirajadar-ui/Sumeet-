@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { ClipboardCheck, CalendarClock, ListChecks, Plus, Trash2, AlertTriangle } from 'lucide-react';
 import { EXAM_TRACKS, ExamTrack } from '../lib/lms';
 import {
-  STANDARD_DOCUMENTS,
+  DOCUMENT_CATEGORIES,
+  DOCUMENTS_BY_CATEGORY,
+  DocumentCategory,
   getDocumentChecklist,
   toggleDocument,
   TimelineEvent,
@@ -23,19 +25,36 @@ function useForceUpdate() {
 
 function DocumentsPanel({ studentId }: { studentId: string }) {
   const forceUpdate = useForceUpdate();
-  const checklist = getDocumentChecklist(studentId);
-  const doneCount = STANDARD_DOCUMENTS.filter((d) => checklist[d]).length;
+  const [category, setCategory] = useState<DocumentCategory>('kcetApplication');
+  const checklist = getDocumentChecklist(studentId, category);
+  const docs = DOCUMENTS_BY_CATEGORY[category];
+  const doneCount = docs.filter((d) => checklist[d]).length;
+  const activeMeta = DOCUMENT_CATEGORIES.find((c) => c.key === category)!;
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
+      <div className="flex gap-2 flex-wrap justify-center">
+        {DOCUMENT_CATEGORIES.map((c) => (
+          <button
+            key={c.key}
+            onClick={() => setCategory(c.key)}
+            className={`px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider ${
+              category === c.key ? 'bg-ink-800 text-white' : 'bg-ink-100 text-ink-500'
+            }`}
+          >
+            {c.label}
+          </button>
+        ))}
+      </div>
       <p className="text-sm text-ink-500 text-center">
-        <strong className="text-ink-800">{doneCount}</strong> of {STANDARD_DOCUMENTS.length} ready
+        <strong className="text-ink-800">{doneCount}</strong> of {docs.length} ready
+        <span className="block text-xs text-ink-400 mt-0.5">{activeMeta.hint}</span>
       </p>
-      {STANDARD_DOCUMENTS.map((doc) => (
+      {docs.map((doc) => (
         <button
           key={doc}
           onClick={() => {
-            toggleDocument(studentId, doc);
+            toggleDocument(studentId, category, doc);
             forceUpdate();
           }}
           className="w-full flex items-center gap-3 bg-white border-2 border-ink-200 rounded-3xl px-4 py-3 text-left hover:border-gold-300 transition-all"

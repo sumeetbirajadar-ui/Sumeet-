@@ -60,6 +60,7 @@ export default function ReportsPage() {
 
       <div className="report-print space-y-4">
         <div className="text-center mb-2">
+          <img src="/branding/science-monk-logo.png" alt="Science Monk Academy" className="w-12 h-12 rounded-full object-cover mx-auto mb-2" />
           <h2 className="text-2xl font-bold font-display">
             {studentName}'s {period === 'week' ? 'Weekly' : 'Monthly'} Report
           </h2>

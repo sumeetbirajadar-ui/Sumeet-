@@ -82,9 +82,12 @@ export default function StudentHome({ onNavigate }: { onNavigate: (view: Dest) =
         <div className="absolute bottom-0 right-16 w-16 h-16 rounded-full bg-sage-400/20" />
         <div className="relative">
           <div className="flex items-start justify-between gap-4 mb-4">
-            <span className="inline-flex items-center gap-1.5 bg-white/10 text-gold-300 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">
-              <Sparkles className="w-3.5 h-3.5" /> KCET · NEET · JEE
-            </span>
+            <div className="flex items-center gap-2">
+              <img src="/branding/science-monk-logo.png" alt="Science Monk Academy" className="w-8 h-8 rounded-full object-cover shrink-0" />
+              <span className="inline-flex items-center gap-1.5 bg-white/10 text-gold-300 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">
+                <Sparkles className="w-3.5 h-3.5" /> KCET · NEET · JEE
+              </span>
+            </div>
             <button onClick={() => onNavigate('reports')} className="flex items-center gap-2 text-left">
               <PrepScoreRing score={score} />
               <span className="text-[10px] uppercase tracking-widest text-ink-300 hidden sm:block">Prep<br />Score</span>

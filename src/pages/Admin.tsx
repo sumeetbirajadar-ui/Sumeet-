@@ -850,6 +850,7 @@ export default function Admin() {
   return (
     <div className="max-w-5xl mx-auto py-8 px-4">
       <header className="text-center mb-8">
+        <img src="/branding/science-monk-logo.png" alt="Science Monk Academy" className="w-14 h-14 rounded-full object-cover mx-auto mb-3" />
         <h1 className="text-3xl font-bold tracking-tight font-display mb-2 flex items-center justify-center gap-2">
           <ShieldCheck className="w-7 h-7 text-gold-500" /> Admin
         </h1>

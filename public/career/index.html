@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#3C5066" />
+<title>SSBPUC · Career Compass</title>
+<style>
+/* =========================================================================
+   SSBPUC Career Compass — Parisian editorial design
+   Cream · Champagne · Sage · Powder Blue · Aubergine · No red, no burgundy
+   ========================================================================= */
+@font-face { font-family:'Lora'; src:url('Lora.ttf'); font-weight:400; font-display:swap; }
+@font-face { font-family:'Lora'; src:url('Lora-Italic.ttf'); font-weight:400; font-style:italic; font-display:swap; }
+@font-face { font-family:'Poppins'; src:url('Poppins-Light.ttf'); font-weight:300; font-display:swap; }
+@font-face { font-family:'Poppins'; src:url('Poppins-Regular.ttf'); font-weight:400; font-display:swap; }
+@font-face { font-family:'Poppins'; src:url('Poppins-Medium.ttf'); font-weight:500; font-display:swap; }
+@font-face { font-family:'Poppins'; src:url('Poppins-Bold.ttf'); font-weight:700; font-display:swap; }
+
+:root {
+  /* The Paris palette */
+  --cream:        #F5EFE5;
+  --ivory:        #FBF8F2;
+  --paper:        #FFFFFF;
+  --cafe:         #2A2520;
+  --cafe-soft:    #4A453E;
+  --taupe:        #8B7F73;
+  --linen:        #E8E0D2;
+  --warm-line:    #DCD3C2;
+  --gold:         #B8946B;
+  --gold-deep:    #8B6914;
+  --gold-soft:    #E0C896;
+
+  /* Branch signature colours */
+  --c-basic-l:    #B5C5D6;  --c-basic-d:    #3C5066;   /* Powder Blue */
+  --c-medical-l: #B5C5A8;   --c-medical-d: #4A6342;   /* Sage Green */
+  --c-engg-l:    #6B7A8B;   --c-engg-d:    #2C3340;   /* Slate Charcoal */
+  --c-comm-l:    #D6BB8E;   --c-comm-d:    #7A5A1A;   /* Champagne Gold */
+  --c-design-l:  #C9B89A;   --c-design-d:  #6B5A3C;   /* Almond Beige */
+  --c-law-l:     #6B7896;   --c-law-d:     #2C3855;   /* Dusty Navy */
+  --c-perf-l:    #A088A0;   --c-perf-d:    #4A3C50;   /* Soft Plum */
+  --c-hotel-l:   #A88E5A;   --c-hotel-d:   #5C4D2C;   /* Bronze Olive */
+  --c-tourism-l: #8B9D9D;   --c-tourism-d: #3C5454;   /* Dusty Teal */
+  --c-foreign-l: #4A5573;   --c-foreign-d: #1A1F33;   /* Deep Indigo */
+  --c-govt-l:    #8B8B5C;   --c-govt-d:    #4A4A2C;   /* Olive Sage */
+
+  --radius:      18px;
+  --radius-sm:   12px;
+  --radius-lg:   24px;
+  --shadow-sm:   0 2px 6px rgba(42,37,32,0.06), 0 1px 2px rgba(42,37,32,0.04);
+  --shadow:      0 8px 24px rgba(42,37,32,0.10), 0 2px 6px rgba(42,37,32,0.05);
+  --shadow-lg:   0 16px 48px rgba(42,37,32,0.14), 0 4px 12px rgba(42,37,32,0.06);
+}
+
+* { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+html { font-size:16px; -webkit-text-size-adjust:100%; }
+body {
+  font-family:'Poppins', system-ui, sans-serif;
+  background: var(--cream);
+  color: var(--cafe);
+  line-height: 1.5;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+a { color:inherit; text-decoration:none; }
+button { font-family:inherit; cursor:pointer; border:none; background:none; }
+img { display:block; max-width:100%; }
+
+/* ===== App shell ===== */
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  background: var(--cream);
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 24px;
+  box-shadow: 0 0 80px rgba(42,37,32,0.06);
+}
+
+/* ===== Top bar ===== */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(245,239,229,0.92);
+  backdrop-filter: saturate(150%) blur(16px);
+  -webkit-backdrop-filter: saturate(150%) blur(16px);
+  border-bottom: 1px solid var(--warm-line);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+}
+.topbar .back {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: rgba(42,37,32,0.06);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  color: var(--cafe);
+  transition: background .15s ease, transform .12s ease;
+}
+.topbar .back:active { background: rgba(42,37,32,0.12); transform: scale(0.94); }
+.topbar.has-back .back { display: flex; }
+
+.topbar .brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+.topbar .brand img {
+  width: 32px; height: 32px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.topbar .brand .meta {
+  flex: 1;
+  min-width: 0;
+}
+.topbar .brand .meta h1 {
+  font-family: 'Lora', serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--cafe);
+  line-height: 1.1;
+  letter-spacing: 0.2px;
+}
+.topbar .brand .meta small {
+  display: block;
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--taupe);
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+/* ===== Views ===== */
+.view { display:none; padding: 0 20px; }
+.view.active { display: block; animation: fadeUp .35s cubic-bezier(.2,.7,.3,1); }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ====================================================================
+   HOME
+   ==================================================================== */
+
+/* ----- Editorial hero ----- */
+.hero {
+  margin: 22px -20px 26px;
+  padding: 0 26px;
+  position: relative;
+}
+.hero .stamp {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  font-weight: 600;
+  padding: 4px 11px;
+  border: 1px solid var(--gold);
+  border-radius: 14px;
+  margin-bottom: 18px;
+}
+.hero .greeting {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--taupe);
+  margin-bottom: 4px;
+}
+.hero h2 {
+  font-family: 'Lora', serif;
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 1.05;
+  color: var(--cafe);
+  letter-spacing: -0.8px;
+  margin-bottom: 14px;
+}
+.hero h2 em {
+  font-style: italic;
+  color: var(--gold-deep);
+}
+.hero .lede {
+  font-size: 13.5px;
+  color: var(--cafe-soft);
+  line-height: 1.55;
+  margin-bottom: 22px;
+  max-width: 340px;
+}
+.hero-quote {
+  position: relative;
+  padding: 16px 18px 16px 32px;
+  background: var(--ivory);
+  border-radius: var(--radius);
+  border: 1px solid var(--warm-line);
+  font-style: italic;
+  font-family: 'Lora', serif;
+  font-size: 13.5px;
+  color: var(--cafe);
+  line-height: 1.5;
+  box-shadow: var(--shadow-sm);
+}
+.hero-quote::before {
+  content: '\201C';
+  position: absolute;
+  left: 12px; top: 8px;
+  font-family: 'Lora', serif;
+  font-size: 36px;
+  color: var(--gold);
+  line-height: 1;
+}
+.hero-quote .attr {
+  display: block;
+  margin-top: 8px;
+  font-style: normal;
+  font-family: 'Poppins', sans-serif;
+  font-size: 9.5px;
+  letter-spacing: 2.5px;
+  color: var(--gold-deep);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* ----- Daily card ----- */
+.daily-card {
+  margin: 0 0 28px;
+  background: linear-gradient(135deg, #FFF4DB 0%, #F3E4BB 100%);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid #E8D4A3;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+.daily-card::after {
+  content: '';
+  position: absolute;
+  top: -30px; right: -30px;
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(184,148,107,0.22), transparent 65%);
+}
+.daily-card .ic-wrap {
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(139,105,20,0.30);
+}
+.daily-card .ic-wrap svg { width: 22px; height: 22px; color: #FFF4DB; }
+.daily-card .body { flex: 1; min-width: 0; position: relative; z-index: 1; }
+.daily-card .label {
+  font-size: 9.5px;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  font-weight: 700;
+}
+.daily-card .heading {
+  font-family: 'Lora', serif;
+  font-size: 16px;
+  color: var(--cafe);
+  margin-top: 2px;
+  line-height: 1.2;
+  font-weight: 500;
+}
+.daily-card .arrow { color: var(--gold-deep); font-size: 22px; position: relative; z-index: 1; }
+
+/* ----- Section heading ----- */
+.section-h {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding: 8px 0 12px;
+  border-bottom: 1px solid var(--warm-line);
+  margin-bottom: 16px;
+}
+.section-h h3 {
+  font-family: 'Lora', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--cafe);
+  letter-spacing: -0.3px;
+}
+.section-h .meta {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--taupe);
+  font-weight: 500;
+}
+
+/* ----- Branch cards (magazine-style) ----- */
+.branches {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+.branch {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+  box-shadow: var(--shadow);
+  background: var(--paper);
+}
+.branch:active { transform: scale(0.97); box-shadow: var(--shadow-sm); }
+
+.branch .canvas {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 18%, rgba(255,255,255,0.32) 0%, transparent 55%),
+    linear-gradient(155deg, var(--bl) 0%, var(--bd) 100%);
+}
+.branch .illus {
+  position: absolute;
+  top: 14px; right: 12px;
+  width: 64px; height: 64px;
+  opacity: 0.32;
+  color: white;
+}
+.branch .illus svg { width: 100%; height: 100%; }
+
+.branch .num {
+  position: absolute;
+  top: 16px; left: 16px;
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: rgba(255,255,255,0.88);
+  letter-spacing: 0.5px;
+}
+.branch .num::before {
+  content: '';
+  display: inline-block;
+  width: 18px; height: 1px;
+  background: rgba(255,255,255,0.55);
+  vertical-align: middle;
+  margin-right: 7px;
+}
+
+.branch .text-block {
+  position: absolute;
+  left: 16px; right: 16px; bottom: 14px;
+  color: white;
+}
+.branch .group {
+  font-size: 9px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.78);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.branch .name {
+  font-family: 'Lora', serif;
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.4px;
+  margin-bottom: 6px;
+  color: white;
+}
+.branch .tag {
+  font-size: 10.5px;
+  font-style: italic;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 10px;
+  line-height: 1.3;
+  height: 26px;
+  overflow: hidden;
+}
+.branch .pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10.5px;
+  letter-spacing: 0.5px;
+  background: rgba(255,255,255,0.20);
+  border: 1px solid rgba(255,255,255,0.32);
+  padding: 4px 10px;
+  border-radius: 12px;
+  color: white;
+  font-weight: 500;
+  backdrop-filter: blur(8px);
+}
+.branch .pill .arr { font-size: 12px; }
+
+/* ----- Closing card ----- */
+.closing {
+  margin: 6px -20px 0;
+  padding: 26px 24px;
+  background: var(--paper);
+  border-top: 1px solid var(--warm-line);
+  border-bottom: 1px solid var(--warm-line);
+  text-align: center;
+}
+.closing .div {
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  margin-bottom: 14px;
+}
+.closing .div::before, .closing .div::after {
+  content: ''; flex: 0 0 30px; height: 1px; background: var(--gold);
+}
+.closing .div span {
+  font-family: 'Lora', serif; font-style: italic;
+  color: var(--gold-deep); font-size: 11px;
+  letter-spacing: 3px; text-transform: uppercase;
+}
+.closing .verse {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--cafe-soft);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.closing .attr {
+  font-size: 9.5px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--taupe);
+  font-weight: 500;
+}
+
+/* Bookmarks strip */
+.bookmarks {
+  margin: 22px 0;
+  padding: 14px 16px;
+  background: var(--paper);
+  border-radius: var(--radius);
+  border: 1px solid var(--warm-line);
+  box-shadow: var(--shadow-sm);
+}
+.bookmarks h4 {
+  font-family: 'Lora', serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--cafe);
+  margin-bottom: 8px;
+  display: flex; align-items: center; gap: 6px;
+}
+.bookmarks h4 .ic { color: var(--gold); }
+.bookmark-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.bm-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 11px;
+  background: var(--cream);
+  border: 1px solid var(--warm-line);
+  border-radius: 14px;
+  font-size: 11.5px;
+  color: var(--cafe);
+  font-weight: 500;
+}
+.bm-chip .star { color: var(--gold); font-size: 11px; }
+
+/* ====================================================================
+   BRANCH VIEW
+   ==================================================================== */
+.branch-cover {
+  margin: 0 -20px 22px;
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+}
+.branch-cover .canvas {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 70% 30%, rgba(255,255,255,0.18) 0%, transparent 55%),
+    linear-gradient(160deg, var(--bl) 0%, var(--bd) 100%);
+}
+.branch-cover .illus-bg {
+  position: absolute;
+  right: -30px; bottom: -30px;
+  width: 220px; height: 220px;
+  opacity: 0.16;
+  color: white;
+}
+.branch-cover .illus-bg svg { width: 100%; height: 100%; }
+.branch-cover .stack {
+  position: absolute;
+  left: 24px; bottom: 22px;
+  right: 24px;
+  color: white;
+  z-index: 1;
+}
+.branch-cover .group-no {
+  font-size: 10px;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.78);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.branch-cover .title {
+  font-family: 'Lora', serif;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+.branch-cover .desc {
+  font-size: 12.5px;
+  font-style: italic;
+  color: rgba(255,255,255,0.86);
+  line-height: 1.45;
+  max-width: 320px;
+  margin-bottom: 14px;
+}
+.branch-cover .stats {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.88);
+  font-weight: 600;
+  background: rgba(255,255,255,0.14);
+  padding: 6px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.18);
+  backdrop-filter: blur(6px);
+}
+
+.exams-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.exam-row {
+  background: var(--paper);
+  border-radius: var(--radius);
+  padding: 16px 14px 16px 16px;
+  border: 1px solid var(--warm-line);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+.exam-row:active { transform: scale(0.99); }
+.exam-row::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 14px; bottom: 14px;
+  width: 3px;
+  background: var(--bd);
+  border-radius: 0 2px 2px 0;
+}
+.exam-row .num-badge {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--bl), var(--bd));
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Lora', serif;
+  font-weight: 500;
+  font-size: 16px;
+  flex-shrink: 0;
+  box-shadow: 0 3px 8px rgba(42,37,32,0.16);
+}
+.exam-row .body { flex: 1; min-width: 0; }
+.exam-row .ex-name {
+  font-family: 'Lora', serif;
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--cafe);
+  line-height: 1.18;
+  letter-spacing: -0.2px;
+}
+.exam-row .ex-sub {
+  font-size: 11.5px;
+  color: var(--taupe);
+  margin-top: 3px;
+  line-height: 1.35;
+}
+.exam-row .ex-meta {
+  display: flex;
+  gap: 8px;
+  margin-top: 7px;
+}
+.exam-row .meta-chip {
+  font-size: 9.5px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--bd);
+  background: var(--cream);
+  padding: 3px 8px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+.exam-row .star-btn {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  color: var(--warm-line);
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: color .15s ease, background .15s ease, transform .12s ease;
+}
+.exam-row .star-btn.on { color: var(--gold); background: rgba(184,148,107,0.10); }
+.exam-row .star-btn:active { transform: scale(0.88); }
+
+.elig-note {
+  margin-top: 20px;
+  padding: 14px 16px;
+  background: var(--paper);
+  border-radius: var(--radius);
+  border: 1px solid var(--warm-line);
+  border-left: 3px solid var(--bd);
+  font-size: 12px;
+  color: var(--cafe-soft);
+  line-height: 1.5;
+  font-style: italic;
+  font-family: 'Lora', serif;
+}
+
+/* ====================================================================
+   DETAIL VIEW
+   ==================================================================== */
+.detail-cover {
+  margin: 0 -20px 22px;
+  position: relative;
+  padding: 24px 24px 26px;
+  overflow: hidden;
+}
+.detail-cover .canvas {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 80% 20%, rgba(255,255,255,0.22) 0%, transparent 55%),
+    linear-gradient(160deg, var(--bl) 0%, var(--bd) 100%);
+}
+.detail-cover .illus-bg {
+  position: absolute;
+  right: -40px; bottom: -50px;
+  width: 240px; height: 240px;
+  opacity: 0.14;
+  color: white;
+}
+.detail-cover .content {
+  position: relative;
+  z-index: 1;
+  color: white;
+}
+.detail-cover .crumb {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.detail-cover .num-line {
+  display: inline-block;
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: rgba(255,255,255,0.88);
+  margin-bottom: 12px;
+  padding: 3px 11px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 12px;
+}
+.detail-cover .ex-name {
+  font-family: 'Lora', serif;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.6px;
+  margin-bottom: 6px;
+}
+.detail-cover .ex-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.86);
+  font-style: italic;
+  line-height: 1.4;
+}
+.detail-cover .star-btn {
+  position: absolute;
+  top: 20px; right: 22px;
+  z-index: 2;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.22);
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  transition: all .15s ease;
+}
+.detail-cover .star-btn.on {
+  background: var(--gold-soft);
+  color: var(--gold-deep);
+  border-color: var(--gold);
+}
+
+/* speciality quote */
+.spec {
+  margin: 0 0 24px;
+  padding: 18px 20px 18px 24px;
+  background: var(--paper);
+  border-radius: var(--radius);
+  border: 1px solid var(--warm-line);
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--cafe);
+  line-height: 1.55;
+  position: relative;
+  box-shadow: var(--shadow-sm);
+}
+.spec::before {
+  content: '\201C';
+  font-size: 38px;
+  color: var(--gold);
+  position: absolute;
+  left: 10px; top: 4px;
+  line-height: 1;
+}
+
+/* info section */
+.info-section {
+  margin-bottom: 8px;
+}
+.info-section .lbl {
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  font-weight: 700;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.info-section .lbl::before {
+  content: '';
+  display: inline-block;
+  width: 20px; height: 1px;
+  background: var(--gold);
+}
+.info-section .val {
+  font-size: 14px;
+  color: var(--cafe);
+  line-height: 1.5;
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--warm-line);
+}
+.info-section:last-of-type .val { border-bottom: none; padding-bottom: 0; }
+
+/* Actions */
+.actions {
+  margin-top: 24px;
+}
+.actions h4 {
+  font-family: 'Lora', serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--cafe);
+  margin-bottom: 12px;
+  letter-spacing: -0.2px;
+  display: flex; align-items: baseline; gap: 12px;
+}
+.actions h4::after {
+  content: ''; flex: 1; height: 1px; background: var(--warm-line);
+}
+.btn-primary {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 18px;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--bl), var(--bd));
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 14px;
+  box-shadow: 0 6px 18px rgba(42,37,32,0.20);
+  text-align: left;
+  width: 100%;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.btn-primary:active { transform: scale(0.98); box-shadow: 0 3px 10px rgba(42,37,32,0.16); }
+.btn-primary .ic-circle {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.btn-primary .ic-circle svg { width: 18px; height: 18px; color: white; }
+.btn-primary .txt { flex: 1; line-height: 1.2; }
+.btn-primary .txt small {
+  display: block; font-weight: 400; font-size: 11.5px;
+  color: rgba(255,255,255,0.78); margin-top: 2px;
+}
+.btn-primary .arr { font-size: 18px; color: rgba(255,255,255,0.7); }
+
+.action-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.action-tile {
+  background: var(--paper);
+  border-radius: var(--radius);
+  padding: 16px 8px 14px;
+  text-align: center;
+  border: 1px solid var(--warm-line);
+  box-shadow: var(--shadow-sm);
+  transition: transform .12s ease, border-color .15s ease;
+}
+.action-tile:active { transform: scale(0.95); }
+.action-tile .ic-circle {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--cream);
+  margin: 0 auto 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--bd);
+}
+.action-tile .ic-circle svg { width: 22px; height: 22px; }
+.action-tile .lbl {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--cafe);
+  line-height: 1.15;
+}
+.action-tile .sub {
+  font-size: 10px;
+  color: var(--taupe);
+  margin-top: 2px;
+  font-weight: 400;
+}
+
+.btn-secondary {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--cafe);
+  font-size: 13.5px;
+  font-weight: 500;
+  border: 1px solid var(--warm-line);
+  box-shadow: var(--shadow-sm);
+  width: 100%;
+  text-align: left;
+  transition: transform .12s ease, border-color .15s ease;
+}
+.btn-secondary:active { transform: scale(0.99); }
+.btn-secondary .ic-circle {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--cream);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--bd);
+  flex-shrink: 0;
+}
+.btn-secondary .ic-circle svg { width: 18px; height: 18px; }
+.btn-secondary .txt { flex: 1; line-height: 1.2; }
+.btn-secondary .txt small {
+  display: block; font-weight: 400; font-size: 11px;
+  color: var(--taupe); margin-top: 2px;
+}
+.btn-secondary .arr { color: var(--taupe); font-size: 17px; }
+
+.detail-footnote {
+  margin-top: 22px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--taupe);
+  font-style: italic;
+  font-family: 'Lora', serif;
+}
+
+/* ====================================================================
+   UPDATES VIEW
+   ==================================================================== */
+.upd-cover {
+  margin: 0 -20px 22px;
+  padding: 28px 24px;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 70% 30%, rgba(255,255,255,0.20) 0%, transparent 60%),
+    linear-gradient(150deg, #C9A961 0%, #8B6914 100%);
+  color: white;
+}
+.upd-cover .ic-big {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.20);
+  border: 1px solid rgba(255,255,255,0.30);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 14px;
+}
+.upd-cover .ic-big svg { width: 28px; height: 28px; color: white; }
+.upd-cover h2 {
+  font-family: 'Lora', serif;
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.4px;
+  margin-bottom: 8px;
+}
+.upd-cover p {
+  font-size: 13px;
+  font-style: italic;
+  color: rgba(255,255,255,0.92);
+  max-width: 340px;
+  line-height: 1.5;
+}
+
+.upd-block {
+  background: var(--paper);
+  border-radius: var(--radius);
+  padding: 18px 16px 14px;
+  border: 1px solid var(--warm-line);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 16px;
+}
+.upd-block .head {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 4px;
+}
+.upd-block .head .lbl {
+  font-size: 11px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  font-weight: 700;
+}
+.upd-block .sub {
+  font-size: 11.5px;
+  color: var(--taupe);
+  margin-bottom: 12px;
+  font-style: italic;
+}
+.upd-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.upd-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 12px;
+  background: var(--cream);
+  border: 1px solid var(--warm-line);
+  border-radius: 18px;
+  font-size: 12px;
+  color: var(--cafe);
+  font-weight: 500;
+  transition: background .15s ease, border-color .15s ease;
+}
+.upd-chip:active { background: var(--linen); border-color: var(--taupe); }
+.upd-chip .arr { font-size: 11px; color: var(--gold-deep); }
+
+/* ====================================================================
+   Tablet
+   ==================================================================== */
+@media (min-width: 720px) {
+  .branches { grid-template-columns: 1fr 1fr 1fr; }
+  .action-grid { gap: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ===== Top bar ===== -->
+  <header class="topbar" id="topbar">
+    <button class="back" id="back-btn" aria-label="Back">←</button>
+    <div class="brand">
+      <img src="college_logo.png" alt="SSBPUC" />
+      <div class="meta">
+        <h1 id="topbar-title">Career Compass</h1>
+        <small id="topbar-sub">SSBPU SCIENCE COLLEGE</small>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Home view ===== -->
+  <main class="view active" id="view-home">
+    <section class="hero">
+      <div class="stamp" id="hero-date">Vendredi · 1er Juin 2026</div>
+      <p class="greeting">Bonjour, future scholar —</p>
+      <h2>Where will your <em>journey</em> begin?</h2>
+      <p class="lede">Eleven elegant paths · one hundred thirty-two examinations · a thoughtfully curated compass for the Class of 2026.</p>
+      <div class="hero-quote">
+        <span id="quote-text">—</span>
+        <span class="attr" id="quote-attr">—</span>
+      </div>
+    </section>
+
+    <a class="daily-card" href="#/updates" id="updates-cta">
+      <div class="ic-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
+          <path d="M10 21a2 2 0 0 0 4 0"/>
+        </svg>
+      </div>
+      <div class="body">
+        <div class="label">Aujourd'hui · Live updates</div>
+        <div class="heading">Today's exam notifications &amp; news</div>
+      </div>
+      <span class="arrow">›</span>
+    </a>
+
+    <div class="bookmarks" id="bookmarks-strip" style="display:none">
+      <h4><span class="ic">★</span> <span>Your Shortlist</span></h4>
+      <div class="bookmark-chips" id="bookmark-chips"></div>
+    </div>
+
+    <div class="section-h">
+      <h3>Choose Your Branch</h3>
+      <span class="meta">11 paths · 132 exams</span>
+    </div>
+
+    <div class="branches" id="branches-grid"></div>
+
+    <div class="closing">
+      <div class="div"><span>Une boussole</span></div>
+      <p class="verse">"The roots of education are bitter, but the fruit is sweet — choose your path with knowledge, walk it with grace."</p>
+      <p class="attr">— A Compass for the Class of 2026 —</p>
+    </div>
+  </main>
+
+  <!-- ===== Branch view ===== -->
+  <main class="view" id="view-branch">
+    <section class="branch-cover" id="branch-cover">
+      <div class="canvas"></div>
+      <div class="illus-bg" id="branch-illus-bg"></div>
+      <div class="stack">
+        <div class="group-no" id="branch-group-no">Groupe 01</div>
+        <h2 class="title" id="branch-title">—</h2>
+        <p class="desc" id="branch-desc">—</p>
+        <div class="stats" id="branch-stats">12 Examinations</div>
+      </div>
+    </section>
+    <div class="exams-list" id="exams-list"></div>
+    <div class="elig-note" id="branch-elig"></div>
+  </main>
+
+  <!-- ===== Detail view ===== -->
+  <main class="view" id="view-detail">
+    <section class="detail-cover" id="detail-cover">
+      <div class="canvas"></div>
+      <div class="illus-bg" id="detail-illus-bg"></div>
+      <button class="star-btn" id="detail-star">☆</button>
+      <div class="content">
+        <div class="crumb" id="detail-crumb">—</div>
+        <div class="num-line" id="detail-num">N° 01 of 12</div>
+        <h2 class="ex-name" id="detail-name">—</h2>
+        <p class="ex-sub" id="detail-sub">—</p>
+      </div>
+    </section>
+
+    <div class="spec" id="detail-spec">—</div>
+
+    <div id="detail-info"></div>
+
+    <div class="actions">
+      <h4>Take Action</h4>
+      <a class="btn-primary" id="btn-website" target="_blank" rel="noopener noreferrer">
+        <div class="ic-circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>
+          </svg>
+        </div>
+        <div class="txt">Visit Official Website<small id="btn-website-url"></small></div>
+        <span class="arr">›</span>
+      </a>
+
+      <h4>Explore on YouTube</h4>
+      <div class="action-grid" id="yt-grid"></div>
+
+      <a class="btn-secondary" id="btn-news" target="_blank" rel="noopener noreferrer">
+        <div class="ic-circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="5" width="18" height="14" rx="2"/>
+            <path d="M7 9h6M7 13h10M7 17h7"/>
+          </svg>
+        </div>
+        <div class="txt">Latest News &amp; Notifications<small>Live from Google News</small></div>
+        <span class="arr">›</span>
+      </a>
+    </div>
+
+    <p class="detail-footnote">Verify all dates &amp; details at the official exam portal.</p>
+  </main>
+
+  <!-- ===== Updates view ===== -->
+  <main class="view" id="view-updates">
+    <section class="upd-cover">
+      <div class="ic-big">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
+          <path d="M10 21a2 2 0 0 0 4 0"/>
+        </svg>
+      </div>
+      <h2>Today's Updates</h2>
+      <p>Tap any chip to see live notifications, news &amp; results — fresh from Google.</p>
+    </section>
+
+    <div class="upd-block">
+      <div class="head"><span class="lbl">⚡ National · Fastest Moving</span></div>
+      <div class="sub">Major nationwide entrances with frequent notifications</div>
+      <div class="upd-chips" id="upd-national"></div>
+    </div>
+
+    <div class="upd-block">
+      <div class="head"><span class="lbl">📅 By Career Path</span></div>
+      <div class="sub">News stream for each of the eleven groups</div>
+      <div class="upd-chips" id="upd-paths"></div>
+    </div>
+
+    <div class="upd-block">
+      <div class="head"><span class="lbl">📰 General Education News</span></div>
+      <div class="sub">Editorial coverage from leading Indian sources</div>
+      <div class="upd-chips" id="upd-general"></div>
+    </div>
+  </main>
+
+</div>
+
+<!-- ===== SVG illustration library ===== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Atom (Basic Sciences) -->
+    <symbol id="il-atom" viewBox="0 0 100 100">
+      <g fill="none" stroke="currentColor" stroke-width="1.6">
+        <circle cx="50" cy="50" r="6" fill="currentColor"/>
+        <ellipse cx="50" cy="50" rx="38" ry="14"/>
+        <ellipse cx="50" cy="50" rx="38" ry="14" transform="rotate(60 50 50)"/>
+        <ellipse cx="50" cy="50" rx="38" ry="14" transform="rotate(120 50 50)"/>
+      </g>
+    </symbol>
+    <!-- Leaf droplet (Medical) -->
+    <symbol id="il-medical" viewBox="0 0 100 100">
+      <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+        <path d="M50 14 Q72 36 72 60 Q72 80 50 86 Q28 80 28 60 Q28 36 50 14 Z"/>
+        <line x1="50" y1="22" x2="50" y2="78"/>
+        <line x1="36" y1="50" x2="64" y2="50"/>
+      </g>
+    </symbol>
+    <!-- Compass/blueprint (Engineering) -->
+    <symbol id="il-engg" viewBox="0 0 100 100">
+      <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+        <circle cx="50" cy="50" r="32"/>
+        <circle cx="50" cy="50" r="3" fill="currentColor"/>
+        <path d="M50 24 L52 50 L48 50 Z" fill="currentColor"/>
+        <path d="M50 76 L52 50 L48 50 Z" opacity=".5" fill="currentColor"/>
+        <line x1="18" y1="50" x2="26" y2="50"/>
+        <line x1="74" y1="50" x2="82" y2="50"/>
+        <line x1="50" y1="18" x2="50" y2="26"/>
+        <line x1="50" y1="74" x2="50" y2="82"/>
+      </g>
+    </symbol>
+    <!-- Coin / laurel (Commerce) -->
+    <symbol id="il-commerce" viewBox="0 0 100 100">
+      <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+        <circle cx="50" cy="50" r="26"/>
+        <text x="50" y="62" font-family="Lora,serif" font-style="italic" font-size="32" font-weight="500" text-anchor="middle" fill="currentColor">₹</text>
+        <path d="M14 70 Q26 84 50 84 Q74 84 86 70" opacity=".6"/>
+        <path d="M14 30 Q26 16 50 16 Q74 16 86 30" opacity=".6"/>
+      </g>
+    </symbol>
+    <!-- Pencil + palette (Design) -->
+    <symbol id="il-design" viewBox="0 0 100 100">
+      <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 56 Q20 36 40 24 Q60 16 76 30 Q88 42 80 58 Q72 70 56 66 Q48 64 50 56 Q52 50 46 50 L34 50 Q22 50 22 56 Z"/>
+        <circle cx="36" cy="38" r="3" fill="currentColor"/>
+        <circle cx="50" cy="30" r="3" fill="currentColor"/>
+        <circle cx="64" cy="36" r="3" fill="currentColor"/>
+        <circle cx="70" cy="50" r="3" fill="currentColor"/>
+        <path d="M30 84 L60 54 M60 54 L70 64" stroke-width="2"/>
+      </g>
+    </symbol>
+    <!-- Scales of justice (Law) -->
+    <symbol id="il-law" viewBox="0 0 100 100">
+      <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+        <line x1="50" y1="18" x2="50" y2="78"/>
+        <line x1="34" y1="78" x2="66" y2="78"/>
+        <line x1="20" y1="30" x2="80" y2="30"/>
+        <path d="M20 30 L12 50 L28 50 Z"/>
+        <path d="M80 30 L72 50 L88 50 Z"/>
+        <line x1="12" y1="50" x2="28" y2="50"/>
+        <line x1="72" y1="50" x2="88" y2="50"/>
+      </g>
+    </symbol>
+    <!-- Theatre mask (Performance Arts) -->
+    <symbol id="il-perf" viewBox="0 0 100 100">
+      <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 24 Q50 18 78 24 L74 60 Q70 84 50 84 Q30 84 26 60 Z"/>
+        <circle cx="38" cy="46" r="3" fill="currentColor"/>
+        <circle cx="62" cy="46" r="3" fill="currentColor"/>
+        <path d="M38 66 Q50 72 62 66"/>
+      </g>
+    </symbol>
+    <!-- Hotel (chef hat + utensils) -->
+    <symbol id="il-hotel" viewBox="0 0 100 100">
+      <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M26 50 Q18 50 18 38 Q18 26 30 28 Q34 18 50 18 Q66 18 70 28 Q82 26 82 38 Q82 50 74 50 L74 70 L26 70 Z"/>
+        <line x1="34" y1="70" x2="34" y2="80"/>
+        <line x1="50" y1="70" x2="50" y2="80"/>
+        <line x1="66" y1="70" x2="66" y2="80"/>
+      </g>
+    </symbol>
+    <!-- Mountain (Tourism) -->
+    <symbol id="il-tourism" viewBox="0 0 100 100">
+      <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 78 L34 38 L52 62 L66 44 L90 78 Z"/>
+        <circle cx="62" cy="24" r="6"/>
+        <path d="M34 38 L42 50" stroke-dasharray="3 3"/>
+      </g>
+    </symbol>
+    <!-- Globe with plane (Foreign) -->
+    <symbol id="il-foreign" viewBox="0 0 100 100">
+      <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+        <circle cx="50" cy="50" r="32"/>
+        <ellipse cx="50" cy="50" rx="14" ry="32"/>
+        <line x1="18" y1="50" x2="82" y2="50"/>
+        <path d="M30 26 L74 30 M26 70 L72 74" stroke-dasharray="3 3"/>
+      </g>
+    </symbol>
+    <!-- Pillar/government -->
+    <symbol id="il-govt" viewBox="0 0 100 100">
+      <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 30 L50 14 L90 30 Z"/>
+        <rect x="20" y="34" width="8" height="36"/>
+        <rect x="46" y="34" width="8" height="36"/>
+        <rect x="72" y="34" width="8" height="36"/>
+        <rect x="10" y="72" width="80" height="6"/>
+        <rect x="10" y="30" width="80" height="4"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<script src="data.js"></script>
+<script>
+/* ============================================================
+   SSBPUC Career Compass — Paris edition · Application logic
+   ============================================================ */
+
+const $ = id => document.getElementById(id);
+const e = (tag, attrs={}, ...kids) => {
+  const n = document.createElement(tag);
+  for (const k in attrs) {
+    if (k === 'class') n.className = attrs[k];
+    else if (k === 'html') n.innerHTML = attrs[k];
+    else if (k.startsWith('on')) n.addEventListener(k.slice(2), attrs[k]);
+    else if (k === 'style') {
+      for (const p in attrs[k]) {
+        if (p.startsWith('--')) n.style.setProperty(p, attrs[k][p]);
+        else n.style[p] = attrs[k][p];
+      }
+    }
+    else n.setAttribute(k, attrs[k]);
+  }
+  for (const kid of kids) {
+    if (kid == null) continue;
+    n.append(typeof kid === 'string' ? document.createTextNode(kid) : kid);
+  }
+  return n;
+};
+
+// Branch design tokens (matches CSS variables)
+const BRANCHES = {
+  basic:    { tagline:'Pure discovery awaits.',       group:'Discovery',    bl:'#B5C5D6', bd:'#3C5066', illus:'il-atom',     icon:'🔬' },
+  medical:  { tagline:'The art of healing.',          group:'Vocation',     bl:'#B5C5A8', bd:'#4A6342', illus:'il-medical',  icon:'🩺' },
+  engg:     { tagline:'Build what does not yet exist.',group:'Builder',      bl:'#6B7A8B', bd:'#2C3340', illus:'il-engg',     icon:'⚙️' },
+  commerce: { tagline:'Trade in ideas and value.',    group:'Mercantile',   bl:'#D6BB8E', bd:'#7A5A1A', illus:'il-commerce', icon:'📊' },
+  design:   { tagline:'Make the world more beautiful.',group:'Atelier',      bl:'#C9B89A', bd:'#6B5A3C', illus:'il-design',   icon:'🎨' },
+  law:      { tagline:'Justice well-pleaded.',        group:'Avocat',       bl:'#6B7896', bd:'#2C3855', illus:'il-law',      icon:'⚖️' },
+  perfarts: { tagline:'Where the curtain rises.',     group:'Stage',        bl:'#A088A0', bd:'#4A3C50', illus:'il-perf',     icon:'🎭' },
+  hotel:    { tagline:'Hospitality, perfected.',      group:'Maison',       bl:'#A88E5A', bd:'#5C4D2C', illus:'il-hotel',    icon:'🍽️' },
+  tourism:  { tagline:'Above the clouds and beyond.', group:'Voyage',       bl:'#8B9D9D', bd:'#3C5454', illus:'il-tourism',  icon:'🏔️' },
+  foreign:  { tagline:'A world unfolds.',             group:'Étranger',     bl:'#4A5573', bd:'#1A1F33', illus:'il-foreign',  icon:'🌍' },
+  govt:     { tagline:'Serve the republic.',          group:'République',   bl:'#8B8B5C', bd:'#4A4A2C', illus:'il-govt',     icon:'🏛️' },
+};
+
+const QUOTES = [
+  ["The future belongs to those who prepare for it today.", "Malcolm X"],
+  ["Choose a path with heart, and walk it with grace.", "Anonymous"],
+  ["Knowledge is power; information is liberating.", "Kofi Annan"],
+  ["The roots of education are bitter, the fruit sweet.", "Aristotle"],
+  ["You miss 100% of the shots you don't take.", "Wayne Gretzky"],
+  ["Arise, awake, and stop not till the goal is reached.", "Swami Vivekananda"],
+  ["Education is the most powerful weapon to change the world.", "Nelson Mandela"],
+  ["What we plant today, we harvest tomorrow.", "Sanskrit Proverb"],
+  ["Travel light, but pack curiosity.", "Le Petit Compass"],
+  ["The journey of a thousand miles begins beneath one's feet.", "Lao Tzu"],
+];
+
+function todayStr() {
+  const d = new Date();
+  return d.toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+}
+function dayOfYear() {
+  const d = new Date(); const start = new Date(d.getFullYear(), 0, 0);
+  return Math.floor((d - start) / 86400000);
+}
+
+// Bookmark store
+const BK_KEY = 'ssbpuc_paris_bookmarks';
+const Bookmarks = {
+  get() { try { return new Set(JSON.parse(localStorage.getItem(BK_KEY) || '[]')); } catch(e) { return new Set(); } },
+  has(id) { return this.get().has(id); },
+  toggle(id) {
+    const s = this.get();
+    s.has(id) ? s.delete(id) : s.add(id);
+    localStorage.setItem(BK_KEY, JSON.stringify([...s]));
+    return s.has(id);
+  },
+  clear() { localStorage.removeItem(BK_KEY); },
+  count() { return this.get().size; },
+};
+
+// URL helpers
+function ytSearch(query) {
+  return `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}&sp=CAMSAhAB`;
+}
+function gNewsSearch(query) {
+  return `https://news.google.com/search?q=${encodeURIComponent(query)}`;
+}
+function siteUrl(text) {
+  if (!text) return '';
+  return 'https://' + text.trim().replace(/^https?:\/\//, '');
+}
+function primaryInstitute(card) {
+  let text = card.institutes_text || '';
+  if (!text) for (const r of card.rows) {
+    if (/institute|school|college|board|force|scheme|conducting/i.test(r.label)) {
+      text = r.value; break;
+    }
+  }
+  let first = text.split('·')[0].split(',')[0].trim();
+  first = first.replace(/\(.*?\)/g, '').replace(/[—\-–].*$/, '').trim();
+  if (first.length > 60) first = first.slice(0, 60);
+  return first || card.name;
+}
+
+// ============= HOME =============
+function renderHome() {
+  $('hero-date').textContent = todayStr();
+  const q = QUOTES[dayOfYear() % QUOTES.length];
+  $('quote-text').textContent = q[0];
+  $('quote-attr').textContent = '— ' + q[1];
+
+  // Branch grid
+  const grid = $('branches-grid');
+  grid.innerHTML = '';
+  DATA.sections.forEach((s, i) => {
+    const b = BRANCHES[s.key];
+    const card = e('a', {
+      class: 'branch',
+      href: '#/s/' + s.key,
+      style: { '--bl': b.bl, '--bd': b.bd },
+    },
+      e('div', { class: 'canvas' }),
+      e('div', { class: 'illus', html: `<svg><use href="#${b.illus}"/></svg>` }),
+      e('div', { class: 'num' }, `N° ${String(i+1).padStart(2,'0')}`),
+      e('div', { class: 'text-block' },
+        e('div', { class: 'group' }, b.group),
+        e('div', { class: 'name' }, s.name),
+        e('div', { class: 'tag' }, b.tagline),
+        e('div', { class: 'pill' }, `${s.cards.length} exams`, e('span', { class: 'arr' }, '→')),
+      ),
+    );
+    grid.appendChild(card);
+  });
+
+  // Bookmarks
+  renderBookmarksStrip();
+}
+
+function renderBookmarksStrip() {
+  const bms = Bookmarks.get();
+  const strip = $('bookmarks-strip');
+  if (bms.size === 0) { strip.style.display = 'none'; return; }
+  strip.style.display = 'block';
+  const chips = $('bookmark-chips');
+  chips.innerHTML = '';
+  for (const id of bms) {
+    const [sk, n] = id.split(':');
+    const sec = DATA.sections.find(s => s.key === sk);
+    if (!sec) continue;
+    const card = sec.cards.find(c => c.n === parseInt(n));
+    if (!card) continue;
+    chips.appendChild(e('a', { class: 'bm-chip', href: `#/c/${sk}/${n}` },
+      e('span', { class: 'star' }, '★'),
+      e('span', {}, card.name)
+    ));
+  }
+}
+
+// ============= BRANCH =============
+function renderBranch(key) {
+  const s = DATA.sections.find(x => x.key === key);
+  if (!s) return;
+  const b = BRANCHES[key];
+  const idx = DATA.sections.findIndex(x => x.key === key);
+
+  document.documentElement.style.setProperty('--bl', b.bl);
+  document.documentElement.style.setProperty('--bd', b.bd);
+
+  // Cover
+  const cover = $('branch-cover');
+  cover.style.setProperty('--bl', b.bl);
+  cover.style.setProperty('--bd', b.bd);
+  $('branch-illus-bg').innerHTML = `<svg><use href="#${b.illus}"/></svg>`;
+  $('branch-group-no').textContent = `Groupe ${String(idx+1).padStart(2,'0')} · ${b.group}`;
+  $('branch-title').textContent = s.name;
+  $('branch-desc').textContent = b.tagline + ' ' + s.subtitle.split('—')[0].trim();
+  $('branch-stats').textContent = `${s.cards.length} Examinations`;
+
+  // List
+  const list = $('exams-list');
+  list.innerHTML = '';
+  s.cards.forEach(c => {
+    const id = `${key}:${c.n}`;
+    const isBM = Bookmarks.has(id);
+    const window = (c.rows.find(r => /registration|window/i.test(r.label)) || {}).value || '';
+    const shortWindow = window.split('·')[0].split('(')[0].trim().slice(0, 28);
+
+    const row = e('a', {
+      class: 'exam-row',
+      href: `#/c/${key}/${c.n}`,
+      style: { '--bl': b.bl, '--bd': b.bd },
+    },
+      e('div', { class: 'num-badge' }, String(c.n).padStart(2,'0')),
+      e('div', { class: 'body' },
+        e('div', { class: 'ex-name' }, c.name),
+        e('div', { class: 'ex-sub' }, c.sub),
+        shortWindow ? e('div', { class: 'ex-meta' },
+          e('div', { class: 'meta-chip' }, shortWindow)
+        ) : null,
+      ),
+      e('button', {
+        class: 'star-btn' + (isBM ? ' on' : ''),
+        onclick: ev => {
+          ev.preventDefault(); ev.stopPropagation();
+          const now = Bookmarks.toggle(id);
+          ev.currentTarget.classList.toggle('on', now);
+          ev.currentTarget.textContent = now ? '★' : '☆';
+        }
+      }, isBM ? '★' : '☆'),
+    );
+    list.appendChild(row);
+  });
+
+  // Eligibility
+  $('branch-elig').textContent = s.eligibility.replace(/\s*·\s*verify.*$/i, '');
+}
+
+// ============= DETAIL =============
+function renderDetail(key, n) {
+  const s = DATA.sections.find(x => x.key === key);
+  if (!s) return;
+  const card = s.cards.find(c => c.n === parseInt(n));
+  if (!card) return;
+  const b = BRANCHES[key];
+  const id = `${key}:${n}`;
+
+  const cover = $('detail-cover');
+  cover.style.setProperty('--bl', b.bl);
+  cover.style.setProperty('--bd', b.bd);
+  $('detail-illus-bg').innerHTML = `<svg><use href="#${b.illus}"/></svg>`;
+  document.documentElement.style.setProperty('--bl', b.bl);
+  document.documentElement.style.setProperty('--bd', b.bd);
+
+  $('detail-crumb').textContent = s.name + ' · ' + b.group;
+  $('detail-num').textContent = `N° ${String(card.n).padStart(2,'0')} of ${s.cards.length}`;
+  $('detail-name').textContent = card.name;
+  $('detail-sub').textContent = card.sub;
+
+  // Star
+  const star = $('detail-star');
+  const isBM = Bookmarks.has(id);
+  star.classList.toggle('on', isBM);
+  star.textContent = isBM ? '★' : '☆';
+  star.onclick = () => {
+    const now = Bookmarks.toggle(id);
+    star.classList.toggle('on', now);
+    star.textContent = now ? '★' : '☆';
+    renderBookmarksStrip();
+  };
+
+  // Speciality
+  $('detail-spec').textContent = card.spec;
+
+  // Info sections
+  const info = $('detail-info');
+  info.innerHTML = '';
+  card.rows.forEach(r => {
+    info.appendChild(e('div', { class: 'info-section' },
+      e('div', { class: 'lbl' }, r.label),
+      e('div', { class: 'val' }, r.value),
+    ));
+  });
+
+  // Website
+  const webBtn = $('btn-website');
+  const url = siteUrl(card.website);
+  if (url && card.website) {
+    webBtn.href = url;
+    webBtn.style.display = '';
+    webBtn.style.setProperty('--bl', b.bl);
+    webBtn.style.setProperty('--bd', b.bd);
+    $('btn-website-url').textContent = card.website;
+  } else {
+    webBtn.style.display = 'none';
+  }
+
+  // YouTube grid
+  const inst = primaryInstitute(card);
+  const yt = $('yt-grid');
+  yt.innerHTML = '';
+  const tiles = [
+    { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg>',
+      label: 'Campus Tour', sub: 'See the campus', q: inst + ' campus tour' },
+    { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 6 6 .9-4.5 4.3L18 20l-6-3-6 3 1.5-6.8L3 8.9 9 8z"/></svg>',
+      label: 'College Fest', sub: 'Festival highlights', q: inst + ' fest' },
+    { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4z" fill="currentColor"/></svg>',
+      label: 'Student Vlog', sub: 'Day in life', q: inst + ' student vlog day in life' },
+  ];
+  tiles.forEach(t => {
+    yt.appendChild(e('a', {
+      class: 'action-tile',
+      href: ytSearch(t.q),
+      target: '_blank', rel: 'noopener noreferrer',
+      style: { '--bd': b.bd, '--bl': b.bl },
+    },
+      e('div', { class: 'ic-circle', html: t.svg }),
+      e('div', { class: 'lbl' }, t.label),
+      e('div', { class: 'sub' }, t.sub),
+    ));
+  });
+
+  // News
+  $('btn-news').href = gNewsSearch(card.name + ' 2026 2027 notification updates India');
+}
+
+// ============= UPDATES =============
+function renderUpdates() {
+  const NAT = [
+    ['🎓 JEE Main', 'JEE Main 2027 notification dates'],
+    ['🩺 NEET-UG', 'NEET UG 2027 registration notification'],
+    ['⚖️ CLAT', 'CLAT 2027 application notification'],
+    ['📊 IPMAT', 'IPMAT IIM Indore 2027 application'],
+    ['🎨 NID DAT', 'NID DAT 2027 application notification'],
+    ['🍽️ NCHM JEE', 'NCHM JEE 2027 notification'],
+    ['🏛️ NDA UPSC', 'NDA 2027 notification UPSC'],
+    ['🌍 SAT', 'SAT 2026 2027 India dates'],
+    ['📐 BITSAT', 'BITSAT 2027 notification dates'],
+    ['🌐 CUET-UG', 'CUET UG 2027 notification dates'],
+    ['🛡️ Agniveer', 'Agniveer 2027 notification recruitment'],
+    ['🚆 RRB NTPC', 'RRB NTPC 2027 notification recruitment'],
+  ];
+  const fill = (id, list) => {
+    const c = $(id); c.innerHTML = '';
+    list.forEach(([lbl, q]) => c.appendChild(e('a', {
+      class: 'upd-chip', href: gNewsSearch(q), target: '_blank', rel: 'noopener noreferrer'
+    }, e('span', {}, lbl), e('span', { class: 'arr' }, '↗'))));
+  };
+  fill('upd-national', NAT);
+
+  const PATHS = DATA.sections.map(s => [
+    (BRANCHES[s.key].icon + ' ' + s.name),
+    s.name + ' entrance exam 2026 2027 notification India'
+  ]);
+  fill('upd-paths', PATHS);
+
+  const GEN = [
+    ['📰 Education News Today', 'site:thehindu.com education news today'],
+    ['📊 Exam Notifications', 'entrance exam notification today India'],
+    ['📋 Latest Results', 'entrance exam result 2026 2027'],
+    ['🔮 Karnataka Exam News', 'KCET COMEDK Karnataka 2027 news'],
+    ['💼 Career Counselling', 'career options after class 12 India'],
+    ['🎓 Scholarships Open', 'scholarship for class 12 students 2026 India'],
+  ];
+  fill('upd-general', GEN);
+}
+
+// ============= Routing =============
+function route() {
+  const h = location.hash || '#/home';
+  const parts = h.replace('#/', '').split('/');
+  const view = parts[0] || 'home';
+
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  const topbar = $('topbar');
+  topbar.classList.remove('has-back');
+  $('topbar-title').textContent = 'Career Compass';
+  $('topbar-sub').textContent = 'SSBPU SCIENCE COLLEGE';
+
+  if (view === 'home') {
+    $('view-home').classList.add('active');
+    renderHome();
+  } else if (view === 's') {
+    $('view-branch').classList.add('active');
+    topbar.classList.add('has-back');
+    const s = DATA.sections.find(x => x.key === parts[1]);
+    if (s) {
+      $('topbar-title').textContent = s.name;
+      $('topbar-sub').textContent = BRANCHES[s.key].group.toUpperCase() + ' GROUP';
+    }
+    renderBranch(parts[1]);
+  } else if (view === 'c') {
+    $('view-detail').classList.add('active');
+    topbar.classList.add('has-back');
+    const s = DATA.sections.find(x => x.key === parts[1]);
+    const card = s ? s.cards.find(c => c.n === parseInt(parts[2])) : null;
+    if (card) {
+      $('topbar-title').textContent = card.name;
+      $('topbar-sub').textContent = s.name.toUpperCase();
+    }
+    renderDetail(parts[1], parts[2]);
+  } else if (view === 'updates') {
+    $('view-updates').classList.add('active');
+    topbar.classList.add('has-back');
+    $('topbar-title').textContent = "Today's Updates";
+    $('topbar-sub').textContent = 'LIVE NOTIFICATIONS';
+    renderUpdates();
+  }
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+$('back-btn').addEventListener('click', () => {
+  const h = location.hash;
+  if (h.startsWith('#/c/')) {
+    const parts = h.replace('#/', '').split('/');
+    location.hash = '#/s/' + parts[1];
+  } else {
+    location.hash = '#/home';
+  }
+});
+
+window.addEventListener('hashchange', route);
+route();
+</script>
+
+</body>
+</html>

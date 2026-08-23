@@ -36,15 +36,23 @@ import {
   Star,
   BarChart3
 } from 'lucide-react';
-import { 
-  DailyData, 
+import {
+  DailyData,
   WeeklyReview,
   AppState,
-  INITIAL_ROUTINE_TASKS, 
-  EVENING_530_TASKS, 
-  EVENING_730_TASKS, 
-  WEEKLY_TASKS 
+  INITIAL_ROUTINE_TASKS,
+  EVENING_530_TASKS,
+  EVENING_730_TASKS,
+  WEEKLY_TASKS
 } from './types';
+import Predictor from './pages/Predictor';
+import CareerGuidance from './pages/CareerGuidance';
+import Admin from './pages/Admin';
+import StudentHome from './pages/StudentHome';
+import { GraduationCap as NavPredictorIcon, Compass as NavCareerIcon, ShieldCheck as NavAdminIcon, Home as NavHomeIcon } from 'lucide-react';
+
+type Role = 'admin' | 'student';
+type View = 'home' | 'routine' | 'planner' | 'weekly' | 'predictor' | 'career' | 'admin';
 
 const iconMap: Record<string, React.ReactNode> = {
   Sun: <Sun className="w-5 h-5" />,
@@ -68,7 +76,12 @@ export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return localStorage.getItem('is_authenticated') === 'true';
   });
-  const [view, setView] = useState<'routine' | 'planner' | 'weekly'>('routine');
+  const [role, setRole] = useState<Role>(() => {
+    return (localStorage.getItem('app_role') as Role) || 'student';
+  });
+  const [view, setView] = useState<View>(() => {
+    return ((localStorage.getItem('app_role') as Role) || 'student') === 'admin' ? 'routine' : 'home';
+  });
   const [arrivalPath, setArrivalPath] = useState<'530' | '730'>('530');
   const [currentDate, setCurrentDate] = useState(new Date().toISOString().split('T')[0]);
   
@@ -81,16 +94,18 @@ export default function App() {
     };
   });
 
-  const handleLogin = (success: boolean) => {
-    if (success) {
-      setIsAuthenticated(true);
-      localStorage.setItem('is_authenticated', 'true');
-    }
+  const handleLogin = (nextRole: Role) => {
+    setIsAuthenticated(true);
+    setRole(nextRole);
+    setView(nextRole === 'admin' ? 'routine' : 'home');
+    localStorage.setItem('is_authenticated', 'true');
+    localStorage.setItem('app_role', nextRole);
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
     localStorage.removeItem('is_authenticated');
+    localStorage.removeItem('app_role');
   };
 
   const getDayData = (date: string): DailyData => {
@@ -227,6 +242,9 @@ export default function App() {
   if (!isAuthenticated) {
     return <Login onLogin={handleLogin} />;
   }
+
+  const adminOnlyViews: View[] = ['routine', 'planner', 'weekly', 'admin'];
+  const effectiveView: View = role === 'student' && adminOnlyViews.includes(view) ? 'home' : view;
 
   const RoutineView = () => (
     <div className="max-w-2xl mx-auto py-8 px-4">
@@ -717,68 +735,96 @@ export default function App() {
   return (
     <div className="min-h-screen bg-stone-50 pb-24">
       <AnimatePresence mode="wait">
-        {view === 'routine' ? (
-          <motion.div
-            key="routine"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            <RoutineView />
-          </motion.div>
-        ) : view === 'planner' ? (
-          <motion.div
-            key="planner"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            <PlannerView />
-          </motion.div>
-        ) : (
-          <motion.div
-            key="weekly"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            <WeeklyReviewView />
-          </motion.div>
-        )}
+        <motion.div
+          key={effectiveView}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3 }}
+        >
+          {effectiveView === 'home' && <StudentHome onNavigate={(v) => setView(v)} />}
+          {effectiveView === 'routine' && <RoutineView />}
+          {effectiveView === 'planner' && <PlannerView />}
+          {effectiveView === 'weekly' && <WeeklyReviewView />}
+          {effectiveView === 'predictor' && <Predictor />}
+          {effectiveView === 'career' && <CareerGuidance />}
+          {effectiveView === 'admin' && <Admin />}
+        </motion.div>
       </AnimatePresence>
 
       {/* Navigation Bar */}
-      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 bg-stone-900/90 backdrop-blur-md text-white px-8 py-4 rounded-full shadow-2xl flex items-center gap-8 z-50">
-        <button 
-          onClick={() => setView('routine')}
-          className={`flex items-center gap-2 transition-colors ${view === 'routine' ? 'text-amber-400' : 'text-stone-400 hover:text-white'}`}
+      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 bg-stone-900/90 backdrop-blur-md text-white px-6 py-4 rounded-full shadow-2xl flex items-center gap-6 z-50 max-w-[95vw] overflow-x-auto">
+        {role === 'admin' && (
+          <>
+            <button
+              onClick={() => setView('routine')}
+              className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'routine' ? 'text-amber-400' : 'text-stone-400 hover:text-white'}`}
+            >
+              <Layout className="w-5 h-5" />
+              <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Routine</span>
+            </button>
+            <div className="w-px h-6 bg-stone-700 shrink-0"></div>
+            <button
+              onClick={() => setView('planner')}
+              className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'planner' ? 'text-blue-400' : 'text-stone-400 hover:text-white'}`}
+            >
+              <Calendar className="w-5 h-5" />
+              <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Planner</span>
+            </button>
+            <div className="w-px h-6 bg-stone-700 shrink-0"></div>
+            <button
+              onClick={() => setView('weekly')}
+              className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'weekly' ? 'text-emerald-400' : 'text-stone-400 hover:text-white'}`}
+            >
+              <TrendingUp className="w-5 h-5" />
+              <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Review</span>
+            </button>
+            <div className="w-px h-6 bg-stone-700 shrink-0"></div>
+          </>
+        )}
+        {role === 'student' && (
+          <>
+            <button
+              onClick={() => setView('home')}
+              className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'home' ? 'text-amber-400' : 'text-stone-400 hover:text-white'}`}
+            >
+              <NavHomeIcon className="w-5 h-5" />
+              <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Home</span>
+            </button>
+            <div className="w-px h-6 bg-stone-700 shrink-0"></div>
+          </>
+        )}
+        <button
+          onClick={() => setView('predictor')}
+          className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'predictor' ? 'text-amber-400' : 'text-stone-400 hover:text-white'}`}
         >
-          <Layout className="w-5 h-5" />
-          <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Routine</span>
+          <NavPredictorIcon className="w-5 h-5" />
+          <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Predictor</span>
         </button>
-        <div className="w-px h-6 bg-stone-700"></div>
-        <button 
-          onClick={() => setView('planner')}
-          className={`flex items-center gap-2 transition-colors ${view === 'planner' ? 'text-blue-400' : 'text-stone-400 hover:text-white'}`}
+        <div className="w-px h-6 bg-stone-700 shrink-0"></div>
+        <button
+          onClick={() => setView('career')}
+          className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'career' ? 'text-amber-400' : 'text-stone-400 hover:text-white'}`}
         >
-          <Calendar className="w-5 h-5" />
-          <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Planner</span>
+          <NavCareerIcon className="w-5 h-5" />
+          <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Career</span>
         </button>
-        <div className="w-px h-6 bg-stone-700"></div>
-        <button 
-          onClick={() => setView('weekly')}
-          className={`flex items-center gap-2 transition-colors ${view === 'weekly' ? 'text-emerald-400' : 'text-stone-400 hover:text-white'}`}
-        >
-          <TrendingUp className="w-5 h-5" />
-          <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Review</span>
-        </button>
-        <div className="w-px h-6 bg-stone-700"></div>
-        <button 
+        {role === 'admin' && (
+          <>
+            <div className="w-px h-6 bg-stone-700 shrink-0"></div>
+            <button
+              onClick={() => setView('admin')}
+              className={`flex items-center gap-2 transition-colors shrink-0 ${effectiveView === 'admin' ? 'text-amber-400' : 'text-stone-400 hover:text-white'}`}
+            >
+              <NavAdminIcon className="w-5 h-5" />
+              <span className="hidden md:inline font-bold text-sm uppercase tracking-wider">Admin</span>
+            </button>
+          </>
+        )}
+        <div className="w-px h-6 bg-stone-700 shrink-0"></div>
+        <button
           onClick={handleLogout}
-          className="text-stone-400 hover:text-rose-400 transition-colors p-2"
+          className="text-stone-400 hover:text-rose-400 transition-colors p-2 shrink-0"
           title="Logout"
         >
           <Trash2 className="w-5 h-5" />
@@ -788,9 +834,11 @@ export default function App() {
   );
 }
 
-const Login: React.FC<{ onLogin: (success: boolean) => void }> = ({ onLogin }) => {
+const Login: React.FC<{ onLogin: (role: 'admin' | 'student') => void }> = ({ onLogin }) => {
+  const [mode, setMode] = useState<'admin' | 'student'>('student');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [studentName, setStudentName] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -799,10 +847,23 @@ const Login: React.FC<{ onLogin: (success: boolean) => void }> = ({ onLogin }) =
     setIsLoading(true);
     setError('');
 
+    if (mode === 'student') {
+      setTimeout(() => {
+        if (studentName.trim().length === 0) {
+          setError('Please enter your name');
+          setIsLoading(false);
+          return;
+        }
+        localStorage.setItem('student_name', studentName.trim());
+        onLogin('student');
+      }, 400);
+      return;
+    }
+
     // Simulate a small delay for "rich" feel
     setTimeout(() => {
       if (username === 'Sumeet' && password === 'Sumeet') {
-        onLogin(true);
+        onLogin('admin');
       } else {
         setError('Invalid username or password');
         setIsLoading(false);
@@ -848,40 +909,78 @@ const Login: React.FC<{ onLogin: (success: boolean) => void }> = ({ onLogin }) =
             >
               <Layout className="w-8 h-8 text-stone-900" />
             </motion.div>
-            <h1 className="text-3xl font-bold text-white tracking-tight font-display mb-2">Welcome Back</h1>
-            <p className="text-stone-400 text-sm">Sign in to your daily journey</p>
+            <h1 className="text-3xl font-bold text-white tracking-tight font-display mb-2">Welcome</h1>
+            <p className="text-stone-400 text-sm">
+              {mode === 'student' ? 'Sign in to your KCET prep hub' : 'Sign in to your daily journey'}
+            </p>
+          </div>
+
+          <div className="flex gap-2 mb-8 bg-white/5 p-1 rounded-2xl">
+            <button
+              type="button"
+              onClick={() => { setMode('student'); setError(''); }}
+              className={`flex-1 py-2 rounded-xl text-sm font-bold uppercase tracking-wider transition-all ${mode === 'student' ? 'bg-amber-400 text-stone-900' : 'text-stone-400'}`}
+            >
+              Student
+            </button>
+            <button
+              type="button"
+              onClick={() => { setMode('admin'); setError(''); }}
+              className={`flex-1 py-2 rounded-xl text-sm font-bold uppercase tracking-wider transition-all ${mode === 'admin' ? 'bg-amber-400 text-stone-900' : 'text-stone-400'}`}
+            >
+              Admin
+            </button>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-2">
-              <label className="text-xs font-bold text-stone-400 uppercase tracking-widest ml-1">Username</label>
-              <div className="relative">
-                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-500" />
-                <input 
-                  type="text" 
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white outline-none focus:border-amber-400/50 focus:bg-white/10 transition-all"
-                  placeholder="Enter username"
-                  required
-                />
+            {mode === 'student' ? (
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-stone-400 uppercase tracking-widest ml-1">Your Name</label>
+                <div className="relative">
+                  <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-500" />
+                  <input
+                    type="text"
+                    value={studentName}
+                    onChange={(e) => setStudentName(e.target.value)}
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white outline-none focus:border-amber-400/50 focus:bg-white/10 transition-all"
+                    placeholder="Enter your name"
+                    required
+                  />
+                </div>
               </div>
-            </div>
+            ) : (
+              <>
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-stone-400 uppercase tracking-widest ml-1">Username</label>
+                  <div className="relative">
+                    <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-500" />
+                    <input
+                      type="text"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white outline-none focus:border-amber-400/50 focus:bg-white/10 transition-all"
+                      placeholder="Enter username"
+                      required
+                    />
+                  </div>
+                </div>
 
-            <div className="space-y-2">
-              <label className="text-xs font-bold text-stone-400 uppercase tracking-widest ml-1">Password</label>
-              <div className="relative">
-                <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-500" />
-                <input 
-                  type="password" 
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white outline-none focus:border-amber-400/50 focus:bg-white/10 transition-all"
-                  placeholder="Enter password"
-                  required
-                />
-              </div>
-            </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-stone-400 uppercase tracking-widest ml-1">Password</label>
+                  <div className="relative">
+                    <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-500" />
+                    <input
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white outline-none focus:border-amber-400/50 focus:bg-white/10 transition-all"
+                      placeholder="Enter password"
+                      required
+                    />
+                  </div>
+                </div>
+              </>
+            )}
 
             {error && (
               <motion.p 
@@ -911,7 +1010,11 @@ const Login: React.FC<{ onLogin: (success: boolean) => void }> = ({ onLogin }) =
 
           <div className="mt-10 text-center">
             <p className="text-stone-500 text-xs">
-              Secure access for <span className="text-amber-400/80 font-bold">Sumeet</span> only
+              {mode === 'admin' ? (
+                <>Secure access for <span className="text-amber-400/80 font-bold">Sumeet</span> only</>
+              ) : (
+                'Open access for all students'
+              )}
             </p>
           </div>
         </div>

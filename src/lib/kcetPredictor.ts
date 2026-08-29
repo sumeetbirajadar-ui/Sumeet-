@@ -63,20 +63,22 @@ export interface EnggResultRow {
   code: string;
   name: string;
   location: string;
-  rounds: number[]; // 9 real values, aligned to ENGG_ROUNDS
+  rounds: number[]; // 10 real values, aligned to ENGG_ROUNDS (2022-2024 all rounds, plus real 2025 R1)
   prediction: PredictionLevel;
   avgFinal: number;
-  projected: YearFigure[]; // 2025, 2026 (override-aware)
+  projected: YearFigure[]; // 2026 only (override-aware) — 2025 is now real data in `rounds`, not a trend guess
 }
 
+// 2025 now has a real, KEA-published Round 1 column (see `rounds`), so there's
+// nothing left to estimate for 2025. Only 2026 is still a trend projection,
+// and it's deliberately based on the three real Final rounds (2022-2024) —
+// not on 2025 R1, since an R1 cutoff isn't comparable to a Final-round one.
 function projectedYearsForEngg(overrides: OverrideStore, code: string, branch: string, category: string, arr: number[]): YearFigure[] {
   const finals = FINAL_IDX.map((i) => arr[i] || 0);
-  const [est2025, est2026] = estimateFutureYears(finals, 2);
-  return [2025, 2026].map((year, idx) => {
-    const override = getOverrideFrom(overrides, 'engg', code, branch, category, year);
-    if (override) return { year, value: override.cutoff, source: 'official' };
-    return { year, value: idx === 0 ? est2025 : est2026, source: 'estimated' };
-  });
+  const [est2026] = estimateFutureYears(finals, 1);
+  const override = getOverrideFrom(overrides, 'engg', code, branch, category, 2026);
+  if (override) return [{ year: 2026, value: override.cutoff, source: 'official' }];
+  return [{ year: 2026, value: est2026, source: 'estimated' }];
 }
 
 export function predictEngg(rank: number, branch: string, category: string, overrides: OverrideStore): EnggResultRow[] {

@@ -202,9 +202,10 @@ function CutoffOverridesPanel() {
   return (
     <div className="space-y-6">
       <div className="bg-sage-50 border border-sage-100 text-sage-800 text-xs rounded-3xl px-4 py-3">
-        Enter a real, officially published cutoff for 2025/2026 here once KEA releases it. It will show as
-        "Official" in the predictor instead of the trend-based estimate. Never enter a figure you haven't verified
-        against the official KEA cutoff PDF.
+        Enter a real, officially published cutoff here once KEA releases it — for Engineering that's 2026 only
+        (2025 Round 1 is already real KEA data in the predictor); Agriculture and Veterinary/Professional still take
+        2025 or 2026. It will show as "Official" in the predictor instead of the trend-based estimate. Never enter a
+        figure you haven't verified against the official KEA cutoff PDF.
       </div>
 
       <form onSubmit={handleAdd} className="bg-white rounded-3xl border-2 border-ink-200 p-6 space-y-4">
@@ -213,9 +214,11 @@ function CutoffOverridesPanel() {
           <select
             value={courseType}
             onChange={(e) => {
-              setCourseType(e.target.value as CourseType);
+              const next = e.target.value as CourseType;
+              setCourseType(next);
               setCollegeCode('');
               setBranch('');
+              if (next === 'engg') setYear(2026); // 2025 is now real KEA R1 data for Engineering, not an override target
             }}
             className="border-2 border-ink-200 rounded-2xl px-3 py-2 bg-white"
           >
@@ -248,7 +251,7 @@ function CutoffOverridesPanel() {
             ))}
           </select>
           <select value={year} onChange={(e) => setYear(parseInt(e.target.value, 10))} className="border-2 border-ink-200 rounded-2xl px-3 py-2 bg-white">
-            <option value={2025}>2025</option>
+            {courseType !== 'engg' && <option value={2025}>2025</option>}
             <option value={2026}>2026</option>
           </select>
           <input
@@ -855,6 +858,10 @@ export default function Admin() {
           <ShieldCheck className="w-7 h-7 text-gold-500" /> Admin
         </h1>
         <p className="text-ink-500 text-sm">Publish content students see, and correct the predictor with real cutoffs as they're released.</p>
+        <div className="mt-4 flex items-center justify-center gap-2 text-ink-400 text-[11px]">
+          <img src="/branding/founder-photo.png" alt="Founder, Science Monk" className="w-6 h-6 rounded-full object-cover" />
+          <span>A Science Monk creation</span>
+        </div>
       </header>
 
       <div className="flex justify-center gap-2 mb-8 flex-wrap">

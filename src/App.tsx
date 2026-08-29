@@ -106,6 +106,22 @@ function getAppMode(): AppMode {
   return param === 'admin' || param === 'student' ? param : 'combined';
 }
 
+// A faint, fixed, click-through logo behind every screen (login included).
+// Kept deliberately subtle (low opacity, no interaction) so it never competes
+// with real content — it's a mark of origin, not a design element.
+const Watermark: React.FC = () => (
+  <div
+    aria-hidden="true"
+    className="fixed inset-0 z-0 flex items-center justify-center pointer-events-none select-none"
+  >
+    <img
+      src="/branding/science-monk-logo.png"
+      alt=""
+      className="w-[55vmin] h-[55vmin] object-contain opacity-[0.04] grayscale"
+    />
+  </div>
+);
+
 export default function App() {
   const [appMode] = useState<AppMode>(() => getAppMode());
   // A locked mode (?mode=admin / ?mode=student) never honours a stale session
@@ -826,8 +842,9 @@ export default function App() {
   );
 
   return (
-    <div className="h-dvh flex flex-col bg-ink-50">
-      <div className="flex-1 min-h-0 overflow-y-auto">
+    <div className="h-dvh flex flex-col bg-ink-50 relative">
+      <Watermark />
+      <div className="flex-1 min-h-0 overflow-y-auto relative z-10">
         <AnimatePresence mode="wait">
           <motion.div
             key={effectiveView}
@@ -1043,6 +1060,7 @@ const Login: React.FC<{ mode: AppMode; onLogin: (role: 'admin' | 'student') => v
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-ink-950 relative overflow-hidden">
+      <Watermark />
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div 

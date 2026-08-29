@@ -345,10 +345,11 @@ export default function Predictor() {
             </>
           ) : (
             <>
-              Columns for 2022–2024 are real published KEA cutoff ranks. <strong>2025 / 2026 columns are trend-based
-              estimates</strong> (recency-weighted projection from the 2022–24 data) unless an admin has entered a real
-              official figure — those are marked "Official". Always verify against the official KEA cutoff list before
-              making a decision.
+              Columns for 2022–2024 and <strong>2025 R1 are real published KEA cutoff ranks</strong>. KEA had not yet
+              published a verified Round 2 / Final list for 2025 at the time of writing, so only Round 1 is shown for
+              that year. <strong>The Est. 2026 column is a trend-based estimate</strong> (recency-weighted projection
+              from the 2022–24 Final rounds) unless an admin has entered a real official figure — that's marked
+              "Official". Always verify against the official KEA cutoff list before making a decision.
             </>
           )}
         </p>
@@ -400,10 +401,7 @@ export default function Predictor() {
                       </th>
                     ))}
                   {!isAyush && !isProfx && (
-                    <>
-                      <th className="text-right px-3 py-3 whitespace-nowrap">Est. 2025</th>
-                      <th className="text-right px-3 py-3 whitespace-nowrap">Est. 2026</th>
-                    </>
+                    <th className="text-right px-3 py-3 whitespace-nowrap">Est. 2026</th>
                   )}
                 </tr>
               </thead>

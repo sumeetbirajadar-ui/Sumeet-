@@ -67,6 +67,10 @@ export default function ReportsPage() {
           <p className="text-sm text-ink-500">
             {range.start} to {range.end}
           </p>
+          <div className="mt-2 flex items-center justify-center gap-1.5 text-ink-400 text-[10px]">
+            <img src="/branding/founder-photo.png" alt="Founder, Science Monk" className="w-5 h-5 rounded-full object-cover" />
+            <span>A Science Monk creation</span>
+          </div>
         </div>
 
         <div className="bg-white border-2 border-ink-100 rounded-3xl p-5 text-center">

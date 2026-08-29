@@ -13,7 +13,7 @@ import {
   onAuthStateChanged,
   type User,
 } from 'firebase/auth';
-import { app } from './firebase';
+import { app, getDocument } from './firebase';
 
 export const auth = app ? getAuth(app) : null;
 
@@ -69,6 +69,21 @@ export async function loginStudent(email: string, password: string): Promise<Aut
   } catch (err: any) {
     return { success: false, error: friendlyAuthError(err?.code) };
   }
+}
+
+// Admin sign-in is the exact same Firebase email/password flow as a student
+// (loginStudent works fine for this) — the only difference is that "being
+// signed in" isn't enough to grant admin access. After sign-in, the caller
+// must also check isAllowedAdmin(uid): only a uid with a matching doc in the
+// `admins` collection is treated as an admin. That doc can only be created
+// from the Firebase Console or the Admin SDK (Firestore rules block writes
+// to it from the app), so there is no self-service way to become an admin —
+// deliberately, since this replaces what used to be a hardcoded password
+// baked into the client JS.
+export async function isAllowedAdmin(uid: string): Promise<boolean> {
+  if (!auth) return false;
+  const doc = await getDocument<{ role?: string }>('admins', uid);
+  return doc !== null;
 }
 
 export async function logoutStudent(): Promise<void> {

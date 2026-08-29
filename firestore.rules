@@ -1,0 +1,117 @@
+rules_version = '2';
+
+// Security rules for the Science Monk prep app. Every collection here
+// assumes a real signed-in Firebase user (email/password) — the app no
+// longer supports anonymous/local-only accounts for anything that touches
+// Firestore, so `request.auth` is expected to always be present for a
+// legitimate client.
+//
+// `admins/{uid}` is the single source of truth for who is an admin. It can
+// only be populated from the Firebase Console or the Admin SDK — there is
+// no path in these rules that lets the app itself create a doc there, which
+// is what makes admin access meaningful instead of just "anyone who signs
+// up". See mobile/README.md / the deploy notes for how to add the first
+// admin.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return signedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    // ---- Per-student private data ----
+
+    // One doc per student, holding their personal tracker backup (habits,
+    // journal, mock tests, syllabus progress, etc.). Only that student can
+    // ever read or write it — not even other students, and admins have no
+    // reason to either.
+    match /student_cloud_backups/{uid} {
+      allow read, write: if signedIn() && request.auth.uid == uid;
+    }
+
+    // A student can read their own admin-eligibility doc (so the client can
+    // tell "not an admin" apart from "network error"); nobody can write here
+    // from the app.
+    match /admins/{uid} {
+      allow read: if signedIn() && request.auth.uid == uid;
+      allow write: if false;
+    }
+
+    // ---- Admin-authored content, visible to every signed-in student ----
+
+    match /announcements/{id} {
+      allow read: if signedIn();
+      allow write: if isAdmin();
+    }
+
+    match /admin_config/{id} {
+      allow read: if signedIn();
+      allow write: if isAdmin();
+    }
+
+    match /counselling_timeline/{id} {
+      allow read: if signedIn();
+      allow write: if isAdmin();
+    }
+
+    match /lms_batches/{id} {
+      allow read: if signedIn();
+      allow write: if isAdmin();
+    }
+
+    match /lms_classes/{id} {
+      allow read: if signedIn();
+      allow write: if isAdmin();
+    }
+
+    match /lms_content/{id} {
+      allow read: if signedIn();
+      allow write: if isAdmin();
+    }
+
+    match /lms_chapter_resources/{id} {
+      allow read: if signedIn();
+      allow write: if isAdmin();
+    }
+
+    // ---- Doubts: a student owns their own threads/messages; admin sees all ----
+
+    match /lms_doubt_threads/{id} {
+      allow read: if isAdmin() || (signedIn() && resource.data.studentId == request.auth.uid);
+      allow create: if isAdmin() || (signedIn() && request.resource.data.studentId == request.auth.uid);
+      // Only status changes (resolve/reopen) happen after creation, and
+      // that's an admin action in the UI today.
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    match /lms_doubt_messages/{id} {
+      function parentThread(threadId) {
+        return get(/databases/$(database)/documents/lms_doubt_threads/$(threadId)).data;
+      }
+      allow read: if isAdmin() || (signedIn() && parentThread(resource.data.threadId).studentId == request.auth.uid);
+      allow create: if isAdmin() ||
+        (signedIn() &&
+         request.resource.data.senderRole == 'student' &&
+         parentThread(request.resource.data.threadId).studentId == request.auth.uid);
+      allow update, delete: if isAdmin();
+    }
+
+    // ---- Attendance: a student can record their own; admin reads all ----
+
+    match /lms_attendance/{id} {
+      allow read: if isAdmin() || (signedIn() && resource.data.studentId == request.auth.uid);
+      allow create: if signedIn() && request.resource.data.studentId == request.auth.uid;
+      allow update, delete: if isAdmin();
+    }
+
+    // Anything not explicitly listed above is closed by default.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

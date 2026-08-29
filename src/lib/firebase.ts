@@ -5,7 +5,7 @@
 // per-device, and doesn't need to sync from anywhere.
 
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, setDoc, onSnapshot, query, QueryConstraint } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, getDoc, setDoc, onSnapshot, query, QueryConstraint } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -78,4 +78,12 @@ export function subscribeDoc<T>(path: string, id: string, onData: (data: T | nul
 export async function setDocument<T extends object>(path: string, id: string, data: T): Promise<void> {
   if (!db) throw new Error('Firebase is not configured — set the VITE_FIREBASE_* env vars.');
   await setDoc(doc(db, path, id), data);
+}
+
+// One-shot read (vs. the always-listening subscribeDoc above) — for checks
+// that only need the current value once, like "is this uid an admin?".
+export async function getDocument<T>(path: string, id: string): Promise<T | null> {
+  if (!db) return null;
+  const snap = await getDoc(doc(db, path, id));
+  return snap.exists() ? (snap.data() as T) : null;
 }

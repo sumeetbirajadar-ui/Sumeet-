@@ -3,9 +3,9 @@
 This folder has two independent Android Studio projects, generated with
 [Capacitor](https://capacitorjs.com/):
 
-- `student/android` → package `com.sciencemonk.prep.student`, app name
+- `student/android` → package `academy.sciencemonk.student`, app name
   "Science Monk - Student"
-- `admin/android` → package `com.sciencemonk.prep.admin`, app name
+- `admin/android` → package `academy.sciencemonk.admin`, app name
   "Science Monk - Admin" (badged icon so it's easy to tell apart from the
   student app on a home screen)
 
@@ -56,6 +56,32 @@ this once per app:
 6. Upload the resulting `.aab` to Play Console → your app → Production
    (or Internal testing first, which is worth doing before a public
    release).
+
+## Before you hand either APK to anyone else: set up real admin access
+
+Admin login used to be a fixed username/password check baked into the
+website's JS (visible to anyone who opened dev tools or decompiled the old
+APK) with Firestore running fully open. Both are now fixed: admin login is
+real Firebase email/password sign-in, gated by an `admins/{uid}` allowlist
+doc that only you can create (never from the app itself), and
+`firestore.rules` in the repo root locks every collection down to
+signed-in users, admin-only writes where appropriate. **This only takes
+effect once you deploy it** — do this once:
+
+1. `firebase deploy --only firestore:rules` (from the repo, project alias
+   is already set in `.firebaserc`).
+2. Firebase Console → **Authentication → Users → Add user** → enter your
+   admin email and a strong password.
+3. Copy that user's **UID** from the Users table.
+4. Firebase Console → **Firestore Database → Start collection** → collection
+   ID `admins` → document ID = the UID you just copied → add any field
+   (e.g. `role: "admin"`) → **Save**.
+5. Sign in on the Admin tab (web or the Admin app) with that email/password.
+
+Do this **before** or immediately after the app update reaches your admin
+app — until step 4 is done, nobody (including you) can get into the Admin
+experience, which is the point: there's no self-service way to become an
+admin anymore.
 
 ## Changing the app icon, name, or package ID later
 

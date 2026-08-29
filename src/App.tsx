@@ -69,7 +69,7 @@ import SettingsBackup from './pages/SettingsBackup';
 import PomodoroTimer from './components/PomodoroTimer';
 import { latestActivityAt, subscribeClasses, subscribeContent, LiveClass, ContentItem } from './lib/lms';
 import { getLmsLastSeen, markLmsSeen, getOrCreateStudentId, setStudentUid } from './lib/studentIdentity';
-import { logoutStudent, registerStudent, loginStudent, sendStudentPasswordReset } from './lib/studentAuth';
+import { logoutStudent, registerStudent, loginStudent, sendStudentPasswordReset, isAllowedAdmin } from './lib/studentAuth';
 import { pushStudentDataToCloud, pullStudentDataFromCloud, migrateLocalDataToUid } from './lib/cloudSync';
 
 type Role = 'admin' | 'student';
@@ -1036,6 +1036,25 @@ const Login: React.FC<{ mode: AppMode; onLogin: (role: 'admin' | 'student') => v
     else setError(result.error || 'Could not send reset email');
   };
 
+  const handleAdminAuth = async () => {
+    if (!username.trim() || !password) return setError('Please enter your email and password');
+    setIsLoading(true);
+    const result = await loginStudent(username, password); // same Firebase email/password sign-in as students
+    if (!result.success || !result.uid) {
+      setError(result.error || 'Could not log in');
+      setIsLoading(false);
+      return;
+    }
+    const allowed = await isAllowedAdmin(result.uid);
+    if (!allowed) {
+      await logoutStudent();
+      setError('This account is signed in, but is not authorized as an admin.');
+      setIsLoading(false);
+      return;
+    }
+    onLogin('admin');
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -1043,19 +1062,9 @@ const Login: React.FC<{ mode: AppMode; onLogin: (role: 'admin' | 'student') => v
 
     if (mode === 'student') {
       handleStudentAuth();
-      return;
+    } else {
+      handleAdminAuth();
     }
-
-    setIsLoading(true);
-    // Simulate a small delay for "rich" feel
-    setTimeout(() => {
-      if (username === 'Sumeet' && password === 'Sumeet') {
-        onLogin('admin');
-      } else {
-        setError('Invalid username or password');
-        setIsLoading(false);
-      }
-    }, 800);
   };
 
   return (
@@ -1227,15 +1236,15 @@ const Login: React.FC<{ mode: AppMode; onLogin: (role: 'admin' | 'student') => v
             ) : (
               <>
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-ink-400 uppercase tracking-widest ml-1">Username</label>
+                  <label className="text-xs font-bold text-ink-400 uppercase tracking-widest ml-1">Admin Email</label>
                   <div className="relative">
                     <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-500" />
                     <input
-                      type="text"
+                      type="email"
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
                       className="w-full bg-white/5 border border-white/10 rounded-3xl py-4 pl-12 pr-4 text-white outline-none focus:border-gold-400/50 focus:bg-white/10 transition-all"
-                      placeholder="Enter username"
+                      placeholder="you@example.com"
                       required
                     />
                   </div>
@@ -1297,7 +1306,7 @@ const Login: React.FC<{ mode: AppMode; onLogin: (role: 'admin' | 'student') => v
           <div className="mt-10 text-center">
             <p className="text-ink-500 text-xs">
               {mode === 'admin' ? (
-                <>Secure access for <span className="text-gold-400/80 font-bold">Sumeet</span> only</>
+                'Restricted to authorized admin accounts only'
               ) : studentAuthMode === 'register' ? (
                 'Free to join — your progress stays saved to this account'
               ) : (

@@ -1,8 +1,9 @@
 // Karnataka BHMS (Homoeopathy) seat cutoffs via KEA's AYUSH counselling,
-// 2025 admission cycle — Round 1 only (the official KEA-published
-// "Allotment Cut-Off Ranks" report). Private/NRI/Management-Other seats
-// had no allotment yet in this report — their category lists are empty,
-// not missing data.
+// 2025 admission cycle — Round 1 (official "Allotment Cut-Off Ranks"
+// report) plus the Special Stray Round 2 seat allotment list (which also
+// filled in real Private/Management-Other data Round 1 didn't have yet).
+// NRI seats had no allotment in either report — that category list is
+// empty, not missing data.
 // Category codes are grouped by seat quota — Government uses the vertical/
 // horizontal reservation matrix; Private/NRI/Management-Other use a
 // different, much smaller code set (KEA doesn't subdivide those by
@@ -13,15 +14,15 @@ import { QuotaType, CategoryOption, buildCategoryOptions } from '../ayushCategor
 export { QUOTA_OPTIONS } from '../ayushCategoryLabels';
 export type { QuotaType, CategoryOption };
 
-export const BHMS_ROUNDS = ['2025 R1'];
+export const BHMS_ROUNDS = ['2025 R1', '2025 Special Stray R2'];
 
 // Exact set of category codes present in the source data per quota
 // (verified against karnataka.json).
 export const BHMS_CATEGORY_CODES_BY_QUOTA: Record<QuotaType, string[]> = {
   GOVT: ['1G', '1H', '1K', '1R', '2AG', '2AH', '2AK', '2AKH', '2AR', '2ARH', '2BG', '2BH', '2BK', '2BR', '3AG', '3AH', '3AK', '3AR', '3BG', '3BH', '3BK', '3BR', 'GM', 'GMH', 'GMK', 'GMKH', 'GMR', 'GMRH', 'SCG', 'SCH', 'SCK', 'SCKH', 'SCR', 'SCRH', 'STG', 'STH', 'STK', 'STR'],
-  PRIV: [],
+  PRIV: ['OPN'],
   NRI: [],
-  OTHERS: [],
+  OTHERS: ['OTH'],
 };
 
 export const BHMS_CATEGORY_OPTIONS_BY_QUOTA: Record<QuotaType, CategoryOption[]> = {

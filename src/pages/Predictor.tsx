@@ -172,6 +172,14 @@ export default function Predictor() {
   const rows = courseType === 'engg' ? enggRows : courseType === 'agri' ? agriRows : courseType === 'prof' ? profRows : ayushRows;
   const counts = countPredictions(rows);
 
+  // A round with zero real data across every college in this result (e.g.
+  // NRI/Private seats that were only allotted in a later round than the
+  // ones on record) is a wasted column of all dashes — hide it rather than
+  // show it empty.
+  const visibleAyushRoundIndices = isAyush
+    ? AYUSH_CONFIG[courseType].rounds.map((_, idx) => idx).filter((idx) => (ayushRows as AyushResultRow[]).some((r) => r.rounds[idx] > 0))
+    : [];
+
   function handleTypeChange(t: CourseType) {
     setCourseType(t);
     setBranch('');
@@ -349,9 +357,9 @@ export default function Predictor() {
                     ))}
                   {courseType === 'prof' && <th className="text-right px-3 py-3">Reference Cutoff</th>}
                   {isAyush &&
-                    AYUSH_CONFIG[courseType].rounds.map((l) => (
-                      <th key={l} className="text-right px-3 py-3 whitespace-nowrap">
-                        {l}
+                    visibleAyushRoundIndices.map((idx) => (
+                      <th key={idx} className="text-right px-3 py-3 whitespace-nowrap">
+                        {AYUSH_CONFIG[courseType].rounds[idx]}
                       </th>
                     ))}
                   {!isAyush && (
@@ -443,9 +451,9 @@ export default function Predictor() {
                       <td className="px-4 py-3">
                         <Badge level={r.prediction} />
                       </td>
-                      {r.rounds.map((v, idx) => (
-                        <td key={idx} className={`px-3 py-3 text-right whitespace-nowrap ${cellColor(rankNum, v)}`}>
-                          {v ? v.toLocaleString() : '—'}
+                      {visibleAyushRoundIndices.map((idx) => (
+                        <td key={idx} className={`px-3 py-3 text-right whitespace-nowrap ${cellColor(rankNum, r.rounds[idx])}`}>
+                          {r.rounds[idx] ? r.rounds[idx].toLocaleString() : '—'}
                         </td>
                       ))}
                     </tr>

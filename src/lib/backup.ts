@@ -10,7 +10,7 @@ export interface BackupFile {
   data: Record<string, string>;
 }
 
-const STUDENT_KEY_PREFIXES = [
+export const STUDENT_KEY_PREFIXES = [
   'syllabus_progress_v1_',
   'syllabus_revision_v1_',
   'habits_list_v1_',
@@ -25,13 +25,27 @@ const STUDENT_KEY_PREFIXES = [
   'personal_care_log_v1_',
   'resources_custom_v1_',
   'resources_progress_v1_',
+  'counselling_documents_v2_kcetApplication_',
+  'counselling_documents_v2_kcetCounselling_',
+  'counselling_documents_v2_neetApplication_',
+  'counselling_documents_v2_neetCounselling_',
+  'counselling_documents_v2_jeeApplication_',
+  'counselling_allotments_v1_',
+  'daily_tracker_app_state_',
 ];
+
+// Keys that hold one value per device rather than per-studentId-suffix.
+export const STUDENT_EXACT_KEYS = ['student_name'];
 
 export function buildBackup(studentId: string): BackupFile {
   const data: Record<string, string> = {};
   STUDENT_KEY_PREFIXES.forEach((prefix) => {
     const value = localStorage.getItem(prefix + studentId);
     if (value !== null) data[prefix + studentId] = value;
+  });
+  STUDENT_EXACT_KEYS.forEach((key) => {
+    const value = localStorage.getItem(key);
+    if (value !== null) data[key] = value;
   });
   return { version: 1, exportedAt: new Date().toISOString(), studentId, data };
 }
@@ -61,8 +75,14 @@ export function restoreBackup(studentId: string, json: string): { success: boole
   }
   let count = 0;
   Object.entries(parsed.data).forEach(([key, value]) => {
+    if (typeof value !== 'string') return;
+    if (STUDENT_EXACT_KEYS.includes(key)) {
+      localStorage.setItem(key, value);
+      count++;
+      return;
+    }
     const prefix = STUDENT_KEY_PREFIXES.find((p) => key.startsWith(p));
-    if (!prefix || typeof value !== 'string') return;
+    if (!prefix) return;
     localStorage.setItem(prefix + studentId, value);
     count++;
   });

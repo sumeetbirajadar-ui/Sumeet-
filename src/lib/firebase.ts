@@ -19,7 +19,7 @@ const firebaseConfig = {
 
 export const firebaseConfigured = Boolean(firebaseConfig.apiKey && firebaseConfig.projectId);
 
-const app = firebaseConfigured ? initializeApp(firebaseConfig) : null;
+export const app = firebaseConfigured ? initializeApp(firebaseConfig) : null;
 export const db = app ? getFirestore(app) : null;
 
 // Small generic helpers so each admin-content module (announcements, live

@@ -69,7 +69,9 @@ import ReportsPage from './pages/ReportsPage';
 import SettingsBackup from './pages/SettingsBackup';
 import PomodoroTimer from './components/PomodoroTimer';
 import { latestActivityAt, subscribeClasses, subscribeContent, LiveClass, ContentItem } from './lib/lms';
-import { getLmsLastSeen, markLmsSeen, getOrCreateStudentId } from './lib/studentIdentity';
+import { getLmsLastSeen, markLmsSeen, getOrCreateStudentId, setStudentUid } from './lib/studentIdentity';
+import { logoutStudent, registerStudent, loginStudent, sendStudentPasswordReset } from './lib/studentAuth';
+import { pushStudentDataToCloud, pullStudentDataFromCloud, migrateLocalDataToUid } from './lib/cloudSync';
 
 type Role = 'admin' | 'student';
 type View = 'home' | 'routine' | 'planner' | 'weekly' | 'predictor' | 'career' | 'admin' | 'lms' | 'counselling' | 'assistant' | 'tracker' | 'habitsFocus' | 'performance' | 'targetsGoals' | 'wellbeingCare' | 'reports' | 'settingsBackup';
@@ -158,10 +160,34 @@ export default function App() {
   };
 
   const handleLogout = () => {
+    if (role === 'student') {
+      // Best-effort final save before the session ends — the periodic
+      // autosave below already covers most of it, this just catches
+      // whatever changed since the last tick.
+      pushStudentDataToCloud(getOrCreateStudentId());
+      logoutStudent();
+    }
     setIsAuthenticated(false);
     localStorage.removeItem('is_authenticated');
     localStorage.removeItem('app_role');
   };
+
+  // While a student is signed in, keep their tracker data mirrored to the
+  // cloud (under their account uid) so it survives logout, a cleared
+  // browser, or opening the app on a different phone.
+  useEffect(() => {
+    if (!isAuthenticated || role !== 'student') return;
+    const uid = getOrCreateStudentId();
+    const interval = setInterval(() => pushStudentDataToCloud(uid), 30000);
+    const onHide = () => {
+      if (document.visibilityState === 'hidden') pushStudentDataToCloud(uid);
+    };
+    document.addEventListener('visibilitychange', onHide);
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener('visibilitychange', onHide);
+    };
+  }, [isAuthenticated, role]);
 
   const getDayData = (date: string): DailyData => {
     return state.daily[date] || {
@@ -942,27 +968,72 @@ const Login: React.FC<{ mode: AppMode; onLogin: (role: 'admin' | 'student') => v
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [studentName, setStudentName] = useState('');
+  const [studentAuthMode, setStudentAuthMode] = useState<'login' | 'register'>('login');
+  const [email, setEmail] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [info, setInfo] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError('');
+  const handleStudentAuth = async () => {
+    if (studentAuthMode === 'register') {
+      if (studentName.trim().length === 0) return setError('Please enter your name');
+      if (!email.trim()) return setError('Please enter your email');
+      if (password.length < 6) return setError('Password should be at least 6 characters');
+      if (password !== confirmPassword) return setError('Passwords do not match');
 
-    if (mode === 'student') {
-      setTimeout(() => {
-        if (studentName.trim().length === 0) {
-          setError('Please enter your name');
-          setIsLoading(false);
-          return;
-        }
-        localStorage.setItem('student_name', studentName.trim());
-        onLogin('student');
-      }, 400);
+      setIsLoading(true);
+      const oldLocalId = getOrCreateStudentId();
+      const result = await registerStudent(studentName, email, password);
+      if (!result.success || !result.uid) {
+        setError(result.error || 'Could not create account');
+        setIsLoading(false);
+        return;
+      }
+      migrateLocalDataToUid(oldLocalId, result.uid);
+      setStudentUid(result.uid);
+      localStorage.setItem('student_name', studentName.trim());
+      await pushStudentDataToCloud(result.uid);
+      onLogin('student');
       return;
     }
 
+    if (!email.trim() || !password) return setError('Please enter your email and password');
+    setIsLoading(true);
+    const result = await loginStudent(email, password);
+    if (!result.success || !result.uid) {
+      setError(result.error || 'Could not log in');
+      setIsLoading(false);
+      return;
+    }
+    setStudentUid(result.uid);
+    await pullStudentDataFromCloud(result.uid);
+    onLogin('student');
+  };
+
+  const handleForgotPassword = async () => {
+    setError('');
+    setInfo('');
+    if (!email.trim()) {
+      setError('Enter your email above first, then tap "Forgot password?"');
+      return;
+    }
+    const result = await sendStudentPasswordReset(email);
+    if (result.success) setInfo('Password reset link sent — check your email.');
+    else setError(result.error || 'Could not send reset email');
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setInfo('');
+
+    if (mode === 'student') {
+      handleStudentAuth();
+      return;
+    }
+
+    setIsLoading(true);
     // Simulate a small delay for "rich" feel
     setTimeout(() => {
       if (username === 'Sumeet' && password === 'Sumeet') {
@@ -1044,22 +1115,101 @@ const Login: React.FC<{ mode: AppMode; onLogin: (role: 'admin' | 'student') => v
             </div>
           )}
 
+          {mode === 'student' && (
+            <div className="flex gap-2 mb-6 bg-white/5 p-1 rounded-3xl">
+              <button
+                type="button"
+                onClick={() => { setStudentAuthMode('login'); setError(''); setInfo(''); }}
+                className={`flex-1 py-1.5 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all ${studentAuthMode === 'login' ? 'bg-white/15 text-white' : 'text-ink-400'}`}
+              >
+                Log In
+              </button>
+              <button
+                type="button"
+                onClick={() => { setStudentAuthMode('register'); setError(''); setInfo(''); }}
+                className={`flex-1 py-1.5 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all ${studentAuthMode === 'register' ? 'bg-white/15 text-white' : 'text-ink-400'}`}
+              >
+                Create Account
+              </button>
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-6">
             {mode === 'student' ? (
-              <div className="space-y-2">
-                <label className="text-xs font-bold text-ink-400 uppercase tracking-widest ml-1">Your Name</label>
-                <div className="relative">
-                  <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-500" />
-                  <input
-                    type="text"
-                    value={studentName}
-                    onChange={(e) => setStudentName(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-3xl py-4 pl-12 pr-4 text-white outline-none focus:border-gold-400/50 focus:bg-white/10 transition-all"
-                    placeholder="Enter your name"
-                    required
-                  />
+              <>
+                {studentAuthMode === 'register' && (
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-ink-400 uppercase tracking-widest ml-1">Your Name</label>
+                    <div className="relative">
+                      <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-500" />
+                      <input
+                        type="text"
+                        value={studentName}
+                        onChange={(e) => setStudentName(e.target.value)}
+                        className="w-full bg-white/5 border border-white/10 rounded-3xl py-4 pl-12 pr-4 text-white outline-none focus:border-gold-400/50 focus:bg-white/10 transition-all"
+                        placeholder="Enter your name"
+                        required
+                      />
+                    </div>
+                  </div>
+                )}
+
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-ink-400 uppercase tracking-widest ml-1">Email</label>
+                  <div className="relative">
+                    <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-500" />
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-3xl py-4 pl-12 pr-4 text-white outline-none focus:border-gold-400/50 focus:bg-white/10 transition-all"
+                      placeholder="you@example.com"
+                      required
+                    />
+                  </div>
                 </div>
-              </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-ink-400 uppercase tracking-widest ml-1">Password</label>
+                  <div className="relative">
+                    <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-500" />
+                    <input
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-3xl py-4 pl-12 pr-4 text-white outline-none focus:border-gold-400/50 focus:bg-white/10 transition-all"
+                      placeholder={studentAuthMode === 'register' ? 'At least 6 characters' : 'Enter password'}
+                      required
+                    />
+                  </div>
+                  {studentAuthMode === 'login' && (
+                    <button
+                      type="button"
+                      onClick={handleForgotPassword}
+                      className="text-xs text-gold-400/80 hover:text-gold-300 font-semibold ml-1"
+                    >
+                      Forgot password?
+                    </button>
+                  )}
+                </div>
+
+                {studentAuthMode === 'register' && (
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-ink-400 uppercase tracking-widest ml-1">Confirm Password</label>
+                    <div className="relative">
+                      <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-500" />
+                      <input
+                        type="password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        className="w-full bg-white/5 border border-white/10 rounded-3xl py-4 pl-12 pr-4 text-white outline-none focus:border-gold-400/50 focus:bg-white/10 transition-all"
+                        placeholder="Re-enter password"
+                        required
+                      />
+                    </div>
+                  </div>
+                )}
+              </>
             ) : (
               <>
                 <div className="space-y-2">
@@ -1095,7 +1245,7 @@ const Login: React.FC<{ mode: AppMode; onLogin: (role: 'admin' | 'student') => v
             )}
 
             {error && (
-              <motion.p 
+              <motion.p
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 className="text-rose-400 text-xs font-bold text-center bg-rose-400/10 py-2 rounded-lg border border-rose-400/20"
@@ -1104,7 +1254,17 @@ const Login: React.FC<{ mode: AppMode; onLogin: (role: 'admin' | 'student') => v
               </motion.p>
             )}
 
-            <button 
+            {info && (
+              <motion.p
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="text-sage-400 text-xs font-bold text-center bg-sage-400/10 py-2 rounded-lg border border-sage-400/20"
+              >
+                {info}
+              </motion.p>
+            )}
+
+            <button
               type="submit"
               disabled={isLoading}
               className="w-full bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold py-4 rounded-3xl shadow-lg shadow-gold-400/20 transition-all active:scale-95 flex items-center justify-center gap-2 group"
@@ -1113,7 +1273,7 @@ const Login: React.FC<{ mode: AppMode; onLogin: (role: 'admin' | 'student') => v
                 <div className="w-5 h-5 border-2 border-ink-900/30 border-t-ink-900 rounded-full animate-spin" />
               ) : (
                 <>
-                  <span>Sign In</span>
+                  <span>{mode === 'student' ? (studentAuthMode === 'register' ? 'Create Account' : 'Log In') : 'Sign In'}</span>
                   <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </>
               )}
@@ -1124,8 +1284,10 @@ const Login: React.FC<{ mode: AppMode; onLogin: (role: 'admin' | 'student') => v
             <p className="text-ink-500 text-xs">
               {mode === 'admin' ? (
                 <>Secure access for <span className="text-gold-400/80 font-bold">Sumeet</span> only</>
+              ) : studentAuthMode === 'register' ? (
+                'Free to join — your progress stays saved to this account'
               ) : (
-                'Open access for all students'
+                "New here? Tap \"Create Account\" above"
               )}
             </p>
           </div>

@@ -7,6 +7,7 @@ import { BAMS_CATEGORY_OPTIONS_BY_QUOTA, BAMS_ROUNDS } from '../data/bams/meta';
 import { BHMS_CATEGORY_OPTIONS_BY_QUOTA, BHMS_ROUNDS } from '../data/bhms/meta';
 import { BDS_CATEGORY_OPTIONS_BY_QUOTA, BDS_ROUNDS } from '../data/bds/meta';
 import { MBBS_CATEGORY_OPTIONS_BY_QUOTA, MBBS_ROUNDS } from '../data/mbbs/meta';
+import { PROFX_BRANCH_OPTIONS, PROFX_CATEGORY_OPTIONS_BY_BRANCH, PROFX_ROUNDS } from '../data/profExtra/meta';
 import {
   predictEngg,
   predictAgri,
@@ -21,6 +22,7 @@ import { predictBams, BamsResultRow } from '../lib/bamsPredictor';
 import { predictBhms, BhmsResultRow } from '../lib/bhmsPredictor';
 import { predictBds, BdsResultRow } from '../lib/bdsPredictor';
 import { predictMbbs, MbbsResultRow } from '../lib/mbbsPredictor';
+import { predictProfx, ProfxResultRow } from '../lib/profxPredictor';
 import { OverrideStore, subscribeOverrideStore } from '../lib/adminOverrides';
 
 const BADGE_STYLES: Record<PredictionLevel, string> = {
@@ -61,6 +63,7 @@ function cellColor(rank: number, cutoff: number): string {
 // config table instead of repeating near-identical JSX per course.
 type AyushCourse = 'bams' | 'bhms' | 'bds' | 'mbbs';
 type AyushResultRow = BamsResultRow | BhmsResultRow | BdsResultRow | MbbsResultRow;
+type RoundsShapeResultRow = AyushResultRow | ProfxResultRow;
 
 const AYUSH_CONFIG: Record<
   AyushCourse,
@@ -141,9 +144,18 @@ export default function Predictor() {
   const [quota, setQuota] = useState<QuotaType>('GOVT');
   const [submitted, setSubmitted] = useState(false);
 
-  const branchOptions = courseType === 'engg' ? ENGG_BRANCH_OPTIONS : courseType === 'agri' ? AGRI_BRANCH_OPTIONS : PROF_BRANCH_OPTIONS;
   const isAyush = isAyushCourse(courseType);
-  const categoryOptions = isAyush ? AYUSH_CONFIG[courseType].categoryOptionsByQuota[quota] : CATEGORY_OPTIONS;
+  const isProfx = courseType === 'profx';
+  const branchOptions =
+    courseType === 'engg' ? ENGG_BRANCH_OPTIONS :
+    courseType === 'agri' ? AGRI_BRANCH_OPTIONS :
+    courseType === 'prof' ? PROF_BRANCH_OPTIONS :
+    isProfx ? PROFX_BRANCH_OPTIONS : [];
+  const categoryOptions = isAyush
+    ? AYUSH_CONFIG[courseType].categoryOptionsByQuota[quota]
+    : isProfx
+    ? PROFX_CATEGORY_OPTIONS_BY_BRANCH[branch] || []
+    : CATEGORY_OPTIONS;
   const needsBranch = !isAyush;
 
   const rankNum = parseFloat(rank);
@@ -168,17 +180,30 @@ export default function Predictor() {
     () => (submitted && valid && isAyush ? AYUSH_CONFIG[courseType].predict(rankNum, category, quota) : []),
     [submitted, valid, isAyush, courseType, rankNum, category, quota]
   );
+  const profxRows = useMemo<ProfxResultRow[]>(
+    () => (submitted && valid && isProfx ? predictProfx(rankNum, branch, category) : []),
+    [submitted, valid, isProfx, rankNum, branch, category]
+  );
 
-  const rows = courseType === 'engg' ? enggRows : courseType === 'agri' ? agriRows : courseType === 'prof' ? profRows : ayushRows;
+  const rows =
+    courseType === 'engg' ? enggRows :
+    courseType === 'agri' ? agriRows :
+    courseType === 'prof' ? profRows :
+    isProfx ? profxRows : ayushRows;
   const counts = countPredictions(rows);
 
+  // Rows that carry a real round-wise closing-rank array (AYUSH courses and
+  // the "extra professional courses" group) rather than the engg/agri/prof
+  // trend-projection shape.
+  const roundsShapeRows: Array<{ rounds: number[] }> = isAyush ? ayushRows : isProfx ? profxRows : [];
+  const roundLabelsForCourse: string[] = isAyush ? AYUSH_CONFIG[courseType].rounds : isProfx ? PROFX_ROUNDS : [];
   // A round with zero real data across every college in this result (e.g.
   // NRI/Private seats that were only allotted in a later round than the
-  // ones on record) is a wasted column of all dashes — hide it rather than
-  // show it empty.
-  const visibleAyushRoundIndices = isAyush
-    ? AYUSH_CONFIG[courseType].rounds.map((_, idx) => idx).filter((idx) => (ayushRows as AyushResultRow[]).some((r) => r.rounds[idx] > 0))
-    : [];
+  // ones on record, or a branch that only ever had a Round 1 report) is a
+  // wasted column of all dashes — hide it rather than show it empty.
+  const visibleRoundIndices = roundLabelsForCourse
+    .map((_, idx) => idx)
+    .filter((idx) => roundsShapeRows.some((r) => r.rounds[idx] > 0));
 
   function handleTypeChange(t: CourseType) {
     setCourseType(t);
@@ -191,6 +216,12 @@ export default function Predictor() {
   function handleQuotaChange(q: QuotaType) {
     setQuota(q);
     setCategory('');
+    setSubmitted(false);
+  }
+
+  function handleBranchChange(b: string) {
+    setBranch(b);
+    if (isProfx) setCategory('');
     setSubmitted(false);
   }
 
@@ -211,7 +242,7 @@ export default function Predictor() {
 
       <div className="bg-white rounded-3xl border-2 border-ink-200 shadow-sm p-6 mb-8">
         <div className="flex gap-2 mb-6 flex-wrap">
-          {(['engg', 'agri', 'prof', 'bams', 'bhms', 'mbbs', 'bds'] as CourseType[]).map((t) => (
+          {(['engg', 'agri', 'prof', 'bams', 'bhms', 'mbbs', 'bds', 'profx'] as CourseType[]).map((t) => (
             <button
               key={t}
               onClick={() => handleTypeChange(t)}
@@ -219,7 +250,7 @@ export default function Predictor() {
                 courseType === t ? 'bg-ink-800 text-white' : 'bg-ink-100 text-ink-500 hover:bg-ink-200'
               }`}
             >
-              {t === 'engg' ? 'Engineering' : t === 'agri' ? 'Agriculture' : t === 'prof' ? 'Veterinary / Professional' : isAyushCourse(t) ? AYUSH_CONFIG[t].label : t}
+              {t === 'engg' ? 'Engineering' : t === 'agri' ? 'Agriculture' : t === 'prof' ? 'Veterinary / Professional' : t === 'profx' ? 'Other UGCET Courses' : isAyushCourse(t) ? AYUSH_CONFIG[t].label : t}
             </button>
           ))}
         </div>
@@ -227,7 +258,7 @@ export default function Predictor() {
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
           <div className="md:col-span-1">
             <label className="text-xs font-bold text-ink-500 uppercase tracking-widest mb-1 block">
-              {courseType === 'prof' ? 'Your UGCET Rank' : isAyush ? 'Your NEET AIR (All India Rank)' : 'Your KCET Rank'}
+              {courseType === 'prof' || isProfx ? 'Your UGCET Rank' : isAyush ? 'Your NEET AIR (All India Rank)' : 'Your KCET Rank'}
             </label>
             <input
               type="number"
@@ -277,7 +308,7 @@ export default function Predictor() {
               </label>
               <select
                 value={branch}
-                onChange={(e) => setBranch(e.target.value)}
+                onChange={(e) => handleBranchChange(e.target.value)}
                 className="w-full border-2 border-ink-200 rounded-2xl px-3 py-2 outline-none focus:border-gold-400 bg-white"
               >
                 <option value="">-- Select --</option>
@@ -306,6 +337,12 @@ export default function Predictor() {
         <p>
           {isAyush ? (
             AYUSH_CONFIG[courseType].note
+          ) : isProfx ? (
+            <>
+              These are real <strong>2025 KEA UGCET</strong> closing ranks, Round 1 through Round 3 where KEA
+              published each — not every branch got all three rounds (e.g. Sericulture only ever had a Round 1
+              report). Always verify against the official KEA cutoff list before making a decision.
+            </>
           ) : (
             <>
               Columns for 2022–2024 are real published KEA cutoff ranks. <strong>2025 / 2026 columns are trend-based
@@ -356,13 +393,13 @@ export default function Predictor() {
                       </th>
                     ))}
                   {courseType === 'prof' && <th className="text-right px-3 py-3">Reference Cutoff</th>}
-                  {isAyush &&
-                    visibleAyushRoundIndices.map((idx) => (
+                  {(isAyush || isProfx) &&
+                    visibleRoundIndices.map((idx) => (
                       <th key={idx} className="text-right px-3 py-3 whitespace-nowrap">
-                        {AYUSH_CONFIG[courseType].rounds[idx]}
+                        {roundLabelsForCourse[idx]}
                       </th>
                     ))}
-                  {!isAyush && (
+                  {!isAyush && !isProfx && (
                     <>
                       <th className="text-right px-3 py-3 whitespace-nowrap">Est. 2025</th>
                       <th className="text-right px-3 py-3 whitespace-nowrap">Est. 2026</th>
@@ -441,8 +478,8 @@ export default function Predictor() {
                       ))}
                     </tr>
                   ))}
-                {isAyush &&
-                  (rows as AyushResultRow[]).map((r, i) => (
+                {(isAyush || isProfx) &&
+                  (rows as RoundsShapeResultRow[]).map((r, i) => (
                     <tr key={r.code} className="hover:bg-ink-50">
                       <td className="px-4 py-3 font-medium text-ink-800">
                         {i + 1}. {r.name}
@@ -451,7 +488,7 @@ export default function Predictor() {
                       <td className="px-4 py-3">
                         <Badge level={r.prediction} />
                       </td>
-                      {visibleAyushRoundIndices.map((idx) => (
+                      {visibleRoundIndices.map((idx) => (
                         <td key={idx} className={`px-3 py-3 text-right whitespace-nowrap ${cellColor(rankNum, r.rounds[idx])}`}>
                           {r.rounds[idx] ? r.rounds[idx].toLocaleString() : '—'}
                         </td>

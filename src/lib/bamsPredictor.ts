@@ -1,10 +1,11 @@
 import karnatakaBams from '../data/bams/karnataka.json';
 import { PredictionLevel, getPrediction } from './kcetPredictor';
+import { QuotaType } from '../data/ayushCategoryLabels';
 
 interface BamsCollege {
   n: string;
   l: string;
-  cats: Record<string, number[]>; // [R1, R2, R3] closing rank, 0 = no seat allotted that round
+  quotas: Record<string, Record<string, number[]>>; // quota -> category -> [R1, R2, R3] closing rank
 }
 
 const DATA = karnatakaBams as unknown as Record<string, BamsCollege>;
@@ -26,15 +27,12 @@ export interface BamsResultRow {
   refVal: number;
 }
 
-// 2024 government-quota seats only (Round 1/2/3). Private, NRI and
-// Management-quota BAMS seats aren't included yet — those aren't primarily
-// rank-competitive in the same way, and weren't part of what was verified
-// against the source. Only one admission year is available, so this shows
-// the real 2024 numbers directly rather than a multi-year trend estimate.
-export function predictBams(rank: number, category: string): BamsResultRow[] {
+// 2024 seats only. Only one admission year is available, so this shows the
+// real 2024 numbers directly rather than a multi-year trend estimate.
+export function predictBams(rank: number, category: string, quota: QuotaType): BamsResultRow[] {
   const rows: BamsResultRow[] = [];
   for (const [code, college] of Object.entries(DATA)) {
-    const arr = college.cats[category];
+    const arr = college.quotas[quota]?.[category];
     if (!arr) continue;
     const values = arr.filter((v) => v > 0);
     const refVal = values.length > 0 ? values[values.length - 1] : 0; // latest round with a real allotment

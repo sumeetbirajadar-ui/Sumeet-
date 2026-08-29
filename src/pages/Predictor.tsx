@@ -2,10 +2,11 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { GraduationCap, Search, Info } from 'lucide-react';
 import { ENGG_BRANCH_OPTIONS, AGRI_BRANCH_OPTIONS, PROF_BRANCH_OPTIONS } from '../data/kcet/branchOptions';
 import { CATEGORY_OPTIONS, ENGG_ROUNDS, AGRI_ROUNDS, CourseType } from '../data/kcet/meta';
-import { BAMS_CATEGORY_OPTIONS, BAMS_ROUNDS } from '../data/bams/meta';
-import { BHMS_CATEGORY_OPTIONS, BHMS_ROUNDS } from '../data/bhms/meta';
-import { BDS_CATEGORY_OPTIONS, BDS_ROUNDS } from '../data/bds/meta';
-import { MBBS_CATEGORY_OPTIONS, MBBS_ROUNDS } from '../data/mbbs/meta';
+import { QuotaType, QUOTA_OPTIONS } from '../data/ayushCategoryLabels';
+import { BAMS_CATEGORY_OPTIONS_BY_QUOTA, BAMS_ROUNDS } from '../data/bams/meta';
+import { BHMS_CATEGORY_OPTIONS_BY_QUOTA, BHMS_ROUNDS } from '../data/bhms/meta';
+import { BDS_CATEGORY_OPTIONS_BY_QUOTA, BDS_ROUNDS } from '../data/bds/meta';
+import { MBBS_CATEGORY_OPTIONS_BY_QUOTA, MBBS_ROUNDS } from '../data/mbbs/meta';
 import {
   predictEngg,
   predictAgri,
@@ -63,60 +64,66 @@ type AyushResultRow = BamsResultRow | BhmsResultRow | BdsResultRow | MbbsResultR
 
 const AYUSH_CONFIG: Record<
   AyushCourse,
-  { label: string; categoryOptions: { value: string; label: string }[]; rounds: string[]; predict: (rank: number, category: string) => AyushResultRow[]; note: React.ReactNode }
+  {
+    label: string;
+    categoryOptionsByQuota: Record<QuotaType, { value: string; label: string }[]>;
+    rounds: string[];
+    predict: (rank: number, category: string, quota: QuotaType) => AyushResultRow[];
+    note: React.ReactNode;
+  }
 > = {
   bams: {
     label: 'AYUSH (BAMS)',
-    categoryOptions: BAMS_CATEGORY_OPTIONS,
+    categoryOptionsByQuota: BAMS_CATEGORY_OPTIONS_BY_QUOTA,
     rounds: BAMS_ROUNDS,
     predict: predictBams,
     note: (
       <>
-        These are the real <strong>2024 KEA AYUSH counselling</strong> closing ranks for <strong>government-quota
-        BAMS seats only</strong> (private/NRI/management-quota seats aren't included yet), Rounds 1–3. Only one year
-        of data is available so far, so there's no future-year estimate here — always verify against the official
-        KEA cutoff list before making a decision.
+        These are the real <strong>2024 KEA AYUSH counselling</strong> closing ranks for <strong>BAMS</strong>,
+        Rounds 1–3, across all four seat quotas. Only one year of data is available so far, so there's no
+        future-year estimate here — always verify against the official KEA cutoff list before making a decision.
       </>
     ),
   },
   bhms: {
     label: 'AYUSH (BHMS)',
-    categoryOptions: BHMS_CATEGORY_OPTIONS,
+    categoryOptionsByQuota: BHMS_CATEGORY_OPTIONS_BY_QUOTA,
     rounds: BHMS_ROUNDS,
     predict: predictBhms,
     note: (
       <>
-        These are the real <strong>2025 KEA AYUSH counselling</strong> closing ranks for <strong>government-quota
-        BHMS seats only</strong>, from the official Round 1 allotment cut-off report — the only round KEA had
-        published in this aggregated form when this was built. Always verify against the official KEA cutoff list
-        before making a decision.
+        These are the real <strong>2025 KEA AYUSH counselling</strong> closing ranks for <strong>BHMS</strong>, from
+        the official Round 1 allotment cut-off report — the only round KEA had published in this aggregated form
+        when this was built. Private/NRI/Management-Other BHMS seats hadn't been allotted yet in this report, so
+        only Government shows results. Always verify against the official KEA cutoff list before making a decision.
       </>
     ),
   },
   bds: {
     label: 'BDS',
-    categoryOptions: BDS_CATEGORY_OPTIONS,
+    categoryOptionsByQuota: BDS_CATEGORY_OPTIONS_BY_QUOTA,
     rounds: BDS_ROUNDS,
     predict: predictBds,
     note: (
       <>
-        These are the real <strong>2025 KEA NEET-UG counselling</strong> closing ranks for <strong>government-quota
-        BDS seats only</strong>, computed from KEA's official Round 1 (final) and Round 3 seat allotment lists — no
-        Round 2 document was available. Always verify against the official KEA cutoff list before making a decision.
+        These are the real <strong>2025 KEA NEET-UG counselling</strong> closing ranks for <strong>BDS</strong>,
+        computed from KEA's official Round 1 (final) and Round 3 seat allotment lists, across all four seat quotas
+        — no Round 2 document was available. Always verify against the official KEA cutoff list before making a
+        decision.
       </>
     ),
   },
   mbbs: {
     label: 'MBBS',
-    categoryOptions: MBBS_CATEGORY_OPTIONS,
+    categoryOptionsByQuota: MBBS_CATEGORY_OPTIONS_BY_QUOTA,
     rounds: MBBS_ROUNDS,
     predict: predictMbbs,
     note: (
       <>
-        These are the real <strong>2025 KEA NEET-UG counselling</strong> closing ranks for <strong>government-quota
-        MBBS seats only</strong>, computed from KEA's official Round 3 (final, post-High-Court-order) seat allotment
-        list — Round 1 and Round 2 documents weren't available. Always verify against the official KEA cutoff list
-        before making a decision.
+        These are the real <strong>2025 KEA NEET-UG counselling</strong> closing ranks for <strong>MBBS</strong>,
+        computed from KEA's official Round 3 (final, post-High-Court-order) seat allotment list, across all four
+        seat quotas — Round 1 and Round 2 documents weren't available. Always verify against the official KEA
+        cutoff list before making a decision.
       </>
     ),
   },
@@ -131,11 +138,12 @@ export default function Predictor() {
   const [rank, setRank] = useState('');
   const [category, setCategory] = useState('');
   const [branch, setBranch] = useState('');
+  const [quota, setQuota] = useState<QuotaType>('GOVT');
   const [submitted, setSubmitted] = useState(false);
 
   const branchOptions = courseType === 'engg' ? ENGG_BRANCH_OPTIONS : courseType === 'agri' ? AGRI_BRANCH_OPTIONS : PROF_BRANCH_OPTIONS;
   const isAyush = isAyushCourse(courseType);
-  const categoryOptions = isAyush ? AYUSH_CONFIG[courseType].categoryOptions : CATEGORY_OPTIONS;
+  const categoryOptions = isAyush ? AYUSH_CONFIG[courseType].categoryOptionsByQuota[quota] : CATEGORY_OPTIONS;
   const needsBranch = !isAyush;
 
   const rankNum = parseFloat(rank);
@@ -157,8 +165,8 @@ export default function Predictor() {
     [submitted, valid, courseType, rankNum, branch, category, overrides]
   );
   const ayushRows = useMemo<AyushResultRow[]>(
-    () => (submitted && valid && isAyush ? AYUSH_CONFIG[courseType].predict(rankNum, category) : []),
-    [submitted, valid, isAyush, courseType, rankNum, category]
+    () => (submitted && valid && isAyush ? AYUSH_CONFIG[courseType].predict(rankNum, category, quota) : []),
+    [submitted, valid, isAyush, courseType, rankNum, category, quota]
   );
 
   const rows = courseType === 'engg' ? enggRows : courseType === 'agri' ? agriRows : courseType === 'prof' ? profRows : ayushRows;
@@ -167,6 +175,14 @@ export default function Predictor() {
   function handleTypeChange(t: CourseType) {
     setCourseType(t);
     setBranch('');
+    setCategory('');
+    setQuota('GOVT');
+    setSubmitted(false);
+  }
+
+  function handleQuotaChange(q: QuotaType) {
+    setQuota(q);
+    setCategory('');
     setSubmitted(false);
   }
 
@@ -200,7 +216,7 @@ export default function Predictor() {
           ))}
         </div>
 
-        <form onSubmit={handleSubmit} className={`grid grid-cols-1 gap-4 items-end ${needsBranch ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
           <div className="md:col-span-1">
             <label className="text-xs font-bold text-ink-500 uppercase tracking-widest mb-1 block">
               {courseType === 'prof' ? 'Your UGCET Rank' : isAyush ? 'Your NEET AIR (All India Rank)' : 'Your KCET Rank'}
@@ -214,6 +230,22 @@ export default function Predictor() {
               className="w-full border-2 border-ink-200 rounded-2xl px-3 py-2 outline-none focus:border-gold-400"
             />
           </div>
+          {isAyush && (
+            <div className="md:col-span-1">
+              <label className="text-xs font-bold text-ink-500 uppercase tracking-widest mb-1 block">Seat Type</label>
+              <select
+                value={quota}
+                onChange={(e) => handleQuotaChange(e.target.value as QuotaType)}
+                className="w-full border-2 border-ink-200 rounded-2xl px-3 py-2 outline-none focus:border-gold-400 bg-white"
+              >
+                {QUOTA_OPTIONS.map((q) => (
+                  <option key={q.value} value={q.value}>
+                    {q.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
           <div className="md:col-span-1">
             <label className="text-xs font-bold text-ink-500 uppercase tracking-widest mb-1 block">Category</label>
             <select
@@ -227,6 +259,7 @@ export default function Predictor() {
                   {c.label}
                 </option>
               ))}
+              {isAyush && categoryOptions.length === 0 && <option disabled>No seats allotted yet for this quota</option>}
             </select>
           </div>
           {needsBranch && (

@@ -1,10 +1,11 @@
 import karnatakaMbbs from '../data/mbbs/karnataka.json';
 import { PredictionLevel, getPrediction } from './kcetPredictor';
+import { QuotaType } from '../data/ayushCategoryLabels';
 
 interface MbbsCollege {
   n: string;
   l: string;
-  cats: Record<string, number[]>; // [R3] closing rank
+  quotas: Record<string, Record<string, number[]>>; // quota -> category -> [R3] closing rank
 }
 
 const DATA = karnatakaMbbs as unknown as Record<string, MbbsCollege>;
@@ -26,13 +27,12 @@ export interface MbbsResultRow {
   refVal: number;
 }
 
-// 2025 government-quota seats only, Round 3 (the final, court-ordered
-// result) — the only round KEA's official document covered when this was
-// built.
-export function predictMbbs(rank: number, category: string): MbbsResultRow[] {
+// 2025 Round 3 (final, court-ordered) only — the only round KEA's official
+// document covered when this was built.
+export function predictMbbs(rank: number, category: string, quota: QuotaType): MbbsResultRow[] {
   const rows: MbbsResultRow[] = [];
   for (const [code, college] of Object.entries(DATA)) {
-    const arr = college.cats[category];
+    const arr = college.quotas[quota]?.[category];
     if (!arr) continue;
     const values = arr.filter((v) => v > 0);
     const refVal = values.length > 0 ? values[values.length - 1] : 0;

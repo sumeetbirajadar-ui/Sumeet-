@@ -59,7 +59,6 @@ import {
   ClipboardCheck as NavCounsellingIcon,
 } from 'lucide-react';
 import Counselling from './pages/Counselling';
-import AiAssistant from './pages/AiAssistant';
 import SyllabusTracker from './pages/SyllabusTracker';
 import HabitsFocus from './pages/HabitsFocus';
 import Performance from './pages/Performance';
@@ -74,7 +73,7 @@ import { logoutStudent, registerStudent, loginStudent, sendStudentPasswordReset 
 import { pushStudentDataToCloud, pullStudentDataFromCloud, migrateLocalDataToUid } from './lib/cloudSync';
 
 type Role = 'admin' | 'student';
-type View = 'home' | 'routine' | 'planner' | 'weekly' | 'predictor' | 'career' | 'admin' | 'lms' | 'counselling' | 'assistant' | 'tracker' | 'habitsFocus' | 'performance' | 'targetsGoals' | 'wellbeingCare' | 'reports' | 'settingsBackup';
+type View = 'home' | 'routine' | 'planner' | 'weekly' | 'predictor' | 'career' | 'admin' | 'lms' | 'counselling' | 'tracker' | 'habitsFocus' | 'performance' | 'targetsGoals' | 'wellbeingCare' | 'reports' | 'settingsBackup';
 
 const iconMap: Record<string, React.ReactNode> = {
   Sun: <Sun className="w-5 h-5" />,
@@ -161,9 +160,9 @@ export default function App() {
 
   const handleLogout = () => {
     if (role === 'student') {
-      // Best-effort final save before the session ends — the periodic
-      // autosave below already covers most of it, this just catches
-      // whatever changed since the last tick.
+      // The save that matters: push whatever's currently in localStorage to
+      // the cloud before the session ends, so logging back in (anywhere)
+      // picks up exactly this. No ticking timer — see the effect below.
       pushStudentDataToCloud(getOrCreateStudentId());
       logoutStudent();
     }
@@ -172,21 +171,19 @@ export default function App() {
     localStorage.removeItem('app_role');
   };
 
-  // While a student is signed in, keep their tracker data mirrored to the
-  // cloud (under their account uid) so it survives logout, a cleared
-  // browser, or opening the app on a different phone.
+  // No periodic autosave — saving is event-driven, not timer-driven. A
+  // save fires on logout (above) and whenever the student leaves the app
+  // (locks the phone, switches app, closes the tab) via visibilitychange,
+  // which covers the realistic "forgot to tap Logout" case too, without
+  // ever writing to Firestore on a fixed interval.
   useEffect(() => {
     if (!isAuthenticated || role !== 'student') return;
     const uid = getOrCreateStudentId();
-    const interval = setInterval(() => pushStudentDataToCloud(uid), 30000);
     const onHide = () => {
       if (document.visibilityState === 'hidden') pushStudentDataToCloud(uid);
     };
     document.addEventListener('visibilitychange', onHide);
-    return () => {
-      clearInterval(interval);
-      document.removeEventListener('visibilitychange', onHide);
-    };
+    return () => document.removeEventListener('visibilitychange', onHide);
   }, [isAuthenticated, role]);
 
   const getDayData = (date: string): DailyData => {
@@ -848,7 +845,6 @@ export default function App() {
             {effectiveView === 'admin' && <Admin />}
             {effectiveView === 'lms' && <StudentLMS />}
             {effectiveView === 'counselling' && <Counselling />}
-            {effectiveView === 'assistant' && <AiAssistant />}
             {effectiveView === 'tracker' && <SyllabusTracker />}
             {effectiveView === 'habitsFocus' && <HabitsFocus />}
             {effectiveView === 'performance' && <Performance />}

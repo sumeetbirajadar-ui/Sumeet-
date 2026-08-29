@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Megaphone, GraduationCap, Compass, Video, ClipboardCheck, Sparkles, MessageSquareText, BookOpenCheck, Flame, Target, Flag, HeartHandshake, FileBarChart, Settings as SettingsIcon, CalendarClock } from 'lucide-react';
+import { Megaphone, GraduationCap, Compass, Video, ClipboardCheck, Sparkles, BookOpenCheck, Flame, Target, Flag, HeartHandshake, FileBarChart, Settings as SettingsIcon, CalendarClock } from 'lucide-react';
 import { Announcement, subscribePublished } from '../lib/announcements';
 import { latestActivityAt, subscribeClasses, subscribeContent, LiveClass, ContentItem } from '../lib/lms';
 import { getLmsLastSeen, getOrCreateStudentId } from '../lib/studentIdentity';
@@ -7,7 +7,7 @@ import { examProgressSummary, getDueRevisions } from '../lib/syllabusTracker';
 import { prepScore } from '../lib/prepScore';
 import { getQuoteOfDay } from '../lib/quotes';
 
-type Dest = 'predictor' | 'career' | 'lms' | 'counselling' | 'assistant' | 'tracker' | 'habitsFocus' | 'performance' | 'targetsGoals' | 'wellbeingCare' | 'reports' | 'settingsBackup';
+type Dest = 'predictor' | 'career' | 'lms' | 'counselling' | 'tracker' | 'habitsFocus' | 'performance' | 'targetsGoals' | 'wellbeingCare' | 'reports' | 'settingsBackup';
 
 function FeatureCard({
   onClick,
@@ -147,13 +147,6 @@ export default function StudentHome({ onNavigate }: { onNavigate: (view: Dest) =
           badgeClass="bg-clay-50"
           title="Wellbeing & Care"
           description="A quiet daily check-in, and the basics that keep you able to study."
-        />
-        <FeatureCard
-          onClick={() => onNavigate('assistant')}
-          icon={<MessageSquareText className="w-6 h-6 text-sage-600" />}
-          badgeClass="bg-sage-50"
-          title="Ask the AI Assistant"
-          description="Doubt-solving and counselling help, grounded in current search results."
         />
         <FeatureCard
           onClick={() => onNavigate('predictor')}

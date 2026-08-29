@@ -3,6 +3,9 @@ import { GraduationCap, Search, Info } from 'lucide-react';
 import { ENGG_BRANCH_OPTIONS, AGRI_BRANCH_OPTIONS, PROF_BRANCH_OPTIONS } from '../data/kcet/branchOptions';
 import { CATEGORY_OPTIONS, ENGG_ROUNDS, AGRI_ROUNDS, CourseType } from '../data/kcet/meta';
 import { BAMS_CATEGORY_OPTIONS, BAMS_ROUNDS } from '../data/bams/meta';
+import { BHMS_CATEGORY_OPTIONS, BHMS_ROUNDS } from '../data/bhms/meta';
+import { BDS_CATEGORY_OPTIONS, BDS_ROUNDS } from '../data/bds/meta';
+import { MBBS_CATEGORY_OPTIONS, MBBS_ROUNDS } from '../data/mbbs/meta';
 import {
   predictEngg,
   predictAgri,
@@ -14,6 +17,9 @@ import {
   ProfResultRow,
 } from '../lib/kcetPredictor';
 import { predictBams, BamsResultRow } from '../lib/bamsPredictor';
+import { predictBhms, BhmsResultRow } from '../lib/bhmsPredictor';
+import { predictBds, BdsResultRow } from '../lib/bdsPredictor';
+import { predictMbbs, MbbsResultRow } from '../lib/mbbsPredictor';
 import { OverrideStore, subscribeOverrideStore } from '../lib/adminOverrides';
 
 const BADGE_STYLES: Record<PredictionLevel, string> = {
@@ -48,6 +54,78 @@ function cellColor(rank: number, cutoff: number): string {
   return 'text-ink-400';
 }
 
+// AYUSH/medical predictors (bams, bhms, bds, mbbs) all share the same shape
+// — NEET AIR + category only, no branch, a fixed set of real round-wise
+// closing ranks with no future-year projection — so they're driven off one
+// config table instead of repeating near-identical JSX per course.
+type AyushCourse = 'bams' | 'bhms' | 'bds' | 'mbbs';
+type AyushResultRow = BamsResultRow | BhmsResultRow | BdsResultRow | MbbsResultRow;
+
+const AYUSH_CONFIG: Record<
+  AyushCourse,
+  { label: string; categoryOptions: { value: string; label: string }[]; rounds: string[]; predict: (rank: number, category: string) => AyushResultRow[]; note: React.ReactNode }
+> = {
+  bams: {
+    label: 'AYUSH (BAMS)',
+    categoryOptions: BAMS_CATEGORY_OPTIONS,
+    rounds: BAMS_ROUNDS,
+    predict: predictBams,
+    note: (
+      <>
+        These are the real <strong>2024 KEA AYUSH counselling</strong> closing ranks for <strong>government-quota
+        BAMS seats only</strong> (private/NRI/management-quota seats aren't included yet), Rounds 1–3. Only one year
+        of data is available so far, so there's no future-year estimate here — always verify against the official
+        KEA cutoff list before making a decision.
+      </>
+    ),
+  },
+  bhms: {
+    label: 'AYUSH (BHMS)',
+    categoryOptions: BHMS_CATEGORY_OPTIONS,
+    rounds: BHMS_ROUNDS,
+    predict: predictBhms,
+    note: (
+      <>
+        These are the real <strong>2025 KEA AYUSH counselling</strong> closing ranks for <strong>government-quota
+        BHMS seats only</strong>, from the official Round 1 allotment cut-off report — the only round KEA had
+        published in this aggregated form when this was built. Always verify against the official KEA cutoff list
+        before making a decision.
+      </>
+    ),
+  },
+  bds: {
+    label: 'BDS',
+    categoryOptions: BDS_CATEGORY_OPTIONS,
+    rounds: BDS_ROUNDS,
+    predict: predictBds,
+    note: (
+      <>
+        These are the real <strong>2025 KEA NEET-UG counselling</strong> closing ranks for <strong>government-quota
+        BDS seats only</strong>, computed from KEA's official Round 1 (final) and Round 3 seat allotment lists — no
+        Round 2 document was available. Always verify against the official KEA cutoff list before making a decision.
+      </>
+    ),
+  },
+  mbbs: {
+    label: 'MBBS',
+    categoryOptions: MBBS_CATEGORY_OPTIONS,
+    rounds: MBBS_ROUNDS,
+    predict: predictMbbs,
+    note: (
+      <>
+        These are the real <strong>2025 KEA NEET-UG counselling</strong> closing ranks for <strong>government-quota
+        MBBS seats only</strong>, computed from KEA's official Round 3 (final, post-High-Court-order) seat allotment
+        list — Round 1 and Round 2 documents weren't available. Always verify against the official KEA cutoff list
+        before making a decision.
+      </>
+    ),
+  },
+};
+const AYUSH_COURSES = Object.keys(AYUSH_CONFIG) as AyushCourse[];
+function isAyushCourse(t: CourseType): t is AyushCourse {
+  return (AYUSH_COURSES as string[]).includes(t);
+}
+
 export default function Predictor() {
   const [courseType, setCourseType] = useState<CourseType>('engg');
   const [rank, setRank] = useState('');
@@ -56,8 +134,9 @@ export default function Predictor() {
   const [submitted, setSubmitted] = useState(false);
 
   const branchOptions = courseType === 'engg' ? ENGG_BRANCH_OPTIONS : courseType === 'agri' ? AGRI_BRANCH_OPTIONS : PROF_BRANCH_OPTIONS;
-  const categoryOptions = courseType === 'bams' ? BAMS_CATEGORY_OPTIONS : CATEGORY_OPTIONS;
-  const needsBranch = courseType !== 'bams';
+  const isAyush = isAyushCourse(courseType);
+  const categoryOptions = isAyush ? AYUSH_CONFIG[courseType].categoryOptions : CATEGORY_OPTIONS;
+  const needsBranch = !isAyush;
 
   const rankNum = parseFloat(rank);
   const valid = !!rankNum && rankNum > 0 && !!category && (!needsBranch || !!branch);
@@ -77,12 +156,12 @@ export default function Predictor() {
     () => (submitted && valid && courseType === 'prof' ? predictProf(rankNum, branch, category, overrides) : []),
     [submitted, valid, courseType, rankNum, branch, category, overrides]
   );
-  const bamsRows = useMemo<BamsResultRow[]>(
-    () => (submitted && valid && courseType === 'bams' ? predictBams(rankNum, category) : []),
-    [submitted, valid, courseType, rankNum, category]
+  const ayushRows = useMemo<AyushResultRow[]>(
+    () => (submitted && valid && isAyush ? AYUSH_CONFIG[courseType].predict(rankNum, category) : []),
+    [submitted, valid, isAyush, courseType, rankNum, category]
   );
 
-  const rows = courseType === 'engg' ? enggRows : courseType === 'agri' ? agriRows : courseType === 'prof' ? profRows : bamsRows;
+  const rows = courseType === 'engg' ? enggRows : courseType === 'agri' ? agriRows : courseType === 'prof' ? profRows : ayushRows;
   const counts = countPredictions(rows);
 
   function handleTypeChange(t: CourseType) {
@@ -103,12 +182,12 @@ export default function Predictor() {
         <h1 className="text-3xl font-bold tracking-tight font-display mb-2 flex items-center justify-center gap-2">
           <GraduationCap className="w-7 h-7 text-gold-500" /> College Predictor
         </h1>
-        <p className="text-ink-500 text-sm">KCET Engineering, Agriculture & Veterinary/Professional, plus Karnataka AYUSH (BAMS) counselling</p>
+        <p className="text-ink-500 text-sm">KCET Engineering, Agriculture & Veterinary/Professional, plus Karnataka AYUSH (BAMS &amp; BHMS), MBBS and BDS counselling</p>
       </header>
 
       <div className="bg-white rounded-3xl border-2 border-ink-200 shadow-sm p-6 mb-8">
         <div className="flex gap-2 mb-6 flex-wrap">
-          {(['engg', 'agri', 'prof', 'bams'] as CourseType[]).map((t) => (
+          {(['engg', 'agri', 'prof', 'bams', 'bhms', 'mbbs', 'bds'] as CourseType[]).map((t) => (
             <button
               key={t}
               onClick={() => handleTypeChange(t)}
@@ -116,7 +195,7 @@ export default function Predictor() {
                 courseType === t ? 'bg-ink-800 text-white' : 'bg-ink-100 text-ink-500 hover:bg-ink-200'
               }`}
             >
-              {t === 'engg' ? 'Engineering' : t === 'agri' ? 'Agriculture' : t === 'prof' ? 'Veterinary / Professional' : 'AYUSH (BAMS)'}
+              {t === 'engg' ? 'Engineering' : t === 'agri' ? 'Agriculture' : t === 'prof' ? 'Veterinary / Professional' : isAyushCourse(t) ? AYUSH_CONFIG[t].label : t}
             </button>
           ))}
         </div>
@@ -124,7 +203,7 @@ export default function Predictor() {
         <form onSubmit={handleSubmit} className={`grid grid-cols-1 gap-4 items-end ${needsBranch ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
           <div className="md:col-span-1">
             <label className="text-xs font-bold text-ink-500 uppercase tracking-widest mb-1 block">
-              {courseType === 'prof' ? 'Your UGCET Rank' : courseType === 'bams' ? 'Your NEET AIR (All India Rank)' : 'Your KCET Rank'}
+              {courseType === 'prof' ? 'Your UGCET Rank' : isAyush ? 'Your NEET AIR (All India Rank)' : 'Your KCET Rank'}
             </label>
             <input
               type="number"
@@ -181,28 +260,21 @@ export default function Predictor() {
         </form>
       </div>
 
-      {courseType !== 'bams' ? (
-        <div className="flex items-start gap-2 bg-sage-50 border border-sage-100 text-sage-800 text-xs rounded-3xl px-4 py-3 mb-8">
-          <Info className="w-4 h-4 mt-0.5 shrink-0" />
-          <p>
-            Columns for 2022–2024 are real published KEA cutoff ranks. <strong>2025 / 2026 columns are trend-based
-            estimates</strong> (recency-weighted projection from the 2022–24 data) unless an admin has entered a real
-            official figure — those are marked "Official". Always verify against the official KEA cutoff list before
-            making a decision.
-          </p>
-        </div>
-      ) : (
-        <div className="flex items-start gap-2 bg-sage-50 border border-sage-100 text-sage-800 text-xs rounded-3xl px-4 py-3 mb-8">
-          <Info className="w-4 h-4 mt-0.5 shrink-0" />
-          <p>
-            These are the real <strong>2024 KEA AYUSH counselling</strong> closing ranks for <strong>government-quota
-            BAMS seats only</strong> (private/NRI/management-quota seats aren't included yet). Only one year of data
-            is available so far, so there's no future-year estimate here — always verify against the official KEA
-            cutoff list before making a decision. MBBS, BDS and BHMS predictors aren't available yet — the category-
-            wise official data for those couldn't be fully sourced yet.
-          </p>
-        </div>
-      )}
+      <div className="flex items-start gap-2 bg-sage-50 border border-sage-100 text-sage-800 text-xs rounded-3xl px-4 py-3 mb-8">
+        <Info className="w-4 h-4 mt-0.5 shrink-0" />
+        <p>
+          {isAyush ? (
+            AYUSH_CONFIG[courseType].note
+          ) : (
+            <>
+              Columns for 2022–2024 are real published KEA cutoff ranks. <strong>2025 / 2026 columns are trend-based
+              estimates</strong> (recency-weighted projection from the 2022–24 data) unless an admin has entered a real
+              official figure — those are marked "Official". Always verify against the official KEA cutoff list before
+              making a decision.
+            </>
+          )}
+        </p>
+      </div>
 
       {submitted && valid && rows.length === 0 && (
         <div className="bg-white rounded-3xl border-2 border-ink-200 p-8 text-center text-ink-500">
@@ -243,13 +315,13 @@ export default function Predictor() {
                       </th>
                     ))}
                   {courseType === 'prof' && <th className="text-right px-3 py-3">Reference Cutoff</th>}
-                  {courseType === 'bams' &&
-                    BAMS_ROUNDS.map((l) => (
+                  {isAyush &&
+                    AYUSH_CONFIG[courseType].rounds.map((l) => (
                       <th key={l} className="text-right px-3 py-3 whitespace-nowrap">
                         {l}
                       </th>
                     ))}
-                  {courseType !== 'bams' && (
+                  {!isAyush && (
                     <>
                       <th className="text-right px-3 py-3 whitespace-nowrap">Est. 2025</th>
                       <th className="text-right px-3 py-3 whitespace-nowrap">Est. 2026</th>
@@ -328,8 +400,8 @@ export default function Predictor() {
                       ))}
                     </tr>
                   ))}
-                {courseType === 'bams' &&
-                  (rows as BamsResultRow[]).map((r, i) => (
+                {isAyush &&
+                  (rows as AyushResultRow[]).map((r, i) => (
                     <tr key={r.code} className="hover:bg-ink-50">
                       <td className="px-4 py-3 font-medium text-ink-800">
                         {i + 1}. {r.name}

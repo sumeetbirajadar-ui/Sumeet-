@@ -48,4 +48,4 @@ export const CATEGORY_OPTIONS: CategoryOption[] = [
   { value: 'STR', label: 'STR — ST (Rural / HK)' },
 ];
 
-export type CourseType = 'engg' | 'agri' | 'prof' | 'bams';
+export type CourseType = 'engg' | 'agri' | 'prof' | 'bams' | 'bhms' | 'bds' | 'mbbs';

@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { GraduationCap, Search, Info } from 'lucide-react';
 import { ENGG_BRANCH_OPTIONS, AGRI_BRANCH_OPTIONS, PROF_BRANCH_OPTIONS } from '../data/kcet/branchOptions';
 import { CATEGORY_OPTIONS, ENGG_ROUNDS, AGRI_ROUNDS, CourseType } from '../data/kcet/meta';
+import { BAMS_CATEGORY_OPTIONS, BAMS_ROUNDS } from '../data/bams/meta';
 import {
   predictEngg,
   predictAgri,
@@ -12,6 +13,7 @@ import {
   AgriResultRow,
   ProfResultRow,
 } from '../lib/kcetPredictor';
+import { predictBams, BamsResultRow } from '../lib/bamsPredictor';
 import { OverrideStore, subscribeOverrideStore } from '../lib/adminOverrides';
 
 const BADGE_STYLES: Record<PredictionLevel, string> = {
@@ -54,9 +56,11 @@ export default function Predictor() {
   const [submitted, setSubmitted] = useState(false);
 
   const branchOptions = courseType === 'engg' ? ENGG_BRANCH_OPTIONS : courseType === 'agri' ? AGRI_BRANCH_OPTIONS : PROF_BRANCH_OPTIONS;
+  const categoryOptions = courseType === 'bams' ? BAMS_CATEGORY_OPTIONS : CATEGORY_OPTIONS;
+  const needsBranch = courseType !== 'bams';
 
   const rankNum = parseFloat(rank);
-  const valid = !!rankNum && rankNum > 0 && !!branch && !!category;
+  const valid = !!rankNum && rankNum > 0 && !!category && (!needsBranch || !!branch);
 
   const [overrides, setOverrides] = useState<OverrideStore>({ engg: {}, agri: {}, prof: {} });
   useEffect(() => subscribeOverrideStore(setOverrides), []);
@@ -73,8 +77,12 @@ export default function Predictor() {
     () => (submitted && valid && courseType === 'prof' ? predictProf(rankNum, branch, category, overrides) : []),
     [submitted, valid, courseType, rankNum, branch, category, overrides]
   );
+  const bamsRows = useMemo<BamsResultRow[]>(
+    () => (submitted && valid && courseType === 'bams' ? predictBams(rankNum, category) : []),
+    [submitted, valid, courseType, rankNum, category]
+  );
 
-  const rows = courseType === 'engg' ? enggRows : courseType === 'agri' ? agriRows : profRows;
+  const rows = courseType === 'engg' ? enggRows : courseType === 'agri' ? agriRows : courseType === 'prof' ? profRows : bamsRows;
   const counts = countPredictions(rows);
 
   function handleTypeChange(t: CourseType) {
@@ -93,14 +101,14 @@ export default function Predictor() {
     <div className="max-w-5xl mx-auto py-8 px-4">
       <header className="text-center mb-8">
         <h1 className="text-3xl font-bold tracking-tight font-display mb-2 flex items-center justify-center gap-2">
-          <GraduationCap className="w-7 h-7 text-gold-500" /> KCET College Predictor
+          <GraduationCap className="w-7 h-7 text-gold-500" /> College Predictor
         </h1>
-        <p className="text-ink-500 text-sm">Karnataka CET — Engineering, Agriculture & Veterinary/Professional courses</p>
+        <p className="text-ink-500 text-sm">KCET Engineering, Agriculture & Veterinary/Professional, plus Karnataka AYUSH (BAMS) counselling</p>
       </header>
 
       <div className="bg-white rounded-3xl border-2 border-ink-200 shadow-sm p-6 mb-8">
-        <div className="flex gap-2 mb-6">
-          {(['engg', 'agri', 'prof'] as CourseType[]).map((t) => (
+        <div className="flex gap-2 mb-6 flex-wrap">
+          {(['engg', 'agri', 'prof', 'bams'] as CourseType[]).map((t) => (
             <button
               key={t}
               onClick={() => handleTypeChange(t)}
@@ -108,15 +116,15 @@ export default function Predictor() {
                 courseType === t ? 'bg-ink-800 text-white' : 'bg-ink-100 text-ink-500 hover:bg-ink-200'
               }`}
             >
-              {t === 'engg' ? 'Engineering' : t === 'agri' ? 'Agriculture' : 'Veterinary / Professional'}
+              {t === 'engg' ? 'Engineering' : t === 'agri' ? 'Agriculture' : t === 'prof' ? 'Veterinary / Professional' : 'AYUSH (BAMS)'}
             </button>
           ))}
         </div>
 
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+        <form onSubmit={handleSubmit} className={`grid grid-cols-1 gap-4 items-end ${needsBranch ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
           <div className="md:col-span-1">
             <label className="text-xs font-bold text-ink-500 uppercase tracking-widest mb-1 block">
-              {courseType === 'prof' ? 'Your UGCET Rank' : 'Your KCET Rank'}
+              {courseType === 'prof' ? 'Your UGCET Rank' : courseType === 'bams' ? 'Your NEET AIR (All India Rank)' : 'Your KCET Rank'}
             </label>
             <input
               type="number"
@@ -135,30 +143,32 @@ export default function Predictor() {
               className="w-full border-2 border-ink-200 rounded-2xl px-3 py-2 outline-none focus:border-gold-400 bg-white"
             >
               <option value="">-- Select --</option>
-              {CATEGORY_OPTIONS.map((c) => (
+              {categoryOptions.map((c) => (
                 <option key={c.value} value={c.value}>
                   {c.label}
                 </option>
               ))}
             </select>
           </div>
-          <div className="md:col-span-1">
-            <label className="text-xs font-bold text-ink-500 uppercase tracking-widest mb-1 block">
-              {courseType === 'engg' ? 'Branch / Programme' : 'Course'}
-            </label>
-            <select
-              value={branch}
-              onChange={(e) => setBranch(e.target.value)}
-              className="w-full border-2 border-ink-200 rounded-2xl px-3 py-2 outline-none focus:border-gold-400 bg-white"
-            >
-              <option value="">-- Select --</option>
-              {branchOptions.map((b) => (
-                <option key={b.value} value={b.value}>
-                  {b.label}
-                </option>
-              ))}
-            </select>
-          </div>
+          {needsBranch && (
+            <div className="md:col-span-1">
+              <label className="text-xs font-bold text-ink-500 uppercase tracking-widest mb-1 block">
+                {courseType === 'engg' ? 'Branch / Programme' : 'Course'}
+              </label>
+              <select
+                value={branch}
+                onChange={(e) => setBranch(e.target.value)}
+                className="w-full border-2 border-ink-200 rounded-2xl px-3 py-2 outline-none focus:border-gold-400 bg-white"
+              >
+                <option value="">-- Select --</option>
+                {branchOptions.map((b) => (
+                  <option key={b.value} value={b.value}>
+                    {b.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
           <div className="md:col-span-1">
             <button
               type="submit"
@@ -171,15 +181,28 @@ export default function Predictor() {
         </form>
       </div>
 
-      <div className="flex items-start gap-2 bg-sage-50 border border-sage-100 text-sage-800 text-xs rounded-3xl px-4 py-3 mb-8">
-        <Info className="w-4 h-4 mt-0.5 shrink-0" />
-        <p>
-          Columns for 2022–2024 are real published KEA cutoff ranks. <strong>2025 / 2026 columns are trend-based
-          estimates</strong> (recency-weighted projection from the 2022–24 data) unless an admin has entered a real
-          official figure — those are marked "Official". Always verify against the official KEA cutoff list before
-          making a decision.
-        </p>
-      </div>
+      {courseType !== 'bams' ? (
+        <div className="flex items-start gap-2 bg-sage-50 border border-sage-100 text-sage-800 text-xs rounded-3xl px-4 py-3 mb-8">
+          <Info className="w-4 h-4 mt-0.5 shrink-0" />
+          <p>
+            Columns for 2022–2024 are real published KEA cutoff ranks. <strong>2025 / 2026 columns are trend-based
+            estimates</strong> (recency-weighted projection from the 2022–24 data) unless an admin has entered a real
+            official figure — those are marked "Official". Always verify against the official KEA cutoff list before
+            making a decision.
+          </p>
+        </div>
+      ) : (
+        <div className="flex items-start gap-2 bg-sage-50 border border-sage-100 text-sage-800 text-xs rounded-3xl px-4 py-3 mb-8">
+          <Info className="w-4 h-4 mt-0.5 shrink-0" />
+          <p>
+            These are the real <strong>2024 KEA AYUSH counselling</strong> closing ranks for <strong>government-quota
+            BAMS seats only</strong> (private/NRI/management-quota seats aren't included yet). Only one year of data
+            is available so far, so there's no future-year estimate here — always verify against the official KEA
+            cutoff list before making a decision. MBBS, BDS and BHMS predictors aren't available yet — the category-
+            wise official data for those couldn't be fully sourced yet.
+          </p>
+        </div>
+      )}
 
       {submitted && valid && rows.length === 0 && (
         <div className="bg-white rounded-3xl border-2 border-ink-200 p-8 text-center text-ink-500">
@@ -220,8 +243,18 @@ export default function Predictor() {
                       </th>
                     ))}
                   {courseType === 'prof' && <th className="text-right px-3 py-3">Reference Cutoff</th>}
-                  <th className="text-right px-3 py-3 whitespace-nowrap">Est. 2025</th>
-                  <th className="text-right px-3 py-3 whitespace-nowrap">Est. 2026</th>
+                  {courseType === 'bams' &&
+                    BAMS_ROUNDS.map((l) => (
+                      <th key={l} className="text-right px-3 py-3 whitespace-nowrap">
+                        {l}
+                      </th>
+                    ))}
+                  {courseType !== 'bams' && (
+                    <>
+                      <th className="text-right px-3 py-3 whitespace-nowrap">Est. 2025</th>
+                      <th className="text-right px-3 py-3 whitespace-nowrap">Est. 2026</th>
+                    </>
+                  )}
                 </tr>
               </thead>
               <tbody className="divide-y divide-ink-100">
@@ -291,6 +324,23 @@ export default function Predictor() {
                           <span className={p.source === 'official' ? 'text-emerald-700 font-bold' : 'text-ink-400 italic'}>
                             ~{p.value ? p.value.toLocaleString() : '—'}
                           </span>
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                {courseType === 'bams' &&
+                  (rows as BamsResultRow[]).map((r, i) => (
+                    <tr key={r.code} className="hover:bg-ink-50">
+                      <td className="px-4 py-3 font-medium text-ink-800">
+                        {i + 1}. {r.name}
+                      </td>
+                      <td className="px-4 py-3 text-ink-500">{r.location || '—'}</td>
+                      <td className="px-4 py-3">
+                        <Badge level={r.prediction} />
+                      </td>
+                      {r.rounds.map((v, idx) => (
+                        <td key={idx} className={`px-3 py-3 text-right whitespace-nowrap ${cellColor(rankNum, v)}`}>
+                          {v ? v.toLocaleString() : '—'}
                         </td>
                       ))}
                     </tr>

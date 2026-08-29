@@ -1,0 +1,12 @@
+{
+  "appId": "academy.sciencemonk.student",
+  "appName": "Science Monk - Student",
+  "webDir": "www",
+  "server": {
+    "url": "https://sumeet-phi.vercel.app/?mode=student",
+    "cleartext": false
+  },
+  "android": {
+    "allowMixedContent": false
+  }
+}

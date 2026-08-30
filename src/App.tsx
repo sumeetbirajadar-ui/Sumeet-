@@ -1114,11 +1114,18 @@ const Login: React.FC<{ mode: AppMode; onLogin: (role: 'admin' | 'student') => v
         <div className="bg-white/10 backdrop-blur-2xl p-10 rounded-[3rem] border border-white/20 shadow-2xl">
           <div className="text-center mb-10">
             <motion.div
-              initial={{ rotate: -10 }}
-              animate={{ rotate: 0 }}
-              className="inline-block w-20 h-20 rounded-full overflow-hidden shadow-lg mb-6 bg-white"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex items-center justify-center gap-4 mb-6"
             >
-              <img src="/branding/science-monk-logo.png" alt="Science Monk Academy" className="w-full h-full object-cover" />
+              <div className="w-24 h-24 rounded-full overflow-hidden shadow-lg bg-white shrink-0">
+                <img src="/branding/science-monk-logo.png" alt="Science Monk Academy" className="w-full h-full object-cover" />
+              </div>
+              <img
+                src="/branding/founder-photo.png"
+                alt="Sumeet Birajadar, Founder"
+                className="w-20 h-24 rounded-2xl object-cover object-top shadow-lg shrink-0"
+              />
             </motion.div>
             <h1 className="text-3xl font-bold text-white tracking-tight font-display mb-2">Welcome</h1>
             <p className="text-ink-400 text-sm">

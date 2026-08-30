@@ -1315,9 +1315,9 @@ const Login: React.FC<{ mode: AppMode; onLogin: (role: 'admin' | 'student') => v
             </p>
           </div>
 
-          <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-center gap-3">
-            <img src="/branding/founder-photo.png" alt="Sumeet Birajadar, Founder" className="w-14 h-14 rounded-full object-cover shrink-0" />
-            <p className="text-ink-500 text-[11px] leading-tight text-left">
+          <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-center gap-4">
+            <img src="/branding/founder-photo.png" alt="Sumeet Birajadar, Founder" className="w-16 h-20 rounded-2xl object-cover object-top shrink-0" />
+            <p className="text-ink-500 text-xs leading-tight text-left">
               <span className="text-ink-300 font-semibold">Sumeet Birajadar</span>
               <br />
               Founder, <span className="text-ink-300 font-semibold">Science Monk</span> Academy

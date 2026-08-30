@@ -204,6 +204,11 @@ export default function StudentHome({ onNavigate }: { onNavigate: (view: Dest) =
           ))}
         </div>
       </div>
+
+      <div className="flex items-center justify-center gap-2.5 text-ink-400 text-xs pt-2">
+        <img src="/branding/founder-photo.png" alt="Sumeet Birajadar, Founder" className="w-9 h-9 rounded-full object-cover" />
+        <span>Sumeet Birajadar &middot; Science Monk Academy</span>
+      </div>
     </div>
   );
 }

@@ -65,6 +65,15 @@ const SPECIAL_LABELS: Record<string, string> = {
   MM: 'Minority Quota (institution-declared, code MM)',
   MMH: 'Minority Quota (institution-declared, code MMH)',
   MU: 'Minority Quota (institution-declared, code MU)',
+  'S-G': 'Institution-declared quota (code S-G)',
+  RC1: 'Institution-declared reservation category (code RC1)',
+  RC2: 'Institution-declared reservation category (code RC2)',
+  RC3: 'Institution-declared reservation category (code RC3)',
+  RC4: 'Institution-declared reservation category (code RC4)',
+  RC5: 'Institution-declared reservation category (code RC5)',
+  RC6: 'Institution-declared reservation category (code RC6)',
+  RC7: 'Institution-declared reservation category (code RC7)',
+  RC8: 'Institution-declared reservation category (code RC8)',
 };
 
 export function decodeCategory(code: string): string {

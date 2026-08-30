@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Sun, 
@@ -45,11 +45,17 @@ import {
   EVENING_730_TASKS,
   WEEKLY_TASKS
 } from './types';
-import Predictor from './pages/Predictor';
-import CareerGuidance from './pages/CareerGuidance';
-import Admin from './pages/Admin';
+// Route-level code splitting: these pages (especially Predictor, which pulls
+// in every course's cutoff dataset — well over a megabyte of JSON) used to
+// be bundled into the app's single startup chunk, so a student opening the
+// login screen or the syllabus tracker paid the download+parse cost of data
+// they may never look at. Lazy-loading means each page's own chunk is only
+// fetched when its tab is actually opened.
+const Predictor = lazy(() => import('./pages/Predictor'));
+const CareerGuidance = lazy(() => import('./pages/CareerGuidance'));
+const Admin = lazy(() => import('./pages/Admin'));
 import StudentHome from './pages/StudentHome';
-import StudentLMS from './pages/StudentLMS';
+const StudentLMS = lazy(() => import('./pages/StudentLMS'));
 import {
   GraduationCap as NavPredictorIcon,
   Compass as NavCareerIcon,
@@ -58,14 +64,14 @@ import {
   Video as NavLmsIcon,
   ClipboardCheck as NavCounsellingIcon,
 } from 'lucide-react';
-import Counselling from './pages/Counselling';
-import SyllabusTracker from './pages/SyllabusTracker';
-import HabitsFocus from './pages/HabitsFocus';
-import Performance from './pages/Performance';
-import TargetsGoals from './pages/TargetsGoals';
-import WellbeingCare from './pages/WellbeingCare';
-import ReportsPage from './pages/ReportsPage';
-import SettingsBackup from './pages/SettingsBackup';
+const Counselling = lazy(() => import('./pages/Counselling'));
+const SyllabusTracker = lazy(() => import('./pages/SyllabusTracker'));
+const HabitsFocus = lazy(() => import('./pages/HabitsFocus'));
+const Performance = lazy(() => import('./pages/Performance'));
+const TargetsGoals = lazy(() => import('./pages/TargetsGoals'));
+const WellbeingCare = lazy(() => import('./pages/WellbeingCare'));
+const ReportsPage = lazy(() => import('./pages/ReportsPage'));
+const SettingsBackup = lazy(() => import('./pages/SettingsBackup'));
 import PomodoroTimer from './components/PomodoroTimer';
 import { latestActivityAt, subscribeClasses, subscribeContent, LiveClass, ContentItem } from './lib/lms';
 import { getLmsLastSeen, markLmsSeen, getOrCreateStudentId, setStudentUid } from './lib/studentIdentity';
@@ -119,6 +125,12 @@ const Watermark: React.FC = () => (
       alt=""
       className="w-[55vmin] h-[55vmin] object-contain opacity-[0.04] grayscale"
     />
+  </div>
+);
+
+const PageLoadingFallback: React.FC = () => (
+  <div className="flex items-center justify-center py-24">
+    <div className="w-8 h-8 border-2 border-ink-200 border-t-gold-400 rounded-full animate-spin" />
   </div>
 );
 
@@ -853,22 +865,24 @@ export default function App() {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
           >
-            {effectiveView === 'home' && <StudentHome onNavigate={(v) => setView(v)} />}
-            {effectiveView === 'routine' && <RoutineView />}
-            {effectiveView === 'planner' && <PlannerView />}
-            {effectiveView === 'weekly' && <WeeklyReviewView />}
-            {effectiveView === 'predictor' && <Predictor />}
-            {effectiveView === 'career' && <CareerGuidance />}
-            {effectiveView === 'admin' && <Admin />}
-            {effectiveView === 'lms' && <StudentLMS />}
-            {effectiveView === 'counselling' && <Counselling />}
-            {effectiveView === 'tracker' && <SyllabusTracker />}
-            {effectiveView === 'habitsFocus' && <HabitsFocus />}
-            {effectiveView === 'performance' && <Performance />}
-            {effectiveView === 'targetsGoals' && <TargetsGoals />}
-            {effectiveView === 'wellbeingCare' && <WellbeingCare />}
-            {effectiveView === 'reports' && <ReportsPage />}
-            {effectiveView === 'settingsBackup' && <SettingsBackup />}
+            <Suspense fallback={<PageLoadingFallback />}>
+              {effectiveView === 'home' && <StudentHome onNavigate={(v) => setView(v)} />}
+              {effectiveView === 'routine' && <RoutineView />}
+              {effectiveView === 'planner' && <PlannerView />}
+              {effectiveView === 'weekly' && <WeeklyReviewView />}
+              {effectiveView === 'predictor' && <Predictor />}
+              {effectiveView === 'career' && <CareerGuidance />}
+              {effectiveView === 'admin' && <Admin />}
+              {effectiveView === 'lms' && <StudentLMS />}
+              {effectiveView === 'counselling' && <Counselling />}
+              {effectiveView === 'tracker' && <SyllabusTracker />}
+              {effectiveView === 'habitsFocus' && <HabitsFocus />}
+              {effectiveView === 'performance' && <Performance />}
+              {effectiveView === 'targetsGoals' && <TargetsGoals />}
+              {effectiveView === 'wellbeingCare' && <WellbeingCare />}
+              {effectiveView === 'reports' && <ReportsPage />}
+              {effectiveView === 'settingsBackup' && <SettingsBackup />}
+            </Suspense>
           </motion.div>
         </AnimatePresence>
       </div>

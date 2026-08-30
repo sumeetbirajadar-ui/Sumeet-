@@ -124,9 +124,9 @@ const AYUSH_CONFIG: Record<
     note: (
       <>
         These are the real <strong>2025 KEA NEET-UG counselling</strong> closing ranks for <strong>MBBS</strong>,
-        computed from KEA's official Round 3 (final, post-High-Court-order) seat allotment list, across all four
-        seat quotas — Round 1 and Round 2 documents weren't available. Always verify against the official KEA
-        cutoff list before making a decision.
+        computed from KEA's official Round 1, Round 2, and Round 3 (final, post-High-Court-order) seat allotment
+        lists, across all four seat quotas. Always verify against the official KEA cutoff list before making a
+        decision.
       </>
     ),
   },

@@ -5,7 +5,7 @@ import { QuotaType } from '../data/ayushCategoryLabels';
 interface MbbsCollege {
   n: string;
   l: string;
-  quotas: Record<string, Record<string, number[]>>; // quota -> category -> [R3] closing rank
+  quotas: Record<string, Record<string, number[]>>; // quota -> category -> [R1, R2, R3] closing rank
 }
 
 const DATA = karnatakaMbbs as unknown as Record<string, MbbsCollege>;
@@ -22,13 +22,12 @@ export interface MbbsResultRow {
   code: string;
   name: string;
   location: string;
-  rounds: number[]; // R3 (final) closing rank
+  rounds: number[]; // R1, R2, R3 (final) closing rank
   prediction: PredictionLevel;
   refVal: number;
 }
 
-// 2025 Round 3 (final, court-ordered) only — the only round KEA's official
-// document covered when this was built.
+// 2025 Rounds 1, 2, and 3 (final, court-ordered), all from official KEA data.
 export function predictMbbs(rank: number, category: string, quota: QuotaType): MbbsResultRow[] {
   const rows: MbbsResultRow[] = [];
   for (const [code, college] of Object.entries(DATA)) {

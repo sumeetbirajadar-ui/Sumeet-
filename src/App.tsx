@@ -1316,11 +1316,11 @@ const Login: React.FC<{ mode: AppMode; onLogin: (role: 'admin' | 'student') => v
           </div>
 
           <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-center gap-3">
-            <img src="/branding/founder-photo.png" alt="Founder, Science Monk" className="w-9 h-9 rounded-full object-cover shrink-0" />
+            <img src="/branding/founder-photo.png" alt="Sumeet Birajadar, Founder" className="w-14 h-14 rounded-full object-cover shrink-0" />
             <p className="text-ink-500 text-[11px] leading-tight text-left">
-              A <span className="text-ink-300 font-semibold">Science Monk</span> creation
+              <span className="text-ink-300 font-semibold">Sumeet Birajadar</span>
               <br />
-              Storytelling &amp; content by its founder
+              Founder, <span className="text-ink-300 font-semibold">Science Monk</span> Academy
             </p>
           </div>
         </div>

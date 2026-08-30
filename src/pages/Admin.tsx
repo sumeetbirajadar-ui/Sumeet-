@@ -858,9 +858,11 @@ export default function Admin() {
           <ShieldCheck className="w-7 h-7 text-gold-500" /> Admin
         </h1>
         <p className="text-ink-500 text-sm">Publish content students see, and correct the predictor with real cutoffs as they're released.</p>
-        <div className="mt-4 flex items-center justify-center gap-2 text-ink-400 text-[11px]">
-          <img src="/branding/founder-photo.png" alt="Founder, Science Monk" className="w-6 h-6 rounded-full object-cover" />
-          <span>A Science Monk creation</span>
+        <div className="mt-4 flex items-center justify-center gap-2.5 text-ink-500 text-sm">
+          <img src="/branding/founder-photo.png" alt="Sumeet Birajadar, Founder" className="w-10 h-10 rounded-full object-cover" />
+          <span>
+            <span className="font-bold text-ink-700">Sumeet Birajadar</span> &middot; Science Monk Academy
+          </span>
         </div>
       </header>
 

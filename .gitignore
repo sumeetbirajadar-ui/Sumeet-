@@ -11,3 +11,6 @@ coverage/
 # `npx cap add android && npx capacitor-assets generate --android` in each
 # mobile/<app>/ folder) — kept out of git, shipped to the user as a zip instead.
 mobile/*/android/
+
+# Downloaded PDFs from the mathongo-pdf-downloader tool
+tools/mathongo-pdf-downloader/downloads/

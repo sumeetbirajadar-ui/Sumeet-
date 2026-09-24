@@ -1,0 +1,769 @@
+<title>GPSTR Maths 60-Day Plan</title>
+<meta name="description" content="A 60-day, 4-hours-a-morning plan for the Karnataka GPSTR (Graduate Primary Teacher, Classes 6–8) Mathematics & Science post, Vijayapura district.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+Kannada:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#F4F7F6; --surface:#FFFFFF; --sunk:#EAF0EE; --ink:#15201E; --muted:#56655F; --line:#D5DFDB;
+  --accent:#1D5C57; --accent-ink:#FFFFFF; --accent-soft:#DCEBE8;
+  --gold:#A8680E; --gold-soft:#F6EAD6;
+  --ok:#2E7D4F; --ok-soft:#DDF0E4; --warn:#9A5B00; --warn-soft:#FBEBCF; --bad:#B03A2E; --bad-soft:#F7DEDA;
+  --display:"Zilla Slab", Georgia, "Times New Roman", serif;
+  --body:"Source Sans 3", "Noto Sans Kannada", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0F1614; --surface:#17201E; --sunk:#1D2826; --ink:#E4ECE9; --muted:#9BAEA8; --line:#2B3936;
+    --accent:#6BC2B8; --accent-ink:#0B1412; --accent-soft:#1E3633;
+    --gold:#E2A54A; --gold-soft:#3A2C16;
+    --ok:#6FCF97; --ok-soft:#173226; --warn:#F0B35A; --warn-soft:#3A2B12; --bad:#F08A7E; --bad-soft:#3B1D19;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0F1614; --surface:#17201E; --sunk:#1D2826; --ink:#E4ECE9; --muted:#9BAEA8; --line:#2B3936;
+  --accent:#6BC2B8; --accent-ink:#0B1412; --accent-soft:#1E3633;
+  --gold:#E2A54A; --gold-soft:#3A2C16;
+  --ok:#6FCF97; --ok-soft:#173226; --warn:#F0B35A; --warn-soft:#3A2B12; --bad:#F08A7E; --bad-soft:#3B1D19;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;padding-inline:16px;padding-block:0 48px}
+.wrap{max-width:900px;margin:0 auto}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.2;margin:0}
+h1{font-size:clamp(1.8rem,4.5vw,2.6rem);font-weight:700}
+h2{font-size:1.6rem;font-weight:600;margin-bottom:.5rem}
+h3{font-size:1.15rem;font-weight:600;margin-top:1.4rem;margin-bottom:.4rem}
+p{margin:.5rem 0;max-width:68ch}
+ul,ol{margin:.4rem 0;padding-left:1.25rem;max-width:70ch}
+li{margin:.2rem 0}
+a{color:var(--accent)}
+.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.muted{color:var(--muted)}
+.num{font-variant-numeric:tabular-nums}
+
+header.top{padding-block:28px 18px;display:grid;gap:14px}
+.headline-row{display:flex;flex-wrap:wrap;gap:18px;align-items:end;justify-content:space-between}
+.today{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+.today .big{font-family:var(--display);font-size:1.9rem;font-weight:700;color:var(--accent);line-height:1}
+.today label{font-size:.8rem;color:var(--muted)}
+.today input{font:inherit;font-size:.85rem;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:6px;padding:3px 6px}
+.lede{font-size:1.05rem;color:var(--muted);max-width:70ch}
+
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);margin-inline:-16px;padding:8px 16px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin}
+nav.tabs button{font:inherit;font-size:.9rem;font-weight:600;white-space:nowrap;border:1px solid transparent;background:transparent;color:var(--muted);padding:6px 12px;border-radius:999px;cursor:pointer}
+nav.tabs button:hover{color:var(--ink);background:var(--sunk)}
+nav.tabs button[aria-selected="true"]{background:var(--accent);color:var(--accent-ink)}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+section.panel{padding-top:24px;display:grid;gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.tag{display:inline-block;font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:4px;vertical-align:middle;font-weight:600}
+.tag.ok{background:var(--ok-soft);color:var(--ok)}
+.tag.warn{background:var(--warn-soft);color:var(--warn)}
+.tag.bad{background:var(--bad-soft);color:var(--bad)}
+.note{border-left:3px solid var(--gold);background:var(--gold-soft);padding:10px 14px;border-radius:0 8px 8px 0}
+.note.alert{border-color:var(--bad);background:var(--bad-soft)}
+
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;background:var(--sunk)}
+tr:last-child td{border-bottom:0}
+td.r,th.r{text-align:right}
+
+.facts{display:grid;gap:0;border:1px solid var(--line);border-radius:10px;background:var(--surface);overflow:hidden}
+.fact{display:grid;grid-template-columns:minmax(120px,190px) 1fr;gap:12px;padding:10px 16px;border-bottom:1px solid var(--line)}
+.fact:last-child{border-bottom:0}
+.fact .k{font-weight:600;color:var(--muted);font-size:.9rem}
+@media (max-width:520px){.fact{grid-template-columns:1fr;gap:2px}}
+
+.bars{display:grid;gap:8px}
+.bar{display:grid;grid-template-columns:150px 1fr 48px;gap:10px;align-items:center;font-size:.9rem}
+.bar .track{height:14px;background:var(--sunk);border-radius:3px;overflow:hidden}
+.bar .fill{height:100%;background:var(--accent)}
+.bar .fill.g{background:var(--gold)}
+@media (max-width:520px){.bar{grid-template-columns:110px 1fr 40px}}
+
+/* timetable */
+.slots{display:grid;gap:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface)}
+.slot{display:grid;grid-template-columns:118px 1fr;gap:14px;padding:11px 16px;border-bottom:1px solid var(--line);align-items:start}
+.slot:last-child{border-bottom:0}
+.slot .t{font-family:var(--mono);font-size:.82rem;color:var(--accent);font-weight:600;padding-top:2px}
+.slot.brk{background:var(--sunk)}
+.slot b{font-weight:700}
+
+/* plan */
+.progress{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.pbar{flex:1;min-width:160px;height:10px;background:var(--sunk);border-radius:99px;overflow:hidden}
+.pbar>div{height:100%;background:var(--accent);width:0;transition:width .3s}
+.phase-h{margin-top:10px;display:flex;flex-wrap:wrap;align-items:baseline;gap:10px}
+.phase-h h3{margin:0}
+.days{display:grid;gap:8px}
+.day{display:grid;grid-template-columns:auto 1fr;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+.day.is-today{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.day.done{opacity:.62}
+.day .dn{display:grid;justify-items:center;gap:4px;min-width:52px}
+.day .dn .n{font-family:var(--display);font-weight:700;font-size:1.35rem;line-height:1}
+.day .dn .d{font-family:var(--mono);font-size:.66rem;color:var(--muted);text-transform:uppercase}
+.day input[type=checkbox]{width:20px;height:20px;accent-color:var(--accent);cursor:pointer}
+.day .rows{display:grid;gap:3px;font-size:.93rem}
+.day .rows div{display:grid;grid-template-columns:78px 1fr;gap:8px}
+.day .rows .lbl{font-family:var(--mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding-top:3px}
+.day.test{background:var(--gold-soft);border-color:transparent}
+.day .todaybadge{font-family:var(--mono);font-size:.62rem;background:var(--accent);color:var(--accent-ink);padding:1px 5px;border-radius:3px}
+
+/* syllabus checklist */
+.checks{columns:2 260px;column-gap:24px}
+.checks label{display:flex;gap:8px;align-items:flex-start;break-inside:avoid;padding:3px 0;cursor:pointer;font-size:.95rem}
+.checks input{margin-top:4px;accent-color:var(--accent)}
+
+/* formulas */
+.fgroup{break-inside:avoid}
+.f{font-family:var(--mono);font-size:.86rem;background:var(--sunk);padding:1px 6px;border-radius:4px;white-space:normal}
+.flist{list-style:none;padding:0;display:grid;gap:6px}
+.flist li{display:grid;grid-template-columns:minmax(120px,170px) 1fr;gap:10px;font-size:.93rem}
+@media (max-width:520px){.flist li{grid-template-columns:1fr;gap:0}}
+
+/* quiz */
+.q{display:grid;gap:8px}
+.q .qt{font-weight:600}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:6px}
+.opts button{font:inherit;text-align:left;border:1px solid var(--line);background:var(--bg);color:var(--ink);padding:8px 12px;border-radius:8px;cursor:pointer}
+.opts button:hover:not(:disabled){border-color:var(--accent)}
+.opts button.right{background:var(--ok-soft);border-color:var(--ok);color:var(--ink)}
+.opts button.wrong{background:var(--bad-soft);border-color:var(--bad);color:var(--ink)}
+.opts button:disabled{cursor:default}
+.expl{font-size:.9rem;color:var(--muted)}
+.score{font-family:var(--display);font-size:1.4rem;font-weight:700;color:var(--accent)}
+.btn{font:inherit;font-weight:600;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);padding:7px 14px;border-radius:8px;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--accent)}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.filters button{font:inherit;font-size:.85rem;border:1px solid var(--line);background:var(--surface);color:var(--muted);padding:4px 10px;border-radius:999px;cursor:pointer}
+.filters button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);font-weight:600}
+
+footer{margin-top:40px;font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <div class="eyebrow">Karnataka GPSTR · Graduate Primary Teacher (Classes 6–8) · Mathematics &amp; Science · Vijayapura</div>
+  <div class="headline-row">
+    <h1>GPSTR Maths 60-Day Plan</h1>
+    <div class="today" aria-live="polite">
+      <div><div class="eyebrow">Plan day</div><div class="big num" id="dayNum">1</div></div>
+      <div style="display:grid;gap:2px">
+        <label for="startDate">Start date</label>
+        <input type="date" id="startDate" value="2026-09-24">
+      </div>
+    </div>
+  </div>
+  <p class="lede">Built for a study window of <b>3:30 to 7:30 every morning</b> and nothing else. The plan covers all three papers. Paper 2 gets the most time because it is where a maths graduate can pull ahead. Science and Paper 1 pedagogy get daily slots because that is where most maths candidates lose marks.</p>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Sections">
+  <button role="tab" data-tab="exam" aria-selected="true">The exam</button>
+  <button role="tab" data-tab="plan">60-day plan</button>
+  <button role="tab" data-tab="day">Daily routine</button>
+  <button role="tab" data-tab="syllabus">Syllabus tracker</button>
+  <button role="tab" data-tab="formulas">Formula sheet</button>
+  <button role="tab" data-tab="pedagogy">Pedagogy notes</button>
+  <button role="tab" data-tab="quiz">Practice quiz</button>
+  <button role="tab" data-tab="books">Books &amp; sources</button>
+  <button role="tab" data-tab="verify">Do this first</button>
+</nav>
+
+<!-- ============ EXAM ============ -->
+<section class="panel" id="exam" role="tabpanel">
+  <h2>What the exam is</h2>
+  <p><b>GPSTR</b> stands for <i>Graduate Primary School Teacher Recruitment</i>. The Karnataka Department of School Education uses it to hire teachers for <b>Classes 6–8</b> in government schools. The post you applied for is the <b>Mathematics &amp; Science</b> teacher (GPT). It is one combined post, so <b>Paper 2 tests science as well as maths</b>. Plan for both.</p>
+
+  <div class="facts">
+    <div class="fact"><div class="k">Notification</div><div>Released 12 Aug 2026 for about 15,000 teaching posts (all types). Online applications opened 18 Aug. The deadline was extended into September. <span class="tag ok">Many sources agree</span></div></div>
+    <div class="fact"><div class="k">GPT posts (6–8)</div><div>About <b class="num">8,500</b> statewide: <span class="num">3,228</span> in Kalyana Karnataka and <span class="num">5,272</span> elsewhere. <b>Vijayapura is not a Kalyana Karnataka district</b>, so it falls in the non-KK pool (Belagavi division). <span class="tag warn">Reported, check the PDF</span></div></div>
+    <div class="fact"><div class="k">Vijayapura seats</div><div>The district-wise split (Kannada / Urdu / Marathi medium, category-wise) is only in the official notification PDF. Open it and write your exact number in the "Do this first" tab. <span class="tag bad">Not found online</span></div></div>
+    <div class="fact"><div class="k">Exam date</div><div>Not announced as of 24 Sep 2026. Coaching sites expect <b>October–November 2026</b>, which fits your 60-day window (ending around 22 Nov). <span class="tag warn">Expected only</span></div></div>
+    <div class="fact"><div class="k">Eligibility</div><div>Degree with the relevant subjects, a B.Ed / D.El.Ed, and a <b>valid TET (KARTET or CTET Paper-II)</b>. Age 21–40 for General, with relaxation for SC/ST and 2A/2B/3A/3B.</div></div>
+    <div class="fact"><div class="k">Negative marking</div><div>Past GPSTR exams had none. Answer every MCQ unless the 2026 notification says otherwise. <span class="tag warn">Check the notification</span></div></div>
+  </div>
+
+  <h3>Paper pattern (same three-paper structure as 2017 and 2022)</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Paper</th><th>What's in it</th><th class="r">Marks</th><th>Time</th><th>Type</th></tr></thead>
+    <tbody>
+      <tr><td><b>Paper 1</b><br><span class="muted">General</span></td><td>Educational Psychology &amp; Pedagogy (50) · General Kannada (25) · General English (25) · General Knowledge / Aptitude (25) · Health &amp; Value Education (15) · Computer Literacy (10)</td><td class="r num">150</td><td class="num">2 h 30 m</td><td>150 MCQs</td></tr>
+      <tr><td><b>Paper 2</b><br><span class="muted">Maths &amp; Science</span></td><td>Subject knowledge, Class 6–10 level plus basic PUC topics (sets, progressions, P&amp;C, probability, matrices). Physics, chemistry and biology are included.</td><td class="r num">150</td><td class="num">3 h</td><td>50 MCQ + 100 descriptive</td></tr>
+      <tr><td><b>Paper 3</b><br><span class="muted">Language</span></td><td>Language proficiency in your medium (Kannada / Urdu / Marathi…): essay, letter, précis, comprehension, grammar, translation.</td><td class="r num">100</td><td class="num">2 h</td><td>Descriptive</td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted" style="font-size:.9rem">Section marks inside Paper 1 are as reported by Testbook/Adda247 from the earlier notification. Check them against the 2026 PDF.</p>
+
+  <h3>Where the 400 marks come from</h3>
+  <div class="card bars" aria-label="Marks by area">
+    <div class="bar"><span>Paper 2 descriptive</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="num r">100</span></div>
+    <div class="bar"><span>Paper 3 language</span><div class="track"><div class="fill g" style="width:100%"></div></div><span class="num r">100</span></div>
+    <div class="bar"><span>Ed. Psychology</span><div class="track"><div class="fill" style="width:50%"></div></div><span class="num r">50</span></div>
+    <div class="bar"><span>Paper 2 MCQ</span><div class="track"><div class="fill" style="width:50%"></div></div><span class="num r">50</span></div>
+    <div class="bar"><span>Kannada</span><div class="track"><div class="fill g" style="width:25%"></div></div><span class="num r">25</span></div>
+    <div class="bar"><span>English</span><div class="track"><div class="fill g" style="width:25%"></div></div><span class="num r">25</span></div>
+    <div class="bar"><span>GK / Aptitude</span><div class="track"><div class="fill g" style="width:25%"></div></div><span class="num r">25</span></div>
+    <div class="bar"><span>Health &amp; Value</span><div class="track"><div class="fill g" style="width:15%"></div></div><span class="num r">15</span></div>
+    <div class="bar"><span>Computer</span><div class="track"><div class="fill g" style="width:10%"></div></div><span class="num r">10</span></div>
+  </div>
+
+  <h3>How selection works</h3>
+  <ul>
+    <li>A <b>merit score</b> is built from your exam marks plus your <b>TET score, which has carried 20% weight in past rounds</b>. Some sites say 2026 uses <i>70% exam + 20% TET + 10% academics</i>, but that is not confirmed. Read the "selection" section of the PDF.</li>
+    <li>Seats are filled <b>district by district</b>, by category (GM, SC, ST, C1, 2A, 2B, 3A, 3B), with men/women and sub-quotas (<b>Rural</b>, <b>Kannada medium</b>, Project-displaced) and separate lists per <b>medium</b>.</li>
+    <li>A 1:2 list goes to document verification. Then a 1:1 provisional list, objections, and the final list.</li>
+    <li>There is a minimum mark in Papers 1 and 2. Reports put it around 35–50% depending on category, but check the notification. You will be aiming much higher anyway.</li>
+  </ul>
+
+  <h3>Past cutoffs, Vijayapura (official 2017 GPSTR list)</h3>
+  <p>These are <b>final merit percentages</b> of the last candidate selected in each group. They come from the department's 2017 cutoff PDF. I could not find the 2022 district list online.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Post (Vijayapura)</th><th>Category</th><th class="r">Men</th><th class="r">Women</th></tr></thead>
+    <tbody>
+      <tr><td><b>Maths &amp; Science, Kannada medium</b></td><td>GM · Others</td><td class="r num"><b>74.30</b></td><td class="r num"><b>78.41</b></td></tr>
+      <tr><td>Maths &amp; Science, Urdu medium</td><td>GM · Others</td><td class="r num">–</td><td class="r num">72.87</td></tr>
+      <tr><td>Social Studies, Kannada medium</td><td>GM · Others</td><td class="r num">80.70</td><td class="r num">81.13</td></tr>
+      <tr><td>Social Studies, Kannada medium</td><td>GM · Rural</td><td class="r num">77.20</td><td class="r num">76.31</td></tr>
+      <tr><td>Social Studies, Kannada medium</td><td>SC / ST / 2A / 3B · Others</td><td class="r num">75.2–76.5</td><td class="r num">73.4–75.9</td></tr>
+      <tr><td>English language teacher</td><td>GM · Others</td><td class="r num">76.07</td><td class="r num">79.81</td></tr>
+      <tr><td>Maths &amp; Science, Kannada medium <span class="muted">(Belagavi, for comparison)</span></td><td>GM · Others</td><td class="r num">72.91</td><td class="r num">77.14</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note"><b>What this tells you.</b> For Maths &amp; Science in Vijayapura, the last selected GM candidate scored about <b>74–78%</b> merit. Only a GM row appears for Maths &amp; Science, while Social Studies filled every category. That pattern fits the well-known shortage of qualified maths-science candidates in north Karnataka. <b>Set your target at 75%+ of total marks</b>, and claim every sub-quota you're entitled to (Rural, Kannada medium, category), because those cutoffs run 1–4 points lower.</div>
+
+  <h3>The strategy in five lines</h3>
+  <ol>
+    <li><b>Paper 2 is your advantage.</b> Aim for 120+/150. Descriptive maths rewards clean, step-by-step working and neat diagrams.</li>
+    <li><b>Science is the risk.</b> A maths graduate usually hasn't studied biology or chemistry since Class 10. That's why science gets 45 minutes every day.</li>
+    <li><b>Ed. Psychology (50 marks) has the best return in Paper 1.</b> The same 40–50 concepts come up every year. Study them daily until you can't get them wrong.</li>
+    <li><b>Paper 3 is 100 marks for writing well.</b> Write one essay or letter every week. Presentation matters.</li>
+    <li><b>Past papers and mocks show you the real exam.</b> The last 14 days are for full-length timed papers.</li>
+  </ol>
+</section>
+
+<!-- ============ PLAN ============ -->
+<section class="panel" id="plan" role="tabpanel" hidden>
+  <h2>60-day plan</h2>
+  <p>Tick each day as you finish it. Every 7th day is a <b>test day</b>: a timed test on that week's topics, analysis, then one Paper 3 writing task. If the exam date is announced earlier, skip ahead to Phase 3 when about 18 days are left.</p>
+  <div class="progress card">
+    <span><b class="num" id="doneCount">0</b> / 60 days done</span>
+    <div class="pbar" aria-hidden="true"><div id="pfill"></div></div>
+    <button class="btn ghost" id="jumpToday" type="button">Jump to today</button>
+  </div>
+  <p class="muted" style="font-size:.85rem">Ticks are saved in this browser on this device only.</p>
+  <div id="planList"></div>
+</section>
+
+<!-- ============ DAY ============ -->
+<section class="panel" id="day" role="tabpanel" hidden>
+  <h2>Daily routine, 3:30–7:30</h2>
+  <p>Four hours, with the hardest work first while your mind is fresh. Keep the order fixed so you don't have to decide anything at 3:30 in the morning.</p>
+  <div class="slots">
+    <div class="slot"><div class="t">3:15–3:30</div><div>Wake, water, wash face. No phone. Open the plan to today's row.</div></div>
+    <div class="slot"><div class="t">3:30–4:40</div><div><b>Maths, 70 min.</b> 25 min: read the topic from the KTBS/NCERT textbook and copy its formulas into your formula notebook. 45 min: solve 15–20 problems, including at least 2 written as full descriptive answers.</div></div>
+    <div class="slot"><div class="t">4:40–5:25</div><div><b>Science, 45 min.</b> Read the textbook chapter and make one page of notes: definitions, SI units, one labelled diagram, key reactions. Finish with 10 MCQs.</div></div>
+    <div class="slot brk"><div class="t">5:25–5:35</div><div>Break. Walk, tea, stretch.</div></div>
+    <div class="slot"><div class="t">5:35–6:15</div><div><b>Paper 1: Educational Psychology, 40 min.</b> One topic a day (see plan), then 15 KARTET/GPSTR past MCQs on it.</div></div>
+    <div class="slot"><div class="t">6:15–6:45</div><div><b>Paper 1 rotation, 30 min.</b> Mon &amp; Thu: Kannada grammar · Tue &amp; Fri: English grammar · Wed: GK + current affairs · Sat: Computer + Health &amp; Value.</div></div>
+    <div class="slot"><div class="t">6:45–7:15</div><div><b>Mixed MCQ set, 30 min.</b> 30 questions from anything already studied, timed. This is spaced revision.</div></div>
+    <div class="slot"><div class="t">7:15–7:30</div><div><b>Error log.</b> Write every wrong answer as "question → why wrong → correct idea". Re-read the log each test day.</div></div>
+  </div>
+
+  <h3>Test day (every 7th day)</h3>
+  <div class="slots">
+    <div class="slot"><div class="t">3:30–5:45</div><div>Timed test: 50 MCQs on the week's maths + science + Ed. Psych, then 3 descriptive maths questions.</div></div>
+    <div class="slot"><div class="t">5:45–6:45</div><div>Mark it strictly. Re-solve every wrong answer and add it to the error log.</div></div>
+    <div class="slot"><div class="t">6:45–7:30</div><div><b>Paper 3 writing.</b> One essay (about 250 words) or formal letter in your medium language. Keep paragraphs neat, with a clear opening and conclusion.</div></div>
+  </div>
+
+  <h3>Rules that protect the plan</h3>
+  <ul>
+    <li><b>Sleep by 9:30 pm.</b> Waking at 3:15 on 5 hours of sleep will wear you out by week 3. Six hours is the minimum.</li>
+    <li>Missed a day? <b>Don't try to double up.</b> Continue from where you are and absorb the gap on the next test day.</li>
+    <li>Keep three notebooks: <b>Formula</b>, <b>Error log</b>, <b>Ed. Psych one-liners</b>. In the last week you revise only from these.</li>
+    <li>For any spare 5 minutes in the day (a bus or queue), carry the Ed. Psych one-liner notebook or the Formula sheet tab on your phone.</li>
+  </ul>
+</section>
+
+<!-- ============ SYLLABUS ============ -->
+<section class="panel" id="syllabus" role="tabpanel" hidden>
+  <h2>Syllabus tracker</h2>
+  <p>Tick a topic only when you can solve a past-paper question on it without notes. The list follows the published GPSTR Maths &amp; Science syllabus, with Class 6–10 KTBS textbooks plus basic PUC topics.</p>
+  <div id="sylBox"></div>
+</section>
+
+<!-- ============ FORMULAS ============ -->
+<section class="panel" id="formulas" role="tabpanel" hidden>
+  <h2>Formula sheet</h2>
+  <p>Copy these into your own Formula notebook as you study each topic. Writing them yourself is how you remember them.</p>
+  <div class="grid2" id="fBox"></div>
+
+  <h3>Proofs and constructions to practise for the descriptive part</h3>
+  <div class="card">
+  <ol>
+    <li>Basic Proportionality Theorem (Thales) and its converse</li>
+    <li>Pythagoras theorem and its converse</li>
+    <li>Areas of similar triangles are in the ratio of squares of corresponding sides</li>
+    <li>Tangent at any point of a circle is perpendicular to the radius</li>
+    <li>Lengths of tangents from an external point are equal</li>
+    <li>Angle subtended at the centre is twice the angle at the circumference; angles in the same segment are equal</li>
+    <li>Angle sum property of a triangle; exterior angle theorem</li>
+    <li>Mid-point theorem</li>
+    <li>Prove √2 (or √3, √5) is irrational</li>
+    <li>Derive S<sub>n</sub> of an AP; derive the quadratic formula</li>
+    <li>Constructions: divide a segment in a given ratio · tangents from an external point · triangle similar to a given one with scale factor</li>
+    <li>Graphical solution of a pair of linear equations</li>
+  </ol>
+  <p><b>How to write a descriptive answer:</b> Given → To prove → Construction → Proof with a reason for every step → Conclusion. Draw a neat labelled figure in pencil. Box the final answer and give units.</p>
+  </div>
+</section>
+
+<!-- ============ PEDAGOGY ============ -->
+<section class="panel" id="pedagogy" role="tabpanel" hidden>
+  <h2>Pedagogy notes</h2>
+  <p>These concepts come up again and again in GPSTR and KARTET Ed. Psych questions. Learn the one-line version of each.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Name</th><th>Key idea</th><th>Classic question hook</th></tr></thead>
+    <tbody>
+      <tr><td><b>Piaget</b></td><td>Stages: Sensorimotor (0–2), Pre-operational (2–7), Concrete operational (7–11), Formal operational (11+). Schema, assimilation, accommodation, equilibration.</td><td>Classes 6–8 children are at the concrete → formal transition, so use concrete aids before abstraction.</td></tr>
+      <tr><td><b>Vygotsky</b></td><td>Zone of Proximal Development, scaffolding, social origin of learning, inner speech.</td><td>Peer/teacher support that is withdrawn gradually = scaffolding.</td></tr>
+      <tr><td><b>Kohlberg</b></td><td>Moral development: Pre-conventional → Conventional → Post-conventional (6 stages).</td><td>"Obeys rules to avoid punishment" = stage 1.</td></tr>
+      <tr><td><b>Erikson</b></td><td>8 psychosocial stages; Classes 6–8 ≈ Industry vs Inferiority → Identity vs Role confusion.</td><td>Adolescent identity crisis.</td></tr>
+      <tr><td><b>Pavlov</b></td><td>Classical conditioning (CS, UCS, CR, extinction, generalisation).</td><td>Fear of maths from repeated punishment.</td></tr>
+      <tr><td><b>Thorndike</b></td><td>Trial and error; laws of Readiness, Exercise, Effect.</td><td>"Practice makes perfect" = law of exercise.</td></tr>
+      <tr><td><b>Skinner</b></td><td>Operant conditioning, reinforcement schedules, programmed learning.</td><td>Praise after a correct answer = positive reinforcement.</td></tr>
+      <tr><td><b>Köhler</b></td><td>Gestalt, insight learning (chimpanzee Sultan).</td><td>Sudden "aha" solution.</td></tr>
+      <tr><td><b>Bandura</b></td><td>Social / observational learning, modelling, self-efficacy (Bobo doll).</td><td>Students copy the teacher's behaviour.</td></tr>
+      <tr><td><b>Bruner</b></td><td>Discovery learning; enactive → iconic → symbolic; spiral curriculum.</td><td>Revisiting topics at higher depth each year.</td></tr>
+      <tr><td><b>Gardner</b></td><td>Multiple intelligences (8–9 types).</td><td>Logical-mathematical, spatial, bodily-kinaesthetic…</td></tr>
+      <tr><td><b>Maslow</b></td><td>Hierarchy of needs → self-actualisation.</td><td>A hungry child can't focus on learning.</td></tr>
+      <tr><td><b>Bloom</b></td><td>Cognitive levels: Remember, Understand, Apply, Analyse, Evaluate, Create (revised).</td><td>Framing questions at each level.</td></tr>
+      <tr><td><b>Van Hiele</b></td><td>Geometry thinking levels: Visualisation → Analysis → Abstraction → Deduction → Rigour.</td><td>Maths-specific pedagogy.</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3 style="margin-top:0">Maths teaching methods</h3>
+      <ul>
+        <li><b>Inductive</b>: examples → rule (good for introducing). <b>Deductive</b>: rule → examples (good for practice).</li>
+        <li><b>Analytic</b>: unknown → known (discovery). <b>Synthetic</b>: known → unknown (presentation). Used together.</li>
+        <li><b>Heuristic</b> (Armstrong): the learner discovers. <b>Project</b> (Kilpatrick). <b>Problem-solving</b>. <b>Laboratory</b> method.</li>
+        <li>Concrete → Pictorial → Abstract. Manipulatives, maths lab, activity-based learning.</li>
+        <li>Error analysis, diagnostic testing → remedial teaching.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">Assessment, policy and Karnataka programmes</h3>
+      <ul>
+        <li><b>CCE</b>: formative (FA, during learning, to improve it) vs summative (SA, end of term). Tools: rubrics, portfolios, anecdotal records.</li>
+        <li><b>RTE Act 2009</b>: free &amp; compulsory education for ages 6–14; no detention/corporal punishment; 25% EWS seats in private schools; PTR 30:1 (primary), 35:1 (upper primary).</li>
+        <li><b>NCF 2005</b>: connect learning to life outside school, move away from rote learning.</li>
+        <li><b>NEP 2020</b>: 5+3+3+4 structure, foundational literacy &amp; numeracy, mother tongue till Class 5 (preferably 8), competency-based assessment.</li>
+        <li>Karnataka: <b>Nali-Kali</b> (activity-based, Classes 1–3), <b>Kalika Chetarike</b> (learning recovery), Chinnara Angala, Samudayadatta Shale, SDMC.</li>
+        <li>Inclusive education: learning disabilities (dyslexia = reading, dyscalculia = maths, dysgraphia = writing), gifted, CWSN.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="panel" id="quiz" role="tabpanel" hidden>
+  <h2>Practice quiz</h2>
+  <p>A quick check of the level to expect. Click an answer to see if it's right and why. Start with it on Day 1 as a diagnostic, then retake it on test days.</p>
+  <div class="progress card">
+    <span>Score: <span class="score num" id="qScore">0 / 0</span></span>
+    <div class="filters" id="qFilters">
+      <button type="button" data-f="all" aria-pressed="true">All</button>
+      <button type="button" data-f="Maths" aria-pressed="false">Maths</button>
+      <button type="button" data-f="Science" aria-pressed="false">Science</button>
+      <button type="button" data-f="Pedagogy" aria-pressed="false">Pedagogy</button>
+    </div>
+    <button class="btn ghost" type="button" id="qReset">Reset</button>
+  </div>
+  <div id="qBox" style="display:grid;gap:10px"></div>
+</section>
+
+<!-- ============ BOOKS ============ -->
+<section class="panel" id="books" role="tabpanel" hidden>
+  <h2>Books &amp; sources</h2>
+  <p>Keep the book list short: textbooks first, then past papers. Guides are for MCQ practice, not for learning a topic.</p>
+  <div class="grid2">
+    <div class="card"><div class="eyebrow">Paper 2 · Core</div>
+      <h3 style="margin-top:.3rem">Karnataka State (KTBS) textbooks, Classes 6–10</h3>
+      <p>Maths and Science, free PDFs at <b>textbooksonline.karnataka.gov.in</b>. The exam follows these books closely, and their diagrams and definitions are what examiners expect.</p>
+      <p>Add <b>1st PUC Maths</b> chapters on Sets, Sequences &amp; Series, Permutations &amp; Combinations, Probability, and <b>2nd PUC</b> Matrices &amp; Determinants.</p></div>
+    <div class="card"><div class="eyebrow">Paper 2 · Backup</div>
+      <h3 style="margin-top:.3rem">NCERT Classes 6–10 Maths &amp; Science</h3>
+      <p>Free at ncert.nic.in. Use the exercises and examples for descriptive practice. Use RD Sharma / RS Aggarwal (Class 9–10) only for extra problems.</p></div>
+    <div class="card"><div class="eyebrow">Paper 1 · Ed. Psych</div>
+      <h3 style="margin-top:.3rem">One Ed. Psych book + KARTET papers</h3>
+      <p>Your own D.El.Ed/B.Ed psychology notes plus one book (e.g. S.K. Mangal, <i>Advanced Educational Psychology</i>, or any Kannada <i>Shaikshanika Manovijnana</i> GPSTR/TET guide). Solve all <b>KARTET Paper-II</b> past papers. The psychology questions overlap heavily.</p></div>
+    <div class="card"><div class="eyebrow">Paper 1 · Languages</div>
+      <h3 style="margin-top:.3rem">Kannada &amp; English grammar</h3>
+      <p>Kannada: grammar sections of KTBS Class 8–10 first-language Kannada textbooks (ಸಂಧಿ, ಸಮಾಸ, ಅಲಂಕಾರ, ವಿಭಕ್ತಿ, ಕಾಲ). English: Wren &amp; Martin, <i>High School English Grammar</i>, chapters on tenses, voice, speech, articles, prepositions.</p></div>
+    <div class="card"><div class="eyebrow">Paper 1 · GK</div>
+      <h3 style="margin-top:.3rem">Karnataka-focused current affairs</h3>
+      <p>Lucent's <i>General Knowledge</i> for static GK, plus one Kannada monthly (e.g. <i>Spardha Vijetha</i> or <i>Spardha Spoorthi</i>) for the last 6–8 months. Focus on Karnataka schemes, awards, sports, and the Constitution.</p></div>
+    <div class="card"><div class="eyebrow">All papers · Most important</div>
+      <h3 style="margin-top:.3rem">Previous question papers</h3>
+      <p>GPSTR <b>2017</b> and <b>2022</b> (Papers 1 &amp; 2), HSTR papers for harder maths, KARTET Paper-II. Sources: Testbook, Adda247, and Kannada sites such as Chanakya Kanaja, which host the 2022 Paper 1 PDF. Solve each one timed.</p></div>
+  </div>
+  <h3>Official websites</h3>
+  <ul>
+    <li><b>schooleducation.karnataka.gov.in</b> / <b>schooleducation.kar.nic.in</b>: notification PDF, syllabus, admit card, key answers, results.</li>
+    <li><b>sts.karnataka.gov.in</b>: portal used for GPSTR marks and objections in 2022.</li>
+    <li>DDPI office, Vijayapura: district vacancy list and document verification schedule.</li>
+  </ul>
+</section>
+
+<!-- ============ VERIFY ============ -->
+<section class="panel" id="verify" role="tabpanel" hidden>
+  <h2>Do this first (Days 1–2)</h2>
+  <p>Coaching websites disagree on some details. The official notification PDF settles all of them. Download it and fill in this checklist.</p>
+  <div class="card checks" id="verifyBox"></div>
+  <div class="note alert"><b>Watch for fake news.</b> Some sites claim the 2026 round is "merit-based without an exam" or "computer-based". Trust only the department website and newspapers (Prajavani, Vijaya Karnataka, Deccan Herald). Check the site every Monday for the exam date and admit card.</div>
+  <h3>Documents to keep ready for verification</h3>
+  <ul>
+    <li>Application printout and fee receipt</li>
+    <li>SSLC, PUC, degree marks cards (all semesters), B.Ed / D.El.Ed marks cards</li>
+    <li>KARTET / CTET Paper-II certificate</li>
+    <li>Caste &amp; income certificate (Form-D for 2A/2B/3A/3B, or SC/ST), <b>Rural study certificate</b> (Classes 1–10), <b>Kannada medium certificate</b>, if you're claiming those quotas</li>
+    <li>Domicile / study certificate, Aadhaar, passport photos</li>
+  </ul>
+</section>
+
+<footer>
+  Researched 24 Sep 2026 from public sources: Testbook, Careers360, Adda247, KarnatakaEduCareers, and the department's 2017 GPSTR cutoff list. Figures marked "reported" should be checked against the official notification. This page is a study aid, not an official document.
+</footer>
+</div>
+
+<script>
+(function(){
+  var store = {
+    get:function(k,d){try{var v=localStorage.getItem('gpstr.'+k);return v===null?d:JSON.parse(v);}catch(e){return d;}},
+    set:function(k,v){try{localStorage.setItem('gpstr.'+k,JSON.stringify(v));}catch(e){}}
+  };
+
+  /* ---------- tabs ---------- */
+  var tabs=[].slice.call(document.querySelectorAll('nav.tabs button'));
+  function show(id){
+    tabs.forEach(function(b){b.setAttribute('aria-selected',b.dataset.tab===id?'true':'false');});
+    document.querySelectorAll('section.panel').forEach(function(s){s.hidden=s.id!==id;});
+    store.set('tab',id);
+  }
+  tabs.forEach(function(b){b.addEventListener('click',function(){show(b.dataset.tab);window.scrollTo({top:0});});});
+  var initial=(location.hash||'').replace('#','')||store.get('tab','exam');
+  if(!document.getElementById(initial)) initial='exam';
+  show(initial);
+
+  /* ---------- plan data ---------- */
+  var maths=[
+    'Number system: integers, fractions, decimals, divisibility rules, HCF & LCM',
+    'Real numbers: Euclid’s division lemma, fundamental theorem of arithmetic, irrationals, surds, exponents',
+    'Sets: types, operations, Venn diagrams, n(A∪B) problems',
+    'Ratio, proportion, percentage, averages, unitary method',
+    'Commercial maths: profit & loss, discount, simple & compound interest',
+    'Arithmetic progression: nth term, sum, word problems',
+    'Geometric progression (+ harmonic basics): nth term, sum, infinite GP',
+    'Algebraic expressions, identities, factorisation, LCM/HCF of polynomials',
+    'Polynomials: zeros, relation of zeros & coefficients, remainder/factor theorem, division',
+    'Pair of linear equations: graphical, substitution, elimination, cross-multiplication, consistency',
+    'Quadratic equations: factorising, formula, discriminant, nature of roots, word problems',
+    'Permutations & combinations: nPr, nCr, fundamental counting principle',
+    'Probability: classical definition, dice/coins/cards problems',
+    'Matrices & determinants: types, operations, 2×2 and 3×3 determinants',
+    'Lines & angles, parallel lines & transversal, angle sum, exterior angle',
+    'Triangles: congruence rules, similarity (AA, SSS, SAS), BPT + converse',
+    'Pythagoras theorem + converse, areas of similar triangles (proofs)',
+    'Quadrilaterals & polygons: properties, interior/exterior angle sums, mid-point theorem',
+    'Circles: chords, angles in segments, cyclic quadrilaterals',
+    'Tangents: tangent ⟂ radius, equal tangent lengths (proofs + problems)',
+    'Constructions: bisectors, dividing a segment, tangents, similar triangles',
+    'Coordinate geometry: distance, section formula, mid-point, area of triangle, slope',
+    'Trigonometry: ratios, standard angles, complementary angles, identities',
+    'Heights & distances',
+    'Mensuration 2D: perimeter & area of plane figures, circles, sectors',
+    'Mensuration 3D: surface area & volume of cube, cylinder, cone, sphere, frustum',
+    'Statistics: mean, median, mode (grouped data), ogives, graphs',
+    'Data handling: bar graph, histogram, pie chart; maths pedagogy for data',
+    'Descriptive drill: all triangle theorems written out in full',
+    'Descriptive drill: all circle & tangent theorems + 2 constructions',
+    'Descriptive drill: AP/GP and quadratic word problems (5-mark style)',
+    'Descriptive drill: mensuration & trigonometry long problems',
+    'HSTR-level mixed problems: algebra, P&C, probability, matrices',
+    'Weak-topic day: redo every maths entry in your error log'
+  ];
+  var science=[
+    'Physical quantities, SI units, measurement, dimensions',
+    'Motion: distance/displacement, speed/velocity, acceleration, equations of motion, graphs',
+    'Force & Newton’s laws, momentum, conservation of momentum',
+    'Gravitation: universal law, g, mass vs weight, free fall',
+    'Work, energy, power; conservation of energy',
+    'Pressure, buoyancy, Archimedes’ principle, density',
+    'Sound: waves, frequency, echo, range of hearing',
+    'Light: reflection, plane & spherical mirrors, mirror formula',
+    'Refraction, lenses, lens formula, power of lens',
+    'Human eye, defects, dispersion, scattering',
+    'Electricity: current, potential, Ohm’s law, series & parallel, heating effect',
+    'Magnetic effects of current, electromagnetic induction, motor & generator',
+    'Heat & temperature, expansion, transfer of heat, sources of energy',
+    'Matter: states, changes of state, mixtures & separation',
+    'Atoms & molecules: laws of chemical combination, mole concept, valency, formulae',
+    'Atomic structure: Thomson, Rutherford, Bohr, electronic configuration, isotopes',
+    'Periodic classification: Mendeleev, modern periodic table, trends',
+    'Chemical bonding: ionic, covalent; properties',
+    'Chemical reactions & equations: types, balancing, oxidation–reduction',
+    'Acids, bases & salts: indicators, pH, common salts & uses',
+    'Metals & non-metals, reactivity series, metallurgy, corrosion',
+    'Carbon & its compounds: covalency, homologous series, functional groups, soaps',
+    'Cell: structure, organelles, cell division',
+    'Tissues (plant & animal); diversity & classification of organisms',
+    'Nutrition: photosynthesis, human digestive system',
+    'Respiration in plants & humans',
+    'Transportation: human heart, blood, circulation; transport in plants',
+    'Excretion: human kidney, nephron; excretion in plants',
+    'Control & coordination: nervous system, brain, hormones, plant hormones',
+    'Reproduction in plants & animals, reproductive health',
+    'Heredity & evolution: Mendel’s experiments, sex determination',
+    'Microorganisms, diseases (communicable/non-communicable), immunity',
+    'Ecology & environment: ecosystem, food chains, ozone, waste management',
+    'Natural resources, conservation; revise all labelled diagrams'
+  ];
+  var ped=[
+    'Growth vs development, principles, heredity & environment',
+    'Piaget: stages, schema, assimilation, accommodation',
+    'Vygotsky: ZPD, scaffolding; Piaget vs Vygotsky',
+    'Kohlberg moral development; Erikson psychosocial stages',
+    'Adolescence: physical, emotional, social changes',
+    'Learning: meaning, factors, curves, plateau, transfer of learning',
+    'Pavlov classical conditioning',
+    'Thorndike trial & error + laws of learning',
+    'Skinner operant conditioning, reinforcement',
+    'Köhler insight learning, Gestalt; Bandura social learning',
+    'Bruner, constructivism, discovery learning',
+    'Intelligence: theories (Spearman, Thurstone, Guilford, Gardner), IQ',
+    'Personality: types, traits, assessment',
+    'Motivation: intrinsic/extrinsic, Maslow; attention & interest',
+    'Memory & forgetting: types, Ebbinghaus, techniques',
+    'Individual differences; creativity; gifted children',
+    'Inclusive education, CWSN, learning disabilities',
+    'Mental health, adjustment, defence mechanisms, guidance & counselling',
+    'Teaching methods: lecture, discussion, demonstration, project, heuristic',
+    'Maths pedagogy: inductive/deductive, analytic/synthetic, Van Hiele',
+    'Science pedagogy: inquiry, experiment, lab method, scientific attitude',
+    'Lesson planning, teaching aids, ICT in education',
+    'Evaluation: CCE, formative & summative, tools & techniques',
+    'Bloom’s taxonomy, objectives, question framing, blueprint',
+    'Achievement vs diagnostic tests, remedial teaching, action research',
+    'RTE Act 2009 (key sections)',
+    'NCF 2005, NEP 2020 highlights',
+    'Karnataka programmes: Nali-Kali, Kalika Chetarike, SDMC',
+    'Classroom management, teacher roles, school as community',
+    'Health & Value Education: nutrition, diseases, first aid, values',
+    'Computer literacy: hardware, software, MS Office, internet, Nudi',
+    'KARTET Paper-II past paper (Psychology section), timed',
+    'GPSTR 2022 Paper 1 (Psychology section), timed',
+    'Ed. Psych one-liner notebook, full revision'
+  ];
+
+  var plan=[];
+  plan.push({type:'setup',m:'Download the 2026 notification PDF + syllabus; fill in the "Do this first" tab. Gather KTBS Class 6–10 Maths & Science PDFs.',s:'Take the Practice quiz here as a diagnostic.',p:'Download GPSTR 2017 & 2022 and KARTET Paper-II past papers.'});
+  plan.push({type:'setup',m:'Solve the GPSTR 2022 Paper 2 maths MCQs untimed. Note which topics feel weak.',s:'Scan the science MCQs of the same paper and mark weak areas.',p:'Buy/arrange 3 notebooks: Formula, Error log, Ed. Psych one-liners. Fix your sleep time.'});
+  var mi=0,si=0,pi=0,week=0;
+  for(var d=3; d<=42; d++){
+    if(d%7===0){week++;plan.push({type:'test',m:'Timed test on this week’s maths (MCQ + 3 descriptive).',s:'Timed test on this week’s science + Ed. Psych.',p:'Paper 3: one essay or formal letter in your medium language. Re-read the error log.'});continue;}
+    plan.push({type:'learn',m:maths[mi++]||'Revision',s:science[si++]||'Revision',p:ped[pi++]||'Revision'});
+  }
+  for(var d2=43; d2<=56; d2++){
+    var k=d2-43;
+    if(d2===49||d2===56){plan.push({type:'test',m:'Paper 3 full mock (2 h): essay, letter, précis, comprehension, grammar.',s:'Mark it strictly; compare with model answers.',p:'Re-read the whole error log.'});continue;}
+    if(k%2===0){plan.push({type:'mock',m:'Full Paper 2 mock, 3 h (50 MCQ + 100 descriptive). Use a GPSTR/HSTR past paper or mock series.',s:'Analyse: note every step or formula you missed.',p:'Ed. Psych one-liners: 20 min quick revision.'});}
+    else{plan.push({type:'mock',m:'Full Paper 1 mock, 2 h 30 m (150 MCQs), OMR-style.',s:'Science quick revision: diagrams & reactions (30 min).',p:'Analyse the mock; add wrong answers to the error log.'});}
+  }
+  plan.push({type:'rev',m:'Revise Formula notebook: algebra, AP/GP, commercial maths.',s:'Revise physics formulas & units.',p:'Ed. Psych one-liners: theorists & stages.'});
+  plan.push({type:'rev',m:'Revise geometry theorems: write 4 proofs from memory.',s:'Revise chemistry: equations, periodic table, pH.',p:'Revise RTE, NCF, NEP, CCE, Bloom.'});
+  plan.push({type:'rev',m:'Revise mensuration, trigonometry, statistics.',s:'Revise biology diagrams.',p:'Kannada & English grammar rules; last 3 months of current affairs.'});
+  plan.push({type:'rev',m:'Final light mock: 50 mixed MCQs only.',s:'Re-read the error log one last time.',p:'Check admit card, centre location, travel, documents.'});
+
+  var phases=[
+    {from:1,to:2,name:'Phase 0: Set up',desc:'Collect material, check the notification, take a diagnostic test.'},
+    {from:3,to:42,name:'Phase 1: Learn everything once',desc:'Maths, science and Ed. Psych every day. Weekly test every 7th day.'},
+    {from:43,to:56,name:'Phase 2: Full mocks',desc:'Alternate full Paper 1 and Paper 2 mocks. Paper 3 mocks on days 49 and 56.'},
+    {from:57,to:60,name:'Phase 3: Revise & rest',desc:'Only your own notebooks. No new topics.'}
+  ];
+
+  var done=store.get('done',{});
+  var startInput=document.getElementById('startDate');
+  startInput.value=store.get('start','2026-09-24');
+
+  function dayIndex(){
+    var s=new Date(startInput.value+'T00:00:00'); if(isNaN(s)) return 1;
+    var now=new Date(); now.setHours(0,0,0,0);
+    return Math.floor((now-s)/86400000)+1;
+  }
+  function fmt(n){
+    var s=new Date(startInput.value+'T00:00:00'); if(isNaN(s)) return '';
+    s.setDate(s.getDate()+n-1);
+    return s.toLocaleDateString('en-IN',{day:'numeric',month:'short'})+' · '+s.toLocaleDateString('en-IN',{weekday:'short'});
+  }
+  var typeLabel={setup:'Setup',learn:'',test:'Test day',mock:'Mock',rev:'Revision'};
+
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+
+  function renderPlan(){
+    var t=dayIndex();
+    var dn=document.getElementById('dayNum');
+    dn.textContent = t<1 ? 'Starts in '+(1-t)+'d' : (t>60 ? 'Done' : t);
+    var html='';
+    phases.forEach(function(ph){
+      html+='<div class="phase-h"><h3>'+ph.name+'</h3><span class="muted">Days '+ph.from+'–'+ph.to+' · '+ph.desc+'</span></div><div class="days">';
+      for(var i=ph.from;i<=ph.to;i++){
+        var p=plan[i-1], isT=(i===t), isD=!!done[i];
+        var labels = p.type==='learn'?['Maths','Science','Paper 1']:(p.type==='setup'?['Task 1','Task 2','Task 3']:['Main','Then','Also']);
+        html+='<div class="day'+(p.type==='test'?' test':'')+(isT?' is-today':'')+(isD?' done':'')+'" id="d'+i+'">'
+          +'<div class="dn"><span class="n num">'+i+'</span><span class="d">'+fmt(i)+'</span>'
+          +'<input type="checkbox" id="cb'+i+'" data-day="'+i+'" aria-label="Mark day '+i+' done"'+(isD?' checked':'')+'>'
+          +(isT?'<span class="todaybadge">TODAY</span>':'')+'</div>'
+          +'<div class="rows">'+(typeLabel[p.type]?'<span class="tag '+(p.type==='test'?'warn':'ok')+'" style="justify-self:start">'+typeLabel[p.type]+'</span>':'')
+          +'<div><span class="lbl">'+labels[0]+'</span><span>'+esc(p.m)+'</span></div>'
+          +'<div><span class="lbl">'+labels[1]+'</span><span>'+esc(p.s)+'</span></div>'
+          +'<div><span class="lbl">'+labels[2]+'</span><span>'+esc(p.p)+'</span></div></div></div>';
+      }
+      html+='</div>';
+    });
+    document.getElementById('planList').innerHTML=html;
+    updateCount();
+  }
+  function updateCount(){
+    var n=Object.keys(done).filter(function(k){return done[k];}).length;
+    document.getElementById('doneCount').textContent=n;
+    document.getElementById('pfill').style.width=(n/60*100)+'%';
+  }
+  document.getElementById('planList').addEventListener('change',function(e){
+    var d=e.target.dataset.day; if(!d) return;
+    done[d]=e.target.checked; store.set('done',done);
+    document.getElementById('d'+d).classList.toggle('done',e.target.checked);
+    updateCount();
+  });
+  startInput.addEventListener('change',function(){store.set('start',startInput.value);renderPlan();});
+  document.getElementById('jumpToday').addEventListener('click',function(){
+    var t=Math.min(Math.max(dayIndex(),1),60);
+    var el=document.getElementById('d'+t); if(el) el.scrollIntoView({behavior:'smooth',block:'center'});
+  });
+  renderPlan();
+
+  /* ---------- syllabus ---------- */
+  var syl={
+    'Maths: Arithmetic & Algebra':['Number system & real numbers','Sets & Venn diagrams','Ratio, proportion, percentage','Profit, loss, discount','Simple & compound interest','Arithmetic progression','Geometric progression','Polynomials','Linear equations in two variables','Quadratic equations','Permutations & combinations','Probability','Matrices & determinants'],
+    'Maths: Geometry, Mensuration, Statistics':['Lines, angles, triangles','Congruence & similarity','Pythagoras & BPT proofs','Quadrilaterals & polygons','Circles & tangents','Constructions','Coordinate geometry','Trigonometry & identities','Heights & distances','Mensuration: 2D','Mensuration: 3D','Statistics & data handling'],
+    'Science: Physics':['SI units & measurement','Motion','Force & laws of motion','Gravitation','Work, energy, power','Pressure & buoyancy','Sound','Light: reflection','Light: refraction & lenses','Human eye','Electricity','Magnetism & EMI','Heat'],
+    'Science: Chemistry':['Matter & separation','Atoms & molecules','Atomic structure','Periodic table','Chemical bonding','Chemical reactions & redox','Acids, bases, salts','Metals, non-metals, metallurgy','Carbon compounds'],
+    'Science: Biology':['Cell & tissues','Classification of organisms','Nutrition','Respiration','Transportation','Excretion','Control & coordination','Reproduction','Heredity & evolution','Microorganisms & diseases','Ecology & environment','Natural resources'],
+    'Paper 1':['Child development','Learning theories','Intelligence & personality','Motivation & memory','Inclusive education','Teaching methods & pedagogy','Evaluation & CCE','RTE / NCF / NEP','Kannada grammar','English grammar','GK & current affairs','Health & value education','Computer literacy'],
+    'Paper 3':['Essay writing','Formal & informal letters','Précis / summary','Comprehension','Grammar & usage','Translation']
+  };
+  var sylDone=store.get('syl',{}), sh='';
+  Object.keys(syl).forEach(function(g,gi){
+    sh+='<div class="card"><h3 style="margin-top:0">'+g+' <span class="muted num" style="font-family:var(--body);font-size:.85rem;font-weight:400" id="sc'+gi+'"></span></h3><div class="checks">';
+    syl[g].forEach(function(t,ti){var id='s'+gi+'_'+ti;sh+='<label for="'+id+'"><input type="checkbox" id="'+id+'" data-g="'+gi+'"'+(sylDone[id]?' checked':'')+'>'+esc(t)+'</label>';});
+    sh+='</div></div>';
+  });
+  var sylBox=document.getElementById('sylBox'); sylBox.innerHTML=sh; sylBox.style.display='grid'; sylBox.style.gap='12px';
+  function sylCount(){Object.keys(syl).forEach(function(g,gi){var n=syl[g].filter(function(_,ti){return sylDone['s'+gi+'_'+ti];}).length;document.getElementById('sc'+gi).textContent='· '+n+' / '+syl[g].length;});}
+  sylBox.addEventListener('change',function(e){if(!e.target.id)return;sylDone[e.target.id]=e.target.checked;store.set('syl',sylDone);sylCount();});
+  sylCount();
+
+  /* ---------- formulas ---------- */
+  var F={
+    'Progressions':[['AP nth term','aₙ = a + (n−1)d'],['AP sum','Sₙ = n/2 [2a + (n−1)d] = n/2 (a + l)'],['GP nth term','aₙ = a·rⁿ⁻¹'],['GP sum','Sₙ = a(rⁿ−1)/(r−1), r≠1'],['Infinite GP','S∞ = a/(1−r), |r|<1'],['Sum 1..n','n(n+1)/2 ; squares n(n+1)(2n+1)/6']],
+    'Commercial maths':[['Simple interest','SI = PRT/100'],['Compound interest','A = P(1 + R/100)ⁿ ; CI = A − P'],['Profit %','(Profit / CP) × 100'],['SP with gain','SP = CP × (100+g)/100'],['Discount','% on marked price ; SP = MP − discount']],
+    'Algebra':[['Identities','(a±b)² = a² ± 2ab + b² ; a²−b² = (a+b)(a−b)'],['Cubes','(a+b)³ = a³+b³+3ab(a+b) ; a³+b³ = (a+b)(a²−ab+b²)'],['Quadratic roots','x = [−b ± √(b²−4ac)] / 2a'],['Discriminant','D>0 real distinct · D=0 equal · D<0 no real roots'],['Zeros','α+β = −b/a ; αβ = c/a'],['Consistency','a₁/a₂ ≠ b₁/b₂ unique ; = ≠ c-ratio none ; all equal infinite']],
+    'Counting & probability':[['Permutations','ⁿPᵣ = n!/(n−r)!'],['Combinations','ⁿCᵣ = n!/[r!(n−r)!] ; ⁿCᵣ = ⁿCₙ₋ᵣ'],['Probability','P(E) = favourable / total ; P(E)+P(not E) = 1'],['Two dice','36 outcomes ; sum 7 occurs 6 ways'],['Cards','52: 4 suits × 13 ; 12 face cards']],
+    'Coordinate geometry':[['Distance','√[(x₂−x₁)² + (y₂−y₁)²]'],['Section (m:n)','((mx₂+nx₁)/(m+n), (my₂+ny₁)/(m+n))'],['Mid-point','((x₁+x₂)/2, (y₁+y₂)/2)'],['Area of triangle','½|x₁(y₂−y₃)+x₂(y₃−y₁)+x₃(y₁−y₂)|'],['Slope','m = (y₂−y₁)/(x₂−x₁)']],
+    'Trigonometry':[['Ratios','sin = opp/hyp, cos = adj/hyp, tan = opp/adj'],['Identities','sin²θ+cos²θ = 1 ; 1+tan²θ = sec²θ ; 1+cot²θ = cosec²θ'],['Standard','sin30=½, sin45=1/√2, sin60=√3/2 ; tan45=1'],['Complementary','sin(90−θ)=cosθ ; tan(90−θ)=cotθ']],
+    'Mensuration':[['Circle','A = πr² ; C = 2πr ; sector = θ/360 × πr²'],['Cylinder','CSA 2πrh ; TSA 2πr(r+h) ; V πr²h'],['Cone','l = √(r²+h²) ; CSA πrl ; V ⅓πr²h'],['Sphere','SA 4πr² ; V ⁴⁄₃πr³ ; hemisphere TSA 3πr²'],['Frustum','V = ⅓πh(R²+r²+Rr)'],['Heron','√[s(s−a)(s−b)(s−c)]']],
+    'Statistics':[['Mean (grouped)','x̄ = Σfx / Σf  (or assumed mean a + Σfd/Σf)'],['Median','l + [(n/2 − cf)/f] × h'],['Mode','l + [(f₁−f₀)/(2f₁−f₀−f₂)] × h'],['Empirical','3 Median = Mode + 2 Mean']],
+    'Physics essentials':[['Motion','v = u+at ; s = ut+½at² ; v² = u²+2as'],['Force, momentum','F = ma ; p = mv'],['Gravitation','F = Gm₁m₂/r² ; g ≈ 9.8 m/s²'],['Work, power','W = Fs ; P = W/t ; KE = ½mv² ; PE = mgh'],['Mirror / lens','1/f = 1/v + 1/u (mirror) ; 1/f = 1/v − 1/u (lens) ; P = 1/f (m)'],['Electricity','V = IR ; P = VI = I²R ; series R = R₁+R₂ ; parallel 1/R = 1/R₁+1/R₂']]
+  };
+  var fh='';
+  Object.keys(F).forEach(function(g){fh+='<div class="card fgroup"><h3 style="margin-top:0">'+g+'</h3><ul class="flist">';F[g].forEach(function(r){fh+='<li><span class="muted">'+esc(r[0])+'</span><span class="f">'+esc(r[1])+'</span></li>';});fh+='</ul></div>';});
+  document.getElementById('fBox').innerHTML=fh;
+
+  /* ---------- quiz ---------- */
+  var Q=[
+    ['Maths','Sum of the first 20 terms of the AP 3, 7, 11, … is',['780','800','820','840'],2,'a=3, d=4: S₂₀ = 10(6 + 19×4) = 10 × 82 = 820.'],
+    ['Maths','HCF of 96 and 404 is',['2','4','8','12'],1,'96 = 2⁵·3, 404 = 2²·101, so HCF = 2² = 4.'],
+    ['Maths','The roots of 2x² − 4x + 3 = 0 are',['Real and distinct','Real and equal','Not real','Rational'],2,'D = 16 − 24 = −8 < 0, so there are no real roots.'],
+    ['Maths','Compound interest on ₹10,000 at 10% p.a. for 2 years is',['₹2,000','₹2,100','₹2,200','₹1,900'],1,'A = 10000 × 1.1² = 12100, so CI = ₹2,100.'],
+    ['Maths','If sin θ = 3/5 (θ acute), tan θ =',['3/4','4/3','4/5','5/3'],0,'Opposite 3, hypotenuse 5, adjacent 4, so tan θ = 3/4.'],
+    ['Maths','Distance between (2, 3) and (5, 7) is',['4','5','6','7'],1,'√(3² + 4²) = 5.'],
+    ['Maths','Volume of a cone with r = 7 cm, h = 24 cm (π = 22/7) is',['1232 cm³','3696 cm³','616 cm³','1540 cm³'],0,'⅓ × 22/7 × 49 × 24 = 1232 cm³.'],
+    ['Maths','If ⁿC₂ = 45, then n =',['9','10','11','12'],1,'n(n−1)/2 = 45, so n(n−1) = 90 and n = 10.'],
+    ['Maths','Two dice are thrown. Probability that the sum is 7:',['1/6','1/9','5/36','7/36'],0,'(1,6),(2,5),(3,4),(4,3),(5,2),(6,1): 6/36 = 1/6.'],
+    ['Maths','If α, β are zeros of x² − 5x + 6, then α² + β² =',['11','13','25','19'],1,'(α+β)² − 2αβ = 25 − 12 = 13.'],
+    ['Maths','A point is 13 cm from the centre of a circle of radius 5 cm. Length of the tangent from it:',['8 cm','10 cm','12 cm','18 cm'],2,'Tangent ⟂ radius: √(13² − 5²) = 12 cm.'],
+    ['Maths','The 6th term of the GP 2, 6, 18, … is',['162','486','1458','243'],1,'2 × 3⁵ = 486.'],
+    ['Maths','Determinant of [[2, 3], [1, 4]] is',['5','11','−5','8'],0,'2×4 − 3×1 = 5.'],
+    ['Maths','An article sold for ₹480 at a 20% loss. Its cost price was',['₹576','₹600','₹580','₹560'],1,'CP = 480 × 100/80 = ₹600.'],
+    ['Maths','Corresponding sides of two similar triangles are in the ratio 2 : 3. Ratio of their areas:',['2 : 3','4 : 9','8 : 27','√2 : √3'],1,'Areas are in the ratio of the squares of the sides.'],
+    ['Maths','Mean of the first 10 natural numbers is',['5','5.5','6','10'],1,'55 / 10 = 5.5.'],
+    ['Science','SI unit of electric charge:',['Ampere','Volt','Coulomb','Ohm'],2,'Charge is measured in coulombs (C).'],
+    ['Science','Power of a convex lens of focal length 50 cm:',['+0.5 D','+2 D','−2 D','+50 D'],1,'P = 1/f(m) = 1/0.5 = +2 D.'],
+    ['Science','pH of pure water at 25 °C:',['0','7','14','1'],1,'Neutral, pH 7.'],
+    ['Science','Structural and functional unit of the kidney:',['Neuron','Nephron','Alveolus','Villus'],1,'The nephron filters blood.'],
+    ['Science','A 12 V battery drives 3 A through a resistor. Its resistance:',['4 Ω','36 Ω','0.25 Ω','15 Ω'],0,'R = V/I = 12/3 = 4 Ω.'],
+    ['Pedagogy','"Zone of Proximal Development" was proposed by',['Piaget','Vygotsky','Bruner','Skinner'],1,'Vygotsky: what a learner can do with help but not yet alone.'],
+    ['Pedagogy','Piaget’s concrete operational stage covers ages',['0–2','2–7','7–11','11 and above'],2,'Concrete operational: about 7 to 11 years.'],
+    ['Pedagogy','Moving from several examples to a general rule is the',['Deductive method','Inductive method','Lecture method','Synthetic method'],1,'Inductive: specific to general.'],
+    ['Pedagogy','The main purpose of formative assessment is to',['Rank students','Certify at year end','Improve learning during teaching','Select for admission'],2,'Formative = assessment for learning.'],
+    ['Pedagogy','Theory of Multiple Intelligences was given by',['Spearman','Thurstone','Howard Gardner','Guilford'],2,'Gardner, 1983.'],
+    ['Pedagogy','RTE Act 2009 guarantees free and compulsory education for ages',['3–6','6–14','5–15','6–18'],1,'Ages 6 to 14 (Article 21A).'],
+    ['Pedagogy','Learning by watching and imitating a model is emphasised by',['Bandura','Pavlov','Thorndike','Köhler'],0,'Bandura’s social (observational) learning theory.']
+  ];
+  var ans={}, filt='all';
+  function renderQ(){
+    var h='';
+    Q.forEach(function(q,i){
+      if(filt!=='all'&&q[0]!==filt) return;
+      var a=ans[i];
+      h+='<div class="card q"><div class="eyebrow">'+q[0]+' · Q'+(i+1)+'</div><div class="qt">'+esc(q[1])+'</div><div class="opts">';
+      q[2].forEach(function(o,oi){
+        var cls=''; if(a!==undefined){ if(oi===q[3]) cls='right'; else if(oi===a) cls='wrong'; }
+        h+='<button type="button" data-q="'+i+'" data-o="'+oi+'" class="'+cls+'"'+(a!==undefined?' disabled':'')+'>'+String.fromCharCode(65+oi)+'. '+esc(o)+'</button>';
+      });
+      h+='</div>'+(a!==undefined?'<div class="expl">'+(a===q[3]?'<b style="color:var(--ok)">Correct.</b> ':'<b style="color:var(--bad)">Not quite.</b> ')+esc(q[4])+'</div>':'')+'</div>';
+    });
+    document.getElementById('qBox').innerHTML=h;
+    var keys=Object.keys(ans), right=keys.filter(function(k){return ans[k]===Q[k][3];}).length;
+    document.getElementById('qScore').textContent=right+' / '+keys.length;
+  }
+  document.getElementById('qBox').addEventListener('click',function(e){
+    var b=e.target.closest('button[data-q]'); if(!b) return;
+    ans[b.dataset.q]=+b.dataset.o; renderQ();
+  });
+  document.getElementById('qFilters').addEventListener('click',function(e){
+    var b=e.target.closest('button[data-f]'); if(!b) return; filt=b.dataset.f;
+    [].forEach.call(this.querySelectorAll('button'),function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
+    renderQ();
+  });
+  document.getElementById('qReset').addEventListener('click',function(){ans={};renderQ();});
+  renderQ();
+
+  /* ---------- verify ---------- */
+  var V=['Exact number of Maths & Science GPT posts in Vijayapura, per medium and category','Your category, and whether you qualify for Rural / Kannada-medium quotas','Exam pattern and section marks for Papers 1–3 (confirm 150 / 150 / 100)','Negative marking: yes or no','Minimum qualifying marks per paper for your category','Merit formula: weight of exam, TET, academics','Paper 3 language options and whether it counts in merit or is qualifying only','Exam date / admit card release date (check every Monday)','Your TET certificate validity and score','Application form printout saved, and details correct'];
+  var vDone=store.get('ver',{}), vh='';
+  V.forEach(function(t,i){vh+='<label for="v'+i+'"><input type="checkbox" id="v'+i+'"'+(vDone['v'+i]?' checked':'')+'>'+esc(t)+'</label>';});
+  var vb=document.getElementById('verifyBox'); vb.innerHTML=vh;
+  vb.addEventListener('change',function(e){vDone[e.target.id]=e.target.checked;store.set('ver',vDone);});
+})();
+</script>

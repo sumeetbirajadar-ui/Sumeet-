@@ -109,6 +109,20 @@ service cloud.firestore {
       allow update, delete: if isAdmin();
     }
 
+    // ---- College management (principal dashboard): admin-only ----
+    // Student phones, fees and attendance are private to the college office,
+    // so nothing here is readable by students.
+
+    match /college_sections/{id} { allow read, write: if isAdmin(); }
+    match /college_students/{id} { allow read, write: if isAdmin(); }
+    match /college_section_transfers/{id} { allow read, write: if isAdmin(); }
+    match /college_lecturers/{id} { allow read, write: if isAdmin(); }
+    match /college_attendance/{id} { allow read, write: if isAdmin(); }
+    match /college_staff_attendance/{id} { allow read, write: if isAdmin(); }
+    match /college_work_logs/{id} { allow read, write: if isAdmin(); }
+    match /college_fee_payments/{id} { allow read, write: if isAdmin(); }
+    match /college_settings/{id} { allow read, write: if isAdmin(); }
+
     // Anything not explicitly listed above is closed by default.
     match /{document=**} {
       allow read, write: if false;

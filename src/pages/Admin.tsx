@@ -1,4 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { Suspense, lazy, useEffect, useMemo, useState } from 'react';
+import { auth } from '../lib/studentAuth';
+
+// The college (principal) dashboard is its own chunk: most admin sessions are
+// about content, so they shouldn't pay for loading it.
+const CollegeAdmin = lazy(() => import('./CollegeAdmin'));
 import { ShieldCheck, Plus, Trash2, Eye, EyeOff, Pencil, Users, Video, FileText, BookOpenCheck, MessageCircle, Send, CalendarClock } from 'lucide-react';
 import { TimelineEvent, subscribeTimelineEvents, addTimelineEvent, deleteTimelineEvent } from '../lib/counselling';
 import {
@@ -848,7 +853,7 @@ function CounsellingDatesPanel() {
 }
 
 export default function Admin() {
-  const [tab, setTab] = useState<'announcements' | 'cutoffs' | 'batches' | 'classes' | 'content' | 'pyq' | 'doubts' | 'counselling'>('announcements');
+  const [tab, setTab] = useState<'college' | 'announcements' | 'cutoffs' | 'batches' | 'classes' | 'content' | 'pyq' | 'doubts' | 'counselling'>('college');
 
   return (
     <div className="max-w-5xl mx-auto py-8 px-4">
@@ -869,6 +874,7 @@ export default function Admin() {
       <div className="flex justify-center gap-2 mb-8 flex-wrap">
         {(
           [
+            ['college', 'College'],
             ['announcements', 'Announcements'],
             ['cutoffs', 'KCET Cutoffs'],
             ['batches', 'Batches'],
@@ -891,6 +897,11 @@ export default function Admin() {
         ))}
       </div>
 
+      {tab === 'college' && (
+        <Suspense fallback={<p className="text-center text-ink-400 text-sm">Loading…</p>}>
+          <CollegeAdmin adminName={auth?.currentUser?.email ?? 'Admin'} />
+        </Suspense>
+      )}
       {tab === 'announcements' && <AnnouncementsPanel />}
       {tab === 'cutoffs' && <CutoffOverridesPanel />}
       {tab === 'batches' && <BatchesPanel />}

@@ -1081,270 +1081,145 @@ const Login: React.FC<{ mode: AppMode; onLogin: (role: 'admin' | 'student') => v
     }
   };
 
+  // Laid out like the SSB PU College principal login: logo + college name
+  // header, one white card with a role dropdown, then a navy Continue button.
+  const field =
+    'w-full bg-[#f5f8fc] border border-[#dbe3ef] rounded-2xl px-4 py-3 text-[#0f1f4a] placeholder:text-slate-400 outline-none focus:border-[#1d3a7a] focus:ring-2 focus:ring-[#1d3a7a]/15 transition-all';
+  const label = 'block text-sm font-semibold text-[#0f1f4a] mb-1.5';
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-ink-950 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[#f5f9fd] px-4 py-10 relative overflow-hidden">
       <Watermark />
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div 
-          animate={{ 
-            scale: [1, 1.2, 1],
-            rotate: [0, 90, 0],
-            opacity: [0.1, 0.2, 0.1]
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute -top-1/4 -left-1/4 w-full h-full bg-gold-500/20 blur-[120px] rounded-full"
-        />
-        <motion.div 
-          animate={{ 
-            scale: [1, 1.5, 1],
-            rotate: [0, -90, 0],
-            opacity: [0.1, 0.3, 0.1]
-          }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute -bottom-1/4 -right-1/4 w-full h-full bg-sage-500/20 blur-[120px] rounded-full"
-        />
-      </div>
-
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.9, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="w-full max-w-md p-8 relative z-10"
-      >
-        <div className="bg-white/10 backdrop-blur-2xl p-10 rounded-[3rem] border border-white/20 shadow-2xl">
-          <div className="text-center mb-10">
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="flex items-center justify-center gap-4 mb-6"
-            >
-              <div className="w-24 h-24 rounded-full overflow-hidden shadow-lg bg-white shrink-0">
-                <img src="/branding/science-monk-logo.png" alt="Science Monk Academy" className="w-full h-full object-cover" />
-              </div>
-              <img
-                src="/branding/founder-photo.png"
-                alt="Sumeet Birajadar, Founder"
-                className="w-20 h-24 rounded-2xl object-cover object-top shadow-lg shrink-0"
-              />
-            </motion.div>
-            <h1 className="text-3xl font-bold text-white tracking-tight font-display mb-2">Welcome</h1>
-            <p className="text-ink-400 text-sm">
-              {mode === 'student' ? 'Sign in to your KCET prep hub' : 'Sign in to your daily journey'}
-            </p>
+      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-sm relative z-10">
+        <div className="text-center mb-7">
+          <div className="flex items-center justify-center gap-4 mb-5">
+            <div className="w-24 h-24 bg-white rounded-xl shadow-md p-1.5 shrink-0">
+              <img src="/branding/science-monk-logo.png" alt="Science Monk Academy" className="w-full h-full object-cover rounded-lg" />
+            </div>
+            <img
+              src="/branding/founder-photo.png"
+              alt="Sumeet Birajadar, Founder"
+              className="w-20 h-24 rounded-xl object-cover object-top shadow-md shrink-0"
+            />
           </div>
+          <h1 className="text-3xl font-extrabold text-[#0f2a5f] tracking-tight font-display">Science Monk Academy</h1>
+          <p className="text-[#0f1f4a] text-lg mt-1">KCET · NEET Prep Hub</p>
+          <p className="text-slate-500 text-sm">Founder: Sumeet Birajadar</p>
+          <span className="inline-block mt-3 bg-[#e3e9f3] text-[#0f2a5f] text-xs font-bold uppercase tracking-wider px-4 py-1.5 rounded-full">
+            {mode === 'admin' ? 'Principal (Admin) Login' : 'Student Login'}
+          </span>
+        </div>
 
-          {showToggle && (
-            <div className="flex gap-2 mb-8 bg-white/5 p-1 rounded-3xl">
-              <button
-                type="button"
-                onClick={() => { setMode('student'); setError(''); }}
-                className={`flex-1 py-2 rounded-2xl text-sm font-bold uppercase tracking-wider transition-all ${mode === 'student' ? 'bg-gold-400 text-ink-900' : 'text-ink-400'}`}
+        <form onSubmit={handleSubmit} className="bg-white rounded-3xl border border-[#dbe3ef] shadow-lg shadow-[#0f1f4a]/5 p-6 space-y-4">
+          {showToggle ? (
+            <div>
+              <label className={label}>Select your role</label>
+              <select
+                value={mode}
+                onChange={(e) => {
+                  setMode(e.target.value as 'admin' | 'student');
+                  setError('');
+                  setInfo('');
+                }}
+                className={field}
               >
-                Student
-              </button>
-              <button
-                type="button"
-                onClick={() => { setMode('admin'); setError(''); }}
-                className={`flex-1 py-2 rounded-2xl text-sm font-bold uppercase tracking-wider transition-all ${mode === 'admin' ? 'bg-gold-400 text-ink-900' : 'text-ink-400'}`}
-              >
-                Admin
-              </button>
+                <option value="admin">Principal (Admin)</option>
+                <option value="student">Student</option>
+              </select>
             </div>
-          )}
-          {!showToggle && (
-            <div className="mb-8 text-center">
-              <span className="inline-flex items-center gap-1.5 bg-white/5 text-ink-300 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">
-                {mode === 'admin' ? 'Admin App' : 'Student App'}
-              </span>
-            </div>
-          )}
+          ) : null}
 
           {mode === 'student' && (
-            <div className="flex gap-2 mb-6 bg-white/5 p-1 rounded-3xl">
-              <button
-                type="button"
-                onClick={() => { setStudentAuthMode('login'); setError(''); setInfo(''); }}
-                className={`flex-1 py-1.5 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all ${studentAuthMode === 'login' ? 'bg-white/15 text-white' : 'text-ink-400'}`}
-              >
-                Log In
-              </button>
-              <button
-                type="button"
-                onClick={() => { setStudentAuthMode('register'); setError(''); setInfo(''); }}
-                className={`flex-1 py-1.5 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all ${studentAuthMode === 'register' ? 'bg-white/15 text-white' : 'text-ink-400'}`}
-              >
-                Create Account
-              </button>
+            <div className="flex gap-1 bg-[#f5f8fc] p-1 rounded-2xl border border-[#dbe3ef]">
+              {(['login', 'register'] as const).map((m) => (
+                <button
+                  key={m}
+                  type="button"
+                  onClick={() => {
+                    setStudentAuthMode(m);
+                    setError('');
+                    setInfo('');
+                  }}
+                  className={`flex-1 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
+                    studentAuthMode === m ? 'bg-white text-[#0f2a5f] shadow-sm' : 'text-slate-400'
+                  }`}
+                >
+                  {m === 'login' ? 'Log In' : 'Create Account'}
+                </button>
+              ))}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {mode === 'student' ? (
-              <>
-                {studentAuthMode === 'register' && (
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-ink-400 uppercase tracking-widest ml-1">Your Name</label>
-                    <div className="relative">
-                      <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-500" />
-                      <input
-                        type="text"
-                        value={studentName}
-                        onChange={(e) => setStudentName(e.target.value)}
-                        className="w-full bg-white/5 border border-white/10 rounded-3xl py-4 pl-12 pr-4 text-white outline-none focus:border-gold-400/50 focus:bg-white/10 transition-all"
-                        placeholder="Enter your name"
-                        required
-                      />
-                    </div>
-                  </div>
-                )}
+          {mode === 'student' && studentAuthMode === 'register' && (
+            <div>
+              <label className={label}>Your name</label>
+              <input type="text" value={studentName} onChange={(e) => setStudentName(e.target.value)} className={field} placeholder="Enter your name" required />
+            </div>
+          )}
 
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-ink-400 uppercase tracking-widest ml-1">Email</label>
-                  <div className="relative">
-                    <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-500" />
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-3xl py-4 pl-12 pr-4 text-white outline-none focus:border-gold-400/50 focus:bg-white/10 transition-all"
-                      placeholder="you@example.com"
-                      required
-                    />
-                  </div>
-                </div>
+          <div>
+            <label className={label}>{mode === 'admin' ? 'Email (your username)' : 'Email'}</label>
+            <input
+              type="email"
+              value={mode === 'admin' ? username : email}
+              onChange={(e) => (mode === 'admin' ? setUsername(e.target.value) : setEmail(e.target.value))}
+              className={field}
+              placeholder="you@example.com"
+              required
+            />
+          </div>
 
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-ink-400 uppercase tracking-widest ml-1">Password</label>
-                  <div className="relative">
-                    <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-500" />
-                    <input
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-3xl py-4 pl-12 pr-4 text-white outline-none focus:border-gold-400/50 focus:bg-white/10 transition-all"
-                      placeholder={studentAuthMode === 'register' ? 'At least 6 characters' : 'Enter password'}
-                      required
-                    />
-                  </div>
-                  {studentAuthMode === 'login' && (
-                    <button
-                      type="button"
-                      onClick={handleForgotPassword}
-                      className="text-xs text-gold-400/80 hover:text-gold-300 font-semibold ml-1"
-                    >
-                      Forgot password?
-                    </button>
-                  )}
-                </div>
+          <div>
+            <label className={label}>Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={field}
+              placeholder={mode === 'student' && studentAuthMode === 'register' ? 'At least 6 characters' : 'Enter password'}
+              required
+            />
+            {mode === 'student' && studentAuthMode === 'login' && (
+              <button type="button" onClick={handleForgotPassword} className="text-xs text-[#1d3a7a] hover:underline font-semibold mt-1.5">
+                Forgot password?
+              </button>
+            )}
+          </div>
 
-                {studentAuthMode === 'register' && (
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-ink-400 uppercase tracking-widest ml-1">Confirm Password</label>
-                    <div className="relative">
-                      <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-500" />
-                      <input
-                        type="password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        className="w-full bg-white/5 border border-white/10 rounded-3xl py-4 pl-12 pr-4 text-white outline-none focus:border-gold-400/50 focus:bg-white/10 transition-all"
-                        placeholder="Re-enter password"
-                        required
-                      />
-                    </div>
-                  </div>
-                )}
-              </>
+          {mode === 'student' && studentAuthMode === 'register' && (
+            <div>
+              <label className={label}>Confirm password</label>
+              <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className={field} placeholder="Re-enter password" required />
+            </div>
+          )}
+
+          {error && <p className="text-rose-600 text-xs font-bold text-center bg-rose-50 py-2 rounded-lg border border-rose-200">{error}</p>}
+          {info && <p className="text-emerald-700 text-xs font-bold text-center bg-emerald-50 py-2 rounded-lg border border-emerald-200">{info}</p>}
+
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full bg-gradient-to-r from-[#0b1a45] to-[#1d3a7a] hover:opacity-95 text-white font-bold py-3.5 rounded-2xl shadow-md transition-all active:scale-[0.98] flex items-center justify-center"
+          >
+            {isLoading ? (
+              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            ) : mode === 'student' && studentAuthMode === 'register' ? (
+              'Create Account'
             ) : (
-              <>
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-ink-400 uppercase tracking-widest ml-1">Admin Email</label>
-                  <div className="relative">
-                    <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-500" />
-                    <input
-                      type="email"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-3xl py-4 pl-12 pr-4 text-white outline-none focus:border-gold-400/50 focus:bg-white/10 transition-all"
-                      placeholder="you@example.com"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-ink-400 uppercase tracking-widest ml-1">Password</label>
-                  <div className="relative">
-                    <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-500" />
-                    <input
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-3xl py-4 pl-12 pr-4 text-white outline-none focus:border-gold-400/50 focus:bg-white/10 transition-all"
-                      placeholder="Enter password"
-                      required
-                    />
-                  </div>
-                </div>
-              </>
+              'Continue'
             )}
+          </button>
 
-            {error && (
-              <motion.p
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="text-rose-400 text-xs font-bold text-center bg-rose-400/10 py-2 rounded-lg border border-rose-400/20"
-              >
-                {error}
-              </motion.p>
-            )}
+          <p className="text-center text-slate-400 text-xs">
+            {mode === 'admin'
+              ? 'Restricted to authorized admin accounts only'
+              : studentAuthMode === 'register'
+                ? 'Free to join — your progress stays saved to this account'
+                : 'New here? Tap "Create Account" above'}
+          </p>
+        </form>
 
-            {info && (
-              <motion.p
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="text-sage-400 text-xs font-bold text-center bg-sage-400/10 py-2 rounded-lg border border-sage-400/20"
-              >
-                {info}
-              </motion.p>
-            )}
-
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full bg-gold-400 hover:bg-gold-300 text-ink-900 font-bold py-4 rounded-3xl shadow-lg shadow-gold-400/20 transition-all active:scale-95 flex items-center justify-center gap-2 group"
-            >
-              {isLoading ? (
-                <div className="w-5 h-5 border-2 border-ink-900/30 border-t-ink-900 rounded-full animate-spin" />
-              ) : (
-                <>
-                  <span>{mode === 'student' ? (studentAuthMode === 'register' ? 'Create Account' : 'Log In') : 'Sign In'}</span>
-                  <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </>
-              )}
-            </button>
-          </form>
-
-          <div className="mt-10 text-center">
-            <p className="text-ink-500 text-xs">
-              {mode === 'admin' ? (
-                'Restricted to authorized admin accounts only'
-              ) : studentAuthMode === 'register' ? (
-                'Free to join — your progress stays saved to this account'
-              ) : (
-                "New here? Tap \"Create Account\" above"
-              )}
-            </p>
-          </div>
-
-          <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-center gap-4">
-            <img src="/branding/founder-photo.png" alt="Sumeet Birajadar, Founder" className="w-16 h-20 rounded-2xl object-cover object-top shrink-0" />
-            <p className="text-ink-500 text-xs leading-tight text-left">
-              <span className="text-ink-300 font-semibold">Sumeet Birajadar</span>
-              <br />
-              Founder, <span className="text-ink-300 font-semibold">Science Monk</span> Academy
-            </p>
-          </div>
-        </div>
+        <p className="text-center text-slate-500 text-xs mt-6">© {new Date().getFullYear()} Science Monk Academy · Sumeet Birajadar</p>
       </motion.div>
     </div>
   );

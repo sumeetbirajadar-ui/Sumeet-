@@ -25,14 +25,37 @@
     {\color{ink}\fontsize{16}{20}\selectfont\itshape Previous Year Question Papers}\\[8pt]
     {\color{gilt}\pgfornament[width=5cm]{88}}\\[4pt]
     {\color{verde}\fontsize{15}{18}\selectfont\scshape 2016 \textendash{} 2026 \enspace\textperiodcentered\enspace Eleven Years \enspace\textperiodcentered\enspace 660 Questions}};
-  % centre emblem
-  \node[inner sep=0pt] at ($(current page.south)+(0,10.9cm)$) {\pgfornament[width=5cm,color=gilt]{75}};
-  \node[align=center,text width=14cm] at ($(current page.south)+(0,8.0cm)$) {%
-    {\color{ink}\large\itshape Every question retyped \textperiodcentered{} Every diagram redrawn}\\[6pt]
-    {\color{navy}\scshape Physics \textperiodcentered{} Karnataka Common Entrance Test}\\[10pt]
-    {\color{gilt}\pgfornament[width=3cm]{15}}};
+  % centre: calligraphic cartouche
+  \coordinate (Q) at ($(current page.south)+(0,10.7cm)$);
+  \begin{scope}
+    \clip (Q) ellipse (6.9cm and 3.2cm);
+    \fill[softgilt!35] (Q) ellipse (6.9cm and 3.2cm);
+    % faint physics motifs
+    \begin{scope}[shift={($(Q)+(-5.5cm,0.1cm)$)},gilt!55,line width=0.6pt]
+      \draw (0,0) ellipse (1.3cm and 0.45cm);
+      \draw[rotate=60] (0,0) ellipse (1.3cm and 0.45cm);
+      \draw[rotate=-60] (0,0) ellipse (1.3cm and 0.45cm);
+      \fill[navy!40] (0,0) circle (0.12cm);
+    \end{scope}
+    \draw[gilt!55,line width=0.6pt,domain=0:1.9,samples=80,shift={($(Q)+(4.4cm,-0.9cm)$)}] plot (\x,{0.35*sin(\x*240)});
+    \draw[gilt!55,line width=0.6pt,domain=0:1.9,samples=80,shift={($(Q)+(4.4cm,-0.9cm)$)}] plot (\x,{0.35*cos(\x*240)});
+  \end{scope}
+  \draw[gilt,line width=1.6pt] (Q) ellipse (6.9cm and 3.2cm);
+  \draw[gilt,line width=0.5pt] (Q) ellipse (6.7cm and 3.0cm);
+  \draw[navy,line width=0.3pt] (Q) ellipse (7.05cm and 3.35cm);
+  \node[inner sep=0pt,fill=ivory] at ($(Q)+(0,3.25cm)$) {\pgfornament[width=4.4cm,color=gilt]{88}};
+  \node[inner sep=0pt,fill=ivory] at ($(Q)+(0,-3.25cm)$) {\pgfornament[width=4.4cm,color=gilt,symmetry=h]{88}};
+  \node[inner sep=0pt] at ($(Q)+(-7.15cm,0)$) {\pgfornament[width=1.4cm,color=gilt,symmetry=v]{46}};
+  \node[inner sep=0pt] at ($(Q)+(7.15cm,0)$) {\pgfornament[width=1.4cm,color=gilt]{46}};
+  \node[align=center,text width=10cm] at ($(Q)+(0,0.25cm)$) {%
+    {\color{navy}\fmmfamily\fontsize{36}{42}\selectfont The important thing}\\[2pt]
+    {\color{navy}\fmmfamily\fontsize{36}{42}\selectfont is not to stop questioning}\\[8pt]
+    {\color{gilt}\pgfornament[width=3.2cm]{88}}\\[1pt]
+    {\color{crimson}\small\scshape Albert Einstein}};
+  \node[align=center] at ($(current page.south)+(0,6.3cm)$) {%
+    {\color{verde}\calligra\fontsize{20}{24}\selectfont every question retyped \quad every diagram redrawn}};
   % small square photo with name, bottom-left corner
-  \node[inner sep=0pt,anchor=south west] (ph) at ($(current page.south west)+(4.4cm,2.6cm)$) {\includegraphics[width=2.3cm,height=2.3cm,keepaspectratio=false,trim=60 260 60 0,clip]{img/photo_src}};
+  \node[inner sep=0pt,anchor=south west] (ph) at ($(current page.south west)+(4.4cm,2.6cm)$) {\includegraphics[width=2.4cm]{img/photo_square}};
   \draw[gilt,line width=1.2pt] (ph.south west) rectangle (ph.north east);
   \node[anchor=west,align=left] at ($(ph.east)+(0.35cm,0)$) {%
     {\color{navy}\fontsize{15}{18}\selectfont\scshape Sumeet Birajadar}\\[2pt]

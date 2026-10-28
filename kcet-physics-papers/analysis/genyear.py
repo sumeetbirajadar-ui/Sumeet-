@@ -43,7 +43,7 @@ ApS=[x for x in A if x[0] in d.SRC]; ApN=[x for x in A if x[0] not in d.SRC]
 xi=[x for x in info if x[2].startswith('keph')]
 cnt=collections.Counter(x[2] for x in info); dirc=collections.Counter(x[2] for x in info if x[1]=='D')
 DIFF=dict(zip(range(1,61),d.DIFF.split())); dc=collections.Counter(DIFF.values())
-ex=collections.Counter(('NEET' if re.search('NEET|AIPMT|AIIMS',v) else 'AIEEE' if 'AIEEE' in v else 'JEE') for k,v in d.SRC.items())
+ex=collections.Counter(('NEET' if re.search('NEET|AIPMT|AIIMS',v) else 'AIEEE' if 'AIEEE' in v else 'JEE') for k,v in d.SRC.items() if k in {x[0] for x in A})
 L=lambda xs:', '.join(str(x[0]) for x in xs)
 rows='\n'.join(f'{CH[f]} & {"XI" if f.startswith("keph") else "XII"} & {m} & {dirc.get(f,0)} & {m-dirc.get(f,0)}\\\\' for f,m in sorted(cnt.items(),key=lambda z:(not z[0].startswith('keph'),z[0])))
 hard=[k for k,v in DIFF.items() if v=='H']

@@ -148,7 +148,7 @@
 % centred figure inside a question
 \newcommand{\fig}[1]{\par\nopagebreak\vspace{3pt}{\centering #1\par}\vspace{2pt}\nopagebreak}
 % keep whole question together where possible
-\newenvironment{qq}{\par\vspace{7pt plus 3pt minus 2pt}\begin{minipage}{\linewidth}}{\end{minipage}\par}
+\newenvironment{qq}{\par\vspace{11pt plus 4pt minus 2pt}\begin{minipage}{\linewidth}}{\end{minipage}\par}
 
 \tikzset{every picture/.style={line width=0.6pt,>=Stealth},
          lbl/.style={font=\footnotesize}}
@@ -197,7 +197,8 @@
   \draw[->] (0,0) -- (2.2,0) node[right,lbl]{#1};
   \draw[->] (0,-1.0) -- (0,1.1) node[above,lbl]{#2};
   #3\end{tikzpicture}}
-% NCERT tag: \ntag{D|A}{printed page}{file}{pdf page}{extra}
-\newcommand{\ntag}[5]{\par\vspace{2pt}{\footnotesize\textbf{[}%
-  \if#1D\textbf{\color{verde}Direct}\else\textbf{\color{crimson}Applied}\fi
-  #5\ \textbar\ NCERT p.\,#2\ \textbar\ \href{https://ncert.nic.in/textbook/pdf/#3.pdf\#page=#4}{\color{navy}\nolinkurl{ncert.nic.in/textbook/pdf/#3.pdf\#page=#4}}\textbf{]}}\par}
+% NCERT tag: \ntag{D|A}{printed page}{file}{pdf page}{extra}{book label}
+\newcommand{\ntag}[6]{\par\vspace{5pt}%
+  \noindent\href{https://ncert.nic.in/textbook/pdf/#3.pdf\#page=#4}{%
+  \fboxsep=2.5pt\colorbox{\if#1Dverde\else crimson\fi}{\scriptsize\bfseries\color{white}\strut\if#1D DIRECT\else APPLIED\fi}%
+  \hspace{4pt}\colorbox{softgilt!70}{\scriptsize\color{ink}\strut #6 \textperiodcentered{} \textbf{Page #2}#5 \ \color{navy}\textbf{Open PDF\,\raisebox{0.5pt}{$\nearrow$}}}}\par\vspace{4pt}}

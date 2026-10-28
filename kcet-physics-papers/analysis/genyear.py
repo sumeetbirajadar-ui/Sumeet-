@@ -33,7 +33,9 @@ while True:
     c,pt=LAB[f[:5]]
     extra=f' \\textperiodcentered{{}} Exemplar Q{ex[0][1:]}' if ex else ''
     tag=f'\\ntag{{{t}}}{{{pg}}}{{{f}}}{{{pg-START[f]+1}}}{{{extra}}}{{Class {c} {pt} \\textperiodcentered{{}} Ch {chap(f)}}}'
-    if t=='A': tag+='\\nsrc{'+d.SRC.get(n,NONE)+'}'
+    OUT=getattr(d,'OUT',{})
+    if n in OUT: tag+='\\nsrc{'+d.SRC.get(n,'None found in NEET/AIPMT/AIEEE/JEE papers, 2005--2026')+'. \\textit{Note: '+OUT[n]+' is not in the 2026-27 NCERT textbook.}}'
+    elif t=='A': tag+='\\nsrc{'+d.SRC.get(n,NONE)+'}'
     out.append(s[i:k-1]+tag); i=k-1; info.append((n,t,f,bool(ex)))
 s=''.join(out)
 D=[x for x in info if x[1]=='D' and not x[3]]; E=[x for x in info if x[3]]; A=[x for x in info if x[1]=='A']
@@ -63,7 +65,7 @@ Applied (concept in NCERT) & '''+str(len(A))+r'''\\\midrule
 \textbf{\color{crimson}2. Where the applied questions resemble earlier exams}\par\smallskip
 Of the '''+str(len(A))+r''' applied questions, \textbf{'''+str(len(ApS))+r'''} closely resemble a question from an earlier national exam:
 NEET/AIPMT/AIIMS '''+str(ex['NEET'])+r''', JEE Main/Advanced '''+str(ex['JEE'])+r''', AIEEE '''+str(ex['AIEEE'])+r'''.
-The other '''+str(len(ApN))+r''' (Q '''+L(ApN)+r''') had no close match in the NEET, AIPMT, AIIMS, AIEEE and JEE papers of 2005--2026 that were searched; they are straightforward applications of NCERT concepts.\par
+The other '''+str(len(ApN))+r''' (Q '''+L(ApN)+r''') had no close match in the NEET, AIPMT, AIIMS, AIEEE and JEE papers of 2005--2026 that were searched; they are straightforward applications of NCERT concepts.'''+((r' \textbf{'+str(len(d.OUT))+r'} questions (Q '+', '.join(map(str,d.OUT))+r') test topics no longer in the 2026-27 NCERT textbook.') if getattr(d,'OUT',None) else '')+r'''\par
 {\footnotesize Strongest repeats: '''+d.STRONG+r'''}\par\medskip
 \textbf{\color{crimson}3. Difficulty level}\par\smallskip
 \begin{tabular}{@{}lr@{}}\toprule

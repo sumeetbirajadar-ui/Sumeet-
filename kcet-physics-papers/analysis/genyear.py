@@ -66,19 +66,22 @@ delblock=(r'''\textbf{\color{crimson}6. Deleted portions}\par\smallskip
 None. Every question of this paper is within the 2026-27 NCERT textbook.\par''')
 # answer key: keys/k<year>.txt lines "Qnum answer topic [| note]"; answer 1-4, or - when no option is correct
 K=[l.split(' | ') for l in open(f'keys/k{Y}.txt').read().strip().splitlines()]; assert len(K)==60
+NUM='\\numoptstrue' in s   # 2016, 2025, 2026 print (1)-(4); the other papers print (A)-(D)
+lab=lambda a:a if NUM else 'ABCD'[int(a)-1]
+fixnote=lambda n:n if NUM else re.sub(r'([Oo]ptions?) \((\d)\)',lambda m:m.group(1)+' ('+lab(m.group(2))+')',n)
 def cell(q,k):
     a=k[0].split()[1]; x=k[0].split(None,2)[2]=='X'
-    s=r'\textbf{'+str(q)+r'}\,'+('--' if a=='-' else '('+a+')')+(r'$^{*}$' if len(k)>1 else '')+(r'$^{\dagger}$' if x else '')
+    s=r'\textbf{'+str(q)+r'}\,'+('--' if a=='-' else '('+lab(a)+')')+(r'$^{*}$' if len(k)>1 else '')+(r'$^{\dagger}$' if x else '')
     return r'\textcolor{gray}{'+s+'}' if x else s
 krows='\\\\\n'.join(' & '.join(cell(r*10+c+1,K[r*10+c]) for c in range(10)) for r in range(6))
-knotes=[(i+1,k[1]) for i,k in enumerate(K) if len(k)>1]
+knotes=[(i+1,fixnote(k[1])) for i,k in enumerate(K) if len(k)>1]
 keyblock=r'''\par\needspace{16\baselineskip}\vspace{14pt}
 \begin{center}{\pgfornament[width=3.2cm,color=gilt]{87}}\par
 {\large\color{navy}\scshape KCET '''+Y+r''' \textperiodcentered{} Answer Key}\end{center}
 {\small\setlength{\tabcolsep}{1pt}\renewcommand{\arraystretch}{1.5}
 \begin{tabularx}{\linewidth}{@{}*{10}{>{\centering\arraybackslash}X}@{}}\toprule
 '''+krows+r'''\\\bottomrule\end{tabularx}}\par\smallskip
-{\footnotesize Answers solved by the editor; (1)--(4) are the printed options.'''+(r' {\color{gray}Grey$^{\dagger}$}: deleted portion (answer given for completeness).' if X else '')+(r' --: no option is correct.' if any(k[0].split()[1]=='-' for k in K) else '')+(r' $^{*}$: see note.' if knotes else '')+r'''\par
+{\footnotesize Answers solved by the editor; '''+('(1)--(4)' if NUM else '(A)--(D)')+r''' are the printed options.'''+(r' {\color{gray}Grey$^{\dagger}$}: deleted portion (answer given for completeness).' if X else '')+(r' --: no option is correct.' if any(k[0].split()[1]=='-' for k in K) else '')+(r' $^{*}$: see note.' if knotes else '')+r'''\par
 '''+(''.join(r'\par\smallskip\textbf{Q'+str(q)+r'.} '+n+'\n' for q,n in knotes))+r'''}\par
 '''
 page=r'''%%BEGIN-ANALYSIS

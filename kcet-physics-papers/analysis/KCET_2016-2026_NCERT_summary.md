@@ -110,3 +110,32 @@ Q1 D p6 keph101 Example 1.2 · Q2 D p20 keph102 Example 2.6 · Q3 D p40 keph103 
 Q1 A p17 keph102 · Q2 D p40 keph103 · Q3 D p31 keph103 · Q4 D p61 keph104 Example 4.7 · Q5 A p57 keph104 · Q6 A p98 keph106 · Q7 Deleted (rolling motion) · Q8 D p134 keph107 · Q9 A p170 keph201 Exemplar 9.4 · Q10 D p187 keph202 · Q11 D p221 keph203 Example 10.8 · Q12 D p215 keph203 · Q13 D p238 keph204 · Q14 D p266 keph206 · Q15 Deleted (Doppler effect) · Q16 D p30 leph101 Exemplar 1.10 · Q17 D p17 leph101 Example 1.7 · Q18 D p24 leph101 · Q19 D p54 leph102 · Q20 A p56 leph102 · Q21 A p72 leph102 · Q22 A p69 leph102 · Q23 D p89 leph103 · Q24 D p90 leph103 · Q25 A p97 leph103 · Q26 A p97 leph103 · Q27 A p97 leph103 · Q28 A p93 leph103 · Q29 D p109 leph104 Exemplar 4.4 · Q30 Deleted (cyclotron) · Q31 A p114 leph104 · Q32 D p82 leph103 · Q33 A p131 leph104 · Q34 Deleted (Curie's law) · Q35 Deleted (Earth's magnetism (angle of dip)) · Q36 Deleted (communication systems (modulation)) · Q37 A p169 leph106 · Q38 D p165 leph106 Example 6.7 · Q39 D p178 leph107 · Q40 D p185 leph107 · Q41 D p187 leph107 · Q42 D p191 leph107 · Q43 D p210 leph108 · Q44 A p229 leph201 · Q45 A p228 leph201 · Q46 A p235 leph201 · Q47 A p240 leph201 · Q48 A p265 leph202 · Q49 D p267 leph202 · Q50 Deleted (Fresnel distance) · Q51 D p279 leph203 · Q52 A p285 leph203 · Q53 D p305 leph204 Exercise 12.4 · Q54 D p299 leph204 · Q55 Deleted (radioactive decay law (half-life)) · Q56 Deleted (alpha- and beta-decay) · Q57 A p310 leph205 · Q58 Deleted (voltage regulation) · Q59 Deleted (transistor) · Q60 Deleted (digital electronics (logic gates))
 
 Difficulty and similar-PYQ sources for applied questions are in `data<year>.py` and in the book.
+
+## The 15 most repeated topics (present syllabus, 2016–2026)
+
+| # | Topic | NCERT chapter | Questions | Years asked |
+|---|---|---|---|---|
+| 1 | Bohr model of hydrogen atom | Atoms | 20 | 11 |
+| 2 | AC circuits (reactance, LCR, phase) | Alternating Current | 16 | 11 |
+| 3 | Biot-Savart law and magnetic fields | Moving Charges & Magnetism | 16 | 9 |
+| 4 | Gauss's law and electric flux | Electric Charges & Fields | 16 | 8 |
+| 5 | Photoelectric effect | Dual Nature | 15 | 11 |
+| 6 | Current, drift velocity and mobility | Current Electricity | 14 | 9 |
+| 7 | Lenses and lens maker's formula | Ray Optics | 14 | 8 |
+| 8 | Kinematics in one dimension | Motion in a Straight Line | 12 | 10 |
+| 9 | Capacitors (energy, dielectrics) | Electrostatic Potential & Capacitance | 12 | 9 |
+| 10 | Kirchhoff's rules and DC circuits | Current Electricity | 12 | 8 |
+| 11 | Electric potential and potential energy | Electrostatic Potential & Capacitance | 11 | 10 |
+| 12 | AC power and rms values | Alternating Current | 11 | 6 |
+| 13 | Elasticity (Young's modulus) | Mech. Prop. of Solids | 10 | 10 |
+| 14 | Electric dipole | Electric Charges & Fields | 10 | 9 |
+| 15 | Young's double-slit interference | Wave Optics | 10 | 9 |
+
+These 15 topics carry 199 of the 571 in-syllabus questions. Repeated almost word for word: 2019 Q20 = 2020 Q48, 2019 Q4 = 2020 Q30, 2019 Q17 ≈ 2020 Q45, 2018 Q37 ≈ 2026 Q44.
+
+## How to prepare (from this analysis)
+
+- 56% of the in-syllabus questions are direct from NCERT; 35 are NCERT Examples and 26 NCERT Exercises. Class XII gives 71% of the questions.
+- Study from: NCERT 2026-27 textbooks (every line, Examples, Exercises, Summary, Points to Ponder); NCERT Exemplar MCQs; NCERT Lab Manual; the KCET papers 2016–2026 with keys.
+- Phases: Class XII NCERT → Class XI NCERT → topic drills starting with the 15 most repeated topics → full timed papers (60 questions, 80 minutes) → last two weeks revision only.
+- Keep a one-page formula sheet per chapter and an error notebook; skip questions marked Deleted Portion.

@@ -1,0 +1,60 @@
+1 4 Kinematics in one dimension
+2 2 Acceleration due to gravity (g, variation)
+3 1 Heat transfer (conduction, radiation, cooling)
+4 1 Dimensional analysis
+5 1 Gravitation (force, field, energy)
+6 1 Beats, organ pipes and strings
+7 3 Measurement and errors
+8 2 Friction
+9 3 Kinetic energy and momentum
+10 4 Bernoulli's principle and fluid flow
+11 2 Second law and heat engines
+12 3 Kinetic theory of gases
+13 2 Laws of motion (lift, apparent weight)
+14 2 X
+15 2 Elasticity (Young's modulus)
+16 1 Coulomb force and electric field
+17 2 Electric potential and potential energy
+18 4 Electric charge and Coulomb's law
+19 1 Capacitors (combination)
+20 4 Equipotential surfaces and potential gradient
+21 4 Capacitors (energy, dielectrics)
+22 4 Ohm's law and measuring instruments
+23 2 X
+24 3 Kirchhoff's rules and DC circuits
+25 2 Kirchhoff's rules and DC circuits
+26 3 Cells, emf and internal resistance
+27 2 Ohm's law and measuring instruments
+28 2 Biot-Savart law and magnetic fields
+29 2 Charged particle in a magnetic field
+30 2 Charged particle in a magnetic field
+31 3 X
+32 2 Magnetic materials
+33 4 X
+34 2 X
+35 1 AC circuits (reactance, LCR, phase)
+36 2 Faraday's law and Lenz's law
+37 1 AC power and rms values
+38 1 AC power and rms values
+39 2 AC power and rms values
+40 2 Transformer and power transmission
+41 2 Photons and photon momentum
+42 - Reflection and spherical mirrors | For an object at F of a convex mirror the image is virtual, at $f/2$ behind the mirror; no option is correct.
+43 3 Reflection and spherical mirrors
+44 1 Lenses and lens maker's formula
+45 2 Diffraction at a single slit
+46 4 Diffraction at a single slit
+47 3 Young's double-slit interference
+48 1 Young's double-slit interference
+49 2 Photoelectric effect
+50 2 de Broglie waves
+51 3 Bohr model of hydrogen atom
+52 4 Bohr model of hydrogen atom
+53 2 Mass defect, binding energy, fission and fusion
+54 4 X
+55 1 X
+56 3 X | $\bar B$ also equals 1 here, so option (2) has the same value.
+57 2 Semiconductors (intrinsic, extrinsic, bands)
+58 1 X
+59 3 X
+60 3 Satellites, orbital and escape speed

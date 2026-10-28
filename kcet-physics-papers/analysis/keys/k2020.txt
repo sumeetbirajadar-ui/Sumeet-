@@ -1,0 +1,60 @@
+1 2 Acceleration due to gravity (g, variation)
+2 3 Elasticity (Young's modulus)
+3 1 Rotational dynamics (torque, moment of inertia)
+4 1 Bernoulli's principle and fluid flow
+5 3 Heat transfer (conduction, radiation, cooling)
+6 1 Thermodynamic processes
+7 3 First law of thermodynamics
+8 3 Simple harmonic motion
+9 4 X
+10 1 Gauss's law and electric flux
+11 1 Coulomb force and electric field
+12 3 Gauss's law and electric flux
+13 2 Electric dipole
+14 3 Capacitors (combination)
+15 2 Equipotential surfaces and potential gradient
+16 1 Conductors, Gauss's law and electric flux
+17 3 Electric potential and potential energy
+18 1 Resistance and resistivity
+19 3 Cells, emf and internal resistance
+20 1 X
+21 1 X
+22 1 Kirchhoff's rules and DC circuits
+23 4 Resistance and resistivity
+24 3 Biot-Savart law and magnetic fields
+25 2 Biot-Savart law and magnetic fields
+26 4 Ampere's law and solenoid
+27 3 X
+28 2 X
+29 4 Biot-Savart law and magnetic fields
+30 3 Magnetic materials
+31 2 Motional emf
+32 2 Self and mutual inductance
+33 3 AC circuits (reactance, LCR, phase)
+34 2 AC circuits (reactance, LCR, phase)
+35 3 AC circuits (reactance, LCR, phase)
+36 3 X
+37 3 Lenses and lens maker's formula
+38 4 Prism and dispersion
+39 4 Lenses and lens maker's formula
+40 3 Polarisation and Malus' law
+41 1 X
+42 4 Young's double-slit interference
+43 2 de Broglie waves
+44 1 Photoelectric effect
+45 3 Bohr model of hydrogen atom
+46 2 Bohr model of hydrogen atom
+47 2 Alpha-particle scattering and atomic models | Correct pattern: A$'$ maximum, B$'$ minimum; option (2) is the closest.
+48 2 Nuclear force and binding energy
+49 3 X
+50 3 X
+51 4 p-n junction diode and rectifier
+52 1 X
+53 2 Semiconductors (intrinsic, extrinsic, bands)
+54 2 Biot-Savart law and magnetic fields
+55 4 Measurement and errors
+56 3 Motion in a plane (vectors, relative velocity)
+57 4 Motion in a plane (vectors, relative velocity)
+58 1 Circular motion
+59 2 Work-energy theorem and power
+60 1 X

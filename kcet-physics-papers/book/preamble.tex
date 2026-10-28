@@ -1,6 +1,6 @@
 % Science Monk -- KCET Physics book: page design and question macros
-\usepackage[a4paper,top=2.55cm,bottom=2.45cm,left=2.05cm,right=2.05cm,
-            headsep=0.45cm,footskip=0.95cm,columnsep=0.75cm]{geometry}
+\usepackage[a4paper,top=1.75cm,bottom=1.6cm,left=1.35cm,right=1.35cm,
+            headheight=14pt,headsep=0.3cm,footskip=0.65cm,columnsep=0.6cm]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage[lining]{baskervillef}
 \usepackage[baskervillef,vvarbb,upint]{newtxmath}
@@ -25,6 +25,7 @@
 \usepackage{fancyhdr}
 \usepackage{titlesec}
 \usepackage{needspace}
+\usepackage[export]{adjustbox}
 \usepackage{etoolbox}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
@@ -33,47 +34,26 @@
 
 % ---------- Palette: British navy, Italian green, French crimson, gilt ------
 % Royal palette: burgundy, antique gold, bottle green on warm ivory (matches the logo's saffron/gold)
-\definecolor{parchment}{HTML}{FAF4E6}
+\definecolor{parchment}{HTML}{FFFEFB}  % near-white page
 \definecolor{navy}{HTML}{6B1E2A}      % primary: royal burgundy (name kept for macros)
 \definecolor{crimson}{HTML}{8A5A12}   % accent: deep saffron-bronze
 \definecolor{verde}{HTML}{2F5D46}     % bottle green
 \definecolor{gilt}{HTML}{B38B3C}      % antique gold
 \definecolor{ink}{HTML}{2A1E18}       % sepia-black text
 \definecolor{softgilt}{HTML}{E8D9B5}
-\definecolor{ivory}{HTML}{FFFBF2}
+\definecolor{ivory}{HTML}{FFFEFA}
 \pagecolor{parchment}
 \color{ink}
 
-% ---------- Page frame: double gilt rule, corner fleurons, tricolour bands --
+% ---------- Page frame: one thin gilt rule close to the page edge ---------
 \newcommand{\pageframe}{%
   \begin{tikzpicture}[remember picture,overlay]
-    \coordinate (SW) at ($(current page.south west)+(0.85cm,0.85cm)$);
-    \coordinate (NE) at ($(current page.north east)+(-0.85cm,-0.85cm)$);
-    \coordinate (SWi) at ($(SW)+(0.16cm,0.16cm)$);
-    \coordinate (NEi) at ($(NE)-(0.16cm,0.16cm)$);
-    \draw[gilt,line width=1.8pt] (SW) rectangle (NE);
-    \draw[navy,line width=0.5pt] (SWi) rectangle (NEi);
-    % corner ornaments
-    \node[anchor=north west,inner sep=0pt] at ($(NEi -| SWi)+(0.06,-0.06)$)
-         {\pgfornament[width=1.25cm,color=gilt]{61}};
-    \node[anchor=north east,inner sep=0pt] at ($(NEi)+(-0.06,-0.06)$)
-         {\pgfornament[width=1.25cm,color=gilt,symmetry=v]{61}};
-    \node[anchor=south west,inner sep=0pt] at ($(SWi)+(0.06,0.06)$)
-         {\pgfornament[width=1.25cm,color=gilt,symmetry=h]{61}};
-    \node[anchor=south east,inner sep=0pt] at ($(SWi -| NEi)+(-0.06,0.06)$)
-         {\pgfornament[width=1.25cm,color=gilt,symmetry=c]{61}};
-    % gold medallion bands centred on top and bottom rules
-    \foreach \yy in {0,1}{
-      \ifnum\yy=0 \coordinate (M) at ($(NE -| current page.center)$);
-      \else       \coordinate (M) at ($(SW -| current page.center)$); \fi
-      \fill[parchment] ($(M)+(-2.6cm,-0.2cm)$) rectangle ($(M)+(2.6cm,0.2cm)$);
-      \node[inner sep=0pt] at (M) {\pgfornament[width=4.6cm,color=gilt]{88}};
-    }
+    \draw[gilt!80,line width=0.5pt] ($(current page.south west)+(0.6cm,0.6cm)$) rectangle ($(current page.north east)+(-0.6cm,-0.6cm)$);
   \end{tikzpicture}}
 \newif\ifwatermark \watermarktrue
 \newcommand{\watermarklogo}{\ifwatermark
   \begin{tikzpicture}[remember picture,overlay]
-    \node[opacity=0.075,inner sep=0pt] at ($(current page.center)+(0,-0.3cm)$)
+    \node[opacity=0.045,inner sep=0pt] at ($(current page.center)+(0,-0.3cm)$)
       {\includegraphics[width=12.5cm]{img/logo}};
   \end{tikzpicture}\fi}
 \AddToShipoutPictureBG{\watermarklogo\pageframe}
@@ -85,7 +65,6 @@
 \renewcommand{\headrulewidth}{0pt}
 \fancyhead[L]{\small\color{navy}\textsc{Science Monk}}
 \fancyhead[R]{\small\color{crimson}\textit{KCET Physics \curyear}}
-\fancyhead[C]{\raisebox{-1.5pt}{\pgfornament[width=1.6cm,color=gilt]{88}}}
 \fancyfoot[C]{\small\color{navy}\textendash~\thepage~\textendash}
 \fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\color{navy}\textendash~\thepage~\textendash}}
 
@@ -140,15 +119,15 @@
   \fi\fi}
 % options that are pictures: \optfig{A}{B}{C}{D} in a 2 x 2 grid
 \newcommand{\optfig}[4]{\par\nopagebreak\vspace{2pt}
-  {\centering
+  {\centering\adjustbox{max width=\linewidth}{%
   \begin{tabular}{@{}c@{\hspace{1.2em}}c@{}}
    \optlabel{A}\raisebox{-.5\height}{#1} & \optlabel{B}\raisebox{-.5\height}{#2}\\[18pt]
    \optlabel{C}\raisebox{-.5\height}{#3} & \optlabel{D}\raisebox{-.5\height}{#4}
-  \end{tabular}\par}}
+  \end{tabular}}\par}}
 % centred figure inside a question
-\newcommand{\fig}[1]{\par\nopagebreak\vspace{3pt}{\centering #1\par}\vspace{2pt}\nopagebreak}
+\newcommand{\fig}[1]{\par\nopagebreak\vspace{3pt}{\centering\adjustbox{max width=\linewidth}{#1}\par}\vspace{2pt}\nopagebreak}
 % keep whole question together where possible
-\newenvironment{qq}{\par\vspace{11pt plus 4pt minus 2pt}\begin{minipage}{\linewidth}}{\end{minipage}\par}
+\newenvironment{qq}{\par\vspace{9pt plus 4pt minus 2pt}\begin{minipage}{\linewidth}}{\end{minipage}\par}
 
 \tikzset{every picture/.style={line width=0.6pt,>=Stealth},
          lbl/.style={font=\footnotesize}}

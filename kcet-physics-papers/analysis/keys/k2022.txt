@@ -1,0 +1,60 @@
+1 4 Diffraction at a single slit
+2 4 Diffraction at a single slit
+3 2 Reflection and spherical mirrors
+4 3 Lenses and lens maker's formula
+5 4 Wavefronts and Huygens' principle
+6 4 Young's double-slit interference
+7 3 Bohr model of hydrogen atom
+8 1 Bohr model of hydrogen atom
+9 2 Mass defect, binding energy, fission and fusion
+10 2 Photoelectric effect | Doubling both intensity and frequency keeps the number of photons per second the same.
+11 4 Photoelectric effect
+12 4 de Broglie waves
+13 4 Bohr model of hydrogen atom
+14 1 X
+15 3 Force on a current-carrying conductor
+16 2 Mass defect, binding energy, fission and fusion
+17 3 Radioactivity (alpha, beta, gamma)
+18 4 Semiconductors (intrinsic, extrinsic, bands)
+19 4 Semiconductors (intrinsic, extrinsic, bands)
+20 2 Laws of motion (lift, apparent weight)
+21 1 Measurement and errors | Lab manual: least count $= 0.5$\,mm$/50$.
+22 4 Kinematics in one dimension
+23 3 Projectile motion
+24 4 Circular motion
+25 4 Viscosity and Stokes' law
+26 2 Second law and heat engines
+27 1 Work-energy theorem and power
+28 4 Rotational dynamics (torque, moment of inertia)
+29 3 Centre of mass
+30 1 Elasticity (Young's modulus)
+31 3 Coulomb force and electric field
+32 3 Electric dipole
+33 1 Simple harmonic motion
+34 1 Coulomb force and electric field
+35 4 Coulomb force and electric field
+36 2 Electric dipole
+37 - Cells, emf and internal resistance | In the closed loop $I = E/r$, so the voltmeter reads $3E - 3Ir = 0$; no option is correct.
+38 4 Current, drift velocity and mobility
+39 2 Wheatstone bridge and meter bridge
+40 4 Electric potential and potential energy
+41 4 Capacitors (energy, dielectrics)
+42 2 Current, drift velocity and mobility
+43 3 Resistivity and temperature
+44 3 Moving coil galvanometer, ammeter, voltmeter
+45 1 Biot-Savart law and magnetic fields
+46 1 Electric power and heating
+47 1 Resistance and resistivity
+48 1 Charged particle in a magnetic field | Option (1) is the magnetic force alone ($2.3\times10^{-13}$\,N); with $E$ as printed the net force is about $1.5\times10^{-12}$\,N.
+49 2 Ampere's law and solenoid
+50 1 AC power and rms values
+51 2 X
+52 3 Self and mutual inductance
+53 3 X
+54 2 Faraday's law and Lenz's law
+55 3 Prism and dispersion
+56 2 Lenses and lens maker's formula
+57 1 AC circuits (reactance, LCR, phase)
+58 1 AC circuits (reactance, LCR, phase)
+59 3 Electromagnetic spectrum
+60 2 Lenses and lens maker's formula

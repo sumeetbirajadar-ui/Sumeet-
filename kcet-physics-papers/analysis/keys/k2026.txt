@@ -1,0 +1,60 @@
+1 2 Dimensional analysis
+2 2 Kinematics in one dimension
+3 2 Projectile motion
+4 3 Kinematics in one dimension
+5 4 Laws of motion (lift, apparent weight)
+6 3 Equilibrium of forces and tension
+7 2 Kinetic energy and momentum
+8 4 Work-energy theorem and power
+9 4 Angular momentum and its conservation
+10 1 Angular momentum and its conservation
+11 3 Acceleration due to gravity (g, variation)
+12 4 Gravitation (force, field, energy)
+13 2 Bernoulli's principle and fluid flow
+14 4 Elasticity (Young's modulus)
+15 3 Surface tension and capillarity
+16 2 Thermodynamic processes
+17 4 Thermodynamic processes
+18 4 Simple harmonic motion
+19 2 Beats, organ pipes and strings
+20 4 Second law and heat engines
+21 1 Coulomb force and electric field
+22 3 Gauss's law and electric flux
+23 4 Gauss's law and electric flux
+24 3 Capacitors (energy, dielectrics)
+25 3 Capacitors (combination)
+26 2 Electric dipole
+27 2 Electric potential and potential energy
+28 3 Kirchhoff's rules and DC circuits
+29 3 Current, drift velocity and mobility
+30 4 Resistivity and temperature
+31 2 Current, drift velocity and mobility
+32 2 Current, drift velocity and mobility
+33 2 Biot-Savart law and magnetic fields
+34 2 Charged particle in a magnetic field
+35 2 Biot-Savart law and magnetic fields
+36 1 Biot-Savart law and magnetic fields
+37 1 Magnetic materials
+38 3 Magnetic materials
+39 3 Photoelectric effect
+40 1 Photoelectric effect
+41 4 Faraday's law and Lenz's law
+42 3 Motional emf
+43 3 AC circuits (reactance, LCR, phase)
+44 1 AC power and rms values
+45 2 Transformer and power transmission
+46 1 Displacement current and Maxwell's equations
+47 3 Reflection and spherical mirrors
+48 2 Reflection and spherical mirrors
+49 4 Refraction and total internal reflection
+50 3 Refraction and total internal reflection
+51 3 Electromagnetic spectrum
+52 1 Young's double-slit interference
+53 2 Bohr model of hydrogen atom
+54 3 Bohr model of hydrogen atom
+55 1 Bohr model of hydrogen atom
+56 3 Semiconductors (intrinsic, extrinsic, bands)
+57 2 p-n junction diode and rectifier
+58 4 p-n junction diode and rectifier
+59 3 Prism and dispersion
+60 2 Ohm's law and measuring instruments

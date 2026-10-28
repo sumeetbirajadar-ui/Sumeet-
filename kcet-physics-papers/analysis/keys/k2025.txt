@@ -1,0 +1,60 @@
+1 4 Dimensional analysis
+2 4 Kinematics in one dimension
+3 3 Projectile motion
+4 4 Circular motion
+5 2 Friction
+6 1 Friction
+7 1 Work-energy theorem and power
+8 4 Collisions and momentum conservation
+9 2 Centre of mass
+10 1 Rotational dynamics (torque, moment of inertia) | Intended answer; the given data treat each wheel separately.
+11 3 Kepler's laws and planetary motion
+12 2 Satellites, orbital and escape speed
+13 1 Elasticity (Young's modulus)
+14 4 Bernoulli's principle and fluid flow
+15 2 Heat transfer (conduction, radiation, cooling)
+16 3 First law of thermodynamics
+17 4 Kinetic theory of gases
+18 3 Simple harmonic motion
+19 3 Wave motion and speed of waves
+20 3 Conductors, Gauss's law and electric flux | Field inside a conductor is zero.
+21 1 Gauss's law and electric flux
+22 2 Electric potential and potential energy
+23 2 Gauss's law and electric flux
+24 1 Electric dipole
+25 2 Equipotential surfaces and potential gradient
+26 1 Gauss's law and electric flux
+27 3 Cells, emf and internal resistance
+28 1 Cells, emf and internal resistance
+29 1 Resistivity and temperature
+30 4 Current, drift velocity and mobility
+31 4 Resistance and resistivity
+32 3 Force between parallel currents
+33 3 Ampere's law and solenoid
+34 4 Moving coil galvanometer, ammeter, voltmeter
+35 1 Magnetic materials
+36 3 Ampere's law and solenoid
+37 3 Biot-Savart law and magnetic fields
+38 1 de Broglie waves
+39 2 Photoelectric effect
+40 2 Faraday's law and Lenz's law
+41 2 Magnetic flux
+42 1 AC power and rms values
+43 4 AC power and rms values
+44 2 AC circuits (reactance, LCR, phase)
+45 2 Electromagnetic spectrum
+46 3 Refraction and total internal reflection
+47 1 Lenses and lens maker's formula
+48 3 Optical instruments (microscope, telescope)
+49 1 Prism and dispersion
+50 2 Wavefronts and Huygens' principle
+51 2 Wavefronts and Huygens' principle
+52 3 Bohr model of hydrogen atom
+53 1 Nuclear composition, size and density
+54 4 Nuclear force and binding energy
+55 1 Semiconductors (intrinsic, extrinsic, bands)
+56 1 Semiconductors (intrinsic, extrinsic, bands)
+57 4 p-n junction diode and rectifier
+58 2 Refraction and total internal reflection | Lab manual: real depth 3.000\,cm, apparent depth 2.000\,cm.
+59 4 Moving coil galvanometer, ammeter, voltmeter | Lab manual: $G = RS/(R-S)$.
+60 2 Viscosity and Stokes' law

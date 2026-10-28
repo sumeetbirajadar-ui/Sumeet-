@@ -64,9 +64,26 @@ xline=('; '.join(f'{t} (Q {", ".join(map(str,q))})' for t,q in xtopics.items()))
 delblock=(r'''\textbf{\color{crimson}6. Deleted portions}\par\smallskip
 \textbf{'''+str(len(X))+r'''} of the 60 questions are on topics removed from the 2026-27 NCERT (rationalised syllabus). They are marked \textsc{Deleted Portion} and are not analysed: '''+xline+r'''.\par''') if X else (r'''\textbf{\color{crimson}6. Deleted portions}\par\smallskip
 None. Every question of this paper is within the 2026-27 NCERT textbook.\par''')
+# answer key: keys/k<year>.txt lines "Qnum answer topic [| note]"; answer 1-4, or - when no option is correct
+K=[l.split(' | ') for l in open(f'keys/k{Y}.txt').read().strip().splitlines()]; assert len(K)==60
+def cell(q,k):
+    a=k[0].split()[1]; x=k[0].split(None,2)[2]=='X'
+    s=r'\textbf{'+str(q)+r'}\,'+('--' if a=='-' else '('+a+')')+(r'$^{*}$' if len(k)>1 else '')+(r'$^{\dagger}$' if x else '')
+    return r'\textcolor{gray}{'+s+'}' if x else s
+krows='\\\\\n'.join(' & '.join(cell(r*10+c+1,K[r*10+c]) for c in range(10)) for r in range(6))
+knotes=[(i+1,k[1]) for i,k in enumerate(K) if len(k)>1]
+keyblock=r'''\par\needspace{16\baselineskip}\vspace{14pt}
+\begin{center}{\pgfornament[width=3.2cm,color=gilt]{87}}\par
+{\large\color{navy}\scshape KCET '''+Y+r''' \textperiodcentered{} Answer Key}\end{center}
+{\small\setlength{\tabcolsep}{1pt}\renewcommand{\arraystretch}{1.5}
+\begin{tabularx}{\linewidth}{@{}*{10}{>{\centering\arraybackslash}X}@{}}\toprule
+'''+krows+r'''\\\bottomrule\end{tabularx}}\par\smallskip
+{\footnotesize Answers solved by the editor; (1)--(4) are the printed options.'''+(r' {\color{gray}Grey$^{\dagger}$}: deleted portion (answer given for completeness).' if X else '')+(r' --: no option is correct.' if any(k[0].split()[1]=='-' for k in K) else '')+(r' $^{*}$: see note.' if knotes else '')+r'''\par
+'''+(''.join(r'\par\smallskip\textbf{Q'+str(q)+r'.} '+n+'\n' for q,n in knotes))+r'''}\par
+'''
 page=r'''%%BEGIN-ANALYSIS
 \end{multicols}
-\clearpage
+'''+keyblock+r'''\clearpage
 \begin{center}{\pgfornament[width=5cm,color=gilt]{87}}\par
 {\fontsize{20}{24}\selectfont\color{navy}\scshape KCET '''+Y+r''' \textperiodcentered{} Paper Analysis}\par
 {\color{gilt}\pgfornament[width=5cm,color=gilt,symmetry=h]{87}}\end{center}
@@ -94,7 +111,7 @@ Easy & '''+str(dc['E'])+r'''\\ Moderate & '''+str(dc['M'])+r'''\\ Hard & '''+str
 {\footnotesize '''+(('Hard: Q '+', '.join(map(str,hard))+'. ') if hard else '')+d.OVERALL+r''' Class XI: '''+str(len(xi))+r''' questions, Class XII: '''+str(NA-len(xi))+r''' (analysed questions only). (Difficulty is the editor's assessment.)}\par\medskip
 \columnbreak
 \textbf{\color{crimson}4. Chapter-wise distribution}\par\smallskip
-{\footnotesize\begin{tabular}{@{}p{3.6cm}c@{\,}r@{\,}r@{\,}r@{}}\toprule
+{\footnotesize\begin{tabular}{@{}p{4.7cm}c@{\,}r@{\,}r@{\,}r@{}}\toprule
 Chapter & Cl. & Qs & Dir & App\\\midrule
 '''+rows+r'''
 \bottomrule\end{tabular}}\par\medskip

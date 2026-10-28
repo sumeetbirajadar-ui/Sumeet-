@@ -1,0 +1,60 @@
+1 2 Kinematics in one dimension
+2 2 Kinematics in one dimension
+3 3 Projectile motion
+4 4 Projectile motion
+5 1 Projectile motion
+6 4 Motion in a plane (vectors, relative velocity)
+7 1 Circular motion
+8 2 X
+9 3 Collisions and momentum conservation
+10 3 X
+11 2 Gravitation (force, field, energy)
+12 2 Surface tension and capillarity
+13 2 Thermal expansion
+14 2 Second law and heat engines
+15 3 Kinetic theory of gases
+16 1 Simple harmonic motion
+17 1 Wave motion and speed of waves
+18 1 Coulomb force and electric field
+19 2 Gauss's law and electric flux
+20 3 Electric potential and potential energy
+21 2 Capacitors (energy, dielectrics)
+22 1 Capacitors (energy, dielectrics)
+23 3 Electric dipole
+24 4 Capacitors (combination)
+25 2 Capacitors (energy, dielectrics)
+26 4 Resistance and resistivity
+27 1 Wheatstone bridge and meter bridge
+28 4 Current, drift velocity and mobility
+29 4 Electric power and heating
+30 3 Charged particle in a magnetic field
+31 1 Force between parallel currents
+32 2 X
+33 2 Charged particle in a magnetic field
+34 2 X
+35 3 Magnetic field lines and Gauss's law for magnetism
+36 3 Self and mutual inductance | From the graph the slope is about 0.07\,A/s, giving about $4\times10^{-4}$\,V; option (3) is the nearest.
+37 4 Self and mutual inductance
+38 2 AC circuits (reactance, LCR, phase)
+39 3 X
+40 2 X
+41 3 Electromagnetic waves (nature, E/B = c)
+42 2 Electromagnetic waves (nature, E/B = c)
+43 2 Refraction and total internal reflection
+44 4 Lenses and lens maker's formula
+45 4 Lenses and lens maker's formula
+46 2 Lenses and lens maker's formula
+47 2 Diffraction at a single slit
+48 1 Diffraction at a single slit
+49 2 Young's double-slit interference
+50 4 Photoelectric effect
+51 4 Photons and photon momentum
+52 4 Photoelectric effect
+53 2 Bohr model of hydrogen atom
+54 4 Bohr model of hydrogen atom
+55 2 de Broglie waves
+56 4 Nuclear force and binding energy
+57 2 Collisions and momentum conservation
+58 2 X
+59 4 p-n junction diode and rectifier
+60 3 X

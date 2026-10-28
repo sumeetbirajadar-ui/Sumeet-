@@ -2,17 +2,9 @@
 \global\watermarkfalse
 \begin{tikzpicture}[remember picture,overlay]
   \coordinate (C) at (current page.center);
-  % ivory board with soft burgundy surround
-  \fill[navy] (current page.south west) rectangle (current page.north east);
-  \fill[ivory] ($(current page.south west)+(1.0cm,1.0cm)$) rectangle ($(current page.north east)+(-1.0cm,-1.0cm)$);
-  \shade[inner color=ivory,outer color=softgilt!70,opacity=0.9] ($(current page.south west)+(1.0cm,1.0cm)$) rectangle ($(current page.north east)+(-1.0cm,-1.0cm)$);
-  % ornate triple gold frame
-  \draw[gilt,line width=2.4pt] ($(current page.south west)+(1.35cm,1.35cm)$) rectangle ($(current page.north east)+(-1.35cm,-1.35cm)$);
-  \draw[gilt,line width=0.6pt] ($(current page.south west)+(1.6cm,1.6cm)$) rectangle ($(current page.north east)+(-1.6cm,-1.6cm)$);
-  \draw[navy,line width=0.4pt] ($(current page.south west)+(1.75cm,1.75cm)$) rectangle ($(current page.north east)+(-1.75cm,-1.75cm)$);
-  \foreach \p/\s in {north west/none,north east/v,south west/h,south east/c}{
-    \node[inner sep=0pt,anchor=\p] at ($(current page.\p)+(\ifnum\pdfstrcmp{\p}{north west}=0 1.8\else\ifnum\pdfstrcmp{\p}{south west}=0 1.8\else -1.8\fi\fi cm,\ifnum\pdfstrcmp{\p}{north west}=0 -1.8\else\ifnum\pdfstrcmp{\p}{north east}=0 -1.8\else 1.8\fi\fi cm)$)
-      {\pgfornament[width=2.6cm,color=gilt,symmetry=\s]{41}};}
+  % plain near-white page with one thin gilt rule
+  \fill[ivory] (current page.south west) rectangle (current page.north east);
+  \draw[gilt,line width=0.8pt] ($(current page.south west)+(0.6cm,0.6cm)$) rectangle ($(current page.north east)+(-0.6cm,-0.6cm)$);
   % top flourish and crest
   \node[inner sep=0pt] at ($(current page.north)+(0,-2.35cm)$) {\pgfornament[width=7cm,color=gilt]{87}};
   \node[inner sep=0pt] (crest) at ($(current page.north)+(0,-6.2cm)$) {\includegraphics[width=6.2cm]{img/logo}};

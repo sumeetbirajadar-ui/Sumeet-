@@ -1,0 +1,60 @@
+1 3 Measurement and errors
+2 4 Kinematics in one dimension
+3 3 Circular motion
+4 2 Vectors
+5 4 Laws of motion (lift, apparent weight)
+6 1 Work-energy theorem and power
+7 3 Centre of mass
+8 4 Acceleration due to gravity (g, variation)
+9 1 Elasticity (Young's modulus)
+10 3 Bernoulli's principle and fluid flow
+11 2 Calorimetry and latent heat
+12 4 Second law and heat engines
+13 2 Kinetic theory of gases
+14 2 Simple harmonic motion
+15 2 Beats, organ pipes and strings
+16 2 Electric charge and Coulomb's law
+17 2 Electric dipole
+18 2 Gauss's law and electric flux
+19 1 Electric potential and potential energy
+20 3 Capacitors (energy, dielectrics)
+21 1 Capacitors (combination)
+22 1 Current, drift velocity and mobility
+23 4 Resistance and resistivity
+24 3 Ohm's law and measuring instruments
+25 2 Kirchhoff's rules and DC circuits
+26 1 Kirchhoff's rules and DC circuits
+27 1 Wheatstone bridge and meter bridge
+28 1 Charged particle in a magnetic field
+29 1 Moving coil galvanometer, ammeter, voltmeter
+30 1 Biot-Savart law and magnetic fields
+31 1 Force on a current-carrying conductor
+32 4 Magnetic dipole and bar magnet
+33 3 X
+34 1 Magnetic materials
+35 3 Faraday's law and Lenz's law
+36 2 X
+37 1 X
+38 2 Self and mutual inductance
+39 3 Transformer and power transmission
+40 2 AC circuits (reactance, LCR, phase)
+41 3 Electromagnetic waves (nature, E/B = c)
+42 3 Reflection and spherical mirrors
+43 2 Reflection and spherical mirrors
+44 3 X
+45 2 Young's double-slit interference
+46 1 Wavefronts and Huygens' principle
+47 1 Polarisation and Malus' law
+48 3 Photoelectric effect
+49 4 de Broglie waves
+50 2 Alpha-particle scattering and atomic models
+51 1 Bohr model of hydrogen atom
+52 2 Mass defect, binding energy, fission and fusion
+53 1 X
+54 2 Mass defect, binding energy, fission and fusion
+55 4 Semiconductors (intrinsic, extrinsic, bands)
+56 3 X
+57 1 X
+58 2 p-n junction diode and rectifier
+59 4 X
+60 2 X

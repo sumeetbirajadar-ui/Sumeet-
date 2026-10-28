@@ -1,0 +1,60 @@
+1 4 p-n junction diode and rectifier
+2 3 p-n junction diode and rectifier
+3 2 X
+4 4 X
+5 4 X
+6 1 X
+7 1 X
+8 4 Friction
+9 1 Work-energy theorem and power
+10 2 Rotational dynamics (torque, moment of inertia)
+11 4 X | Taken literally (six outer discs): $27mR^2$. If all seven discs are meant: $55mR^2/2$, option (2).
+12 1 X
+13 3 Kinematics in one dimension
+14 2 Circular motion
+15 1 Calorimetry and latent heat
+16 2 Second law and heat engines | Efficiency $= 1 - 2.5/4 = 0.375$ from $PV$ of the two isotherms.
+17 3 Kepler's laws and planetary motion
+18 4 Elasticity (Young's modulus)
+19 1 Bernoulli's principle and fluid flow
+20 1 X
+21 4 Electric dipole
+22 3 Kinetic theory of gases
+23 4 X
+24 1 Kinetic theory of gases
+25 4 Electric potential and potential energy
+26 3 Capacitors (energy, dielectrics)
+27 3 Gauss's law and electric flux
+28 2 Coulomb force and electric field
+29 1 Capacitors (combination)
+30 4 Current, drift velocity and mobility
+31 2 Cells, emf and internal resistance
+32 1 Kirchhoff's rules and DC circuits | Infinite ladder: $R = 2 + \sqrt{12} = 5.46\,\Omega$.
+33 4 X
+34 1 X
+35 2 X
+36 4 Electric power and heating
+37 1 X
+38 4 Magnetic dipole and bar magnet
+39 3 X
+40 3 Charged particle in a magnetic field
+41 3 Moving coil galvanometer, ammeter, voltmeter | Galvanometer current at full scale is 0.5\,mA for 50 divisions.
+42 - X | None of the options is dimensionally correct (each lacks a factor of $m$).
+43 4 AC circuits (reactance, LCR, phase)
+44 2 Transformer and power transmission
+45 1 Self and mutual inductance
+46 4 Motional emf
+47 3 Faraday's law and Lenz's law
+48 1 Refraction and total internal reflection
+49 3 Lenses and lens maker's formula
+50 2 Lenses and lens maker's formula
+51 3 Wavefronts and Huygens' principle
+52 1 X
+53 3 Electromagnetic waves (nature, E/B = c)
+54 2 Reflection and spherical mirrors
+55 4 Photoelectric effect
+56 2 Alpha-particle scattering and atomic models
+57 3 Bohr model of hydrogen atom
+58 4 Polarisation and Malus' law
+59 2 Young's double-slit interference
+60 1 Photons and photon momentum

@@ -1,0 +1,60 @@
+1 3 Kinematics in one dimension
+2 4 Projectile motion
+3 1 Vectors
+4 2 Friction
+5 1 Collisions and momentum conservation
+6 2 Centre of mass
+7 3 X
+8 4 Acceleration due to gravity (g, variation)
+9 2 Elasticity (Young's modulus)
+10 1 Bernoulli's principle and fluid flow
+11 2 Heat transfer (conduction, radiation, cooling)
+12 4 Heat transfer (conduction, radiation, cooling)
+13 2 Second law and heat engines
+14 1 Simple harmonic motion
+15 3 X
+16 4 Gauss's law and electric flux
+17 1 Coulomb force and electric field
+18 3 Electric dipole
+19 2 Equipotential surfaces and potential gradient
+20 4 Electric potential and potential energy
+21 1 Capacitors (energy, dielectrics)
+22 3 Capacitors (combination)
+23 2 Current, drift velocity and mobility
+24 4 Resistivity and temperature
+25 2 Cells, emf and internal resistance
+26 4 Kirchhoff's rules and DC circuits
+27 1 Kirchhoff's rules and DC circuits
+28 3 Electric power and heating
+29 4 Charged particle in a magnetic field
+30 3 X
+31 1 Biot-Savart law and magnetic fields
+32 2 Current, drift velocity and mobility
+33 1 Moving coil galvanometer, ammeter, voltmeter
+34 2 X
+35 3 X
+36 4 X
+37 1 Ampere's law and solenoid
+38 2 Motional emf
+39 3 AC power and rms values
+40 1 AC circuits (reactance, LCR, phase)
+41 4 AC circuits (reactance, LCR, phase)
+42 2 AC power and rms values
+43 3 Electromagnetic spectrum
+44 4 Refraction and total internal reflection
+45 1 Refraction and total internal reflection
+46 3 Lenses and lens maker's formula
+47 2 Prism and dispersion
+48 4 Young's double-slit interference
+49 1 Diffraction at a single slit
+50 2 X
+51 3 Photoelectric effect
+52 4 de Broglie waves
+53 2 Bohr model of hydrogen atom
+54 3 Bohr model of hydrogen atom
+55 1 X
+56 4 X
+57 2 Photons and photon momentum
+58 3 X
+59 1 X
+60 4 X

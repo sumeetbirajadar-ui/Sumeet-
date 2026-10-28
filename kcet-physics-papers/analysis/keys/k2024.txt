@@ -1,0 +1,60 @@
+1 4 Lenses and lens maker's formula
+2 1 X
+3 2 Polarisation and Malus' law
+4 4 de Broglie waves
+5 3 Photoelectric effect
+6 3 Photoelectric effect
+7 4 Alpha-particle scattering and atomic models
+8 4 Bohr model of hydrogen atom
+9 4 Nuclear composition, size and density
+10 4 Mass defect, binding energy, fission and fusion
+11 3 X
+12 2 p-n junction diode and rectifier
+13 2 Semiconductors (intrinsic, extrinsic, bands)
+14 4 X
+15 2 p-n junction diode and rectifier
+16 2 Friction
+17 3 Work-energy theorem and power
+18 3 Dimensional analysis
+19 1 Kinematics in one dimension
+20 4 Vectors
+21 4 Rotational dynamics (torque, moment of inertia) | Viewed from above the fan turns clockwise, so the angular velocity points down.
+22 4 Rotational dynamics (torque, moment of inertia)
+23 1 Acceleration due to gravity (g, variation)
+24 2 Elasticity (Young's modulus)
+25 3 Bernoulli's principle and fluid flow
+26 3 Calorimetry and latent heat
+27 4 Thermodynamic processes
+28 1 Kinetic theory of gases
+29 2 Simple harmonic motion
+30 3 X
+31 3 Electric charge and Coulomb's law
+32 2 Electric charge and Coulomb's law
+33 2 Gauss's law and electric flux
+34 1 Gauss's law and electric flux
+35 3 Conductors, Gauss's law and electric flux
+36 2 Capacitors (energy, dielectrics)
+37 1 Capacitors (energy, dielectrics)
+38 3 Current, drift velocity and mobility
+39 4 Kirchhoff's rules and DC circuits
+40 1 Current, drift velocity and mobility
+41 1 Resistivity and temperature | $(R_{400}-R_{100})/(R_{100}\times300) = 2.4\times10^{-3}$ per $^\circ$C; nearest option.
+42 3 Electric power and heating
+43 3 Wheatstone bridge and meter bridge
+44 2 Biot-Savart law and magnetic fields
+45 1 Biot-Savart law and magnetic fields
+46 4 Charged particle in a magnetic field
+47 4 Biot-Savart law and magnetic fields
+48 3 X
+49 3 X
+50 1 Magnetic flux
+51 3 Faraday's law and Lenz's law
+52 2 Faraday's law and Lenz's law
+53 1 Self and mutual inductance
+54 4 X
+55 3 AC circuits (reactance, LCR, phase)
+56 3 AC circuits (reactance, LCR, phase)
+57 1 X
+58 4 Optical instruments (microscope, telescope)
+59 3 Prism and dispersion
+60 1 Refraction at spherical surfaces

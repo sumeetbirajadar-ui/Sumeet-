@@ -198,10 +198,13 @@
   \draw[->] (0,-1.0) -- (0,1.1) node[above,lbl]{#2};
   #3\end{tikzpicture}}
 % NCERT tag: \ntag{D|A}{printed page}{file}{pdf page}{extra}{book label}
+\newsavebox\ntagbadge
+\newcommand{\ntagrest}[2]{\colorbox{#1}{\parbox[t]{\dimexpr\linewidth-\wd\ntagbadge-4pt-2\fboxsep}{\raggedright\scriptsize\color{ink}\strut #2\strut}}}
 \newcommand{\ntag}[6]{\par\vspace{5pt}%
-  \noindent\href{https://ncert.nic.in/textbook/pdf/#3.pdf\#page=#4}{%
-  \fboxsep=2.5pt\colorbox{\if#1Dverde\else crimson\fi}{\scriptsize\bfseries\color{white}\strut\if#1D DIRECT\else APPLIED\fi}%
-  \hspace{4pt}\colorbox{softgilt!70}{\scriptsize\color{ink}\strut #6 \textperiodcentered{} \textbf{Page #2}#5 \ \color{navy}\textbf{Open PDF\,\raisebox{0.5pt}{$\nearrow$}}}}\par\vspace{4pt}}
+  \noindent{\fboxsep=2.5pt\if#1X\sbox\ntagbadge{\colorbox{gray!75!black}{\scriptsize\bfseries\color{white}\strut DELETED PORTION}}%
+  \usebox\ntagbadge\hspace{4pt}\ntagrest{gray!15}{#6 \textperiodcentered{} removed from the 2026-27 NCERT; not analysed}\else
+  \sbox\ntagbadge{\colorbox{\if#1Dverde\else crimson\fi}{\scriptsize\bfseries\color{white}\strut\if#1D DIRECT\else APPLIED\fi}}%
+  \href{https://ncert.nic.in/textbook/pdf/#3.pdf\#page=#4}{\usebox\ntagbadge\hspace{4pt}\ntagrest{softgilt!70}{#6 \textperiodcentered{} \textbf{Page #2}#5 \ {\color{navy}\textbf{Open PDF\,\raisebox{0.5pt}{$\nearrow$}}}}}\fi}\par\vspace{4pt}}
 % source of an applied question: \nsrc{text}
 \newcommand{\nsrc}[1]{\vspace{-1pt}\noindent{\fboxsep=2.5pt\colorbox{verde!10}{\parbox{\dimexpr\linewidth-2\fboxsep}{\raggedright\scriptsize\color{ink}\textbf{\color{verde}Similar PYQ:} #1}}}\par\vspace{5pt}}
 \newenvironment{yearanalysis}{}{}

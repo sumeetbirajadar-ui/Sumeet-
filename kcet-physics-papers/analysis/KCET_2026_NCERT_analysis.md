@@ -1,7 +1,7 @@
 # KCET 2026 Physics: NCERT Direct vs Applied Analysis
 
-Reference books: official NCERT Physics, Reprint 2026-27 (downloaded from ncert.nic.in), plus the
-official NCERT Exemplar Problems (Physics XI and XII). Page numbers are the printed page numbers of the
+Reference books: only the current editions. NCERT Physics textbooks, Reprint 2026-27 (downloaded from ncert.nic.in), plus the
+current NCERT Exemplar Problems (Physics XI and XII) on ncert.nic.in. No older editions are used. Page numbers are the printed page numbers of the
 textbook. Every question was checked by searching the full text of all four books.
 
 - **Direct**: the question, its data or the statement being tested is printed in the NCERT
@@ -62,7 +62,7 @@ Book links (official NCERT chapter PDFs):
 | 42 | Rod PQ moved through field x=0→2b | Applied | XII-P1 Ch 6 §6.6 motional emf, p.162 | leph106 | — |
 | 43 | Pure resistor in AC: phase | Direct | XII-P1 Ch 7 §7.2, p.178 | leph107 | — |
 | 44 | 100 W bulb, 220 V: rms current | Direct | XII-P1 Ch 7 Example 7.1, p.180 (identical) | leph107 | — |
-| 45 | Small town, 900 kW, line loss | Applied | XII-P1 Ch 3 p.93 (P = I²R); Ch 7 transformer | leph103/107 | Not in the 2026-27 NCERT or Exemplar. My recollection (not verified against a copy) is that the pre-2023 NCERT Class 12 exercises had this "small town" problem with different numbers |
+| 45 | Small town, 900 kW, line loss | Applied | XII-P1 Ch 3 p.93 (P = I²R); Ch 7 transformer | leph103/107 | Not in the 2026-27 NCERT textbook or the current NCERT Exemplar |
 | 46 | Match Maxwell's equations | Direct | XII-P1 p.29 (Gauss), p.143 (Gauss, magnetism), p.157 (Faraday), Eq. 8.6 p.204 (Ampère–Maxwell) | leph101/105/106/108 | — |
 | 47 | Reflection: angle of reflection, α, deviation | Applied | XII-P2 Ch 9 §9.2, p.222 | leph201 | Geometry with laws of reflection |
 | 48 | Ray PQ on concave mirror: reflected ray | Direct (Exemplar) | Exemplar XII Q9.8 (identical figure; rays relabelled A–D); concept XII-P2 p.223 | leep109 | NCERT Exemplar XII Q9.8 |

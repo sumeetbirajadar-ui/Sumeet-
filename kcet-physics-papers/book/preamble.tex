@@ -29,6 +29,7 @@
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
 \usepackage[hidelinks,bookmarksnumbered]{hyperref}
+\usepackage{xurl}
 
 % ---------- Palette: British navy, Italian green, French crimson, gilt ------
 % Royal palette: burgundy, antique gold, bottle green on warm ivory (matches the logo's saffron/gold)
@@ -196,3 +197,7 @@
   \draw[->] (0,0) -- (2.2,0) node[right,lbl]{#1};
   \draw[->] (0,-1.0) -- (0,1.1) node[above,lbl]{#2};
   #3\end{tikzpicture}}
+% NCERT tag: \ntag{D|A}{printed page}{file}{pdf page}{extra}
+\newcommand{\ntag}[5]{\par\vspace{2pt}{\footnotesize\textbf{[}%
+  \if#1D\textbf{\color{verde}Direct}\else\textbf{\color{crimson}Applied}\fi
+  #5\ \textbar\ NCERT p.\,#2\ \textbar\ \href{https://ncert.nic.in/textbook/pdf/#3.pdf\#page=#4}{\color{navy}\nolinkurl{ncert.nic.in/textbook/pdf/#3.pdf\#page=#4}}\textbf{]}}\par}

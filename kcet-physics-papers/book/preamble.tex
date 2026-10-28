@@ -202,3 +202,6 @@
   \noindent\href{https://ncert.nic.in/textbook/pdf/#3.pdf\#page=#4}{%
   \fboxsep=2.5pt\colorbox{\if#1Dverde\else crimson\fi}{\scriptsize\bfseries\color{white}\strut\if#1D DIRECT\else APPLIED\fi}%
   \hspace{4pt}\colorbox{softgilt!70}{\scriptsize\color{ink}\strut #6 \textperiodcentered{} \textbf{Page #2}#5 \ \color{navy}\textbf{Open PDF\,\raisebox{0.5pt}{$\nearrow$}}}}\par\vspace{4pt}}
+% source of an applied question: \nsrc{text}
+\newcommand{\nsrc}[1]{\vspace{-1pt}\noindent{\fboxsep=2.5pt\colorbox{verde!10}{\parbox{\dimexpr\linewidth-2\fboxsep}{\raggedright\scriptsize\color{ink}\textbf{\color{verde}Similar PYQ:} #1}}}\par\vspace{5pt}}
+\newenvironment{yearanalysis}{}{}

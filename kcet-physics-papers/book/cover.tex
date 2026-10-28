@@ -1,40 +1,45 @@
 \thispagestyle{empty}
 \global\watermarkfalse
 \begin{tikzpicture}[remember picture,overlay]
-  % navy crest band
-  \fill[navy] ($(current page.north west)+(1.25cm,-1.25cm)$) rectangle ($(current page.north east)+(-1.25cm,-11.1cm)$);
-  \fill[gilt] ($(current page.north west)+(1.25cm,-11.1cm)$) rectangle ($(current page.north east)+(-1.25cm,-11.28cm)$);
-  \fill[verde]   ($(current page.north)+(-3cm,-11.28cm)$) rectangle ($(current page.north)+(-1cm,-11.42cm)$);
-  \fill[white]   ($(current page.north)+(-1cm,-11.28cm)$) rectangle ($(current page.north)+( 1cm,-11.42cm)$);
-  \fill[crimson] ($(current page.north)+( 1cm,-11.28cm)$) rectangle ($(current page.north)+( 3cm,-11.42cm)$);
-  % logo on a parchment medallion
-  \fill[parchment] ($(current page.north)+(0,-5.6cm)$) circle (3.55cm);
-  \draw[gilt,line width=1.4pt] ($(current page.north)+(0,-5.6cm)$) circle (3.55cm);
-  \draw[gilt,line width=0.4pt] ($(current page.north)+(0,-5.6cm)$) circle (3.72cm);
-  \node[inner sep=0pt] at ($(current page.north)+(0,-5.6cm)$) {\includegraphics[width=6.8cm]{img/logo}};
-  \node[gilt,inner sep=0pt] at ($(current page.north west)+(4.1cm,-5.6cm)$) {\pgfornament[width=3.4cm]{75}};
-  \node[gilt,inner sep=0pt] at ($(current page.north east)+(-4.1cm,-5.6cm)$) {\pgfornament[width=3.4cm,symmetry=v]{75}};
+  \coordinate (C) at (current page.center);
+  % ivory board with soft burgundy surround
+  \fill[navy] (current page.south west) rectangle (current page.north east);
+  \fill[ivory] ($(current page.south west)+(1.0cm,1.0cm)$) rectangle ($(current page.north east)+(-1.0cm,-1.0cm)$);
+  \shade[inner color=ivory,outer color=softgilt!70,opacity=0.9] ($(current page.south west)+(1.0cm,1.0cm)$) rectangle ($(current page.north east)+(-1.0cm,-1.0cm)$);
+  % ornate triple gold frame
+  \draw[gilt,line width=2.4pt] ($(current page.south west)+(1.35cm,1.35cm)$) rectangle ($(current page.north east)+(-1.35cm,-1.35cm)$);
+  \draw[gilt,line width=0.6pt] ($(current page.south west)+(1.6cm,1.6cm)$) rectangle ($(current page.north east)+(-1.6cm,-1.6cm)$);
+  \draw[navy,line width=0.4pt] ($(current page.south west)+(1.75cm,1.75cm)$) rectangle ($(current page.north east)+(-1.75cm,-1.75cm)$);
+  \foreach \p/\s in {north west/none,north east/v,south west/h,south east/c}{
+    \node[inner sep=0pt,anchor=\p] at ($(current page.\p)+(\ifnum\pdfstrcmp{\p}{north west}=0 1.8\else\ifnum\pdfstrcmp{\p}{south west}=0 1.8\else -1.8\fi\fi cm,\ifnum\pdfstrcmp{\p}{north west}=0 -1.8\else\ifnum\pdfstrcmp{\p}{north east}=0 -1.8\else 1.8\fi\fi cm)$)
+      {\pgfornament[width=2.6cm,color=gilt,symmetry=\s]{41}};}
+  % top flourish and crest
+  \node[inner sep=0pt] at ($(current page.north)+(0,-2.35cm)$) {\pgfornament[width=7cm,color=gilt]{87}};
+  \node[inner sep=0pt] (crest) at ($(current page.north)+(0,-5.4cm)$) {\includegraphics[width=4.6cm]{img/logo}};
+  \draw[gilt,line width=1.2pt] (crest.center) circle (2.42cm);
+  \draw[navy,line width=0.4pt] (crest.center) circle (2.56cm);
   % title block
-  \node[anchor=north,align=center,text width=16cm] at ($(current page.north)+(0,-12.1cm)$) {%
-    {\color{navy}\fontsize{34}{40}\selectfont\scshape KCET Physics}\\[6pt]
-    {\color{crimson}\fontsize{17}{21}\selectfont\scshape Previous Year Question Papers}\\[6pt]
-    {\large\itshape 2021 \textendash{} 2026 \enspace\textperiodcentered\enspace Six Papers \enspace\textperiodcentered\enspace 360 Questions}\\[8pt]
-    {\color{gilt}\pgfornament[width=4.2cm]{88}}};
-  % photo on the right, standing on the inner frame
-  \node[anchor=south east,inner sep=0pt] at ($(current page.south east)+(-1.25cm,1.25cm)$)
-    {\includegraphics[height=10.4cm]{img/photo}};
-  % author block on the left
-  \node[anchor=south west,align=left,text width=9.2cm] at ($(current page.south west)+(2.2cm,2.4cm)$) {%
-    {\color{gilt}\small\scshape Compiled \& Presented by}\\[3pt]
-    \mbox{\color{navy}\fontsize{23}{27}\selectfont\bfseries SUMEET BIRAJADAR}\\[4pt]
-    {\color{crimson}\large\itshape Founder \& Physics Mentor}\\[1pt]
-    {\color{navy}\large\scshape Science Monk}\\[10pt]
-    {\color{gilt}\rule{6.5cm}{0.6pt}}\\[6pt]
-    {\small\itshape \textquotedblleft Appa Deepo Bhava\textquotedblright{} \textemdash{} Be a light unto yourself}\\[3pt]
-    {\small\scshape Learn \textperiodcentered{} Think \textperiodcentered{} Excel}\\[10pt]
-    {\footnotesize Karnataka Common Entrance Test (KEA) \textperiodcentered{} English version}\\
-    {\footnotesize 60 MCQs per paper \textperiodcentered{} 1 mark each \textperiodcentered{} 80 minutes \textperiodcentered{} no negative marking}\\
-    {\footnotesize Retyped with redrawn diagrams for Science Monk online classes}};
+  \node[align=center,text width=15cm] at ($(current page.north)+(0,-9.95cm)$) {%
+    {\color{gilt}\scshape\large Science Monk \textperiodcentered{} Presents}\\[6pt]
+    {\color{navy}\fontsize{38}{44}\selectfont\scshape KCET Physics}\\[4pt]
+    {\color{ink}\fontsize{16}{20}\selectfont\itshape Previous Year Question Papers}\\[8pt]
+    {\color{gilt}\pgfornament[width=5cm]{88}}\\[4pt]
+    {\color{verde}\fontsize{15}{18}\selectfont\scshape 2016 \textendash{} 2026 \enspace\textperiodcentered\enspace Eleven Years \enspace\textperiodcentered\enspace 660 Questions}};
+  % oval portrait with gold rings
+  \coordinate (P) at ($(current page.south)+(0,8.6cm)$);
+  \node[inner sep=0pt] at (P) {\includegraphics[height=7.0cm]{img/photo_oval}};
+  \draw[gilt,line width=2.2pt] (P) ellipse (2.56cm and 3.5cm);
+  \draw[navy,line width=0.5pt] (P) ellipse (2.72cm and 3.66cm);
+  \node[inner sep=0pt] at ($(P)+(-4.6cm,0)$) {\pgfornament[width=3.2cm,color=gilt]{75}};
+  \node[inner sep=0pt] at ($(P)+(4.6cm,0)$) {\pgfornament[width=3.2cm,color=gilt,symmetry=v]{75}};
+  % name ribbon
+  \node[fill=navy,text=ivory,inner xsep=18pt,inner ysep=7pt,font=\fontsize{20}{24}\selectfont\scshape] (rib) at ($(current page.south)+(0,4.15cm)$) {Sumeet Birajadar};
+  \draw[gilt,line width=0.8pt] ($(rib.south west)+(-0.08,-0.08)$) rectangle ($(rib.north east)+(0.08,0.08)$);
+  \fill[navy!80!black] (rib.north west) -- ++(-0.6,0) -- ++(0.3,-0.36) -- ++(-0.3,-0.36) -- (rib.south west) -- cycle;
+  \fill[navy!80!black] (rib.north east) -- ++(0.6,0) -- ++(-0.3,-0.36) -- ++(0.3,-0.36) -- (rib.south east) -- cycle;
+  \node[align=center] at ($(current page.south)+(0,2.75cm)$) {%
+    {\color{crimson}\itshape Founder \& Physics Mentor, Science Monk}\\[3pt]
+    {\color{ink}\small\itshape\textquotedblleft Appa Deepo Bhava\textquotedblright{} \textemdash{} Be a light unto yourself \enspace\textperiodcentered\enspace \scshape Learn \textperiodcentered{} Think \textperiodcentered{} Excel}};
 \end{tikzpicture}
 \null
 \clearpage

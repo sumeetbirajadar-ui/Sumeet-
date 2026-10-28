@@ -1,0 +1,267 @@
+\numoptsfalse
+\yearpaper{2019}{Version A-1 \textperiodcentered{} 60 Questions \textperiodcentered{} 60 Marks \textperiodcentered{} 80 Minutes}{}
+\begin{multicols}{2}
+
+\QQ{In a cyclotron a charged particle}
+{\opt{undergoes acceleration all the time}{speeds up between the dees because of the magnetic field.}{speeds up in dee}{slows down within a dee and speeds up between dees}}
+
+\QQ{The number of turns in a coil of Galvanometer is tripled, then}
+{\opt{Voltage sensitivity increases 3 times and current sensitivity remains constant}{Voltage sensitivity remains constant and current sensitivity increases 3 times}{Both voltage and current sensitivity remains constant}{Both voltage and current sensitivity decreases by 33\%}}
+
+\QQ{A circular current loop of magnetic moment M is in an arbitrary orientation in an external uniform magnetic field $\vec B$. The work done to rotate the loop by $30^\circ$ about an axis perpendicular to its plane is}
+{\opt{MB}{$\sqrt3\,\dfrac{MB}{2}$}{$\dfrac{MB}{2}$}{Zero}}
+
+\QQ{In a permanent magnet at room temperature}
+{\opt{magnetic moment of each molecule is zero.}{the individual molecules have non zero magnetic moment which are all perfectly aligned.}{domains are partially aligned.}{domains are all perfectly aligned.}}
+
+\QQ{Coersivity of a magnet where the ferromagnet gets completely demagnetized is $3\times10^3\unit{A\,m^{-1}}$. The minimum current required to be passed in a solenoid having 1000 turns per metre, so that the magnet gets completely demagnetized when placed inside the solenoid is}
+{\opt{$30\unit{mA}$}{$60\unit{mA}$}{$3\unit{A}$}{$6\unit{A}$}}
+
+\QQ{Which one of the following nuclei has shorter mean life?
+\fig{\begin{tikzpicture}[scale=0.8]
+\draw[->] (0,0) -- (2.8,0) node[right,lbl]{$t$}; \draw[->] (0,0) -- (0,2.0) node[above,lbl]{$\dfrac{dN}{dt}$};
+\draw (0,1.4) .. controls (0.8,1.0) and (1.6,0.8) .. (2.4,0.7) node[right,lbl]{C};
+\draw (0,1.4) .. controls (0.6,0.8) and (1.4,0.5) .. (2.2,0.42) node[right,lbl]{B};
+\draw (0,1.4) .. controls (0.5,0.6) and (1.2,0.3) .. (2.0,0.22) node[right,lbl]{A};
+\end{tikzpicture}}}
+{\opt{A}{B}{C}{Same for all}}
+
+\QQ{The conductivity of semiconductor increases with increase in temperature because}
+{\opt{number density of charge carriers increases}{relaxation time increases}{both number density of charge carriers and relaxation time increase}{number density of current carriers increases, relaxation time decreases but effect of decrease in relaxation time is much less than increase in number density}}
+
+\QQ{For a transistor amplifier, the voltage gain}
+{\opt{remains constant for all frequencies}{is high at high and low frequencies and constant in the middle frequency range}{is low at high and low frequencies and constant at mid frequencies}{constant at high frequencies and low at low frequencies}}
+
+\QQ{In the following circuit, what are P and Q?
+\fig{\begin{circuitikz}[scale=0.7,transform shape]
+\draw (0,1.4) node[nor port](G1){}; \draw (0,-0.4) node[nor port](G2){};
+\draw (G1.in 1) -- ++(-0.6,0) node[ocirc]{} node[left]{1};
+\draw (G2.in 2) -- ++(-0.6,0) node[ocirc]{} node[left]{0};
+\draw (G1.out) -- ++(0.6,0) node[ocirc]{} node[right]{P}; \draw (G2.out) -- ++(0.6,0) node[ocirc]{} node[right]{Q};
+\draw (G1.out) ++(0.2,0) -- ++(0,-0.4) -- ($(G2.in 1)+(-0.3,0.5)$) -- ($(G2.in 1)+(-0.3,0)$) -- (G2.in 1);
+\draw (G2.out) ++(0.2,0) -- ++(0,0.4) -- ($(G1.in 2)+(-0.3,-0.5)$) -- ($(G1.in 2)+(-0.3,0)$) -- (G1.in 2);
+\end{circuitikz}}}
+{\opt{$P = 0$, $Q = 0$}{$P = 1$, $Q = 0$}{$P = 0$, $Q = 1$}{$P = 1$, $Q = 1$}}
+
+\QQ{An antenna uses electromagnetic waves of frequency $5\unit{MHz}$. For proper working, the size of the antenna should be}
+{\opt{$15\unit{m}$}{$300\unit{m}$}{$15\unit{km}$}{$3\unit{km}$}}
+
+\QQ{If P, Q and R are physical quantities having different dimensions, which of the following combinations can never be a meaningful quantity?}
+{\opt{$\dfrac{P-Q}{R}$}{$PQ-R$}{$\dfrac{PQ}{R}$}{$\dfrac{PR-Q^2}{R}$}}
+
+\QQ{The given graph shows the variation of velocity ($v$) with position ($x$) for a particle moving along a straight line
+\fig{\gaxes{$x$}{$v$}{\draw (0,1.5) -- (1.6,0); \node[lbl,below left] at (0,0) {O};}}
+Which of the following graph shows the variation of acceleration ($a$) with position ($x$)?}
+{\optfig{\gaxesm{$x$}{$a$}{\draw (0,0.9) -- (1.6,0);}}{\gaxesm{$x$}{$a$}{\draw (0,-0.6) -- (1.9,-0.6);}}{\gaxesm{$x$}{$a$}{\draw (0,-0.9) -- (1.6,0);}}{\gaxesm{$x$}{$a$}{\draw (0,0) -- (1.6,0.9);}}}
+
+\QQ{The trajectory of a projectile projected from origin is given by the equation $y = x-\dfrac{2x^2}{5}$. The initial velocity of the projectile is}
+{\opt{$\dfrac25\unit{m\,s^{-1}}$}{$5\unit{m\,s^{-1}}$}{$25\unit{m\,s^{-1}}$}{$\dfrac52\unit{m\,s^{-1}}$}}
+
+\QQ{An object with mass $5\unit{kg}$ is acted upon by a force, $\vec F = (-3\hat i+4\hat j)\unit{N}$. If its initial velocity at $t = 0$ is $\vec v = (6\hat i-12\hat j)\unit{m\,s^{-1}}$, the time at which it will just have a velocity along $y$-axis is}
+{\opt{$5\unit{s}$}{$10\unit{s}$}{$2\unit{s}$}{$15\unit{s}$}}
+
+\QQ{During inelastic collision between two objects, which of the following quantity always remains conserved?}
+{\opt{Total kinetic energy}{Total mechanical energy}{Total linear momentum}{Speed of each body}}
+
+\QQ{In Rutherford experiment, for head-on collision of $\alpha$-particles with a gold nucleus, the impact parameter is}
+{\opt{zero}{of the order of $10^{-14}\unit{m}$}{of the order of $10^{-10}\unit{m}$}{of the order of $10^{-6}\unit{m}$}}
+
+\QQ{Frequency of revolution of an electron revolving in $n^{\text{th}}$ orbit of H-atom is proportional to}
+{\opt{$\dfrac1{n^2}$}{$n$}{$n$ independent of $n$}{$\dfrac1{n^3}$}}
+
+\QQ{A hydrogen atom in ground state absorbs $10.2\unit{eV}$ of energy. The orbital angular momentum of the electron is increased by}
+{\opt{$1.05\times10^{-34}\unit{J\,s}$}{$2.11\times10^{-34}\unit{J\,s}$}{$3.16\times10^{-34}\unit{J\,s}$}{$4.22\times10^{-34}\unit{J\,s}$}}
+
+\QQ{The end product of decay of ${}_{90}\mathrm{Th}^{232}$ is ${}_{82}\mathrm{Pb}^{208}$. The number of $\alpha$ and $\beta$ particles emitted are respectively}
+{\opt{3, 3}{6, 4}{6, 0}{4, 6}}
+
+\QQ{Two protons are kept at a separation of $10\unit{nm}$. Let $F_n$ and $F_e$ be the nuclear force and the electromagnetic force between them}
+{\opt{$F_e = F_n$}{$F_e\gg F_n$}{$F_e\ll F_n$}{$F_e$ and $F_n$ differ only slightly}}
+
+\QQ{A transparent medium shows relation between $i$ and $r$ as shown. If the speed of light in vacuum is $c$ the Brewster angle for the medium is
+\fig{\gaxes{$\sin i$}{$\sin r$}{\draw (0,0) -- (1.9,1.1); \draw (0.6,0) arc (0:30:0.6); \node[lbl] at (0.85,0.2) {$30^\circ$};}}}
+{\opt{$30^\circ$}{$45^\circ$}{$60^\circ$}{$90^\circ$}}
+
+\QQ{In Young's double slit experiment, using monochromatic light of wavelength $\lambda$, the intensity of light at a point on the screen where path difference is $\lambda$ is K units. The intensity of light at a point where path difference is $\dfrac\lambda3$ is}
+{\opt{K}{$\dfrac K4$}{4K}{2K}}
+
+\QQ{Due to Doppler's effect the shift in wavelength observed is $0.1\unit{\text{\AA}}$ for a star producing wavelength $6000\unit{\text{\AA}}$. Velocity of recession of the star will be}
+{\opt{$25\unit{km/s}$}{$10\unit{km/s}$}{$5\unit{km/s}$}{$20\unit{km/s}$}}
+
+\QQ{An electron is moving with an initial velocity $\vec V = V_0\hat i$ and is in a uniform magnetic field $\vec B = B_0\hat j$. Then its de Broglie wavelength}
+{\opt{remains constant}{increases with time}{decreases with time}{increase and decreases periodically}}
+
+\QQ{Light of certain frequency and intensity incident on a photosensitive material causes photoelectric effect. If both the frequency and intensity are doubled, the photoelectric saturation current becomes}
+{\opt{quadrupled}{doubled}{halved}{unchanged}}
+
+\QQ{A magnetic needle has a magnetic moment of $5\times10^{-2}\unit{A\,m^2}$ and moment of inertia $8\times10^{-6}\unit{kg\,m^2}$. It has a period of oscillation of $2\unit{s}$ in a magnetic field $\vec B$. The magnitude of magnetic field is approximately}
+{\opt{$1.6\times10^{-4}\unit{T}$}{$0.4\times10^{-4}\unit{T}$}{$3.2\times10^{-4}\unit{T}$}{$0.8\times10^{-4}\unit{T}$}}
+
+\QQ{A toroid has 500 turns per metre length. If it carries a current of $2\unit{A}$, the magnetic energy density inside the toroid is}
+{\opt{$0.628\unit{J/m^3}$}{$0.314\unit{J/m^3}$}{$6.28\unit{J/m^3}$}{$3.14\unit{J/m^3}$}}
+
+\QQ{Consider the situation given in figure. The wire AB is slid on the fixed rails with a constant velocity. If the wire AB is replaced by a semicircular wire, the magnitude of the induced current will
+\fig{\begin{tikzpicture}[scale=0.55]
+\foreach \x in {0,1,...,6} \foreach \y in {0,1,...,5} \node[font=\scriptsize] at (\x,\y) {$\times$};
+\draw (2.5,4.4) -- (6.6,4.4) -- (6.6,0.6) -- (2.5,0.6);
+\draw[line width=1pt] (2.5,4.6) -- (2.5,0.4); \node[lbl] at (2.85,4.75) {A}; \node[lbl] at (2.85,0.25) {B};
+\draw[->] (2.3,3.0) -- (1.2,3.0) node[above,lbl]{$v$};
+\draw[decorate,decoration={zigzag,segment length=3pt,amplitude=2pt}] (6.6,3.2) -- (6.6,1.8);
+\end{tikzpicture}}}
+{\opt{increase}{remain same}{decrease}{increase or decrease depending on whether the semicircle bulges towards the resistance or away from it}}
+
+\QQ{The frequency of an alternating current is $50\unit{Hz}$. What is the minimum time taken by current to reach its peak value from rms value?}
+{\opt{$5\times10^{-3}\unit{s}$}{$2.5\times10^{-3}\unit{s}$}{$0.02\unit{s}$}{$10\times10^{-3}\unit{s}$}}
+
+\QQ{The readings of ammeter and voltmeter in the following circuit are respectively
+\fig{\begin{circuitikz}[scale=0.6,transform shape,font=\Large]
+\draw (0,2.4) to[L,l=L,a={$V_L=50\,\mathrm V$}] (2.6,2.4) to[C,l=C,a={$V_C=50\,\mathrm V$}] (4.8,2.4) to[R,l={$R=100\,\Omega$}] (7.2,2.4) -- (7.2,0) to[sV,l={220 V, 50 Hz}] (0,0) to[rmeter,t=A] (0,2.4);
+\draw (4.8,2.4) -- (4.8,1.4) to[rmeter,t=V] (7.2,1.4) -- (7.2,2.4);
+\end{circuitikz}}}
+{\opt{1.2\,A, 120\,V}{1.5\,A, 100\,V}{2.7\,A, 220\,V}{2.2\,A, 220\,V}}
+
+\QQ{Two particles which are initially at rest move towards each other under the action of their mutual attraction. If their speeds are $v$ and $2v$ at any instant, then the speed of center of mass of the system is,}
+{\opt{$2v$}{Zero}{$1.5v$}{$v$}}
+
+\QQ{A particle is moving uniformly along a straight line as shown in the figure. During the motion of the particle from A to B, the angular momentum of the particle about `O'
+\fig{\begin{tikzpicture}[scale=0.8]
+\draw[->] (-1.0,0) -- (2.2,0) node[right,lbl]{$x$}; \draw[->] (0,-0.8) -- (0,1.7) node[above,lbl]{$y$};
+\node[lbl,below left] at (0,0) {O};
+\draw (-0.9,-0.4) -- (1.0,1.5); \draw[->] (0.4,0.9) -- (0.6,1.1);
+\fill (-0.3,0.2) circle (1.5pt) node[left,lbl]{A}; \fill (0.2,0.7) circle (1.5pt) node[below right,lbl]{P}; \node[lbl,left] at (0.75,1.3) {B};
+\end{tikzpicture}}}
+{\opt{increases}{decreases}{remains constant}{first increases then decreases}}
+
+\QQ{A satellite is orbiting close to the earth and has a kinetic energy K. The minimum extra kinetic energy required by it to just overcome the gravitation pull of the earth is}
+{\opt{K}{2K}{$\sqrt3$K}{$2\sqrt2$K}}
+
+\QQ{A wire is stretched such that its volume remains constant. The Poission's ratio of the material of the wire is}
+{\opt{0.50}{$-0.50$}{0.25}{$-0.25$}}
+
+\QQ{A cylindrical container containing water has a small hole at height of $H = 8\unit{cm}$ from the bottom and at a depth of $2\unit{cm}$ from the top surface of the liquid. The maximum horizontal distance travelled by the water before it hits the ground ($x$) is
+\fig{\begin{tikzpicture}[scale=0.7]
+\draw (-0.4,0) -- (3.6,0); \draw (0,0) -- (0,2.6) (2.6,0) -- (2.6,2.6);
+\fill[gray!45] (0.03,0.03) rectangle (2.57,2.4);
+\draw[densely dashed] (0,1.9) -- (2.6,1.9); \draw[->] (2.6,1.9) -- (2.95,1.9);
+\draw[<->] (-0.2,1.9) -- (-0.2,2.4) node[midway,left,lbl]{$h$}; \draw[<->] (-0.2,0) -- (-0.2,1.9) node[midway,left,lbl]{$H$};
+\end{tikzpicture}}}
+{\opt{$8\unit{cm}$}{$4\sqrt2\unit{cm}$}{$4\unit{cm}$}{$6\unit{cm}$}}
+
+\QQ{An inductor of inductance L and resistor R are joined together in series and connected by a source of frequency $\omega$. The power dissipated in the circuit is}
+{\opt{$\dfrac{R^2+\omega^2L^2}{V}$}{$\dfrac{V^2R}{R^2+\omega^2L^2}$}{$\dfrac{V}{R^2+\omega^2L^2}$}{$\dfrac{V^2R}{\sqrt{R^2+\omega^2L^2}}$}}
+
+\QQ{An electromagnetic wave is travelling in $x$-direction with electric field vector given by, $\vec E_y = E_0\sin(kx-\omega t)\,\hat j$. The correct expression for magnetic field vector is}
+{\opt{$\vec B_y = E_0C\sin(kx-\omega t)\,\hat j$}{$\vec B_z = E_0C\sin(kx-\omega t)\,\hat k$}{$\vec B_y = \dfrac{E_0}{C}\sin(kx-\omega t)\,\hat j$}{$\vec B_z = \dfrac{E_0}{C}\sin(kx-\omega t)\,\hat k$}}
+
+\QQ{The phenomenon involved in the reflection of radio-waves by ionosphere is similar to}
+{\opt{reflection of light by plane mirror}{total internal reflection of light in air during a mirage}{dispersion of light by water molecules during the formation of a rainbow}{scattering of light by air particles}}
+
+\QQ{A point object is moving uniformly towards the pole of a concave mirror of focal length $25\unit{cm}$ along its axis as shown below. The speed of the object is $1\unit{m\,s^{-1}}$. At $t = 0$, the distance of the object from the mirror is $50\unit{cm}$. The average velocity of the image formed by the mirror between time $t = 0$ and $t = 0.25\unit{s}$ is:
+\fig{\begin{tikzpicture}[scale=0.8]
+\draw (-0.4,0) -- (3.4,0); \node[lbl,above] at (-0.4,0) {$t=0$};
+\fill (0.3,0) circle (1.4pt) node[below,lbl]{O}; \draw[->] (0.3,0.25) -- (1.0,0.25) node[right,lbl]{$V = 1\unit{m\,s^{-1}}$};
+\draw[line width=1pt] (2.75,-0.8) arc (-25:25:1.9); \foreach \t in {-22,-16,...,22} \draw ($(2.75,-0.8)+(-25:0)$) ;
+\node[lbl,right] at (2.95,0.15) {P};
+\draw[<->] (0.3,-0.9) -- (2.95,-0.9) node[midway,below,lbl]{50 cm};
+\end{tikzpicture}}}
+{\opt{$40\unit{cm\,s^{-1}}$}{$20\unit{cm\,s^{-1}}$}{Zero}{Infinity}}
+
+\QQ{A certain prism is found to produce a minimum deviation of $38^\circ$. It produces a deviation of $44^\circ$ when the angle of incidence is either $42^\circ$ or $62^\circ$. What is the angle of incidence when it is undergoing minimum deviation?}
+{\opt{$30^\circ$}{$40^\circ$}{$49^\circ$}{$60^\circ$}}
+
+\QQ{An aluminium sphere is dipped into water. Which of the following is true?}
+{\opt{Buoyancy will be less in water at $0^\circ$C than that in water at $4^\circ$C}{Buoyancy will be more in water at $0^\circ$C than that in water at $4^\circ$C}{Buoyancy in water at $0^\circ$C will be same as that in water at $4^\circ$C}{Buoyancy may be more or less in water at $4^\circ$C depending on the radius of the sphere}}
+
+\QQ{A thermodynamic system undergoes a cyclic process ABC as shown in the diagram. The work done by the system per cycle is
+\fig{\begin{tikzpicture}[xscale=0.26,yscale=0.006]
+\draw[->] (-1,0) -- (12,0) node[right,lbl]{$V$ (m$^3$)}; \draw[->] (0,-20) -- (0,470) node[above,lbl]{$P$ (N/m$^2$)};
+\draw[densely dashed] (0,400) node[left,lbl]{400} -- (5,400) (0,100) node[left,lbl]{100} -- (5,100) (5,100) -- (5,0) node[below,lbl]{5} (10,100) -- (10,0) node[below,lbl]{10};
+\draw[thick,postaction={decorate},decoration={markings,mark=at position 0.5 with {\arrow{Stealth}}}] (5,400) -- (5,100);
+\draw[thick,postaction={decorate},decoration={markings,mark=at position 0.5 with {\arrow{Stealth}}}] (5,100) -- (10,100);
+\draw[thick,postaction={decorate},decoration={markings,mark=at position 0.5 with {\arrow{Stealth}}}] (10,100) -- (5,400);
+\node[lbl,above] at (5,400) {A}; \node[lbl,below left] at (5,100) {B}; \node[lbl,right] at (10,100) {C};
+\end{tikzpicture}}}
+{\opt{$750\unit{J}$}{$-1250\unit{J}$}{$-750\unit{J}$}{$1250\unit{J}$}}
+
+\QQ{One mole of O$_2$ gas is heated at constant pressure starting at $27^\circ$C. How much energy must be added to the gas as heat to double its volume?}
+{\opt{Zero}{450 R}{750 R}{1050 R}}
+
+\QQ{A piston is performing S.H.M.\ in the vertical direction with a frequency of $0.5\unit{Hz}$. A block of $10\unit{kg}$ is placed on the piston. The maximum amplitude of the system such that the block remains in contact with the piston is}
+{\opt{$1\unit{m}$}{$0.5\unit{m}$}{$1.5\unit{m}$}{$0.1\unit{m}$}}
+
+\QQ{The equation of a stationary wave is $y = 2\sin\left(\dfrac{\pi x}{15}\right)\cos(48\pi t)$. The distance between a node and its next antinode is}
+{\opt{7.5 units}{1.5 units}{22.5 units}{30 units}}
+
+\QQ{In the given circuit, the current through $2\unit{\Omega}$ resistor is
+\fig{\begin{circuitikz}[scale=0.55,transform shape,font=\Large]
+\draw (0,0) to[battery1,l=$1.2\,\mathrm V$,invert] (0,2.4) to[R,l=$1\,\Omega$] (2.2,2.4) -- (4.4,2.4) to[R,l=$1\,\Omega$] (6.6,2.4) to[R,l=$1\,\Omega$] (6.6,0) to[R,l=$1\,\Omega$] (4.4,0) -- (3.2,0) -- (2.2,0) to[R,l=$2\,\Omega$] (0,0);
+\draw (1.6,2.4) to[R,l_=$3\,\Omega$] (1.6,0);
+\draw (2.2,2.4) -- (2.2,0); \draw (4.4,2.4) -- (4.4,0);
+\draw (2.2,0) to[R,l=$1\,\Omega$] (4.4,2.4); \draw (4.4,0) to[R,l_=$1\,\Omega$] (6.6,2.4);
+\end{circuitikz}}}
+{\opt{$0.2\unit{A}$}{$0.3\unit{A}$}{$0.4\unit{A}$}{$0.1\unit{A}$}}
+
+\QQ{Kirchhoff's junction rule is a reflection of}
+{\opt{Conservation of current density vector}{Conservation of energy}{Conservation of momentum}{Conservation of charges}}
+
+\QQ{The variation of terminal potential difference ($V$) with current flowing through a cell is as shown
+\fig{\gaxes{$I$ (A)}{$V$ (volt)}{\draw (0,1.5) node[left,lbl]{3 V} -- (1.6,0) node[below,lbl]{6 A};}}
+The emf and internal resistance of the cell are}
+{\opt{3\,V, $2\unit{\Omega}$}{3\,V, $0.5\unit{\Omega}$}{6\,V, $2\unit{\Omega}$}{6\,V, $0.5\unit{\Omega}$}}
+
+\QQ{In a potentiometer experiment, the balancing point with a cell is at a length $240\unit{cm}$. On shunting the cell with a resistance of $2\unit{\Omega}$, the balancing length becomes $120\unit{cm}$. The internal resistance of the cell is}
+{\opt{$4\unit{\Omega}$}{$2\unit{\Omega}$}{$1\unit{\Omega}$}{$0.5\unit{\Omega}$}}
+
+\QQ{The magnetic field at the centre `O' in the given figure is
+\fig{\begin{tikzpicture}[scale=0.8]
+\draw (60:1) arc (60:360:1); \draw[->] (180:1) ++(0,0.05) -- ++(0,-0.15);
+\fill (0,0) circle (1.4pt) node[below,lbl]{O};
+\draw[densely dashed] (0,0) -- (60:1.25) node[pos=0.55,left,lbl]{$R$}; \draw[densely dashed] (0,0) -- (1.25,0);
+\draw (0.35,0) arc (0:60:0.35); \node[lbl] at (0.6,0.32) {$60^\circ$};
+\node[lbl] at (-1.25,-0.1) {$I$};
+\end{tikzpicture}}}
+{\opt{$\dfrac7{14}\dfrac{\mu_0I}{R}$}{$\dfrac5{12}\dfrac{\mu_0I}{R}$}{$\dfrac3{10}\dfrac{\mu_0I}{R}$}{$\dfrac{\mu_0I}{12R}$}}
+
+\QQ{Two metal plates are separated by $2\unit{cm}$. The potentials of the plates are $-10\unit{V}$ and $+30\unit{V}$. The electric field between the two plates is}
+{\opt{$500\unit{V/m}$}{$1000\unit{V/m}$}{$2000\unit{V/m}$}{$3000\unit{V/m}$}}
+
+\QQ{The equivalent capacitance between A and B is,
+\fig{\begin{circuitikz}[scale=0.6,transform shape,font=\Large]
+\draw (0,2.6) to[C,l=$50\,\mathrm{pF}$] (4.4,2.6) -- (4.4,1.4) node[circ]{} node[right]{A};
+\draw (0,2.6) -- (0,0) to[C,l_=$50\,\mathrm{pF}$] (4.4,0) -- (4.4,0.6) node[circ]{} node[right]{B};
+\draw (0,1.4) to[C,l_=$100\,\mathrm{pF}$] (2.2,1.4) to[C,l_=$100\,\mathrm{pF}$] (4.4,1.4);
+\end{circuitikz}}}
+{\opt{$50\unit{pF}$}{$\dfrac{100}3\unit{pF}$}{$150\unit{pF}$}{$300\unit{pF}$}}
+
+\QQ{A capacitor of capacitance C charged by an amount Q is connected in parallel with an uncharged capacitor of capacitance 2C. The final charges on the capacitors are}
+{\opt{$\dfrac Q2,\ \dfrac Q2$}{$\dfrac Q4,\ \dfrac{3Q}4$}{$\dfrac Q3,\ \dfrac{2Q}3$}{$\dfrac Q5,\ \dfrac{4Q}5$}}
+
+\QQ{Though the electron drift velocity is small and electron charge is very small, a conductor can carry an appreciably large current because}
+{\opt{electron number density is very large}{drift velocity of electron is very large}{electron number density depends on temperature}{relaxation time is small}}
+
+\QQ{Masses of three wires of copper are in the ratio 1:3:5 and their lengths are in the ratio 5:3:1. The ratio of their electrical resistance are}
+{\opt{1:3:5}{5:3:1}{1:15:125}{125:15:1}}
+
+\QQ{A certain charge 2Q is divided at first into two parts $q_1$ and $q_2$. Later the charges are placed at a certain distance. If the force of interaction between two charges is maximum then $\dfrac Q{q_1} =$ \rule{1cm}{0.4pt}.}
+{\opt{4}{2}{1}{0.5}}
+
+\QQ{A particle of mass $m$ and charge $q$ is placed at rest in uniform electric field $E$ and then released. The kinetic energy attained by the particle after moving a distance $y$ is}
+{\opt{$qEy^2$}{$qE^2y$}{$qEy$}{$q^2Ey$}}
+
+\QQ{An electric dipole is kept in non-uniform electric field. It generally experiences}
+{\opt{A force and torque}{A force but not a torque}{A torque but not a force}{Neither a force nor a torque}}
+
+\QQ{The figure gives the electric potential $V$ as a function of distance through four regions on $x$-axis. Which of the following is true for the magnitude of the electric field E in these regions?
+\fig{\begin{tikzpicture}[xscale=0.6,yscale=0.5]
+\draw[->] (-0.3,0) -- (5.8,0) node[right,lbl]{$x$ (m)}; \draw[->] (0,-0.3) -- (0,4.8) node[above,lbl]{$V$ (volt)};
+\foreach \x in {1,...,5} \node[lbl,below] at (\x,0) {\x}; \node[lbl,left] at (0,2) {2}; \node[lbl,left] at (0,4) {4};
+\draw[thick] (0,2) -- (1,2) -- (2,4) -- (4,4) -- (4.6,0);
+\foreach \x in {1,2,4} \draw[densely dashed] (\x,0) -- (\x,4);
+\node[font=\scriptsize] at (0.5,1.0) {\textcircled{\tiny A}}; \node[font=\scriptsize] at (1.5,1.0) {\textcircled{\tiny B}}; \node[font=\scriptsize] at (3,1.0) {\textcircled{\tiny C}}; \node[font=\scriptsize] at (4.75,0.6) {\textcircled{\tiny D}};
+\end{tikzpicture}}}
+{\opt{$E_A>E_B>E_C>E_D$}{$E_A = E_C$ and $E_B<E_D$}{$E_B = E_D$ and $E_A<E_C$}{$E_A<E_B<E_C<E_D$}}
+
+\QQ{A system of two charges separated by a certain distance apart stores electrical potential energy. If the distance between them is increased, the potential energy of the system,}
+{\opt{increases in any case}{decreases in any case}{may increase or decrease}{remains the same}}
+
+\end{multicols}

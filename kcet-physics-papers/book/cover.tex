@@ -1,0 +1,41 @@
+\thispagestyle{empty}
+\global\watermarkfalse
+\begin{tikzpicture}[remember picture,overlay]
+  % navy crest band
+  \fill[navy] ($(current page.north west)+(1.25cm,-1.25cm)$) rectangle ($(current page.north east)+(-1.25cm,-11.1cm)$);
+  \fill[gilt] ($(current page.north west)+(1.25cm,-11.1cm)$) rectangle ($(current page.north east)+(-1.25cm,-11.28cm)$);
+  \fill[verde]   ($(current page.north)+(-3cm,-11.28cm)$) rectangle ($(current page.north)+(-1cm,-11.42cm)$);
+  \fill[white]   ($(current page.north)+(-1cm,-11.28cm)$) rectangle ($(current page.north)+( 1cm,-11.42cm)$);
+  \fill[crimson] ($(current page.north)+( 1cm,-11.28cm)$) rectangle ($(current page.north)+( 3cm,-11.42cm)$);
+  % logo on a parchment medallion
+  \fill[parchment] ($(current page.north)+(0,-5.6cm)$) circle (3.55cm);
+  \draw[gilt,line width=1.4pt] ($(current page.north)+(0,-5.6cm)$) circle (3.55cm);
+  \draw[gilt,line width=0.4pt] ($(current page.north)+(0,-5.6cm)$) circle (3.72cm);
+  \node[inner sep=0pt] at ($(current page.north)+(0,-5.6cm)$) {\includegraphics[width=6.8cm]{img/logo}};
+  \node[gilt,inner sep=0pt] at ($(current page.north west)+(4.1cm,-5.6cm)$) {\pgfornament[width=3.4cm]{75}};
+  \node[gilt,inner sep=0pt] at ($(current page.north east)+(-4.1cm,-5.6cm)$) {\pgfornament[width=3.4cm,symmetry=v]{75}};
+  % title block
+  \node[anchor=north,align=center,text width=16cm] at ($(current page.north)+(0,-12.1cm)$) {%
+    {\color{navy}\fontsize{34}{40}\selectfont\scshape KCET Physics}\\[6pt]
+    {\color{crimson}\fontsize{17}{21}\selectfont\scshape Previous Year Question Papers}\\[6pt]
+    {\large\itshape 2021 \textendash{} 2026 \enspace\textperiodcentered\enspace Six Papers \enspace\textperiodcentered\enspace 360 Questions}\\[8pt]
+    {\color{gilt}\pgfornament[width=4.2cm]{88}}};
+  % photo on the right, standing on the inner frame
+  \node[anchor=south east,inner sep=0pt] at ($(current page.south east)+(-1.25cm,1.25cm)$)
+    {\includegraphics[height=10.4cm]{img/photo}};
+  % author block on the left
+  \node[anchor=south west,align=left,text width=9.2cm] at ($(current page.south west)+(2.2cm,2.4cm)$) {%
+    {\color{gilt}\small\scshape Compiled \& Presented by}\\[3pt]
+    \mbox{\color{navy}\fontsize{23}{27}\selectfont\bfseries SUMEET BIRAJADAR}\\[4pt]
+    {\color{crimson}\large\itshape Founder \& Physics Mentor}\\[1pt]
+    {\color{navy}\large\scshape Science Monk}\\[10pt]
+    {\color{gilt}\rule{6.5cm}{0.6pt}}\\[6pt]
+    {\small\itshape \textquotedblleft Appa Deepo Bhava\textquotedblright{} \textemdash{} Be a light unto yourself}\\[3pt]
+    {\small\scshape Learn \textperiodcentered{} Think \textperiodcentered{} Excel}\\[10pt]
+    {\footnotesize Karnataka Common Entrance Test (KEA) \textperiodcentered{} English version}\\
+    {\footnotesize 60 MCQs per paper \textperiodcentered{} 1 mark each \textperiodcentered{} 80 minutes \textperiodcentered{} no negative marking}\\
+    {\footnotesize Retyped with redrawn diagrams for Science Monk online classes}};
+\end{tikzpicture}
+\null
+\clearpage
+\global\watermarktrue

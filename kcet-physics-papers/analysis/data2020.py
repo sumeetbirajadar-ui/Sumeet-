@@ -27,7 +27,7 @@ A 119 leph104
 A 112 leph104
 A 148 leph105
 A 127 leph104
-D 149 leph105
+D 149 leph105 E5.3
 A 163 leph106
 A 169 leph106
 A 187 leph107
@@ -68,7 +68,7 @@ OUT={9:'the Doppler effect',20:'the potentiometer',21:'the resistor colour code'
 DIFF='M E E E E E M M E M E M M E E E M E E E E M E H E E M M M E M E M E M M E M M E M M M E E M E E E E M E E M E E E E E M'
 STRONG='Q38 (AIPMT 2015, identical), Q56 (NEET 2017, identical), Q28 (JEE Main 2020, same pattern), Q36 (NEET 2020), Q44 (AIPMT 2009), Q10 (JEE Main 2021).'
 OVERALL='Overall: \\textbf{easy to moderate}; Q24 (field at O due to straight and curved parts) is the only lengthy calculation.'
-TAKE=['Several questions are NCERT exercises or Exemplar problems used as they stand: Q58 and Q59 (Class XI exercises, p.\\,69, p.\\,90), Q39 (converging beam, p.\\,249), Q5 (Exemplar XI 11.8), Q37 (Exemplar XII 9.3).',
+TAKE=['Several questions are NCERT exercises or Exemplar problems used as they stand: Q58 and Q59 (Class XI exercises, p.\\,69, p.\\,90), Q39 (converging beam, p.\\,249), Q5 (Exemplar XI 11.8), Q37 (Exemplar XII 9.3), Q30 (Exemplar XII 5.3).',
 'Twelve questions are on topics removed from the rationalised NCERT (Doppler, potentiometer, colour code, cyclotron, Curie\'s law, radiation pressure, resolving power, decay, logic gates, errors, relative velocity).',
 'NEET PYQs reappear almost word for word (Q38 AIPMT 2015, Q56 NEET 2017).',
 'Q20 (potentiometer) and Q21 (colour code) are lab-manual questions.']

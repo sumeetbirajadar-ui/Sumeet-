@@ -15,31 +15,32 @@
       {\pgfornament[width=2.6cm,color=gilt,symmetry=\s]{41}};}
   % top flourish and crest
   \node[inner sep=0pt] at ($(current page.north)+(0,-2.35cm)$) {\pgfornament[width=7cm,color=gilt]{87}};
-  \node[inner sep=0pt] (crest) at ($(current page.north)+(0,-5.4cm)$) {\includegraphics[width=4.6cm]{img/logo}};
-  \draw[gilt,line width=1.2pt] (crest.center) circle (2.42cm);
-  \draw[navy,line width=0.4pt] (crest.center) circle (2.56cm);
+  \node[inner sep=0pt] (crest) at ($(current page.north)+(0,-6.2cm)$) {\includegraphics[width=6.2cm]{img/logo}};
+  \draw[gilt,line width=1.2pt] (crest.center) circle (3.25cm);
+  \draw[navy,line width=0.4pt] (crest.center) circle (3.4cm);
   % title block
-  \node[align=center,text width=15cm] at ($(current page.north)+(0,-9.95cm)$) {%
+  \node[align=center,text width=15cm] at ($(current page.north)+(0,-12.6cm)$) {%
     {\color{gilt}\scshape\large Science Monk \textperiodcentered{} Presents}\\[6pt]
-    {\color{navy}\fontsize{38}{44}\selectfont\scshape KCET Physics}\\[4pt]
+    {\color{navy}\fontsize{46}{52}\selectfont\scshape KCET Physics}\\[4pt]
     {\color{ink}\fontsize{16}{20}\selectfont\itshape Previous Year Question Papers}\\[8pt]
     {\color{gilt}\pgfornament[width=5cm]{88}}\\[4pt]
     {\color{verde}\fontsize{15}{18}\selectfont\scshape 2016 \textendash{} 2026 \enspace\textperiodcentered\enspace Eleven Years \enspace\textperiodcentered\enspace 660 Questions}};
-  % oval portrait with gold rings
-  \coordinate (P) at ($(current page.south)+(0,8.6cm)$);
-  \node[inner sep=0pt] at (P) {\includegraphics[height=7.0cm]{img/photo_oval}};
-  \draw[gilt,line width=2.2pt] (P) ellipse (2.56cm and 3.5cm);
-  \draw[navy,line width=0.5pt] (P) ellipse (2.72cm and 3.66cm);
-  \node[inner sep=0pt] at ($(P)+(-4.6cm,0)$) {\pgfornament[width=3.2cm,color=gilt]{75}};
-  \node[inner sep=0pt] at ($(P)+(4.6cm,0)$) {\pgfornament[width=3.2cm,color=gilt,symmetry=v]{75}};
-  % name ribbon
-  \node[fill=navy,text=ivory,inner xsep=18pt,inner ysep=7pt,font=\fontsize{20}{24}\selectfont\scshape] (rib) at ($(current page.south)+(0,4.15cm)$) {Sumeet Birajadar};
-  \draw[gilt,line width=0.8pt] ($(rib.south west)+(-0.08,-0.08)$) rectangle ($(rib.north east)+(0.08,0.08)$);
-  \fill[navy!80!black] (rib.north west) -- ++(-0.6,0) -- ++(0.3,-0.36) -- ++(-0.3,-0.36) -- (rib.south west) -- cycle;
-  \fill[navy!80!black] (rib.north east) -- ++(0.6,0) -- ++(-0.3,-0.36) -- ++(0.3,-0.36) -- (rib.south east) -- cycle;
-  \node[align=center] at ($(current page.south)+(0,2.75cm)$) {%
-    {\color{crimson}\itshape Founder \& Physics Mentor, Science Monk}\\[3pt]
-    {\color{ink}\small\itshape\textquotedblleft Appa Deepo Bhava\textquotedblright{} \textemdash{} Be a light unto yourself \enspace\textperiodcentered\enspace \scshape Learn \textperiodcentered{} Think \textperiodcentered{} Excel}};
+  % centre emblem
+  \node[inner sep=0pt] at ($(current page.south)+(0,10.9cm)$) {\pgfornament[width=5cm,color=gilt]{75}};
+  \node[align=center,text width=14cm] at ($(current page.south)+(0,8.0cm)$) {%
+    {\color{ink}\large\itshape Every question retyped \textperiodcentered{} Every diagram redrawn}\\[6pt]
+    {\color{navy}\scshape Physics \textperiodcentered{} Karnataka Common Entrance Test}\\[10pt]
+    {\color{gilt}\pgfornament[width=3cm]{15}}};
+  % small square photo with name, bottom-left corner
+  \node[inner sep=0pt,anchor=south west] (ph) at ($(current page.south west)+(4.4cm,2.6cm)$) {\includegraphics[width=2.3cm,height=2.3cm,keepaspectratio=false,trim=60 260 60 0,clip]{img/photo_src}};
+  \draw[gilt,line width=1.2pt] (ph.south west) rectangle (ph.north east);
+  \node[anchor=west,align=left] at ($(ph.east)+(0.35cm,0)$) {%
+    {\color{navy}\fontsize{15}{18}\selectfont\scshape Sumeet Birajadar}\\[2pt]
+    {\color{crimson}\small\itshape Founder \& Physics Mentor}\\
+    {\color{ink}\small\scshape Science Monk}};
+  \node[anchor=south east,align=right] at ($(current page.south east)+(-4.4cm,2.7cm)$) {%
+    {\color{ink}\footnotesize\itshape\textquotedblleft Appa Deepo Bhava\textquotedblright}\\
+    {\color{gilt}\footnotesize\scshape Learn \textperiodcentered{} Think \textperiodcentered{} Excel}};
 \end{tikzpicture}
 \null
 \clearpage

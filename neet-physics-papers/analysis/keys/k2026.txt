@@ -1,0 +1,45 @@
+1 4 Work-energy theorem and power
+2 4 Kinetic theory of gases
+3 4 Self and mutual inductance
+4 3 Beats, organ pipes and strings
+5 1 Self and mutual inductance
+6 3 Kinematics in one dimension
+7 1 Mass defect, binding energy, fission and fusion
+8 1 Photoelectric effect
+9 4 Capacitors (combination)
+10 4 Bernoulli's principle and fluid flow
+11 1 Biot-Savart law and magnetic fields
+12 1 Viscosity and Stokes' law
+13 3 Satellites, orbital and escape speed
+14 2 Kepler's laws and planetary motion
+15 2 Force between parallel currents
+16 2 X
+17 3 Thermodynamic processes
+18 1 Photoelectric effect
+19 3 Photons and photon momentum
+20 3 Measurement and errors
+21 4 Electric potential and potential energy
+22 2 Refraction and total internal reflection
+23 3 Kinetic energy and momentum
+24 3 Thermal expansion
+25 4 Simple harmonic motion
+26 - Measurement and errors | Dropped by NTA. The zero error is $-0.06$\,cm, so the actual length is 1.06\,cm, which is not among the options.
+27 2 X
+28 2 Simple harmonic motion
+29 2 Lenses and lens maker's formula
+30 1 AC circuits (reactance, LCR, phase)
+31 3 Angular momentum and its conservation
+32 2 Faraday's law and Lenz's law
+33 2 Conductors, Gauss's law and electric flux
+34 3 Electric potential and potential energy
+35 3 Alpha-particle scattering and atomic models
+36 1 Resistivity and temperature
+37 1 Dimensional analysis
+38 2 Electromagnetic waves (nature, E/B = c)
+39 3 Thermodynamic processes
+40 4 Bohr model of hydrogen atom
+41 1 Circular motion
+42 3 p-n junction diode and rectifier
+43 3 Electromagnetic spectrum
+44 3 Collisions and momentum conservation
+45 1 Kinetic theory of gases

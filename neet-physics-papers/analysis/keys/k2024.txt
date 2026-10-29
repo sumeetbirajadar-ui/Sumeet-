@@ -1,0 +1,50 @@
+1 3 Bohr model of hydrogen atom
+2 2 Magnetic materials
+3 1 X
+4 1 X
+5 2 X
+6 3 Prism and dispersion
+7 1 Circular motion
+8 1 de Broglie waves
+9 3 Kirchhoff's rules and DC circuits
+10 2 Rotational dynamics (torque, moment of inertia)
+11 1 X
+12 3 Measurement and errors
+13 2 Work-energy theorem and power
+14 1 Electric potential and potential energy
+15 2 Surface tension and capillarity
+16 4 X
+17 4 Electric dipole
+18 4 Cells, emf and internal resistance
+19 2 Faraday's law and Lenz's law | By Lenz's law, solenoid-1 (N pole receding) and solenoid-2 (S pole approaching) both oppose the change; with the winding shown this gives A to B and D to C.
+20 3 Transformer and power transmission
+21 4 Biot-Savart law and magnetic fields
+22 2 Alpha-particle scattering and atomic models | NCERT (p 290) states both: atoms are neutral and each element has a characteristic spectrum.
+23 2 Dimensional analysis
+24 3 Photons and photon momentum
+25 3 Circular motion
+26 3 Simple harmonic motion
+27 2 Thermodynamic processes
+28 1 X
+29 3 Collisions and momentum conservation
+30 2 Capacitors (combination)
+31 4 Laws of motion (lift, apparent weight)
+32 3 Rotational dynamics (torque, moment of inertia)
+33 1 Acceleration due to gravity (g, variation)
+34 2 Elasticity (Young's modulus)
+35 4 Young's double-slit interference
+36 3 Optical instruments (microscope, telescope)
+37 3 Capacitors (energy, dielectrics)
+38 3 AC circuits (reactance, LCR, phase)
+39 3 Wheatstone bridge and meter bridge | In (3) the diode is reverse-biased, so its arm is open and no current flows through G.
+40 3 Electric power and heating
+41 4 Kinematics in one dimension
+42 3 Simple harmonic motion
+43 3 Thermal expansion
+44 3 Faraday's law and Lenz's law
+45 1 Electromagnetic waves (nature, E/B = c)
+46 3 Displacement current and Maxwell's equations
+47 3 Magnetic dipole and bar magnet
+48 2 Satellites, orbital and escape speed
+49 1 Kinetic theory of gases
+50 3 Dimensional analysis

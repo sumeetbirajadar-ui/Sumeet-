@@ -1,0 +1,45 @@
+1 2 Surface tension and capillarity
+2 2 Optical instruments (microscope, telescope)
+3 2 X
+4 4 Friction
+5 2 Work-energy theorem and power
+6 2 Kirchhoff's rules and DC circuits
+7 4 Circular motion
+8 4 X
+9 1 Electromagnetic waves (nature, E/B = c)
+10 1 Impulse and momentum
+11 4 Self and mutual inductance
+12 1 Magnetic dipole and bar magnet
+13 3 Lenses and lens maker's formula
+14 3 Kinetic theory of gases
+15 2 Kinematics in one dimension
+16 2 AC circuits (reactance, LCR, phase)
+17 4 Angular momentum and its conservation
+18 2 Charged particle in a magnetic field
+19 3 Heat transfer (conduction, radiation, cooling)
+20 1 Capacitors (energy, dielectrics)
+21 1 Motion in a plane (vectors, relative velocity)
+22 2 Rotational dynamics (torque, moment of inertia)
+23 2 Simple harmonic motion
+24 3 Dimensional analysis
+25 3 Measurement and errors
+26 3 Displacement current and Maxwell's equations
+27 1 X
+28 4 Electric charge and Coulomb's law
+29 2 Kinetic theory of gases
+30 3 Bohr model of hydrogen atom
+31 1 Kepler's laws and planetary motion
+32 2 Acceleration due to gravity (g, variation)
+33 3 Kirchhoff's rules and DC circuits
+34 2 Bohr model of hydrogen atom
+35 2 Electric dipole
+36 2 Kirchhoff's rules and DC circuits
+37 3 de Broglie waves
+38 1 Photoelectric effect
+39 3 X
+40 1 p-n junction diode and rectifier | The official NTA key accepts both (1) and (2).
+41 2 First law of thermodynamics
+42 3 Measurement and errors
+43 3 Polarisation and Malus' law
+44 4 Simple harmonic motion
+45 2 Beats, organ pipes and strings

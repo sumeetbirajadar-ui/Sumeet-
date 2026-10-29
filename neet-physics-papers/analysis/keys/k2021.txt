@@ -1,0 +1,50 @@
+1 3 X
+2 1 Displacement current and Maxwell's equations
+3 2 Simple harmonic motion
+4 2 Capacitors (combination)
+5 1 Prism and dispersion
+6 3 Electric dipole
+7 3 Kinetic theory of gases
+8 2 Lenses and lens maker's formula
+9 2 Dimensional analysis
+10 2 Heat transfer (conduction, radiation, cooling)
+11 4 Work-energy theorem and power
+12 1 Viscosity and Stokes' law
+13 2 Electromagnetic waves (nature, E/B = c)
+14 1 Current, drift velocity and mobility
+15 4 Simple harmonic motion
+16 3 Capacitors (energy, dielectrics)
+17 4 Charged particle in a magnetic field
+18 4 Optical instruments (microscope, telescope)
+19 3 X
+20 4 AC circuits (reactance, LCR, phase) | Official key: 5\,$\Omega$, taking the given voltages as rms values ($V_{\text{rms}}=50$\,V, $I_{\text{rms}}=10$\,A).
+21 4 Satellites, orbital and escape speed
+22 4 Measurement and errors
+23 2 Work-energy theorem and power
+24 2 Kinematics in one dimension
+25 4 Electric dipole
+26 3 Ampere's law and solenoid
+27 1 X
+28 2 Conductors, Gauss's law and electric flux
+29 3 de Broglie waves
+30 3 Semiconductors (intrinsic, extrinsic, bands)
+31 3 Photons and photon momentum
+32 1 Dimensional analysis
+33 4 Kirchhoff's rules and DC circuits
+34 2 X
+35 4 Mass defect, binding energy, fission and fusion
+36 4 Self and mutual inductance
+37 2 Charged particle in a magnetic field
+38 3 X
+39 3 X
+40 4 Rotational dynamics (torque, moment of inertia)
+41 4 Lenses and lens maker's formula
+42 4 Motion in a plane (vectors, relative velocity)
+43 4 Electric potential and potential energy
+44 1 Magnetic dipole and bar magnet
+45 2 Impulse and momentum
+46 1 Transformer and power transmission
+47 4 Projectile motion
+48 4 Satellites, orbital and escape speed
+49 2 Kirchhoff's rules and DC circuits
+50 1 Rotational dynamics (torque, moment of inertia)

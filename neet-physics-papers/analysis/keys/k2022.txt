@@ -1,0 +1,50 @@
+1 3 Electric power and heating
+2 3 Electric potential and potential energy
+3 1 Photoelectric effect
+4 4 Resistivity and temperature
+5 4 Wave motion and speed of waves
+6 1 Electromagnetic spectrum
+7 3 Rotational dynamics (torque, moment of inertia)
+8 4 Lenses and lens maker's formula
+9 1 de Broglie waves
+10 1 Electromagnetic waves (nature, E/B = c)
+11 4 X
+12 3 Thermodynamic processes
+13 4 Kinematics in one dimension
+14 3 Centre of mass
+15 2 Work-energy theorem and power
+16 4 Work-energy theorem and power
+17 1 Resistance and resistivity
+18 2 Surface tension and capillarity
+19 4 Biot-Savart law and magnetic fields
+20 4 Collisions and momentum conservation
+21 3 Viscosity and Stokes' law
+22 3 Rotational dynamics (torque, moment of inertia)
+23 4 AC power and rms values
+24 4 Dimensional analysis
+25 1 Kinematics in one dimension
+26 1 p-n junction diode and rectifier
+27 4 Equipotential surfaces and potential gradient
+28 2 Dimensional analysis
+29 1 Young's double-slit interference
+30 4 Refraction and total internal reflection
+31 4 p-n junction diode and rectifier
+32 3 Gravitation (force, field, energy)
+33 3 Magnetic flux
+34 1 Bohr model of hydrogen atom
+35 3 Ampere's law and solenoid
+36 2 Simple harmonic motion
+37 1 Kinetic theory of gases
+38 3 Refraction and total internal reflection
+39 3 Dimensional analysis
+40 3 AC circuits (reactance, LCR, phase)
+41 3 Projectile motion
+42 4 Ampere's law and solenoid
+43 4 Elasticity (Young's modulus)
+44 4 X
+45 4 Nuclear composition, size and density
+46 3 Wheatstone bridge and meter bridge
+47 1 Measurement and errors
+48 4 Faraday's law and Lenz's law
+49 3 Electric dipole
+50 4 Capacitors (energy, dielectrics)

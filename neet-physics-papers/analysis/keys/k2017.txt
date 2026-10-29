@@ -1,0 +1,45 @@
+136 1 Gravitation (force, field, energy)
+137 3 Young's double-slit interference
+138 2 X
+139 3 Force between parallel currents
+140 1 de Broglie waves
+141 1 X | $N_B/N_A=e^{7\lambda t}$, so the ratio is $e$ (not $1/e$) at $t=1/(7\lambda)$; the intended answer is (1).
+142 2 X
+143 2 Resistance and resistivity
+144 3 X
+145 1 Electromagnetic waves (nature, E/B = c)
+146 4 Heat transfer (conduction, radiation, cooling)
+147 4 p-n junction diode and rectifier
+148 4 Magnetic dipole and bar magnet
+149 4 X
+150 2 X
+151 2 X
+152 1 Prism and dispersion
+153 1 Capacitors (energy, dielectrics)
+154 2 Motion in a plane (vectors, relative velocity)
+155 1 Thermodynamic processes
+156 4 Circular motion
+157 1 Beats, organ pipes and strings
+158 1 Photoelectric effect | $K_{\max}\approx1.08$\,eV gives $v\approx6.2\times10^5$\,m/s; options (1) and (4) are the same value.
+159 2 Self and mutual inductance | The capacitor in the printed figure is not mentioned in the question; with only the three resistors and two inductors, just the middle resistor carries current at $t=0$: $i=18/9=2$\,A.
+160 3 Heat transfer (conduction, radiation, cooling)
+161 2 Rotational dynamics (torque, moment of inertia)
+162 1 Angular momentum and its conservation
+163 3 Kinetic theory of gases
+164 3 Elasticity (Young's modulus)
+165 4 Centre of mass
+166 3 Acceleration due to gravity (g, variation)
+167 1 Equilibrium of forces and tension
+168 2 Bohr model of hydrogen atom
+169 4 Reflection and spherical mirrors
+170 2 Simple harmonic motion
+171 1 Equipotential surfaces and potential gradient
+172 2 Electric charge and Coulomb's law
+173 4 Dimensional analysis
+174 2 Polarisation and Malus' law
+175 2 Simple harmonic motion
+176 3 Pressure, Pascal's law and hydrostatics
+177 3 Work-energy theorem and power
+178 2 Motion in a plane (vectors, relative velocity)
+179 2 Faraday's law and Lenz's law
+180 1 Second law and heat engines

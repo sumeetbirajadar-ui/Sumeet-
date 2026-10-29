@@ -1,0 +1,50 @@
+1 2 Photoelectric effect
+2 2 Magnetic field lines and Gauss's law for magnetism
+3 4 Kirchhoff's rules and DC circuits
+4 2 Transformer and power transmission
+5 4 p-n junction diode and rectifier
+6 4 Electromagnetic waves (nature, E/B = c)
+7 4 Measurement and errors
+8 1 Refraction and total internal reflection
+9 1 Electric dipole
+10 3 Elasticity (Young's modulus)
+11 3 Bohr model of hydrogen atom
+12 3 Kinetic theory of gases
+13 4 Impulse and momentum
+14 3 Beats, organ pipes and strings
+15 1 Rotational dynamics (torque, moment of inertia)
+16 2 X
+17 2 Gauss's law and electric flux
+18 4 X
+19 1 Self and mutual inductance
+20 1 AC circuits (reactance, LCR, phase)
+21 3 Cells, emf and internal resistance
+22 3 Photons and photon momentum
+23 1 X
+24 4 Young's double-slit interference
+25 4 Projectile motion
+26 2 Second law and heat engines
+27 4 Surface tension and capillarity
+28 1 X
+29 1 Work-energy theorem and power
+30 2 Capacitors (combination)
+31 4 Kinematics in one dimension
+32 - Rotational dynamics (torque, moment of inertia) | Dropped by NTA. The ratio is $\sqrt{2/5}:\sqrt{2/3}=\sqrt3:\sqrt5$, which is not among the options.
+33 4 Gravitation (force, field, energy)
+34 3 Bernoulli's principle and fluid flow
+35 4 AC circuits (reactance, LCR, phase)
+36 1 Bohr model of hydrogen atom
+37 4 Resistivity and temperature
+38 4 AC circuits (reactance, LCR, phase)
+39 3 X
+40 3 Kirchhoff's rules and DC circuits
+41 4 Friction
+42 1 Simple harmonic motion
+43 3 Satellites, orbital and escape speed
+44 1 X
+45 4 Lenses and lens maker's formula
+46 1 Lenses and lens maker's formula
+47 4 Force on a current-carrying conductor
+48 2 Kinematics in one dimension
+49 2 Electric potential and potential energy
+50 4 Kinematics in one dimension

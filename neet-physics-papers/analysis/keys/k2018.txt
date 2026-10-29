@@ -1,0 +1,45 @@
+1 3 Thermodynamic processes
+2 3 Beats, organ pipes and strings
+3 2 Kinetic theory of gases
+4 3 Second law and heat engines
+5 2 X
+6 3 Cells, emf and internal resistance
+7 3 Cells, emf and internal resistance
+8 2 X
+9 2 Young's double-slit interference
+10 1 Optical instruments (microscope, telescope)
+11 2 Bohr model of hydrogen atom
+12 3 de Broglie waves
+13 3 X
+14 3 Photoelectric effect
+15 4 X
+16 4 p-n junction diode and rectifier
+17 2 X
+18 2 Electromagnetic waves (nature, E/B = c)
+19 2 Prism and dispersion
+20 2 Reflection and spherical mirrors
+21 4 Self and mutual inductance
+22 3 Coulomb force and electric field
+23 3 X
+24 2 Beats, organ pipes and strings
+25 2 Simple harmonic motion
+26 4 Force on a current-carrying conductor
+27 3 Magnetic materials
+28 3 AC power and rms values
+29 1 Moving coil galvanometer, ammeter, voltmeter
+30 4 Circular motion
+31 3 Rotational dynamics (torque, moment of inertia)
+32 2 X
+33 4 Friction
+34 2 Kinematics in one dimension
+35 4 Laws of motion (lift, apparent weight)
+36 4 Rotational dynamics (torque, moment of inertia)
+37 4 Measurement and errors
+38 4 Angular momentum and its conservation
+39 2 Kepler's laws and planetary motion
+40 4 Acceleration due to gravity (g, variation)
+41 2 X
+42 1 Viscosity and Stokes' law
+43 1 Heat transfer (conduction, radiation, cooling)
+44 3 Elasticity (Young's modulus)
+45 2 First law of thermodynamics

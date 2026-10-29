@@ -1,0 +1,23 @@
+\documentclass[12pt,a4paper]{article}
+\input{preamble}
+% chapter-wise book: chapter opener, topic heading, original-paper source of each question
+\newcommand{\qsrc}[2]{{\footnotesize\bfseries\color{verde}NEET #1\,\textperiodcentered\,Q#2}\enspace}
+\newcommand{\topichead}[2]{\par\needspace{7\baselineskip}\vspace{12pt}%
+  {\color{navy}\bfseries #1}\hfill{\footnotesize\color{crimson}#2~\ifnum#2=1 Q\else Qs\fi}\par\nopagebreak\vspace{1pt}%
+  {\color{gilt}\hrule height 0.6pt}\nopagebreak\vspace{-2pt}}
+\newcommand{\chapterpaper}[5]{% #1 class/chapter line, #2 name, #3 info line, #4 label, #5 running head
+  \clearpage\gdef\curyear{#5}\setcounter{qno}{0}%
+  \phantomsection\addcontentsline{toc}{section}{#5}\label{#4}%
+  \begin{center}
+    {\pgfornament[width=5cm,color=gilt]{87}}\par\vspace{2pt}
+    {\large\color{crimson}\scshape #1}\par\vspace{2pt}
+    {\fontsize{22}{26}\selectfont\color{navy}\scshape #2}\par\vspace{3pt}
+    {\small #3}\par
+    \vspace{3pt}{\pgfornament[width=5cm,color=gilt,symmetry=h]{87}}
+  \end{center}
+  \vspace{2pt}}
+\begin{document}
+\input{ccover}
+\input{ctoc}
+\input{c_chapters}
+\end{document}

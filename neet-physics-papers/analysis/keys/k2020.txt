@@ -1,0 +1,45 @@
+136 4 Bohr model of hydrogen atom
+137 2 Electromagnetic waves (nature, E/B = c)
+138 3 X
+139 2 Kinetic theory of gases
+140 3 Prism and dispersion
+141 2 Thermodynamic processes
+142 2 Mass defect, binding energy, fission and fusion
+143 2 Acceleration due to gravity (g, variation)
+144 4 Resistivity and temperature
+145 1 Simple harmonic motion
+146 3 Measurement and errors
+147 2 Beats, organ pipes and strings
+148 3 Centre of mass
+149 3 Rotational dynamics (torque, moment of inertia)
+150 3 X
+151 2 Gauss's law and electric flux
+152 1 Equipotential surfaces and potential gradient
+153 2 p-n junction diode and rectifier
+154 3 AC circuits (reactance, LCR, phase)
+155 2 Kinetic theory of gases
+156 4 X
+157 4 Photoelectric effect
+158 1 Mass defect, binding energy, fission and fusion
+159 3 Electric potential and potential energy
+160 3 Laws of motion (lift, apparent weight)
+161 4 Elasticity (Young's modulus)
+162 2 Kinetic theory of gases
+163 3 Resistivity and temperature
+164 4 X
+165 3 Young's double-slit interference
+166 3 Capacitors (energy, dielectrics)
+167 4 Elasticity (Young's modulus)
+168 1 X
+169 3 AC circuits (reactance, LCR, phase)
+170 2 Electric dipole
+171 1 Magnetic materials
+172 1 Ampere's law and solenoid
+173 2 Current, drift velocity and mobility
+174 1 Calorimetry and latent heat
+175 4 de Broglie waves
+176 2 Measurement and errors
+177 4 Kinematics in one dimension
+178 3 Surface tension and capillarity
+179 2 Wheatstone bridge and meter bridge
+180 1 X

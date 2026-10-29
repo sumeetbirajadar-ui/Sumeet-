@@ -1,0 +1,13 @@
+*.aux
+*.log
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+build.log
+main.pdf
+cmain.pdf
+cmain.aux
+cmain.log
+cmain.out
+cmain.toc

@@ -1,0 +1,238 @@
+\partpage{D}{Five Marks Questions}
+\chap{1}{Electric Charges and Fields}
+
+\Q{1}{Using Gauss's law, arrive at the expression for electric field at a point outside a uniformly charged spherical shell. Also write the expression for the electric field at a point on the surface of the charged spherical shell.}{MQP-2, Q.37}
+\RA{\textbf{Statement:} The total electric flux ($\phi$) through any closed surface is $1/\varepsilon_0$ times the net charge enclosed by the closed surface.}{1}
+\nfig{1_28a}{0.32}{1.28 (a) --- Gaussian surface for a point with $r>R$ (Physics Part I, Ch.\ 1)}
+\R{Consider a uniformly charged thin spherical shell of radius $R$. Let $q$ be the charge distributed on the shell. It produces a spherically symmetric electric field. Let P be a point at distance $r$ from the centre of the shell. To determine the field at P, imagine a Gaussian sphere of radius $r$ with O as its centre, as shown in the figure.}{1}
+\R{The total electric flux through the Gaussian surface is: \ $\phi=$ electric intensity $\times$ area \ ($\because\vb E\parallel\vb A$), \ $\phi=E\times4\pi r^2$ \dotfill(1)}{1}
+\R{According to Gauss's theorem: \ $\phi=\dfrac{q}{\varepsilon_0}$ \dotfill(2)}{1}
+\R{From (1) and (2): \ $E\times4\pi r^2=\dfrac{q}{\varepsilon_0}\Rightarrow\boxed{E=\dfrac{1}{4\pi\varepsilon_0}\dfrac{q}{r^2}}$}{}
+\src{KSEAB Scheme of Evaluation, II PUC Annual Exam March 2019, Q.27 (also II PUC Exam-2 April/May 2025, Q.37)}
+\R{On the surface ($r=R$): \ $E=\dfrac{1}{4\pi\varepsilon_0}\dfrac{q}{R^2}=\dfrac{\sigma}{\varepsilon_0}$ \ ($q=4\pi R^2\sigma$)}{1}
+
+\Q{2}{Derive an expression for the electric field at a point on the axis of an electric dipole.}{MQP-3, Q.37}
+\RA{Consider a dipole of charges $-q$ at A and $+q$ at B separated by $2a$, with centre O. Let P be a point on the axis at distance $r$ from O, on the side of $+q$. Let $\hat p$ be the unit vector along the dipole axis (from $-q$ to $+q$).}{1}
+\nfig{1_17a}{0.36}{1.17 (a) --- Electric field of a dipole at a point on the axis (Physics Part I, Ch.\ 1)}
+\R{Field at P due to $-q$ (distance $r+a$): \ $\vb E_{-q}=-\dfrac{q}{4\pi\varepsilon_0(r+a)^2}\,\hat p$}{1}
+\R{Field at P due to $+q$ (distance $r-a$): \ $\vb E_{+q}=\dfrac{q}{4\pi\varepsilon_0(r-a)^2}\,\hat p$}{1}
+\R{Total field: $\vb E=\dfrac{q}{4\pi\varepsilon_0}\left[\dfrac{1}{(r-a)^2}-\dfrac{1}{(r+a)^2}\right]\hat p=\dfrac{q}{4\pi\varepsilon_0}\dfrac{4ar}{(r^2-a^2)^2}\,\hat p$}{1}
+\R{For $r\gg a$: \ $\boxed{\vb E=\dfrac{2\vb p}{4\pi\varepsilon_0r^3}}$, where $p=2aq$ is the dipole moment. The field is along $\vb p$.}{1}
+
+\Q{3}{State Gauss law in electrostatics. Using it, derive the expression for the electric field at a point due to an infinitely long, straight, uniformly charged wire.}{MQP-5, Q.37}
+\RA{\textbf{Statement:} The electric flux through any closed surface is equal to $\dfrac{1}{\varepsilon_0}$ times the total (net) charge enclosed by the surface S.}{1}
+\nfig{1_26}{0.24}{1.26 --- Field of an infinitely long straight wire and its Gaussian surface (Physics Part I, Ch.\ 1)}
+\R{Diagram. Consider an infinitely long uniformly charged straight wire with uniform linear charge density $\lambda$. Let us calculate the electric field at point P at a distance $r$ from this wire. We will consider a cylindrical Gaussian surface of radius $r$ and length $l$ as shown in the figure.}{1}
+\R{By definition, electric flux through the Gaussian cylinder is \ $\phi_E=\displaystyle\int\vb E\cdot d\vb A=E\times2\pi rl$ \dotfill(1)}{1}
+\R{By Gauss's law in electrostatics, flux through the closed surface is $\phi_E=\dfrac{q}{\varepsilon_0}$ and charge enclosed $q=\lambda l$ \ $\Rightarrow\ \phi_E=\dfrac{\lambda l}{\varepsilon_0}$ \dotfill(2)}{1}
+\R{Comparing (1) and (2): \ $E\times2\pi rl=\dfrac{\lambda l}{\varepsilon_0}\Rightarrow\boxed{E=\dfrac{\lambda}{2\pi\varepsilon_0r}}$}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Exam-2 2026, Q.37}
+
+\chap{2}{Electrostatic Potential and Capacitance}
+
+\Q{4}{Derive an expression for electric potential at a point due to a point charge.}{MQP-1, Q.37}
+\RA{Let us calculate the potential due to a charge $Q$ at a point P at a distance $r$ from $Q$. Suppose a unit positive charge is brought radially from infinity to P. Consider an intermediate point A at a distance $x$ from the charge. Let the unit positive charge be displaced by a small displacement $dx$.}{1}
+\nfig{2_3}{0.40}{2.3 --- Work done in bringing a unit positive test charge from infinity to the point P (Physics Part I, Ch.\ 2)}
+\R{The force at this point is given by: \ $F=\dfrac{1}{4\pi\varepsilon_0}\dfrac{Q\times1}{x^2}$}{1}
+\R{The work done to move the unit positive charge through a distance $dx$ is: \ $dW=F\,dx\cos\theta=-\dfrac{1}{4\pi\varepsilon_0}\dfrac{Q}{x^2}\,dx$}{1}
+\R{Therefore, the total work done, which is equal to the potential at the point, is given by:\\ $W=\displaystyle\int dW=\int_\infty^r-\frac{1}{4\pi\varepsilon_0}\frac{Q}{x^2}\,dx=-\frac{Q}{4\pi\varepsilon_0}\int_\infty^r\frac{1}{x^2}\,dx\ \Rightarrow\ W=\frac{Q}{4\pi\varepsilon_0}\left[\frac1r-\frac1\infty\right]=\frac{1}{4\pi\varepsilon_0}\frac{Q}{r}$}{1}
+\R{This is the work done to move the unit positive charge from infinity to point P. By definition, it is equal to the electric potential at P: \ $W=V$, \ $\therefore\ \boxed{V=\dfrac{1}{4\pi\varepsilon_0}\dfrac{Q}{r}}$}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Exam-1 March 2025, Q.37}
+
+\Q{5}{Derive an expression for the capacitance of a parallel plate capacitor with air between the plates. Also write the general expression for the capacitance of a parallel plate capacitor with a dielectric medium.}{MQP-4, Q.37}
+\RA{The capacitor has two parallel plates, each of area $A$, separated by distance $d$ (air in between). Plate 1 carries charge $+Q$ and plate 2 carries $-Q$. Surface charge density $\sigma=\dfrac{Q}{A}$.}{1}
+\nfig{2_25}{0.34}{2.25 --- The parallel plate capacitor (Physics Part I, Ch.\ 2)}
+\R{Field between the plates (outside it is zero): \ $E=\dfrac{\sigma}{2\varepsilon_0}+\dfrac{\sigma}{2\varepsilon_0}=\dfrac{\sigma}{\varepsilon_0}=\dfrac{Q}{\varepsilon_0A}$}{1}
+\R{Potential difference between the plates: \ $V=Ed=\dfrac{Qd}{\varepsilon_0A}$}{1}
+\R{Capacitance: \ $C=\dfrac{Q}{V}\Rightarrow\boxed{C=\dfrac{\varepsilon_0A}{d}}$}{1}
+\R{With a dielectric of dielectric constant $K$ between the plates: \ $\boxed{C=\dfrac{K\varepsilon_0A}{d}}$}{1}
+
+\chap{3}{Current Electricity}
+
+\Q{6}{Assuming the expression for drift velocity, derive the expression for conductivity of a material $\sigma=\dfrac{ne^2\tau}{m}$.}{MQP-1, Q.38}
+\nfig{3_4}{0.36}{3.4 --- Current in a metallic conductor (Physics Part I, Ch.\ 3)}
+\RA{Diagram OR explanation as given below. Volume $=A(\Delta x)=A\,v_d(\Delta t)$. Let $n$ be the number of free electrons per unit volume (number density) in the material; then there are $n\,v_d(\Delta t)A$ electrons in this volume. The electrons drift opposite to the electric field direction. ($A$ = area of cross-section, $v_d$ = drift velocity)}{1}
+\R{The amount of charge crossing the area $A$ to the left in time $\Delta t$ is $I(\Delta t)=neAv_d(\Delta t)$ \ OR \ current $I=neAv_d$ \dotfill(1)}{1}
+\R{Magnitude of drift velocity of electrons is $v_d=\left(\dfrac{e\tau}{m}\right)E$ \dotfill(2)\\ ($e$ = magnitude of electron charge, $\tau$ = relaxation time, $E$ = electric field, $m$ = mass of electron)}{1}
+\R{Substituting $v_d$ from (2) in (1): \ $I=neA\left(\dfrac{e\tau}{m}\right)E=\left(\dfrac{ne^2\tau A}{m}\right)E$. \ Thus, current density $j=\dfrac{I}{A}=\left(\dfrac{ne^2\tau}{m}\right)E$ \dotfill(3)}{1}
+\R{Also $j=\sigma E$ \dotfill(4). \ From (3) and (4), conductivity: \ $\boxed{\sigma=\dfrac{ne^2\tau}{m}}$}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Annual Exam March 2023, Q.40}
+
+\Q{7}{Obtain the expressions for equivalent emf and equivalent internal resistance of two cells of different emfs and different internal resistances connected in series.}{MQP-2, Q.38}
+\RA{Consider two cells $\varepsilon_1,r_1$ and $\varepsilon_2,r_2$ connected in series as shown in the figure. Let the equivalent cell be $\varepsilon_{eq},r_{eq}$. Let the terminal potential differences for the first cell be $V_1$, for the second cell $V_2$ and for the combination $V$.}{}
+\ofig{og86}{0.62}{Two cells in series and the equivalent cell (from the KSEAB scheme)}
+\R{}{1}
+\R{For the first cell, $V_1=\varepsilon_1-Ir_1$ and for the second cell, $V_2=\varepsilon_2-Ir_2$.}{1}
+\R{As the cells are in series, $V=V_1+V_2\ \Rightarrow\ V=(\varepsilon_1-Ir_1)+(\varepsilon_2-Ir_2)=(\varepsilon_1+\varepsilon_2)-I(r_1+r_2)$.}{1}
+\R{For the equivalent cell, $V=\varepsilon_{eq}-Ir_{eq}$.}{1}
+\R{By comparing the last two equations: \ $\boxed{\varepsilon_{eq}=\varepsilon_1+\varepsilon_2}$ \ and \ $\boxed{r_{eq}=r_1+r_2}$}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Exam-1 March 2026, Q.38}
+
+\Q{8}{Using Kirchhoff's laws, arrive at the balancing condition of Wheatstone network.}{MQP-3, Q.38}
+\nfig{3_18}{0.30}{3.18 --- Wheatstone bridge (Physics Part I, Ch.\ 3)}
+\RA{Labelled circuit diagram with arrows for currents. Let four resistors $R_1$, $R_2$, $R_3$ and $R_4$ be connected to form a Wheatstone bridge. Let the currents through the resistors be $I_1$, $I_2$, $I_3$ and $I_4$ respectively. When the bridge is balanced, no current flows through the galvanometer G, i.e.\ $I_g=0$.}{1}
+\R{Applying Kirchhoff's junction rule to the junctions D and B when $I_g=0$ gives $I_1=I_3$ and $I_2=I_4$. Taking $I_g=0$ and p.d.\ across G is 0:\\ Applying Kirchhoff's loop rule to loop ABDA gives: \ $-I_2R_2+0+I_1R_1=0$ \dotfill(1)}{1}
+\R{Applying Kirchhoff's loop rule to loop BCDB gives: \ $-I_4R_4+I_3R_3+0=0$. Using $I_3=I_1$, $I_4=I_2$ we get $I_2R_4-I_1R_3=0$ \dotfill(2)}{1}
+\R{From (1): $I_2R_2=I_1R_1\Rightarrow\dfrac{I_1}{I_2}=\dfrac{R_2}{R_1}$ \dotfill(3); \quad From (2): $I_2R_4=I_1R_3\Rightarrow\dfrac{I_1}{I_2}=\dfrac{R_4}{R_3}$ \dotfill(4)}{1}
+\R{From (3) and (4), the balance condition is \ $\boxed{\dfrac{R_2}{R_1}=\dfrac{R_4}{R_3}}$}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Exam-3 2025, Q.38}
+
+\Q{9}{Obtain the expressions for equivalent emf and equivalent internal resistance of two cells of different emfs and different internal resistances connected in parallel.}{MQP-4, Q.38}
+\RA{Let us consider the parallel combination of two cells with positive terminals connected to B$_1$ and negative terminals connected to B$_2$. $E_1$, $E_2$ are the emfs of the two cells and $r_1$, $r_2$ their internal resistances. $I_1$ and $I_2$ are the currents leaving the positive electrodes of the cells.}{}
+\ofig{og88}{0.38}{Two cells in parallel (from the KSEAB scheme)}
+\R{Since as much charge flows in as out, we have $I=I_1+I_2$. Let $V(B_1)$ and $V(B_2)$ be the potentials at B$_1$ and B$_2$.}{1}
+\R{Considering the first cell: $V=V(B_1)-V(B_2)=E_1-I_1r_1\Rightarrow I_1=\dfrac{E_1-V}{r_1}$. \ Similarly for the second cell: $V=E_2-I_2r_2\Rightarrow I_2=\dfrac{E_2-V}{r_2}$}{1}
+\R{Therefore $I=\dfrac{E_1-V}{r_1}+\dfrac{E_2-V}{r_2}=\dfrac{E_1}{r_1}+\dfrac{E_2}{r_2}-V\left(\dfrac{1}{r_1}+\dfrac{1}{r_2}\right)$ \ $\Rightarrow\ V=\left(\dfrac{E_1r_2+E_2r_1}{r_1+r_2}\right)-I\left(\dfrac{r_1r_2}{r_1+r_2}\right)$ \dotfill(1)}{1}
+\R{If the combination of cells is replaced by a single cell of emf $E_{eq}$ and internal resistance $r_{eq}$, then $V=E_{eq}-Ir_{eq}$ \dotfill(2)}{1}
+\R{From (1) and (2): \ $\boxed{E_{eq}=\dfrac{E_1r_2+E_2r_1}{r_1+r_2}}$ \ and \ $\boxed{r_{eq}=\dfrac{r_1r_2}{r_1+r_2}}$}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Supplementary Exam May 2023, Q.40}
+
+\Q{10}{What is meant by drift velocity of free electrons in a conductor? Derive an expression for electric current in terms of drift velocity and number density of free electrons.}{MQP-5, Q.38}
+\RA{\textbf{Drift velocity:} The average velocity gained by the free electrons of a conductor in the opposite direction (against) to the applied electric field.}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Supplementary Exam September 2020, Q.12}
+\nfig{3_4}{0.36}{3.4 --- Current in a metallic conductor (Physics Part I, Ch.\ 3)}
+\R{Consider a conductor of cross-sectional area $A$ with $n$ free electrons per unit volume, each of charge $e$, drifting with speed $v_d$.}{1}
+\R{In time $\Delta t$, all electrons within a length $v_d\Delta t$ cross the area $A$. Volume $=Av_d\Delta t$, so the number of electrons $=nAv_d\Delta t$.}{1}
+\R{Charge crossing in time $\Delta t$: \ $\Delta q=neAv_d\Delta t$}{1}
+\R{Current: \ $I=\dfrac{\Delta q}{\Delta t}\Rightarrow\boxed{I=neAv_d}$}{1}
+
+\chap{4}{Moving Charges and Magnetism}
+
+\Q{11}{Derive an expression for the magnetic field at a point on the axis of a circular current loop using Biot--Savart law.}{MQP-1, Q.39}
+\RA{Consider a circular coil of radius $R$ carrying a current $I$ placed in the YZ plane. Let us calculate the magnetic field at a point P along the axis of the coil. The distance of the point P from the centre of the circular coil is $x$.}{}
+\ofig{og90}{0.40}{Circular current loop and the field at an axial point P (from the KSEAB scheme)}
+\R{}{1}
+\R{The magnitude of the magnetic field at P due to a small element of the coil is: \ $dB=\dfrac{\mu_0}{4\pi}\dfrac{I|d\vb l\times\vb r|}{r^3}=\dfrac{\mu_0}{4\pi}\dfrac{I\,dl}{r^2}$}{1}
+\R{When we add $d\vb B$ to get the total magnetic field at P, the vertical components of $d\vb B$ cancel and the horizontal components (along the $x$-axis) get added up. The $x$-component of $d\vb B$ is: \ $dB_x=\dfrac{\mu_0}{4\pi}\dfrac{I\,dl}{r^2}\cos\theta$}{1}
+\R{The total magnetic field at P is: \ $B=\sum dB_x=\sum\dfrac{\mu_0}{4\pi}\dfrac{I\,dl}{r^2}\cos\theta$}{1}
+\R{But $\sum dl=2\pi R$, $\cos\theta=\dfrac{R}{r}$ and $r=(R^2+x^2)^{1/2}$. Substituting: \ $\boxed{B=\dfrac{\mu_0IR^2}{2(R^2+x^2)^{3/2}}}$}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Exam-1 March 2026, Q.39}
+
+\Q{12}{Derive the expression for force per unit length on two infinitely long straight parallel conductors carrying currents. Hence define `ampere'.}{MQP-2, Q.39}
+\RA{Labelled diagram with currents, field and force ($\vb F_{ab}$ and $\vb B_b$ are not necessary in the diagram).}{1}
+\nfig{4_17}{0.34}{4.17 --- Two long straight parallel conductors carrying steady currents $I_a$ and $I_b$ (Physics Part I, Ch.\ 4)}
+\R{The magnetic field at the location of `b' produced by the conductor `a' is \ $B_a=\dfrac{\mu_0I_a}{2\pi d}$ \dotfill(1)}{1}
+\R{The magnetic force on a segment $L$ of the conductor `b' due to `a' is $F_{ba}=B_aI_bL\sin90^\circ$. Using (1): \ $F_{ba}=\dfrac{\mu_0I_aI_bL}{2\pi d}$. This force $F_{ba}$ is towards conductor `a'.}{1}
+\R{Force per unit length on the conductor `b' is \ $\dfrac{F_{ba}}{L}=\dfrac{\mu_0}{4\pi}\left(\dfrac{2I_aI_b}{d}\right)=\dfrac{\mu_0I_aI_b}{2\pi d}$. Similarly, force per unit length on the conductor `a' is $\dfrac{F_{ab}}{L}=\dfrac{\mu_0I_aI_b}{2\pi d}$ and $\vb F_{ab}=-\vb F_{ba}$.}{1}
+\R{\textbf{Definition of ampere:} One ampere is that steady current which, when maintained in each of two infinitely long, straight, parallel conductors of negligible cross-section and placed one metre apart in vacuum (or free space or air), would produce a force of $2\times10^{-7}$ newton per metre of length on each other.}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Exam-2 2026, Q.39}
+
+\Q{13}{(i) State Ampere's circuital law. (1)\quad(ii) Using Ampere's circuital law, derive the expression for the magnetic field at a point due to an infinitely long current carrying straight wire. (4)}{MQP-3, Q.39}
+\RA{(i) \textbf{Ampere's circuital law:} The line integral of $\vb B\cdot d\vb l$ over the closed loop is equal to $\mu_0$ times the total current passing through the surface. \ OR \ $\oint\vb B\cdot d\vb l=\mu_0I$, where $I$ -- current, $B$ -- magnetic field and $dl$ -- elemental length.}{1}
+\nfig{4_13}{0.36}{4.13 --- Ampere's circuital law for an infinitely long straight wire (Physics Part I, Ch.\ 4)}
+\R{(ii) \textbf{Derivation:} Let P be a point at a distance $r$ from the straight wire. Consider a circle of radius $r$ around the wire passing through P as an Amperian loop. The magnetic field $B$ at P due to the current in the wire is along the tangent to this circle. Hence the magnetic field $B$ is parallel to the line element $dl$ at P.}{1}
+\R{From Ampere's circuital law, $\oint\vb B\cdot d\vb l=\mu_0I$}{1}
+\R{$\oint\vb B\cdot d\vb l=\oint B\,dl\cos0^\circ=B\times2\pi r$. \quad Thus $B\times2\pi r=\mu_0I$}{1}
+\R{The magnetic field at a distance $r$ outside the wire is \ $\boxed{B=\dfrac{\mu_0I}{2\pi r}}$}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Supplementary Exam August 2021, Q.23}
+
+\Q{14}{(i) Obtain the expression for the torque acting on a rectangular current loop placed in a uniform magnetic field. (3)\quad(ii) When is the torque on the current loop (a) maximum and (b) zero? (2)}{MQP-4, Q.39}
+\RA{(i) A rectangular loop ABCD with sides $a$ and $b$ carries current $I$ in a uniform field $\vb B$; its normal (along $\vb m$) makes angle $\theta$ with $\vb B$. The forces on arms BC and DA are equal, opposite and collinear, so they cancel. The forces on arms AB and CD are $F_1=F_2=IbB$; they are equal, opposite and not collinear, so they form a couple.}{1}
+\nfig{4_18}{0.48}{4.18 --- Rectangular current-carrying coil in a uniform magnetic field (Physics Part I, Ch.\ 4)}
+\R{Torque: \ $\tau=F_1\dfrac{a}{2}\sin\theta+F_2\dfrac{a}{2}\sin\theta=IabB\sin\theta$}{1}
+\R{Since $A=ab$ and $m=IA$: \ $\boxed{\tau=mB\sin\theta}$, or $\vb\tau=\vb m\times\vb B$ (for $N$ turns, $m=NIA$)}{1}
+\R{(ii) (a) \textbf{Maximum} ($\tau=mB$) when $\theta=90^\circ$, i.e.\ the plane of the loop is parallel to $\vb B$.}{1}
+\R{(b) \textbf{Zero} when $\theta=0^\circ$ or $180^\circ$, i.e.\ the plane of the loop is perpendicular to $\vb B$.}{1}
+
+\Q{15}{Derive the expression for the magnetic field at a point inside an air cored long current carrying solenoid using Ampere's circuital law.}{MQP-5, Q.39}
+\RA{Consider a long solenoid with $n$ turns per unit length carrying current $I$. Inside it the field is uniform and along the axis; outside it is nearly zero. Take a rectangular Amperian loop abcd with side ab ($=h$) inside, parallel to the axis.}{1}
+\nfig{4_16}{0.50}{4.16 --- The magnetic field of a very long solenoid; Amperian loop abcd (Physics Part I, Ch.\ 4)}
+\R{Along the perpendicular sides bc and da, $\vb B\perp d\vb l$ (and $B=0$ outside), so they contribute nothing. Along cd (outside), $B=0$.}{1}
+\R{$\oint\vb B\cdot d\vb l=\displaystyle\int_a^b\vb B\cdot d\vb l=Bh$}{1}
+\R{Current enclosed by the loop: $I_e=I(nh)$}{1}
+\R{By Ampere's law, $Bh=\mu_0(nh)I\Rightarrow\boxed{B=\mu_0nI}$}{1}
+
+\chap{9}{Ray Optics and Optical Instruments}
+
+\Q{16}{Derive the expression for refractive index of the material of a prism in terms of angle of the prism and angle of minimum deviation.}{MQP-3, Q.40}
+\nfig{9_21}{0.42}{9.21 --- A ray of light passing through a triangular glass prism (Physics Part II, Ch.\ 9)}
+\RA{Labelled ray diagram. In the quadrilateral AQNR, two of the angles (at the vertices Q and R) are right angles. Therefore the sum of the other angles of the quadrilateral is $180^\circ$: \ $\angle A+\angle QNR=180^\circ$. \ In $\triangle QNR$: $r_1+r_2+\angle QNR=180^\circ$. Comparing: \ $A=r_1+r_2$ \dotfill(1)}{1+1}
+\R{The total deviation $\delta$ is the sum of deviations at the two faces: \ $\delta=(i-r_1)+(e-r_2)$; using $A=r_1+r_2$: \ $\delta=i+e-A$ \dotfill(2)}{1}
+\R{At the minimum deviation position, $\delta=D_m$, $i=e$ and $r_1=r_2$. Eq.\ (1) becomes $A=2r_1\Rightarrow r_1=A/2$ and Eq.\ (2) becomes $D_m=2i-A$ or $i=(A+D_m)/2$.}{1}
+\R{From Snell's law, refractive index: \ $\boxed{n_{21}=\dfrac{n_2}{n_1}=\dfrac{\sin i}{\sin r_1}=\dfrac{\sin\left(\frac{A+D_m}{2}\right)}{\sin\left(\frac{A}{2}\right)}}$}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Annual Exam March 2023, Q.42}
+
+\Q{17}{Derive Lens maker's formula for a convex lens.}{MQP-4, Q.40}
+\RA{Let O be a point object placed on the principal axis of a thin convex lens of focal length $f$. $n_1$ is the refractive index of the medium in which the object is present and $n_2$ that of the material of the lens.}{}
+\ofig{og96}{0.32}{Refraction through a thin convex lens (from the KSEAB scheme)}
+\R{}{1}
+\R{(i) For the refraction at the surface QP$_1$R of radius of curvature $R_1$: a real image I$_1$ is formed in the medium of refractive index $n_2$. For this refraction \ $\dfrac{n_1}{-u}+\dfrac{n_2}{v_1}=\dfrac{n_2-n_1}{R_1}$ \dotfill(1)}{1}
+\R{(ii) For the refraction at the surface QP$_2$R of radius of curvature $R_2$: the final image is formed at I, and I$_1$ acts as a virtual object. For this refraction \ $\dfrac{n_2}{-v_1}+\dfrac{n_1}{v}=\dfrac{n_2-n_1}{-R_2}$ \dotfill(2)}{1}
+\R{Equation (1) + (2) gives \ $\dfrac{n_1}{-u}+\dfrac{n_1}{v}=\dfrac{n_2-n_1}{R_1}-\dfrac{n_2-n_1}{R_2}\Rightarrow\left(\dfrac{1}{-u}+\dfrac1v\right)=\left(\dfrac{n_2}{n_1}-1\right)\left(\dfrac{1}{R_1}-\dfrac{1}{R_2}\right)$}{1}
+\R{If $u=\infty$ then $v=f$. Therefore \ $\boxed{\dfrac1f=\left(\dfrac{n_2}{n_1}-1\right)\left(\dfrac{1}{R_1}-\dfrac{1}{R_2}\right)}$ \ OR \ $\dfrac1f=(n_{21}-1)\left(\dfrac{1}{R_1}-\dfrac{1}{R_2}\right)$. This is the lens maker's formula.}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Supplementary Exam May 2023, Q.42}
+
+\chap{10}{Wave Optics}
+
+\Q{18}{(i) What is a wavefront? (1)\quad(ii) Using Huygens principle, derive Snell's law for a plane wave undergoing refraction. (4)}{MQP-1, Q.40}
+\RA{(i) The locus of points which oscillate in the same phase is called a wavefront. \ OR \ A wavefront is defined as a surface of constant phase.}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Supplementary Exam August 2021, Q.18}
+\nfig{10_4}{0.50}{10.4 --- Refraction of a plane wave AB incident at angle $i$ on the surface PP$'$ (Physics Part II, Ch.\ 10)}
+\R{(ii) Consider a plane wavefront passing from medium 1 (speed $v_1$) to medium 2 (speed $v_2$) as shown in the figure. Let AB be the incident wavefront and EC the refracted wavefront. Let $\tau$ be the time taken by the wavefront to travel from B to C, so $BC=v_1\tau$; in this time the secondary wavelet from A travels $AE=v_2\tau$.}{1}
+\R{In triangle ABC: \ $\sin i=\dfrac{BC}{AC}=\dfrac{v_1\tau}{AC}$ \dotfill(1)}{1}
+\R{In triangle AEC: \ $\sin r=\dfrac{AE}{AC}=\dfrac{v_2\tau}{AC}$ \dotfill(2)}{1}
+\R{From (1) and (2): \ $\dfrac{\sin i}{\sin r}=\dfrac{v_1\tau}{v_2\tau}=\dfrac{v_1}{v_2}$ = constant. \ Since $n_1=c/v_1$ and $n_2=c/v_2$: \ $\boxed{n_1\sin i=n_2\sin r}$ --- Snell's law.}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Exam-2 April/May 2025, Q.40(a)}
+
+\Q{19}{(i) Two coherent waves of same amplitude and constant phase difference undergo interference. Obtain an expression for resultant displacement. (3)\quad(ii) Mention two uses of polaroids. (2)}{MQP-2, Q.40}
+\RA{(i) Let the displacements due to the two coherent waves at a point be $y_1=a\cos\omega t$ and $y_2=a\cos(\omega t+\phi)$, where $\phi$ is the constant phase difference.}{1}
+\R{By the superposition principle: $y=y_1+y_2=a[\cos\omega t+\cos(\omega t+\phi)]$. Using $\cos A+\cos B=2\cos\dfrac{A+B}{2}\cos\dfrac{A-B}{2}$:}{1}
+\R{$\boxed{y=2a\cos\left(\dfrac\phi2\right)\cos\left(\omega t+\dfrac\phi2\right)}$. The resultant amplitude is $2a\cos(\phi/2)$, and the intensity is $I=4I_0\cos^2(\phi/2)$.}{1}
+\R{(ii) Uses of polaroids: sunglasses, windowpanes, photographic cameras, 3D movie cameras. \hfill(ANY TWO --- any other correct use)}{1+1}
+\src{Part (ii): KSEAB Scheme of Evaluation, II PUC Exam-2 2026, Q.40(ii)}
+
+\Q{20}{(i) Using Huygens principle, show that the angle of incidence is equal to the angle of reflection during reflection of a plane wavefront at a surface. (3)\quad(ii) Write the conditions for constructive interference and destructive interference in terms of path difference. (2)}{MQP-5, Q.40}
+\nfig{10_6}{0.40}{10.6 --- Reflection of a plane wave AB by the reflecting surface MN (Physics Part II, Ch.\ 10)}
+\RA{(i) Labelled diagram. MN $\rightarrow$ reflecting plane surface (mirror); $i$ $\rightarrow$ angle of incidence; $r$ $\rightarrow$ angle of reflection; $v$ $\rightarrow$ speed of light wave.}{1}
+\R{Let $\tau$ be the time taken by the wavefront to travel from the point B to C; then distance $BC=v\tau$. In order to construct the reflected wavefront, a sphere of radius $v\tau$ is drawn from the point A as shown in the figure. Let CE represent the tangent plane drawn from the point C to this sphere. Then $AE=BC=v\tau$, $\angle ABC=\angle CEA=90^\circ$ and AC is common.}{1}
+\R{The triangles ABC and CEA are congruent. \ Thus, $\boxed{i=r}$}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Exam-2 2026, Q.40(i)}
+\R{(ii) Condition for constructive interference: path difference $\delta=n\lambda$}{1}
+\R{Condition for destructive interference: path difference $\delta=(2n+1)\dfrac\lambda2$ \ or \ $\left(n+\dfrac12\right)\lambda$, where $n$ is the order of the fringe and $\lambda$ is the wavelength of the light.}{1}
+\src{Part (ii): KSEAB Scheme of Evaluation, II PUC Exam-2 March 2024, Q.42(b)}
+
+\chap{14}{Semiconductor Electronics}
+
+\Q{21}{What is a half-wave rectifier? Draw a neat, labelled circuit diagram and input--output waveforms for half-wave rectifier. Explain the working of a half-wave rectifier.}{MQP-1, Q.41}
+\RA{A half-wave rectifier is a circuit (device) that rectifies only one half cycle of AC (converts AC into DC during one half cycle).}{1}
+\nfig{14_18a}{0.42}{14.18 (a) --- Half-wave rectifier circuit (Physics Part II, Ch.\ 14)}
+\R{Circuit diagram (as above)}{1}
+\nfig{14_18b}{0.40}{14.18 (b) --- Input ac voltage and output voltage waveforms (Physics Part II, Ch.\ 14)}
+\R{Waveform (as above)}{1}
+\R{\textbf{Working:} During the positive half cycle of AC, A is positive and B is negative. The diode becomes forward biased and it conducts. The output appears across the resistance $R_L$.}{1}
+\R{During the negative half cycle of AC, A becomes negative and B becomes positive. The diode is reverse biased, and it does not conduct. No output appears in this case.}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Exam-2 2026, Q.41 and Exam-1 March 2026, Q.41}
+
+\Q{22}{What is meant by rectification? Explain the working of a p-n junction diode as a full-wave rectifier, with the help of relevant circuit diagram and input--output waveforms.}{MQP-2, Q.41}
+\RA{(a) The process of conversion of AC into DC is called rectification.}{1}
+\nfig{14_19a}{0.48}{14.19 (a) --- A full-wave rectifier circuit (Physics Part II, Ch.\ 14)}
+\R{(b) Circuit diagram (as above)}{1}
+\nfig{14_19bc}{0.44}{14.19 (b), (c) --- Input waveforms at A and B; output waveform across $R_L$ (Physics Part II, Ch.\ 14)}
+\R{Waveform (as above)}{1}
+\R{(c) During the positive half cycle of AC input, the diode D$_1$ is forward biased and conducts, while D$_2$ is reverse biased and does not conduct. So the output current flows through $R_L$ as shown in the figure.}{1}
+\R{During the negative half cycle of AC input, D$_2$ is forward biased and conducts while D$_1$ is reverse biased and does not conduct. Again the current flows through $R_L$ in the same direction. Thus there is current flow through $R_L$ over the complete cycle of AC input in the same direction.}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Annual Exam March 2023, Q.44}
+
+\Q{23}{(i) Explain the formation of energy bands in solids. (2)\quad(ii) On the basis of energy bands, distinguish between a conductor, a semiconductor and an insulator. (3)}{MQP-3, Q.41}
+\RA{(i) In an isolated atom, electrons occupy discrete energy levels. In a crystal, atoms are very close, so the outer electrons interact with neighbouring atoms. Each energy level then splits into a large number of closely spaced levels, which form an energy band.}{1}
+\R{The band containing the valence electrons is the valence band; the next higher band is the conduction band. They are separated by the forbidden energy gap $E_g$.}{1}
+\nfig{14_2}{0.66}{14.2 --- Energy bands of (a) metals, (b) insulators and (c) semiconductors (Physics Part II, Ch.\ 14)}
+\R{(ii) Solids are classified as conductors, semiconductors and insulators using energy band theory. In \textbf{conductors} the valence band and conduction band are overlapped.}{1}
+\R{In \textbf{semiconductors} there is a small energy gap ($<3$\,eV) between the valence band and the conduction band.}{1}
+\R{In \textbf{insulators} there is a large energy gap ($>3$\,eV) between the valence band and the conduction band.}{1}
+\src{Part (ii): KSEAB Scheme of Evaluation, II PUC Exam-2 April/May 2025, Q.41(a)}
+
+\Q{24}{With the help of experimental circuit and V--I characteristics, explain the action of a p-n junction diode under forward bias.}{MQP-4, Q.41}
+\nfig{14_16ac}{0.72}{14.16 (a) Experimental circuit -- diode in forward bias; (c) Typical V--I characteristics of a silicon diode (Physics Part II, Ch.\ 14)}
+\R{}{1+1}
+\RA{In forward bias, the p-side is connected to the positive terminal and the n-side to the negative terminal of the battery. The applied voltage opposes the barrier potential, so the effective barrier height and the width of the depletion layer decrease.}{1}
+\R{Initially the current is very small (negligible) until the applied voltage exceeds the threshold (cut-in/knee) voltage --- about 0.7\,V for Si and 0.2\,V for Ge.}{1}
+\R{Beyond the threshold voltage, the diode current increases significantly (exponentially), of the order of mA, even for a small increase in voltage.}{1}
+
+\Q{25}{(i) With the help of a figure, explain how a p-type semiconductor is obtained from an intrinsic semiconductor. (3)\quad(ii) What happens to the width of depletion layer of a p-n junction diode when it is (a) forward biased and (b) reverse biased? (2)}{MQP-5, Q.41}
+\RA{(i) When a trivalent impurity (B, Al, In) is added to pure Si or Ge, the impurity atom forms covalent bonds with only three neighbouring Si atoms. One bond remains incomplete, which creates a vacancy called a hole.}{1}
+\nfig{14_8a}{0.32}{14.8 (a) --- Trivalent acceptor atom doped in a tetravalent Si or Ge lattice (Physics Part II, Ch.\ 14)}
+\R{}{1}
+\R{An electron from a neighbouring bond can jump into this hole, so holes become the majority carriers. The impurity atom accepts an electron, so it is called an acceptor, and the material is a p-type semiconductor.}{1}
+\R{(ii) (a) In forward bias, the width of the depletion layer \textbf{decreases}.}{1}
+\R{(b) In reverse bias, the width of the depletion layer \textbf{increases}.}{1}

@@ -1,0 +1,47 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[a4paper,top=2.1cm,bottom=2.2cm,left=2.1cm,right=2.1cm,footskip=0.9cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{crimson}
+\usepackage[cmintegrals]{newtxmath}
+\usepackage{cinzel}
+\usepackage{amsmath}
+\usepackage{graphicx,xcolor,needspace,array,tabularx,booktabs,enumitem,eso-pic,pdfpages}
+\usepackage[hidelinks]{hyperref}
+\definecolor{maroon}{rgb}{0.482,0.118,0.169}
+\definecolor{gold}{rgb}{0.753,0.541,0.173}
+\definecolor{srcgreen}{rgb}{0.10,0.40,0.25}
+\pagestyle{plain}
+\setlength{\parindent}{0pt}
+\linespread{1.08}
+% one simple outer border on every page (pages are white)
+\AddToShipoutPictureBG{\AtPageLowerLeft{\color{maroon}\linethickness{0.8pt}%
+  \put(\LenToUnit{0.7cm},\LenToUnit{0.7cm}){\framebox(\LenToUnit{\paperwidth-1.4cm},\LenToUnit{\paperheight-1.4cm}){}}}}
+% part and chapter headings
+\newcommand{\partpage}[2]{\clearpage\begin{center}{\color{maroon}\cinzel\large P\,A\,R\,T\, -- #1}\\[2pt]
+  {\color{maroon}\fontsize{20}{24}\selectfont\cinzel #2}\\[2pt]{\color{gold}\rule{6cm}{0.8pt}}\end{center}
+  \hfill{\color{maroon}\footnotesize\bfseries MARKS}\par\vspace{2pt}}
+\newcommand{\chap}[2]{\par\needspace{16\baselineskip}\vspace{8pt}\begin{center}
+  {\color{gold}\footnotesize\cinzel C\,H\,A\,P\,T\,E\,R\ \ #1}\\[1pt]{\color{maroon}\large\itshape\bfseries #2}\\[-2pt]
+  {\color{gold}\rule{0.9\linewidth}{0.5pt}}\end{center}\vspace{2pt}}
+% question: number, text, model paper reference
+\newcommand{\Q}[3]{\par\needspace{6\baselineskip}\vspace{7pt}%
+  \noindent\makebox[2.2em][l]{\textbf{#1.}}\parbox[t]{\dimexpr\linewidth-2.2em-6.6em}{\bfseries\raggedright #2}%
+  \hfill\makebox[6.4em][r]{\color{gray}\scriptsize[#3]}\par\vspace{2pt}}
+% answer row: text and marks at the right
+\newcommand{\Ans}{\noindent\makebox[2.2em][l]{\color{maroon}\small\itshape Ans:}}
+\newcommand{\R}[2]{\noindent\hspace*{2.2em}\parbox[t]{\dimexpr\linewidth-2.2em-3em}{\raggedright #1}\hfill\makebox[2.4em][r]{#2}\par\vspace{1.5pt}}
+\newcommand{\RA}[2]{\noindent\makebox[2.2em][l]{\color{maroon}\small\itshape Ans:}\parbox[t]{\dimexpr\linewidth-2.2em-3em}{\raggedright #1}\hfill\makebox[2.4em][r]{#2}\par\vspace{1.5pt}}
+\newcommand{\note}[1]{\noindent\hspace*{2.2em}{\small\itshape #1}\par}
+% figures: NCERT crop or official scheme crop, with caption
+\newcommand{\nfig}[3]{\par\vspace{3pt}\begin{center}\includegraphics[width=#2\linewidth]{fig/n#1}\\[-1pt]
+  {\color{maroon}\scriptsize\itshape NCERT Fig.\ #3}\end{center}\vspace{-4pt}}
+\newcommand{\ofig}[3]{\par\vspace{3pt}\begin{center}\includegraphics[width=#2\linewidth]{fig/#1}\\[-1pt]
+  {\color{srcgreen}\scriptsize\itshape #3}\end{center}\vspace{-4pt}}
+% source of an official answer
+\newcommand{\src}[1]{\noindent\hspace*{2.2em}{\color{srcgreen}\scriptsize\bfseries\textsf{OFFICIAL ANSWER}}\ {\color{srcgreen}\scriptsize #1}\par}
+\newcommand{\vb}[1]{\vec{#1}}
+\begin{document}
+\includepdf[pages=1,pagecommand={\thispagestyle{empty}}]{fig/cover.pdf}
+\setcounter{page}{1}
+\input{content}
+\end{document}

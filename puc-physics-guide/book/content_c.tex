@@ -1,0 +1,292 @@
+\partpage{C}{Three Marks Questions}
+\chap{1}{Electric Charges and Fields}
+
+\Q{1}{Derive an expression for torque acting on an electric dipole placed in a uniform electric field.}{MQP-1, Q.29}
+\RA{Consider an electric dipole of dipole moment $\vb p$ placed in a uniform external electric field $\vb E$, making an angle $\theta$ with it. Force on $+q$ is $q\vb E$ and on $-q$ is $-q\vb E$; the net force is zero but they form a couple.}{1}
+\nfig{1_19}{0.34}{1.19 --- Dipole in a uniform electric field (Physics Part I, Ch.\ 1)}
+\R{Magnitude of torque = force $\times$ perpendicular distance (force on $q$ is $F=qE$)\\
+$\tau=qE\times(2a\sin\theta)=(2aq)E\sin\theta$ \quad($\because 2aq=p$, dipole moment)}{1}
+\R{$\boxed{\tau=pE\sin\theta}$ \quad or in vector form $\vb\tau=\vb p\times\vb E$}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Exam-2 2026, Q.29}
+
+\Q{2}{Give Coulomb's law in vector form and explain the terms. Define SI unit of charge using Coulomb's law.}{MQP-2, Q.29}
+\RA{Electrostatic force on charge $q_2$ by charge $q_1$ is: \ $\vb F_{21}=\dfrac{1}{4\pi\varepsilon_0}\dfrac{q_1q_2}{r_{21}^2}\,\hat r_{21}$}{1}
+\R{where $q_1$, $q_2$ are the charges, $r_{21}$ is the distance between the charges, $\hat r_{21}$ is the unit vector in the direction from $q_1$ towards $q_2$.}{1}
+\R{One coulomb is the charge on two identical point charges which are separated by a distance of 1\,m in vacuum and experience an electric force of repulsion of $9\times10^9$\,N.}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Exam-1 March 2026, Q.29}
+
+\Q{3}{Define linear charge density. Mention the expression for electric field at a point due to an infinitely long uniformly charged wire and explain the terms.}{MQP-3, Q.29}
+\RA{Linear charge density is the charge per unit length of the wire (SI unit C\,m$^{-1}$).}{1}
+\R{$E=\dfrac{\lambda}{2\pi\varepsilon_0 r}$}{1}
+\R{$\lambda$ = linear charge density of the wire, $r$ = perpendicular distance of the point from the wire, $\varepsilon_0$ = permittivity of free space. The field is radial (outward for $\lambda>0$).}{1}
+
+\Q{4}{Show that the total electric flux through the surface of a sphere enclosing a point charge `$q$' at its centre is $\dfrac{q}{\varepsilon_0}$.}{MQP-4, Q.29}
+\RA{Consider a sphere of radius $r$ with a point charge $q$ at its centre. The field at every point on the surface is radial with magnitude $E=\dfrac{1}{4\pi\varepsilon_0}\dfrac{q}{r^2}$.}{1}
+\nfig{1_22}{0.26}{1.22 --- Flux through a sphere enclosing a point charge $q$ at its centre (Physics Part I, Ch.\ 1)}
+\R{For an area element $\Delta\vb S$, $\vb E$ and $\Delta\vb S$ are along the same direction: $\Delta\phi=\vb E\cdot\Delta\vb S=E\,\Delta S$}{1}
+\R{Total flux: $\phi=\sum E\,\Delta S=E\sum\Delta S=\dfrac{1}{4\pi\varepsilon_0}\dfrac{q}{r^2}\times4\pi r^2\ \Rightarrow\ \boxed{\phi=\dfrac{q}{\varepsilon_0}}$}{1}
+
+\Q{5}{Mention three properties of electric field lines.}{MQP-5, Q.29}
+\RA{(1) Field lines start from positive charges and end at negative charges.}{1}
+\R{(2) In a charge-free region, electric field lines can be taken to be continuous curves without any breaks.}{+}
+\R{(3) Two field lines can never cross each other.}{1}
+\R{(4) Electrostatic field lines do not form any closed loops.}{+}
+\R{(5) A tangent drawn to an electric field line at any point gives the direction of the electric field at that point.}{1}
+\R{(6) Density of field lines is a measure of the strength of the electric field. \hfill(Any three)}{}
+\src{KSEAB Scheme of Evaluation, II PUC Exam-1 March 2025, Q.29}
+
+\chap{2}{Electrostatic Potential and Capacitance}
+
+\Q{6}{What is a capacitor? Mention two factors on which capacitance of a parallel plate capacitor depends.}{MQP-1, Q.30}
+\RA{A capacitor is a device consisting of a pair of conductors separated by an insulator, which can be used to store charges.}{1}
+\R{Capacitance of a capacitor depends on: (i) area of the plates; (ii) distance between the plates; (iii) medium between the plates (or dielectric constant of the medium between the plates). \hfill(Any two factors)}{1+1}
+\src{KSEAB Scheme of Evaluation, II PUC Exam-1 March 2026, Q.30}
+
+\Q{7}{Mention any three important results regarding electrostatics of conductors.}{MQP-2, Q.30}
+\RA{(a) The interior of a conductor can have no excess charge in the static situation.}{1}
+\R{(b) Inside a conductor, electrostatic field is zero.}{1}
+\R{(c) On the surface of a charged conductor, electrostatic field must be normal to the surface at every point.}{1}
+\R{(d) Electrostatic potential is constant throughout the volume of the conductor and has the same value (as inside) on its surface.}{}
+\R{(e) Electric field at the surface of a charged conductor, $\vb E=\dfrac{\sigma}{\varepsilon_0}\hat n$, where $\sigma$ is the surface charge density and $\hat n$ is a unit vector normal to the surface. \hfill(Any three)}{}
+\src{KSEAB Scheme of Evaluation, II PUC Exam-2 2026, Q.30}
+
+\Q{8}{Obtain the expression for equivalent capacitance of two capacitors connected in series.}{MQP-3, Q.30}
+\RA{Let two capacitors with capacitances $C_1$ and $C_2$ be joined in series. In the series combination, the charges on the two plates ($\pm Q$) are the same on each capacitor. The total potential drop $V$ across the combination is the sum of the potential drops $V_1$ and $V_2$ across $C_1$ and $C_2$.}{}
+\nfig{2_26}{0.34}{2.26 --- Combination of two capacitors in series (Physics Part I, Ch.\ 2)}
+\R{Then $V=V_1+V_2=\dfrac{Q}{C_1}+\dfrac{Q}{C_2}=Q\left(\dfrac{1}{C_1}+\dfrac{1}{C_2}\right)$ \dotfill(1)\\ (since $Q=C_1V_1=C_2V_2\Rightarrow V_1=Q/C_1$ and $V_2=Q/C_2$)}{1}
+\R{The combination has an effective capacitance $C_s$ with charge $Q$ and potential difference $V$: \ $C_s=\dfrac{Q}{V}\Rightarrow V=\dfrac{Q}{C_s}$ \dotfill(2)}{1}
+\R{Comparing (2) with (1): \ $\dfrac{Q}{C_s}=Q\left(\dfrac{1}{C_1}+\dfrac{1}{C_2}\right)\Rightarrow\boxed{\dfrac{1}{C_s}=\dfrac{1}{C_1}+\dfrac{1}{C_2}}$}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Supplementary Exam August 2021, Q.20}
+
+\Q{9}{Derive an expression for the potential energy of a system of two point charges in the absence of external electric field.}{MQP-4, Q.30}
+\RA{Consider charges $q_1$ and $q_2$ brought from infinity to points $\vb r_1$ and $\vb r_2$. First $q_1$ is brought: there is no field, so the work done is zero.}{1}
+\nfig{2_13}{0.36}{2.13 --- Potential energy of a system of charges $q_1$ and $q_2$ (Physics Part I, Ch.\ 2)}
+\R{Next $q_2$ is brought against the field of $q_1$. Work done = $q_2\times$ potential of $q_1$ at $\vb r_2$: \ $W=q_2\cdot\dfrac{1}{4\pi\varepsilon_0}\dfrac{q_1}{r_{12}}$}{1}
+\R{This work is stored as potential energy: $\boxed{U=\dfrac{1}{4\pi\varepsilon_0}\dfrac{q_1q_2}{r_{12}}}$, where $r_{12}$ is the distance between the charges.}{1}
+
+\Q{10}{Derive the relation between electric field and electric potential.}{MQP-5, Q.30}
+\nfig{2_12}{0.36}{2.12 --- From the potential to the field (Physics Part I, Ch.\ 2)}
+\RA{Consider two closely spaced equipotential surfaces A and B with potentials $V$ and $V+\delta V$. Work done to move a unit positive charge from P to A (distance $\delta l$, against the field) is $W=F\,\delta l=E\,\delta l$ (for unit positive charge, $q=1$\,C, force $F=E$).}{1}
+\R{This work done is equal to the potential difference: \ $W=q(V_A-V_B)=1\cdot[V-(V+\delta V)]=-\delta V$}{1}
+\R{Thus $E\,\delta l=-\delta V$ \quad$\therefore\ \boxed{E=-\dfrac{\delta V}{\delta l}}$ \quad (The field is in the direction in which the potential decreases steepest.)}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Supplementary Exam September 2020, Q.19}
+
+\chap{4}{Moving Charges and Magnetism}
+
+\Q{11}{In a chamber, a uniform magnetic field of $6.5\times10^{-4}$\,T is maintained. An electron is shot into the field with a speed of $4.8\times10^6$\,m\,s$^{-1}$ normal to the field. Determine the radius of the circular orbit. Given: $e=1.6\times10^{-19}$\,C and $m_e=9.1\times10^{-31}$\,kg.}{MQP-1, Q.31}
+\RA{The magnetic force provides the centripetal force: $qvB=\dfrac{mv^2}{r}\Rightarrow r=\dfrac{mv}{qB}$}{1}
+\R{$r=\dfrac{9.1\times10^{-31}\times4.8\times10^{6}}{1.6\times10^{-19}\times6.5\times10^{-4}}$}{1}
+\R{$\boxed{r=4.2\times10^{-2}\ \text{m}=4.2\ \text{cm}}$}{1}
+
+\Q{12}{What is Lorentz force? Write the expression representing this force and explain the terms.}{MQP-2, Q.31}
+\RA{The total force on a moving charge in the presence of both electric and magnetic fields is called the Lorentz force.}{1}
+\R{Expression: $\vb F=q\left[\vb E+(\vb v\times\vb B)\right]$}{1}
+\R{where $q$ is the charge, $\vb E$ is the electric field, $\vb B$ is the magnetic field and $\vb v$ is the velocity of the charge.}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Exam-3 2025, Q.23 and Exam-1 March 2025, Q.23}
+
+\Q{13}{Explain the conversion of galvanometer into an ammeter using relevant circuit diagram and expression.}{MQP-3, Q.31}
+\RA{A galvanometer can be converted into an ammeter by connecting a \textbf{low resistance in parallel} with it.}{1}
+\nfig{4_21}{0.20}{4.21 --- Conversion of a galvanometer (G) to an ammeter (Physics Part I, Ch.\ 4)}
+\R{Circuit diagram (as above). $R_G$ -- resistance of galvanometer G; $r_s$ -- shunt resistance in parallel with the galvanometer.}{1}
+\R{The resistance of the arrangement $=\dfrac{R_Gr_s}{R_G+r_s}$ \quad OR \quad shunt resistance $r_s=\dfrac{I_GR_G}{I-I_G}$ \quad OR \quad $S=\dfrac{I_gG}{I-I_g}$}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Supplementary Exam May 2023, Q.32}
+
+\Q{14}{Explain the conversion of galvanometer into a voltmeter using relevant circuit diagram and expression.}{MQP-4, Q.31}
+\RA{A galvanometer can be converted into a voltmeter by connecting a suitable \textbf{high resistance in series} with it. The circuit diagram is as shown below:}{1}
+\ofig{og53}{0.42}{Voltmeter: galvanometer G with a high resistance $R$ in series (from the KSEAB scheme)}
+\R{}{1}
+\R{The value of the series resistance is given by: \ $R=\dfrac{V}{I_g}-G$\\ where $V$ = range of the voltmeter, $I_g$ = maximum current through the galvanometer and $G$ = resistance of the galvanometer. (Other symbols should be considered)}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Exam-1 March 2026, Q.31}
+
+\Q{15}{Define `current sensitivity' of a galvanometer. Write two factors on which current sensitivity depends.}{MQP-5, Q.31}
+\RA{Current sensitivity of a galvanometer is the deflection produced per unit current through it.}{1}
+\R{Current sensitivity of a galvanometer depends on: \ * number of turns in the coil ($N$); \ * area of the coil ($A$); \ * magnetic field used ($B$); \ * torsional constant of the spring ($k$). \hfill(any two)}{1+1}
+\src{Factors: KSEAB Scheme of Evaluation, II PUC Exam-2 April/May 2025, Q.24}
+
+\chap{5}{Magnetism and Matter}
+
+\Q{16}{Mention three properties of magnetic field lines.}{MQP-1, Q.32}
+\RA{(i) The magnetic field lines form closed loops.}{}
+\R{(ii) The tangent to the field line at a given point represents the direction of the net magnetic field at that point.}{}
+\R{(iii) The larger the number of field lines crossing per unit area, the stronger is the magnitude of the magnetic field.}{3}
+\R{(iv) The magnetic field lines do not intersect. \hfill(Any 3 properties)}{}
+\src{KSEAB Scheme of Evaluation, II PUC Supplementary Exam May 2023, Q.33}
+
+\Q{17}{State and explain Gauss's law in magnetism. Give its significance.}{MQP-2, Q.32}
+\RA{\textbf{Statement:} The net magnetic flux through any closed surface placed in a magnetic field is zero.}{1}
+\R{\textbf{Explanation:} The magnetic field lines always form a closed loop. Therefore the total magnetic flux through the closed surface $\Phi=\sum\vb B\cdot\Delta\vb S=0$. \ \textbf{OR} \ The isolated magnetic poles do not exist; therefore $\Phi=\sum\vb B\cdot\Delta\vb S=0$.}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Supplementary Exam May 2023, Q.23}
+\R{\textbf{Significance:} Isolated magnetic poles (magnetic monopoles) are not known to exist; magnetic field lines form closed loops.}{1}
+
+\Q{18}{Write three differences between diamagnetic and paramagnetic materials.}{MQP-3, Q.32}
+\Ans\par
+\begin{center}\small\begin{tabular}{|p{0.40\linewidth}|p{0.40\linewidth}|}\hline
+\textbf{Diamagnetic substances} & \textbf{Paramagnetic substances}\\\hline
+1. These are repelled by a magnet. & These are attracted by a magnet.\\\hline
+2. The magnetic susceptibility is negative, $\chi<0$. & The magnetic susceptibility is positive, $\chi>0$.\\\hline
+3. The susceptibility (or permeability or magnetisation) does not depend on temperature. OR They do not obey Curie's law. & The susceptibility (or permeability or magnetisation) depends on temperature. OR They obey Curie's law.\\\hline
+4. Magnetic field lines are expelled out when the substance is placed in an external magnetic field. & Magnetic field lines enter inside when the substance is placed in an external magnetic field.\\\hline
+5. Relative permeability is less than one, $\mu_r<1$. & Relative permeability is more than one, $\mu_r>1$.\\\hline
+\end{tabular}\hfill 1+1+1\end{center}
+\note{(Any three of these OR any other correct difference)}
+\src{KSEAB Scheme of Evaluation, II PUC Annual Exam March 2023, Q.33}
+
+\Q{19}{What are paramagnetic substances? Mention two factors on which susceptibility of a paramagnetic material depends.}{MQP-4, Q.32}
+\RA{Paramagnetic materials magnetise weakly in an external magnetic field in the direction of the magnetising field; they are weakly attracted by a powerful magnet. E.g.\ aluminium, sodium, calcium, oxygen.}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Exam-1 March 2024, Q.34}
+\R{(i) Absolute temperature: the susceptibility of a paramagnetic substance varies inversely with its absolute temperature, $\chi\propto\dfrac{1}{T}$ (Curie's law).}{1}
+\R{(ii) Nature of the material (Curie constant $C$).}{1}
+
+\Q{20}{Obtain the expression for the potential energy of a magnetic needle pivoted in uniform magnetic field.}{MQP-5, Q.32}
+\RA{A needle of magnetic moment $\vb m$ at angle $\theta$ to $\vb B$ experiences a torque $\tau=mB\sin\theta$.}{1}
+\R{Work done in rotating it through $d\theta$: $dW=\tau\,d\theta$. Hence $U=\displaystyle\int mB\sin\theta\,d\theta=-mB\cos\theta$ (taking $U=0$ at $\theta=90^\circ$).}{1}
+\R{$\boxed{U=-\vb m\cdot\vb B=-mB\cos\theta}$. $U$ is minimum ($-mB$) at $\theta=0^\circ$ (stable) and maximum ($+mB$) at $\theta=180^\circ$ (unstable).}{1}
+
+\chap{6}{Electromagnetic Induction}
+
+\Q{21}{Describe the coil and bar magnet experiment to demonstrate the phenomenon of electromagnetic induction.}{MQP-1, Q.33}
+\nfig{6_1}{0.36}{6.1 --- When the bar magnet is pushed towards the coil, the galvanometer G deflects (Physics Part I, Ch.\ 6)}
+\RA{Diagram (as above).}{1}
+\R{\textbullet\ When the North-pole of a bar magnet is pushed towards the coil, the pointer in the galvanometer deflects.}{1}
+\R{\textbullet\ The galvanometer does not show any deflection when the magnet is held stationary.}{1}
+\R{\textbullet\ When the magnet is pulled away from the coil, the galvanometer shows deflection in the opposite direction, which indicates reversal of the current's direction.}{}
+\R{\textbullet\ When the South-pole of the bar magnet is moved towards or away from the coil, the deflections in the galvanometer are opposite to that observed with the North-pole for similar movements.}{}
+\R{\textbullet\ The deflection is found to be larger when the magnet is pushed towards or pulled away from the coil faster.}{}
+\R{\textbullet\ When the bar magnet is held fixed and the coil C$_1$ is moved towards/away from the magnet, same effects are observed.}{}
+\R{\textbullet\ The relative motion between the magnet and the coil is responsible for generation (induction) of electric current in the coil. \hfill(ANY TWO OBSERVATIONS)}{}
+\src{KSEAB Scheme of Evaluation, II PUC Exam-2 2026, Q.33}
+
+\Q{22}{Derive the expression for the magnetic energy stored in a coil, $U=\tfrac12LI^2$.}{MQP-2, Q.33}
+\RA{During setting-up a current of $I$ in a coil of self-inductance $L$, the instantaneous power is: \ $p=|\varepsilon|\,i=Li\dfrac{di}{dt}$}{1}
+\R{Therefore, the magnetic energy stored in the coil (which is equal to energy spent in the process) is: \ $U=\displaystyle\int p\,dt=\int_0^I Li\frac{di}{dt}\,dt$}{1}
+\R{$\Rightarrow\boxed{U=\tfrac12LI^2}$}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Exam-1 March 2026, Q.33}
+
+\Q{23}{Derive the expression for the motional emf induced in a conducting rod moving perpendicular to a uniform magnetic field.}{MQP-3, Q.33}
+\RA{Consider a rod PQ of length $l$ moving perpendicular to a uniform magnetic field $B$ with a speed $v$ as shown in the figure.}{}
+\nfig{6_10}{0.40}{6.10 --- The arm PQ is moved to the left side (Physics Part I, Ch.\ 6)}
+\R{}{1}
+\R{Magnetic flux for the surface PQRS: \ $\phi_B=BA\cos\theta=Blx$}{}
+\R{Induced emf in the rod: \ $\varepsilon=-\dfrac{d\phi_B}{dt}$}{1}
+\R{$\varepsilon=-\dfrac{d(Blx)}{dt}=\boxed{Blv}$ \quad (since $-\dfrac{dx}{dt}=v$)}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Exam-1 March 2025, Q.33}
+
+\Q{24}{Derive the expression for the emf generated in the coil of an AC generator.}{MQP-4, Q.33}
+\ofig{og63a}{0.36}{AC generator: coil rotating between the poles N and S (from the KSEAB scheme)}
+\RA{Labelled diagram (as above). Let the coil be rotated with a constant angular speed $\omega$; the angle $\theta$ between the magnetic field vector $\vb B$ and the area vector $\vb A$ of the coil at any instant $t$ is $\theta=\omega t$.}{1}
+\R{Due to rotation, the effective area of the coil exposed to the magnetic field lines changes with time. The magnetic flux at any time $t$ is \ $\Phi_B=\vb B\cdot\vb A=BA\cos\theta=BA\cos\omega t$}{1}
+\R{From Faraday's law, the induced emf in the rotating coil of $N$ turns: \ $\varepsilon=-N\dfrac{d\Phi_B}{dt}=-NBA\dfrac{d}{dt}(\cos\omega t)$\\
+$\varepsilon=NBA\omega\sin\omega t$, \ where $NBA\omega=\varepsilon_0$ is the maximum value of the emf. Thus the instantaneous emf is $\boxed{\varepsilon=\varepsilon_0\sin\omega t}$.}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Supplementary Exam August 2021, Q.29}
+
+\Q{25}{The pedals of a bicycle are attached to a 100-turn coil of area 0.10\,m$^2$. The coil is rotated at half a revolution per second, and it is placed in a uniform magnetic field of 0.01\,T perpendicular to the axis of rotation of the coil. Calculate the maximum voltage generated in the coil.}{MQP-5, Q.33}
+\RA{Maximum emf: $\varepsilon_0=NBA\omega$}{1}
+\R{$\omega=2\pi\nu=2\pi\times0.5=\pi$\,rad\,s$^{-1}$; \ $\varepsilon_0=100\times0.01\times0.10\times3.14$}{1}
+\R{$\boxed{\varepsilon_0=0.314\ \text{V}}$}{1}
+
+\chap{9}{Ray Optics and Optical Instruments}
+
+\Q{26}{Draw the ray diagram for the formation of image by a compound microscope. Write the expression for linear magnification produced by the objective of compound microscope in terms of its tube length.}{MQP-1, Q.34}
+\nfig{9_24}{0.62}{9.24 --- Ray diagram for the formation of image by a compound microscope (Physics Part II, Ch.\ 9)}
+\R{}{2}
+\R{Linear magnification by the objective: $m_o=\dfrac{L}{f_o}$, where $L$ = tube length (distance between the second focal point of the objective and the first focal point of the eyepiece) and $f_o$ = focal length of the objective.}{1}
+
+\Q{27}{Give the Cartesian sign convention used to measure distances and heights in spherical mirrors.}{MQP-2, Q.34}
+\RA{\textbullet\ All the distances are measured from the pole of the mirror.}{1}
+\R{\textbullet\ The distances measured in the same direction as the incident light are taken as positive and the distances measured in the direction opposite to the direction of incident light are taken as negative.}{1}
+\R{\textbullet\ The heights measured upwards (normal to the principal axis of the mirror) are taken as positive. The heights measured downwards are taken as negative.}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Exam-2 2026, Q.34}
+
+\Q{28}{Show that the focal length of spherical mirror is equal to half of its radius of curvature.}{MQP-3, Q.34}
+\nfig{9_4a}{0.30}{9.4 (a) --- Geometry of reflection of an incident ray on a concave spherical mirror (Physics Part II, Ch.\ 9)}
+\RA{Labelled diagram with arrows. \ $\angle MCP=\theta$ and $\angle MFP=2\theta$.\\ $\tan\theta=\dfrac{MD}{CD}$ \ and \ $\tan2\theta=\dfrac{MD}{FD}$.}{1}
+\R{For small angle $\theta$, $\tan\theta\approx\theta$ and $\tan2\theta\approx2\theta$. \ $\therefore\ 2\theta=\dfrac{MD}{FD}$, \ $2\dfrac{MD}{CD}=\dfrac{MD}{FD}\Rightarrow FD=\dfrac{CD}{2}$}{1}
+\R{For small $\theta$, the point D is very close to the point P. Therefore $FD=-f$ and $CD=-R$. \ Focal length: $\boxed{f=\dfrac{R}{2}}$}{1}
+\src{KSEAB Scheme of Evaluation, II PUC Annual Exam March 2023, Q.35}
+
+\Q{29}{What are reflecting telescopes? Explain the advantages of mirror objectives used in them.}{MQP-4, Q.34}
+\RA{Telescopes which use a concave mirror (instead of a lens) as the objective are called reflecting telescopes, e.g.\ the Cassegrain telescope.}{1}
+\nfig{9_26}{0.50}{9.26 --- Schematic diagram of a reflecting telescope (Cassegrain) (Physics Part II, Ch.\ 9)}
+\R{\textbullet\ There is no chromatic aberration in a mirror.}{1}
+\R{\textbullet\ Using a parabolic reflecting surface (mirror), spherical aberration is also removed.}{1}
+\R{\textbullet\ Providing mechanical support is much less of a problem, since a mirror weighs much less than a lens. \hfill(any two)}{}
+\src{Advantages: KSEAB Scheme of Evaluation, II PUC Exam-3 2025, Q.27}
+
+\Q{30}{Draw the ray diagram for the formation of image in case of a refracting telescope. Mention any one advantage of using objective of larger diameter in a refracting telescope.}{MQP-5, Q.34}
+\nfig{9_25}{0.52}{9.25 --- A refracting telescope (Physics Part II, Ch.\ 9)}
+\R{}{2}
+\R{Advantage of a larger objective: greater light-gathering power (fainter objects can be seen) and higher resolving power.}{1}
+
+\chap{11}{Dual Nature of Radiation and Matter}
+
+\Q{31}{What are matter waves? Explain de Broglie hypothesis of matter waves.}{MQP-1, Q.35}
+\RA{Waves associated with moving material particles are called matter waves (de Broglie waves).}{1}
+\R{\textbf{de Broglie hypothesis:} Nature is symmetrical; just as radiation has a dual nature, moving material particles should also display wave-like properties.}{1}
+\R{The wavelength associated with a particle of momentum $p$: $\lambda=\dfrac{h}{p}=\dfrac{h}{mv}$, where $h$ is Planck's constant.}{1}
+
+\Q{32}{Write three properties of photon.}{MQP-2, Q.35}
+\RA{(a) In interaction of radiation with matter, radiation behaves as if it is made up of particles called photons.}{}
+\R{(b) Each photon has energy $E=h\nu$, where $\nu$ is the frequency, and momentum $p=h\nu/c$, where $c$ is the speed of light.}{}
+\R{(c) All photons of light of a particular frequency ($\nu$), or wavelength ($\lambda$), have the same energy and momentum. The photon energy is independent of intensity of radiation.}{1+1+1}
+\R{(d) Photons are electrically neutral and are not deflected by electric and magnetic fields.}{}
+\R{(e) In a photon-particle collision (such as photon-electron collision), the total energy and total momentum are conserved. However, the number of photons may not be conserved in a collision. \hfill(Any three)}{}
+\src{KSEAB Scheme of Evaluation, II PUC Supplementary Exam May 2023, Q.43(ii)}
+
+\Q{33}{The work function of caesium is 2.14\,eV. Calculate the threshold frequency for caesium.}{MQP-3, Q.35}
+\RA{$\phi_0=h\nu_0\Rightarrow\nu_0=\dfrac{\phi_0}{h}$}{1}
+\R{$\nu_0=\dfrac{2.14\times1.6\times10^{-19}}{6.63\times10^{-34}}$}{1}
+\R{$\boxed{\nu_0=5.16\times10^{14}\ \text{Hz}}$}{1}
+
+\Q{34}{Give any three experimental results of photoelectric effect.}{MQP-4, Q.35}
+\RA{(i) Photoelectric effect is an instantaneous process.}{1}
+\R{(ii) For a given frequency of incident light, photoelectric current is directly proportional to the intensity of incident light.}{+}
+\R{(iii) For any metal surface there exists a minimum frequency of incident light (or threshold frequency) below which there is no photoelectric emission.}{1}
+\R{(iv) Above threshold frequency, the maximum kinetic energy (or stopping potential) of photoelectrons is directly proportional to the frequency of incident light.}{+}
+\R{(v) The maximum kinetic energy of photoelectrons is independent of the intensity of the incident light when the frequency is kept constant.}{1}
+\R{(vi) The photoelectric current is independent of the frequency of incident radiation. \hfill(Any three)}{}
+\src{KSEAB Scheme of Evaluation, II PUC Exam-1 March 2026, Q.35}
+
+\Q{35}{Mention Einstein's photoelectric equation. Using the equation, explain any two experimental results of photoelectric effect.}{MQP-5, Q.35}
+\RA{Einstein's photoelectric equation: \ $K_{\max}=h\nu-\phi_0$ \ OR \ $K_{\max}=h\nu-h\nu_0$ \ OR \ $eV_0=h\nu-\phi_0$, where $K_{\max}$ = maximum kinetic energy of photoelectrons, $\nu$ = frequency of incident light, $h$ = Planck's constant, $\phi_0$ = work function of the metal.}{1}
+\src{Equation: KSEAB Scheme of Evaluation, II PUC Annual Exam March 2020, Q.25}
+\R{(i) $K_{\max}$ depends linearly on $\nu$ and is independent of intensity, because one photon is absorbed by one electron.}{1}
+\R{(ii) Since $K_{\max}\ge0$, emission is possible only if $h\nu\ge\phi_0$, i.e.\ $\nu\ge\nu_0=\phi_0/h$. This explains the threshold frequency.}{1}
+\R{(iii) Intensity $\propto$ number of photons, so photocurrent $\propto$ intensity. \hfill(Equation + any two results)}{}
+
+\chap{13}{Nuclei}
+
+\Q{36}{Differentiate between nuclear fission and nuclear fusion.}{MQP-1, Q.36}
+\Ans\par
+\begin{center}\small\begin{tabular}{|p{0.40\linewidth}|p{0.40\linewidth}|}\hline
+\textbf{Nuclear fission} & \textbf{Nuclear fusion}\\\hline
+The process in which a heavy nucleus splits into two nuclei of comparable masses with release of energy is known as fission. & The process in which two lighter nuclei combine to form a single nucleus with the release of energy is known as fusion.\\\hline
+Fission can take place at room temperature. & Fusion takes place only at high temperature.\\\hline
+Energy released per nucleon (or per unit mass) of the reactant is less. & Energy released per nucleon (or per unit mass) of the reactant is more.\\\hline
+Energy released per reaction is more. & Energy released per reaction is less.\\\hline
+Can be controlled. & Cannot be controlled.\\\hline
+\end{tabular}\hfill 1+1+1\end{center}
+\note{(Any three, or any other correct difference)}
+\src{KSEAB Scheme of Evaluation, II PUC Annual Exam March 2023, Q.29}
+
+\Q{37}{Calculate the binding energy of an alpha ($\alpha$) particle in MeV from the following data. Mass of $\alpha$-particle = 4.002603\,u; mass of neutron = 1.008665\,u; mass of proton = 1.007825\,u.}{MQP-2, Q.36}
+\RA{Mass defect of alpha particle: \ $\Delta m=Zm_p+(A-Z)m_n-M_\alpha$}{1}
+\R{$\Delta m=(2\times1.007825)+(2\times1.008665)-4.002603=0.030377$\,u}{1}
+\R{Binding energy of alpha particle: \ $E_b=\Delta m\times931.5$\,MeV $=0.030377\times931.5\approx\boxed{28.3\ \text{MeV}}$}{1}
+\note{Full marks should be awarded if 931\,MeV or 932\,MeV is used while finding binding energy. (Method as in KSEAB Scheme of Evaluation, II PUC Supplementary Exam September 2020, Q.37, where the same data are used.)}
+
+\Q{38}{Mention three features of nuclear force.}{MQP-3, Q.36}
+\RA{(i) Nuclear force is the strongest force.}{1}
+\R{(ii) Nuclear force is short ranged.}{1}
+\R{(iii) Nuclear force shows the property of saturation.}{1}
+\R{(iv) Nuclear force does not depend on the electric charge (charge independent). \hfill(Any three)}{}
+\src{KSEAB Scheme of Evaluation, II PUC Exam-2 2026, Q.36}
+
+\Q{39}{Calculate the energy equivalent of one atomic mass unit (1\,u) in joules. Given: Mass of carbon-12 atom is $1.992647\times10^{-26}$\,kg.}{MQP-4, Q.36}
+\RA{$1\,\text{u}=\dfrac{\text{mass of }^{12}\text{C atom}}{12}=\dfrac{1.992647\times10^{-26}}{12}=1.6605\times10^{-27}$\,kg}{1}
+\R{$E=mc^2=1.6605\times10^{-27}\times(2.9979\times10^{8})^2$}{1}
+\R{$\boxed{E=1.4924\times10^{-10}\ \text{J}}$ \ ($\approx931.5$\,MeV)}{1}
+
+\Q{40}{What is meant by radioactive decay? Name any two types of radioactive decay.}{MQP-5, Q.36}
+\RA{The spontaneous disintegration of an unstable nucleus by emitting $\alpha$, $\beta$ or $\gamma$ radiation is called radioactive decay.}{1}
+\R{(i) $\alpha$-decay (emission of a helium nucleus $^4_2$He)}{1}
+\R{(ii) $\beta$-decay (emission of an electron or positron) \ / \ (iii) $\gamma$-decay (emission of a high-energy photon) \hfill(Any two types)}{1}

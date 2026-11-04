@@ -129,7 +129,9 @@ Premiere and Final Cut.
 | | | | orbit | premium circle |
 | | | | static | authority, comic timing |
 
-Closer shots centre on the face automatically. Film in 4K (or 1080p landscape) if you'll use close and extreme shots.
+Closer shots centre on the face automatically. Zoom is **resolution-aware**: a 720p source gets
+gentle steps (close ≈ 1.2×), 1080p gets close ≈ 1.27×, and 4K gets the full ladder (close 1.45×, extreme 1.8×),
+so close-ups never turn soft. Film in 4K if you want strong close-ups.
 
 ## 6b. Lighting: shoot it right, then finish it in the edit
 

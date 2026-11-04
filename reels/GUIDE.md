@@ -250,7 +250,7 @@ Patterns: `talk` (wide→close→medium→close), `punch` (wide↔medium), `dram
 (medium→close→wide→extreme…), `minimal` (wide↔medium). You can also give your own:
 `--shots wide,close,wide,medium`.
 
-**Digital zoom loses sharpness.** If you'll use close and extreme shots, film in 4K, or at
+**Digital zoom loses sharpness**, so `auto` scales the whole shot ladder to the source resolution (720p: close ≈ 1.21×, 1080p: ≈ 1.27×, 4K: the full 1.45×/1.8×). If you'll use close and extreme shots, film in 4K, or at
 least 1080p landscape, so there is resolution to crop into.
 
 ### Moving angles

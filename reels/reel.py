@@ -421,6 +421,7 @@ def cmd_auto(a):
     if a.style:
         print(f"  style {a.style}: {STYLES[a.style]['desc']}")
     src = Path(a.input)
+    src_h = probe(src)["h"] or 1080
     out = Path(a.output or src.with_name(src.stem + "_reel.mp4"))
     work = out.with_name(out.stem + "_work")
     work.mkdir(exist_ok=True)
@@ -446,7 +447,8 @@ def cmd_auto(a):
     punches = fx.punch_times(words, min_gap=a.cut_gap) if shots else []
     if shots or a.push or a.moves != ["static"]:
         fx.camera(cur, work / "2c_camera.mp4", cuts=punches, shots=shots or ["wide"], moves=a.moves,
-                  push=a.push, ease_frames=a.ease, punch_zoom=a.punch_zoom if shots == "punch" else None)
+                  push=a.push, ease_frames=a.ease, punch_zoom=a.punch_zoom if shots == "punch" else None,
+                  max_zoom=fx.zoom_cap(min(src_h, probe(src)["w"] or src_h)))
         cur = work / "2c_camera.mp4"
     if a.look or a.lut or a.film or a.grain or a.vignette:
         # Grain is random every frame, which makes intermediate files huge - so it is added once, at export.

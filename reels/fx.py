@@ -328,8 +328,14 @@ def _ease(u):
     return u * u * (3 - 2 * u)
 
 
+def zoom_cap(src_h):
+    """Largest sensible punch-in for a source: a 720p clip is already enlarged ~2.7x to fill 9:16,
+    so it gets gentle shot changes; 4K landscape has room for real close-ups."""
+    return float(np.clip(1.15 + 0.65 * (src_h / 2160), 1.2, 1.8))
+
+
 def camera(inp, out, cuts=(), shots="punch", moves=("static",), push=0.0, shake=(), ease_frames=3,
-           punch_zoom=None, move_amount=1.0):
+           punch_zoom=None, move_amount=1.0, max_zoom=1.8):
     """Virtual multi-camera edit on a 1080x1920 clip.
     cuts:   times where the 'camera' changes (phrase starts from the transcript)
     shots:  pattern name from SHOT_PATTERNS, or a list like ["wide","close"]
@@ -342,7 +348,9 @@ def camera(inp, out, cuts=(), shots="punch", moves=("static",), push=0.0, shake=
     pattern = SHOT_PATTERNS[shots] if isinstance(shots, str) else list(shots)
     if punch_zoom and pattern == SHOT_PATTERNS["punch"]:
         pattern = ["wide", f"z{punch_zoom}"]
-    zoom_of = lambda name: float(name[1:]) if name.startswith("z") else SHOTS[name]
+    # Compress the shot ladder to the resolution budget, keeping wide < medium < close < extreme.
+    squeeze = min(1.0, (max_zoom - 1) / 0.8)
+    zoom_of = lambda name: 1 + ((float(name[1:]) if name.startswith("z") else SHOTS[name]) - 1) * squeeze
     cap = cv2.VideoCapture(str(inp))
     fps = cap.get(cv2.CAP_PROP_FPS) or 30
     n = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) or 1
@@ -392,7 +400,7 @@ def camera(inp, out, cuts=(), shots="punch", moves=("static",), push=0.0, shake=
                 j = jitter[int((t - sh) * fps)]
                 dx, dy, z = dx + amp * j[0], dy + amp * j[1], z * 1.03
         # Zoom about the face: at z=1 the frame is untouched, closer shots slide the face to 40% height.
-        tgt = (w0 / 2, h0 * 0.40)
+        tgt = (w0 / 2, h0 * 0.43)   # keep room above the head in close shots
         a = min(1.0, (z - 1) / 0.45)
         cx, cy = face[0] + (tgt[0] - face[0]) * a, face[1] + (tgt[1] - face[1]) * a
         M = cv2.getRotationMatrix2D((float(face[0]), float(face[1])), float(rot), float(z))

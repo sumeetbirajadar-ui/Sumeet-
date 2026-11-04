@@ -197,42 +197,76 @@ favoured: reposts and visible TikTok watermarks are reportedly held back.
 
 ---
 
-## 7. European cinema styles: French, Italian, British, Nordic
+## 7. How Reels are edited in each country (France, Italy, Germany, UK, Spain, USA)
 
-European film language is generally **slower, more observational and more natural-light** than the
-US creator style. It uses longer takes, fewer graphics, film texture, and type set like a book
-cover instead of a meme. One `--style` flag sets everything in the table below. The looks are
-*inspired by* the films named; they are not copies of any film's actual grade.
+These styles describe **how creators edit**: caption typography, words on screen, cut rhythm,
+keyword pop-ups, branding and the legal labels. They have **nothing to do with colour palettes**.
+Colour stays a separate, optional choice (`--look`, `--light`).
 
-| Style | Colour | Shots and moves | Pace | Captions | Sound |
-|---|---|---|---|---|---|
-| `french` | `parisian`: muted pastel, creamy highlights, cool-grey shadows + 35mm film | wide ↔ medium, **handheld** drift | slow, 3.5 s+ between changes, 16-frame glides | lowercase **Cormorant Garamond italic**, cream | voice and music only |
-| `french_whimsy` | `amelie`: saturated red/green/amber, gold light (Delbonnel-style) | wide/close/medium, **dolly-ins** | lively but smooth | **DM Serif italic**, red accent | light SFX |
-| `nouvelle_vague` | silvery B&W + **16mm** grain/halation | wide ↔ close **jump cuts** (Godard-style), handheld | tight cuts, 0.12 s margins | small lowercase serif | no SFX |
-| `italian` | `italian_summer`: golden natural sunlight, warm greens (Guadagnino-style) + 35mm | wide ↔ medium, **dolly + pan** glides | unhurried, 18-frame glides | **Playfair Display italic**, gold | music-led |
-| `italian_baroque` | `dolce_vita`: deep rich colour, wine shadows, high contrast (Sorrentino-style) | dramatic wide→close→extreme, **orbits, pull-outs** | grand, deliberate | Playfair caps, gold | sparse hits |
-| `neorealismo` | gritty high-contrast B&W + 16mm | handheld, mostly wide | plain | serif, white | none |
-| `british` | `british_drama`: overcast, cool green-grey, desaturated | wide/close/medium, handheld + static | measured, 3 s | **Montserrat** sentence case | none |
-| `peaky` | `peaky`: smoky, only strong colours survive, sepia lean, gold highlights + 35mm | dramatic changes, slow **push / pull** | brooding | **Bebas Neue** caps, gold | impacts on beats |
-| `ritchie` | `ritchie`: half-bleached, brown-gold, crunchy contrast + grain | **snap zooms**, pans, fake orbits | fast, 1.8 s, 2-frame snaps | Bebas caps, 2 words, red | whooshes + impacts |
-| `nordic` | `scandi`: cold, airy, low saturation | static + slow pans, lots of space | very slow, 4 s | lowercase Montserrat, ice blue | none |
-| `hollywood` | `blockbuster` teal-orange | talk pattern, snap jump-zooms | fast, 2.2 s | Poppins ExtraBold caps, yellow | full SFX |
+**How this was researched (4 Nov 2026):**
+1. **Native-language editing tutorials.** I searched YouTube in French, Italian, German, Spanish and
+   British English ("comment monter un reel", "come montare un reel", "Reels schneiden", "cómo editar
+   reels", "how I edit my reels") and read the transcripts of the 18 that came through:
+   Stratégie Vidéo, Marketdamp, Nicorama, DKR, HIBZ, Sandra F Collective (FR); Giulia Gasperini,
+   Gianmarco Capri (IT); Felicia Simon, Sebiforce, Nilson1489 (DE); Alex Arano (ES);
+   Hals, Ben Maclean (UK).
+2. **The top Shorts of leading creators per country.** I took the 3 most-viewed Shorts each from 15
+   channels and studied their opening frames (YouTube's public cover images): **FR** Dr Nozman,
+   Tibo InShape, Léna Situations, ScienceEtonnante; **IT** Geopop, Khaby Lame, Cicciogamer89;
+   **DE** Doktor Whatson, MrWissen2go, simplicissimus; **UK** Steve Mould, Max Fosh;
+   **ES** CdeCiencia, QuantumFracture. YouTube's bot check blocked downloading the videos
+   themselves, so shot lengths could not be measured frame by frame. I did not try to work around that.
+3. **The disclosure laws** that put mandatory text on screen.
 
-**How the colour works** (colourist order: correct, then look, then film print):
-- *Amélie*'s palette is described as deep red, warm yellow-amber, muted green and cool shadow blue,
-  under soft slightly-yellow light. The `amelie` look does this: green-lean shadows, gold highlights,
-  and extra saturation on reds, greens and yellows.
-- *Call Me By Your Name* relied on natural light and 35mm for a golden sunlit look. `italian_summer`
-  warms the mids, lifts yellow-greens, calms the blues, and adds 35mm texture.
-- *Peaky Blinders* was described by its cinematographer as desaturated except strong primaries,
-  with a slight sepia tint, period-photo-inspired, plus a signature "Peaky gold". The `peaky` look
-  uses *selective saturation*: weak colours are drained and strong ones are kept.
-- Warm looks fade their tint out in the brightest areas, so white walls stay cream, not lemon.
-  Skin hues are protected in every look.
+### What each country does
 
-**Film emulation** (`--film 35mm|16mm|super8`), built from the YouTube film-look tutorials.
-It adds softness, **halation** (red-orange glow round bright edges), **bloom** (highlight glow),
-grain, and **gate weave** (the tiny frame wobble of a projector). 16mm and Super 8 push all of these harder.
+| | Captions | Rhythm and framing | Signature habits | Legal label when sponsored |
+|---|---|---|---|---|
+| **France** | **Sentence case**, smallish, often **2 lines**, white with a soft shadow or a black box (Dr Nozman, Léna Situations). HIBZ: Montserrat bold, yellow-orange or white, black blurred shadow | "**Mini zooms un peu partout**" (DKR). Hook in the first ~2 s (HIBZ). Fullscreen B-roll cutaways (Nozman's beaver shot) | Key term slammed in **big yellow capitals** (ScienceEtonnante "GÉNÉRATION PROCÉDURALE"). Overlay icons/infographics. Green-screen effects called "the most viral" (Stratégie Vidéo). Freeze frames, colour flashes, typewriter SFX | **"Publicité" or "Collaboration commerciale"**, visible for the whole promo. Also **"Image retouchée"** (edited body/face) and **"Image virtuelle"** (AI face/body). Law 2023-451 |
+| **Italy** | Sentence-case subtitles in a **translucent dark box**, small, lower third (Geopop) | Direct-to-camera, medium shot, expressive, gentle cut-ins | **Keyword in a yellow highlight box** ("Super El Niño"). **Channel logo top-left**. Gaming: facecam stacked under gameplay (Cicciogamer). Comedy: no words at all (Khaby Lame). Capri: fast cuts + dynamic music in energetic parts, **slow down for emotional moments** | **#ADV / #pubblicità / "in collaborazione con"** at the start (AGCOM rules for large influencers) |
+| **Germany** | **One word at a time**, clean, mid-lower (Doktor Whatson), or sentence-case subtitles in a black box (simplicissimus) | Calm studio framing, few effects. Presenter cut out over an illustrated background (MrWissen2go) | Faceless explainer with film/stock clips + question-mark overlays (simplicissimus). Music kept clearly under the voice (Felicia Simon) | **"Werbung" / "Anzeige"**, visible at first glance (courts rejected vague tags) |
+| **UK** | **2–3 word bold capitals** with a yellow active word (Max Fosh), or lowercase sentence captions mid-frame (Steve Mould). Hals: captions **¾ of the way down**, always fix auto-captions by hand | Handheld, real locations, quick cut-ins. **No dead space**: Hals even cuts the last word. ~1 s clips on music-led reels (Ben Maclean) | Small zoom-ins with a **whoosh**, **shutter click** and **pop** SFX on text (Hals). Macro B-roll of the experiment (Steve Mould). Ambient sound layers (Ben Maclean) | **"#ad"** clearly displayed (ASA) |
+| **Spain** | **One huge yellow capital word** with a thick black outline (CdeCiencia), or small yellow subtitles + giant keyword slams (QuantumFracture) | Fast cuts, animated characters | Keyword slams ("CHARCO") | **"Publicidad"** |
+| **USA** (reference) | 2–3 word ALL CAPS, active word in yellow/green, centre-low | Jump-zoom every ~2 s, constant SFX | Hormozi/MrBeast school | **"#ad"** (FTC) |
+
+**The big European pattern.** European education and science creators (Dr Nozman, Geopop,
+Doktor Whatson, simplicissimus, Steve Mould) mostly use **sentence-case subtitles you can read
+as sentences, often in a box**. They cut calmly and use one emphasis device (a keyword pop or
+highlight box) rather than constant effects. The US "every word in caps + SFX on everything"
+style shows up more in entertainment and in Spain's CdeCiencia. Across all countries
+the shared rules are the same: hook in 1–2 s, no dead air, captions always, logo or branding,
+and the legal label when paid.
+
+### The `--style` presets built from this
+
+| `--style` | Captions | Cuts and framing | Extras | `--sponsored` label |
+|---|---|---|---|---|
+| `french` | sentence case, 2 lines, white Montserrat + soft shadow | mini zooms (1.08×) every ~2.6 s, smooth | key terms pop in **yellow caps** + soft pop SFX | Collaboration commerciale |
+| `italian` | sentence case, 2 lines, **translucent box** | gentle punch-ins every ~3 s | key terms in a **yellow highlight box**, `--logo` top-left | ADV |
+| `german` | **one word at a time**, clean | calm, wide↔medium every ~3.5 s | no SFX | Werbung |
+| `british` | 2–3 word **bold caps**, yellow active word | **handheld**, wide/close/medium cut-ins every ~2.4 s | dry, minimal SFX | #ad |
+| `spanish` | **one huge yellow word**, thick outline | fast snaps every ~2 s | keyword slams + SFX | Publicidad |
+| `european` | sentence case, **boxed** 2-line subtitles | measured, wide↔medium | keyword highlight boxes | Ad |
+| `american` | 2–3 word ALL CAPS, yellow active word | snap jump-zooms every ~2.2 s | full SFX | #ad |
+
+```bash
+python3 reels/reel.py styles
+python3 reels/reel.py auto raw.mp4 --style french  --hook "Saturne a eu une tempête géante" --lang fr
+python3 reels/reel.py auto raw.mp4 --style italian --logo logo.png --keywords "Saturno,Cassini"
+python3 reels/reel.py auto raw.mp4 --style german  --sponsored                 # adds "Werbung"
+python3 reels/reel.py auto raw.mp4 --style british --hook "this storm was bigger than Earth"
+# mix and match: any option overrides the style
+python3 reels/reel.py auto raw.mp4 --style french --cap-box --keywords none --look clean
+```
+
+**For Science Monk (Kannada/Hindi/English physics):** the European education pattern fits teaching
+best: `--style french` or `--style european` with `--lang kn`. Kannada and Devanagari captions
+always stay in sentence case with the Noto font. Keyword pops work on the English technical terms.
+
+### Colour looks and film texture (optional, separate from country style)
+
+The 20 colour looks (`--look`, see §2 and `reel.py looks`) and film emulation (`--film 35mm|16mm|super8`:
+softness, halation, bloom, grain, gate weave) are still available on their own, for any style.
 
 ### Shot sizes and angles
 
@@ -259,25 +293,21 @@ least 1080p landscape, so there is resolution to crop into.
 
 | Move | Feel |
 |---|---|
-| `handheld` | Organic drift and slight roll, like someone holding the phone. French and British realism |
-| `pan` | Slow lateral slide. Italian and Nordic calm |
+| `handheld` | Organic drift and slight roll, like someone holding the phone. UK vlog style |
+| `pan` | Slow lateral slide. Calm |
 | `dolly` | Slow push-in across the shot. Tension, intimacy |
 | `pull` | Pull-out. Reveal, ending, grandeur |
-| `orbit` | Rotate, slide and zoom together, faking a camera circling the subject. Baroque / premium |
-| `static` | Locked off. Authority, comedy timing (Ritchie) |
+| `orbit` | Rotate, slide and zoom together, faking a camera circling the subject. Premium |
+| `static` | Locked off. Authority, comedy timing |
 
-`--ease` sets how framing changes: 1–3 frames is a cut (Hollywood, Ritchie, New Wave jump cuts),
-10–20 frames is a glide (French, Italian, Nordic).
+`--ease` sets how framing changes: 1–3 frames is a cut (American, Spanish, British snaps),
+6–20 frames is a glide (French mini zooms, calm European).
 
 For **shooting** real camera angles: wide = phone 2–3 m away at chest height; close = 0.8–1 m, eye
 level; low angle = authority; high angle = vulnerability; over-the-shoulder for writing or solving;
 top-down for paper and desk work.
 
 ```bash
-python3 reels/reel.py styles                                     # list all style presets
-python3 reels/reel.py auto raw.mp4 --style french --hook "la physique, simplement"
-python3 reels/reel.py auto raw.mp4 --style italian --music piano.mp3 --prompt "Newton"
-python3 reels/reel.py auto raw.mp4 --style ritchie --hook "3 mistakes" --moves static,pan,orbit
 python3 reels/reel.py camera in.mp4 out.mp4 --words-json work/words.json --shots drama --moves dolly,pull --ease 14
 python3 reels/reel.py grade in.mp4 out.mp4 --look peaky --film 35mm --vignette
 ```
@@ -534,6 +564,11 @@ yt-dlp) are what `reel.py` is built on.
   [Beverly Boy: mixing colour temperatures](https://beverlyboy.com/film-technology/color-temperature-tricks-mix-light-without-it-looking-wrong) ·
   [Melies: motivated lighting](https://melies.co/cinematic-techniques/lighting/motivated-lighting) · [Harlowe: social media lighting](https://www.harlowe.com/blogs/blogs/social-media-lighting-for-creators) ·
   [No Film School: Resolve Relight](https://nofilmschool.com/blackmagic-davinci-resolve-relight-fx-tool) · [RelightVid](https://aleafy.github.io/relightvid) · [IC-Light (ComfyUI wiki)](https://comfyui-wiki.com/en/models/ic-light)
+- Country Reels research: France Law 2023-451 ([Bird & Bird](https://www.twobirds.com/en/insights/2023/france/promulgation-de-la-loi-visant-a-encadrer-l-influence-commerciale),
+  [economie.gouv.fr](https://www.economie.gouv.fr/node/3222759)) · Italy AGCOM ([Business of Fashion](https://Businessoffashion.com/news/marketing-pr/italy-introduces-new-rules-targeting-influencer-marketing/),
+  [Osborne Clarke EU guide](https://www.osborneclarke.com/insights/influencer-marketing-a-guide-to-regulation-across-europe)) · Germany ([Hogan Lovells](https://engage.hoganlovells.com/knowledgeservices/news/labelling-requirements-for-influencer-marketing-in-germany)) ·
+  UK ASA ([private.law summary](https://wiki.private.law/en/influencer-regulation)) · [ClickAnalytic: Italian creators Q1 2026](https://www.clickanalytic.com/top-growing-instagram-creators-italy-q1-2026/) ·
+  native tutorials listed in §7 (YouTube) · creator Shorts covers via i.ytimg.com
 - Instagram specs and algorithm: [Argil spec sheet](https://argil.ai/blog/instagram-reel-size-e350f) ·
   [Socialync specs](https://www.socialync.io/tools/video-specs/instagram-reels) ·
   [Later: Reels algorithm](https://later.com/blog/instagram-reels-algorithm/) ·

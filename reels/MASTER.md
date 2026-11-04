@@ -26,23 +26,24 @@ captions + hook + progress bar → Instagram export (+ grain) → cover image**.
 The results: `OUT.mp4`, `OUT.cover.jpg`, and `OUT_work/` with every step plus `words.json`.
 To fix a caption word, edit `words.json` and run the same command again; only the render repeats.
 
-## 2. Choose the style (topic and mood → style)
+## 2. Choose the style (how creators in that country edit)
 
-| If the Reel is… | Use `--style` | Feel |
+Styles are **editing conventions** (captions, cut rhythm, keyword pops, branding, legal labels),
+researched from each country's top creators and native-language tutorials (GUIDE.md §7).
+They don't change colour. Colour is optional and separate (`--look`, `--light`).
+
+| `--style` | Looks like | Use for |
 |---|---|---|
-| Motivation, big claims, energetic tips | `hollywood` | Teal-orange, snap zooms, bold yellow caps, SFX |
-| Calm explainer, "the beauty of physics" | `french` | Muted pastel 35mm, handheld, serif italics |
-| Storytelling, quirky facts, history of a scientist | `french_whimsy` | Amélie-like red/green/amber, dolly-ins |
-| Raw, honest, artistic, black and white | `nouvelle_vague` | Silvery B&W 16mm, jump cuts |
-| Summer, study vlog, feel-good, results day | `italian` | Golden sunlight, gliding pans, gold italics |
-| Grand topics: universe, Nobel prizes, epic history | `italian_baroque` | Rich deep colour, orbits, pull-outs |
-| Gritty reality: exam pressure, real student life | `neorealismo` | Grainy B&W, handheld |
-| Serious documentary, facts, counselling advice | `british` | Overcast cool grade, measured cuts |
-| Dramatic reveal, "the truth about…", period history | `peaky` | Smoky selective colour, gold, impacts |
-| Fast list, "3 mistakes", comedy, hustle | `ritchie` | Bleached contrast, snap zooms, red Bebas caps |
-| Minimal, aesthetic, wellbeing, focus | `nordic` | Cold airy, static + slow pans, lowercase |
+| `french` | Sentence-case 2-line subtitles, soft shadow, key terms pop in yellow caps, mini zooms (Dr Nozman / Léna Situations) | Explainers, science facts, calm teaching (**good default for Science Monk**) |
+| `italian` | Subtitles in a translucent box, keyword in a yellow highlight box, logo top-left (Geopop) | Talking-head education with branding |
+| `german` | One word at a time, calm studio framing, few effects (Doktor Whatson) | Serious explainers, counselling facts |
+| `british` | 2–3 word bold caps, yellow active word, handheld cut-ins, no dead space (Max Fosh / Hals) | Energetic vlogs, experiments, challenges |
+| `spanish` | One huge yellow word, thick outline, keyword slams (CdeCiencia) | Fast fun facts |
+| `european` | Calm boxed sentence subtitles, keyword highlights | Long-ish teaching Reels |
+| `american` | 2–3 word ALL CAPS, snap zooms, SFX everywhere | Motivation, hype, "3 mistakes" lists |
 
-Any explicit option overrides the style, e.g. `--style french --look amelie --moves dolly`.
+Add `--sponsored` on paid posts to show that country's legal label (Collaboration commerciale, ADV,
+Werbung, #ad, Publicidad). Any explicit option overrides the style, e.g. `--style french --cap-box --keywords "Newton,force"`.
 
 ## 3. Every option of `auto`
 
@@ -72,8 +73,13 @@ Any explicit option overrides the style, e.g. `--style french --look amelie --mo
 | | `--film` | 35mm / 16mm / super8 | Halation, bloom, softness, grain, gate weave |
 | | `--grain` / `--vignette` | | Extra grain amount / darken edges |
 | Audio | `--music` / `--music-volume` | file / 0.18 | Ducked background music |
-| | `--sfx` / `--sfx-volume` | / 0.45 | Pop on hook, whoosh on snaps, impacts (peaky/ritchie), ding at end |
+| | `--sfx` / `--sfx-volume` | / 0.45 | Pop on hook and on keyword pops, whoosh on snaps, ding at end |
 | Text | `--hook` / `--hook-secs` | / 2.5 | Title in the first seconds (also the cover title) |
+| | `--case` | upper / sentence / lower (style) | Caption casing |
+| | `--lines` / `--cap-box` | 1–2 / | Two-line European subtitles / translucent box behind captions |
+| | `--keywords` / `--key-style` | auto / none / list; pop / box | Key terms popping big (yellow caps or yellow box) |
+| | `--logo` | file.png | Channel logo top-left |
+| | `--sponsored` / `--label` | / text | Country's legal ad label, or your own label text |
 | | `--font` | style | Caption font family |
 | | `--highlight` | yellow, green, red, cyan, gold, cream, ice, white | Active-word colour |
 | | `--words` | 3 | Max words on screen |
@@ -110,12 +116,12 @@ Built-in SFX: `whoosh swoosh_short pop riser impact ding click glitch shutter` (
 so no copyright). The LUTs in `reels/luts/*.cube` also work in CapCut desktop, DaVinci Resolve,
 Premiere and Final Cut.
 
-## 5. Looks (20)
+## 5. Colour looks (20, optional; separate from country styles)
 
 - **Hollywood:** blockbuster, golden, moody, noir, clean, cyber, thriller, dreamy
-- **French:** amelie, nouvelle_vague, parisian
-- **Italian:** italian_summer, dolce_vita, neorealismo
-- **British:** british_drama, peaky, ritchie
+- **French-cinema-inspired:** amelie, nouvelle_vague, parisian
+- **Italian-cinema-inspired:** italian_summer, dolce_vita, neorealismo
+- **British-drama-inspired:** british_drama, peaky, ritchie
 - **European:** scandi, bleach_bypass, vintage
 
 ## 6. Shots and moving angles
@@ -143,18 +149,16 @@ so close-ups never turn soft. Film in 4K if you want strong close-ups.
 - [ ] Phone: rear camera, eye level, **lock exposure and white balance**, shutter = 2× frame rate
 - [ ] A practical (lamp, fairy lights) in the background for depth
 
-**In the edit** (`--light`, chosen by the style unless you set it):
+**In the edit** (`--light`; every style uses `auto` = exposure fix only, unless you choose):
 
-| Preset | Look | Default for |
-|---|---|---|
-| creator | soft 45° key + warm rim + darker room | hollywood |
-| window | soft side daylight | french, nordic, nouvelle_vague |
-| loop | flattering portrait key | french_whimsy |
-| golden | low warm sun + warm rim | italian |
-| rembrandt | 4:1 moody key | peaky, italian_baroque |
-| overcast | flat, cool, soft | british, neorealismo |
-| split | 90° side, half in shadow | ritchie |
-| butterfly / neon / noir / auto | beauty / two-tone gels / film noir / exposure fix only | (choose) |
+| Preset | Look |
+|---|---|
+| auto | fixes an under/over-exposed face, leaves good light alone |
+| creator | soft 45° key + warm rim + darker room |
+| window / loop / butterfly | soft side daylight / flattering portrait / bright beauty |
+| golden / overcast | low warm sun / flat cool soft |
+| rembrandt / split / noir | moody 4:1 / half in shadow / film noir |
+| neon | teal background + magenta rim |
 
 Virtual light reshapes the light you already have. It can't rescue a dark, noisy clip; light it when you shoot.
 

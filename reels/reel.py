@@ -37,59 +37,60 @@ FONTS = {"latin": "Poppins ExtraBold", "kn": "Noto Sans Kannada", "hi": "Noto Sa
 HIGHLIGHTS = {"yellow": "&H0000E6FF", "green": "&H0050FF7A", "red": "&H002828D6", "cyan": "&H00FFE600",
               "gold": "&H0042C5F5", "cream": "&H00C8E6F5", "ice": "&H00FFE7BD", "white": "&H00FFFFFF"}
 
-# Editing styles: one flag sets look + film stock + shot grammar + camera moves + pacing + typography + sound.
-# Each is a starting point; any explicit flag on the command line wins.
+# Editing styles = how creators in each country actually edit Reels/Shorts: caption typography and casing,
+# how many words are on screen, how often the framing changes, keyword pops, branding and the legally
+# required sponsorship label. Based on the top creators' Shorts (covers) and native-language tutorials
+# (GUIDE.md section 12). Colour is NOT part of a country style: use --look / --light separately if wanted.
 STYLES = {
-    "hollywood": dict(desc="US creator/blockbuster: teal-orange, snap jump-zooms, bold caps captions, SFX",
-        look="blockbuster", film=None, grain=0, vignette=True, shots="talk", moves=["static", "dolly"], ease=3,
-        cut_gap=2.2, font="Poppins ExtraBold", italic=False, upper=True, size=108, highlight="yellow",
-        anim="pop", outline=7, hook_box=True, words=3, sfx=True, margin="0.25s", light="creator"),
-    "french": dict(desc="Modern French arthouse: muted pastel, 35mm film, handheld, slow glides, lowercase serif italics",
-        look="parisian", film="35mm", grain=0, vignette=True, shots="minimal", moves=["handheld"], ease=16,
-        cut_gap=3.5, font="Cormorant Garamond", italic=True, upper=False, size=112, highlight="cream",
-        anim="fade", outline=2, hook_box=False, words=4, sfx=False, margin="0.4s", light="window"),
-    "french_whimsy": dict(desc="Amelie-style storybook: red/green/amber, playful dolly-ins, serif captions with red accent",
-        look="amelie", film="35mm", grain=0, vignette=True, shots="talk", moves=["dolly", "handheld"], ease=8,
-        cut_gap=2.8, font="DM Serif Display", italic=True, upper=False, size=104, highlight="red",
-        anim="pop", outline=3, hook_box=False, words=3, sfx=True, margin="0.3s", light="loop"),
-    "nouvelle_vague": dict(desc="French New Wave: silvery B&W 16mm, tight jump cuts, handheld, minimal serif text",
-        look="nouvelle_vague", film="16mm", grain=0, vignette=False, shots=["wide", "close"], moves=["handheld"],
-        ease=1, cut_gap=2.0, font="Cormorant Garamond", italic=False, upper=False, size=104, highlight="white",
-        anim="fade", outline=3, hook_box=False, words=4, sfx=False, margin="0.12s", light="window"),
-    "italian": dict(desc="Italian summer: golden 35mm warmth, gliding dolly and pan moves, elegant Playfair italics in gold",
-        look="italian_summer", film="35mm", grain=0, vignette=True, shots="minimal", moves=["dolly", "pan"], ease=18,
-        cut_gap=3.2, font="Playfair Display", italic=True, upper=False, size=100, highlight="gold",
-        anim="fade", outline=2, hook_box=False, words=3, sfx=False, margin="0.35s", light="golden"),
-    "italian_baroque": dict(desc="Sorrentino-style grandeur: rich deep colour, slow orbits and pull-outs, dramatic shot changes",
-        look="dolce_vita", film="35mm", grain=0, vignette=True, shots="drama", moves=["orbit", "pull", "dolly"],
-        ease=16, cut_gap=3.0, font="Playfair Display", italic=False, upper=True, size=96, highlight="gold",
-        anim="fade", outline=2, hook_box=False, words=3, sfx=True, margin="0.3s", light="rembrandt"),
-    "neorealismo": dict(desc="Italian neorealism: gritty B&W, handheld street realism, no frills",
-        look="neorealismo", film="16mm", grain=0, vignette=True, shots="minimal", moves=["handheld"], ease=2,
-        cut_gap=3.0, font="Playfair Display", italic=False, upper=False, size=100, highlight="white",
-        anim="fade", outline=3, hook_box=False, words=4, sfx=False, margin="0.3s", light="overcast"),
-    "british": dict(desc="BBC-documentary British: overcast cool grade, measured cuts, handheld, clean sentence-case captions",
-        look="british_drama", film=None, grain=5, vignette=False, shots="talk", moves=["handheld", "static"], ease=3,
-        cut_gap=3.0, font="Montserrat", italic=False, upper=False, size=96, highlight="white",
-        anim="fade", outline=4, hook_box=True, words=4, sfx=False, margin="0.3s", light="overcast"),
-    "peaky": dict(desc="British period drama: smoky selective colour, gold highlights, slow push/pull, bold condensed titles",
-        look="peaky", film="35mm", grain=0, vignette=True, shots="drama", moves=["dolly", "pull", "static"], ease=10,
-        cut_gap=3.0, font="Bebas Neue", italic=False, upper=True, size=140, highlight="gold",
-        anim="fade", outline=4, hook_box=False, words=3, sfx=True, margin="0.3s", light="rembrandt"),
-    "ritchie": dict(desc="British crime-caper: bleached contrast, snap zooms, whip pans, impact hits, punchy condensed caps",
-        look="ritchie", film=None, grain=8, vignette=True, shots="drama", moves=["static", "pan", "static", "orbit"],
-        ease=2, cut_gap=1.8, font="Bebas Neue", italic=False, upper=True, size=150, highlight="red",
-        anim="pop", outline=6, hook_box=True, words=2, sfx=True, margin="0.15s", light="split"),
-    "nordic": dict(desc="Scandinavian minimal: cold airy grade, still frames with slow pans, lots of space, lowercase sans",
-        look="scandi", film=None, grain=3, vignette=False, shots="minimal", moves=["static", "pan"], ease=20,
-        cut_gap=4.0, font="Montserrat", italic=False, upper=False, size=90, highlight="ice",
-        anim="fade", outline=2, hook_box=False, words=4, sfx=False, margin="0.35s", light="window"),
+    "american": dict(desc="US creator style (Hormozi/MrBeast school): 2-3 word ALL-CAPS captions, yellow active word, snap zooms every ~2 s, SFX",
+        case="upper", words=3, lines=1, line_chars=22, cap_box=False, cap_color="white", highlight="yellow",
+        font="Poppins ExtraBold", size=108, outline=7, anim="pop", hook_box=True, pos=0.66, keywords=None,
+        key_style="pop", shots="punch", punch_zoom=1.14, moves=["static"], ease=2, cut_gap=2.2, sfx=True,
+        margin="0.2s", light="auto", label="#ad"),
+    "french": dict(desc="French creators (Dr Nozman, Lena Situations, Strategie Video): sentence-case 2-line subtitles, soft shadow, "
+                        "key terms popping in yellow caps, 'mini zooms' everywhere, tight hook",
+        case="sentence", words=7, lines=2, line_chars=26, cap_box=False, cap_color="white", highlight="none",
+        font="Montserrat", size=82, outline=3, anim="fade", hook_box=True, pos=0.72, keywords="auto",
+        key_style="pop", shots="punch", punch_zoom=1.08, moves=["static"], ease=6, cut_gap=2.6, sfx=True,
+        margin="0.2s", light="auto", label="Collaboration commerciale"),
+    "italian": dict(desc="Italian creators (Geopop, Khaby-era talking heads): subtitles in a translucent dark box, key words in a "
+                         "yellow highlight box, logo top-left, direct-to-camera with gentle punch-ins",
+        case="sentence", words=7, lines=2, line_chars=28, cap_box=True, cap_color="white", highlight="none",
+        font="Montserrat", size=74, outline=12, anim="fade", hook_box=True, pos=0.74, keywords="auto",
+        key_style="box", shots="punch", punch_zoom=1.10, moves=["static"], ease=4, cut_gap=3.0, sfx=False,
+        margin="0.2s", light="auto", label="ADV"),
+    "german": dict(desc="German explainers (Doktor Whatson, MrWissen2go, simplicissimus): one word at a time, lowercase-clean, "
+                        "calm studio framing, few effects, mandatory 'Werbung' label when sponsored",
+        case="sentence", words=1, lines=1, line_chars=22, cap_box=False, cap_color="white", highlight="none",
+        font="Montserrat", size=112, outline=5, anim="pop", hook_box=True, pos=0.70, keywords=None,
+        key_style="pop", shots="minimal", punch_zoom=1.08, moves=["static"], ease=4, cut_gap=3.5, sfx=False,
+        margin="0.25s", light="auto", label="Werbung"),
+    "british": dict(desc="UK creators (Max Fosh vlog energy, Steve Mould science): handheld, 2-3 word bold caps captions with "
+                         "yellow active word, frequent cut-ins, dry pacing, '#ad' label",
+        case="upper", words=3, lines=1, line_chars=20, cap_box=False, cap_color="white", highlight="yellow",
+        font="Montserrat", size=96, outline=6, anim="pop", hook_box=True, pos=0.66, keywords=None,
+        key_style="pop", shots="talk", punch_zoom=1.12, moves=["handheld"], ease=3, cut_gap=2.4, sfx=False,
+        margin="0.2s", light="auto", label="#ad"),
+    "spanish": dict(desc="Spanish science creators (CdeCiencia, QuantumFracture): one huge yellow word at a time with thick "
+                         "black outline, keyword slams, fast cuts, SFX",
+        case="upper", words=1, lines=1, line_chars=20, cap_box=False, cap_color="yellow", highlight="none",
+        font="Poppins ExtraBold", size=150, outline=9, anim="pop", hook_box=True, pos=0.66, keywords="auto",
+        key_style="pop", shots="punch", punch_zoom=1.12, moves=["static"], ease=2, cut_gap=2.0, sfx=True,
+        margin="0.15s", light="auto", label="Publicidad"),
+    "european": dict(desc="Common European education style (FR/IT/DE science channels): calm sentence-case boxed subtitles, "
+                          "keyword highlights, measured cut-ins, clear sponsorship label",
+        case="sentence", words=6, lines=2, line_chars=26, cap_box=True, cap_color="white", highlight="none",
+        font="Montserrat", size=74, outline=12, anim="fade", hook_box=True, pos=0.74, keywords="auto",
+        key_style="box", shots="minimal", punch_zoom=1.08, moves=["static"], ease=5, cut_gap=3.2, sfx=False,
+        margin="0.25s", light="auto", label="Ad"),
 }
-STYLE_KEYS = ["light", "look", "film", "grain", "vignette", "shots", "moves", "ease", "cut_gap", "font", "italic", "upper",
-              "size", "highlight", "anim", "outline", "hook_box", "words", "sfx", "margin"]
+STYLE_KEYS = ["light", "look", "film", "grain", "vignette", "shots", "moves", "ease", "cut_gap", "font", "italic",
+              "case", "size", "highlight", "anim", "outline", "hook_box", "words", "sfx", "margin", "lines",
+              "line_chars", "cap_box", "cap_color", "keywords", "key_style", "pos", "punch_zoom"]
 BASE = dict(light=None, look=None, film=None, grain=0, vignette=False, shots=None, moves=["static"], ease=3, cut_gap=2.2,
-            font=None, italic=False, upper=True, size=None, highlight="yellow", anim="pop", outline=7,
-            hook_box=True, words=3, sfx=False, margin="0.25s")
+            font=None, italic=False, case="upper", size=None, highlight="yellow", anim="pop", outline=7,
+            hook_box=True, words=3, sfx=False, margin="0.25s", lines=1, line_chars=22, cap_box=False,
+            cap_color="white", keywords=None, key_style="pop", pos=0.68, punch_zoom=1.14)
 
 
 def resolve_style(a):
@@ -282,61 +283,120 @@ def group_words(words, max_words, max_chars):
     return groups
 
 
+def _wrap2(text, line_chars):
+    """Break a subtitle into two balanced lines (European subtitle convention) when it's long."""
+    if len(text) <= line_chars or " " not in text:
+        return text
+    mid = len(text) // 2
+    cut = min((i for i, ch in enumerate(text) if ch == " "), key=lambda i: abs(i - mid))
+    return text[:cut] + "\\N" + text[cut + 1:]
+
+
+def pick_keywords(words, spec, min_gap=2.5, after=0.0):
+    """Words to 'pop' big on screen: numbers, proper nouns mid-sentence, long technical words,
+    or an explicit comma list. Spaced out so it never becomes visual noise."""
+    if not spec or spec == "none":
+        return []
+    wanted = None if spec == "auto" else {w.strip().lower() for w in spec.split(",")}
+    out, last = [], -99
+    for i, w in enumerate(words):
+        t = re.sub(r"[^\w-]", "", w["w"])
+        if not t:
+            continue
+        if wanted is not None:
+            hit = t.lower() in wanted
+        else:
+            prev = words[i - 1]["w"] if i else "."
+            proper = t[0].isupper() and not re.search(r"[.!?]$", prev) and t.lower() not in ("i", "i'm")
+            hit = any(c.isdigit() for c in t) or proper or len(t) >= 9
+        if hit and w["s"] >= after and w["s"] - last >= min_gap:
+            out.append(w); last = w["s"]
+    return out
+
+
 def build_ass(data, a):
     lang = data.get("lang", "en")
     script = lang if lang in FONTS else "latin"
     # Indic scripts always use their Noto font; style fonts only apply to Latin text.
     font = (getattr(a, "font", None) or FONTS["latin"]) if script == "latin" else FONTS[script]
-    upper = script == "latin" and not getattr(a, "no_upper", False) and getattr(a, "upper", True)
+    case = getattr(a, "case", None) or ("upper" if getattr(a, "upper", True) and not getattr(a, "no_upper", False) else "sentence")
+    if script != "latin":
+        case = "sentence"
+    fix = {"upper": str.upper, "lower": str.lower}.get(case, lambda x: x)
     italic = -1 if getattr(a, "italic", False) and script == "latin" else 0
-    hl = HIGHLIGHTS[getattr(a, "highlight", None) or "yellow"]
+    hlname = getattr(a, "highlight", None) or "yellow"
+    hl = HIGHLIGHTS.get(hlname)
+    base_col = HIGHLIGHTS.get(getattr(a, "cap_color", None) or "white")
     a.words = getattr(a, "words", None) or 3
     size = a.size or (108 if script == "latin" else 96)
     outline = getattr(a, "outline", None) or 7
-    shadow = 3 if outline >= 5 else 5        # thin-outline (elegant) styles lean on a soft shadow instead
+    shadow = 3 if outline >= 5 else 5        # thin-outline styles lean on a soft shadow instead
     anim = getattr(a, "anim", None) or "pop"
     hook_box = getattr(a, "hook_box", True)
+    cap_box = getattr(a, "cap_box", False)
+    lines = getattr(a, "lines", None) or 1
+    line_chars = getattr(a, "line_chars", None) or 22
+    a.pos = getattr(a, "pos", None) or 0.68
     margin_v = int(H * (1 - a.pos))  # distance from bottom
+    # Caption box (Italian/German subtitle look): opaque-box border style with a translucent black box.
+    cap_border = f"3,{max(outline, 12)},0" if cap_box else f"1,{outline},{shadow}"
+    cap_back = "&H64000000" if cap_box else "&H96000000"
+    key_box = getattr(a, "key_style", "pop") == "box"
     # NB: letter-spacing must stay 0 for Kannada/Devanagari or libass breaks the vowel signs apart.
     head = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: {W}
 PlayResY: {H}
-WrapStyle: 0
+WrapStyle: 2
 ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Cap,{font},{size},&H00FFFFFF,&H00FFFFFF,&H00000000,&H96000000,-1,{italic},0,0,100,100,{1 if script == 'latin' else 0},0,1,{outline},{shadow},2,90,90,{margin_v},1
+Style: Cap,{font},{size},{base_col},&H00FFFFFF,{cap_back if cap_box else '&H00000000'},{cap_back},-1,{italic},0,0,100,100,{1 if script == 'latin' and not cap_box else 0},0,{cap_border},2,90,90,{margin_v},1
 Style: Hook,{font},{int(size * 1.05)},&H00FFFFFF,&H00FFFFFF,&H00000000,{'&H00000000' if hook_box else '&H78000000'},-1,{italic},0,0,100,100,0,0,{3 if hook_box else 1},{26 if hook_box else 2},{0 if hook_box else 6},8,70,70,330,1
+Style: Key,{font},{int(size * 1.9)},{'&H00101010' if key_box else '&H0000E6FF'},&H00FFFFFF,{'&H0000E6FF' if key_box else '&H00000000'},&H96000000,-1,0,0,0,100,100,0,0,{'3,18,0' if key_box else '1,9,4'},5,60,60,0,1
+Style: Label,Montserrat,46,&H00FFFFFF,&H00FFFFFF,&H50000000,&H50000000,-1,0,0,0,100,100,0,0,3,10,0,7,60,60,0,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
     ev = []
+    dur_end = max((w["e"] for w in data["words"]), default=0) + 2
+    if getattr(a, "label", None):   # legal sponsorship label, visible the whole time (FR/IT/DE/UK rules)
+        ev.append(f"Dialogue: 3,{ass_time(0)},{ass_time(dur_end)},Label,,0,0,0,,{{\\pos(60,{getattr(a, 'label_y', 300)})}}{a.label}")
     if a.hook:
-        hook = a.hook.upper() if upper else a.hook
+        hook = fix(a.hook)
         ev.append(f"Dialogue: 1,{ass_time(0)},{ass_time(a.hook_secs)},Hook,,0,0,0,,"
                   f"{{\\fad(150,250)\\3c&H00000000&\\1c&H00FFFFFF&}}{hook}")
-    caps = []  # (start, end, text) - one event per spoken word, whole group visible
+    caps = []
     for g in group_words(data["words"], a.words, a.chars):
         # trailing commas/full stops look cluttered on screen; keep ? and !
-        toks = [re.sub(r"[,.;:।]+$", "", x["w"].upper() if upper else x["w"]) for x in g]
+        toks = [re.sub(r"[,.;:।]+$", "", fix(x["w"])) for x in g]
+        pop_in = "{\\fad(150,0)}" if anim == "fade" else "{\\fscx80\\fscy80\\t(0,90,\\fscx100\\fscy100)}"
+        if hl is None:                       # plain subtitle: whole phrase, no per-word colour
+            text = " ".join(toks)
+            caps.append([g[0]["s"], g[-1]["e"] + 0.3, pop_in + (_wrap2(text, line_chars) if lines > 1 else text)])
+            continue
         for i, w in enumerate(g):
             end = g[i + 1]["s"] if i + 1 < len(g) else w["e"] + 0.3
-            parts = [f"{{\\1c{hl}&\\fscx112\\fscy112}}{t}{{\\1c&H00FFFFFF&\\fscx100\\fscy100}}" if j == i else t
+            parts = [f"{{\\1c{hl}&\\fscx112\\fscy112}}{t}{{\\1c{base_col}&\\fscx100\\fscy100}}" if j == i else t
                      for j, t in enumerate(toks)]
-            if i:
-                pop = ""
-            elif anim == "fade":   # European styles: words breathe in, no bounce
-                pop = "{\\fad(180,0)}"
-            else:
-                pop = "{\\fscx80\\fscy80\\t(0,90,\\fscx100\\fscy100)}"
-            caps.append([w["s"], end, pop + " ".join(parts)])
+            text = " ".join(parts)
+            if lines > 1 and len(" ".join(toks)) > line_chars:
+                k = len(toks) // 2
+                text = " ".join(parts[:k]) + "\\N" + " ".join(parts[k:])
+            caps.append([w["s"], end, (pop_in if i == 0 else "") + text])
     # Never let two caption lines share the screen: cut each one off where the next begins.
     for k in range(len(caps) - 1):
         caps[k][1] = min(caps[k][1], caps[k + 1][0])
     ev += [f"Dialogue: 0,{ass_time(s)},{ass_time(e)},Cap,,0,0,0,,{t}" for s, e, t in caps if e > s]
+    # Keyword pops: the French/Spanish science-creator habit of slamming the key term big on screen.
+    a._key_times = []
+    for w in pick_keywords(data["words"], getattr(a, "keywords", None), after=a.hook_secs + 0.3 if a.hook else 0):
+        t = re.sub(r"[,.;:!?]+$", "", w["w"]).upper()
+        ev.append(f"Dialogue: 2,{ass_time(w['s'])},{ass_time(w['s'] + 1.0)},Key,,0,0,0,,"
+                  f"{{\\pos({W // 2},{int(H * 0.56)})\\fscx60\\fscy60\\t(0,120,\\fscx100\\fscy100)\\fad(0,200)}}{t}")
+        a._key_times.append(w["s"])
     return head + "\n".join(ev) + "\n"
 
 
@@ -346,6 +406,17 @@ def cmd_captions(a):
     ass.write_text(build_ass(data, a), encoding="utf-8")
     fontsdir = Path.home() / ".local/share/fonts"
     vf = f"ass={ass}:fontsdir={fontsdir}"
+    logo = getattr(a, "logo", None)
+    if logo:   # channel logo top-left, inside the safe zone (Geopop / Science Etonnante habit)
+        extra = ["-i", logo]
+        chain = f"[0:v]{vf}[c];[1:v]scale=170:-1,format=rgba,colorchannelmixer=aa=0.9[lg];[c][lg]overlay=50:250"
+        if a.progress:
+            chain += f"[c2];color=c=0xF5C542:s={W}x10[bar];[c2][bar]overlay=x='-W+W*t/{probe(a.input)['dur']:.3f}':y=0:shortest=1"
+        chain += "[v]"
+        run(["ffmpeg", "-y", "-v", "error", "-i", a.input, "-loop", "1", *extra, "-filter_complex", chain,
+             "-shortest", "-map", "[v]", "-map", "0:a?", "-c:v", "libx264", "-crf", "16", "-preset", "medium", "-c:a", "copy", a.output])
+        print(f"  captions file: {ass}")
+        return
     if a.progress:
         vf = f"[0:v]{vf}[c];color=c=0xF5C542:s={W}x10[bar];[c][bar]overlay=x='-W+W*t/{probe(a.input)['dur']:.3f}':y=0:shortest=1"
         run(["ffmpeg", "-y", "-v", "error", "-i", a.input, "-filter_complex", vf, "-c:v", "libx264",
@@ -462,6 +533,11 @@ def cmd_auto(a):
         cur = work / "4_music.mp4"
     if a.sfx:
         cues = [("pop", 0.05)] if a.hook else []          # pop as the hook title lands
+        try:   # a soft pop under each keyword pop-up (French/Spanish creator habit)
+            kd = json.loads(words.read_text())["words"]
+            cues += [("pop", w["s"]) for w in pick_keywords(kd, a.keywords, after=a.hook_secs + 0.3 if a.hook else 0)]
+        except Exception:
+            pass
         if a.ease <= 4:  # snappy styles: whoosh into each snap; smooth European styles stay quiet
             cues += [("whoosh", max(0, t - 0.15)) for t in punches]
         if a.style in ("ritchie", "peaky"):  # caper/period: a low hit on every second cut
@@ -470,10 +546,13 @@ def cmd_auto(a):
         fx.add_sfx(cur, work / "4b_sfx.mp4", cues, volume=a.sfx_volume)
         cur = work / "4b_sfx.mp4"
     if not a.no_captions:
+        label = a.label or (STYLES.get(a.style or "", {}).get("label") if a.sponsored else None)
         cmd_captions(ns(input=cur, output=work / "5_captions.mp4", words_json=words, font=a.font,
-                        highlight=a.highlight, size=a.size, pos=a.pos, words=a.words, chars=18, no_upper=not a.upper,
-                        upper=a.upper, italic=a.italic, anim=a.anim, outline=a.outline, hook_box=a.hook_box,
-                        hook=a.hook, hook_secs=a.hook_secs, progress=a.progress))
+                        highlight=a.highlight, size=a.size, pos=a.pos, words=a.words,
+                        chars=max(18, a.line_chars * a.lines), case=a.case, italic=a.italic, anim=a.anim,
+                        outline=a.outline, hook_box=a.hook_box, lines=a.lines, line_chars=a.line_chars,
+                        cap_box=a.cap_box, cap_color=a.cap_color, keywords=a.keywords, key_style=a.key_style,
+                        label=label, logo=a.logo, hook=a.hook, hook_secs=a.hook_secs, progress=a.progress))
         cur = work / "5_captions.mp4"
     grain = (a.grain or 0) + (fx.FILM_STOCKS[a.film]["grain"] if a.film else 0)
     cmd_export(ns(input=cur, output=out, grain=grain))
@@ -501,8 +580,15 @@ def main():
     tr_opts = [(["--model"], dict(default="small", help="tiny/base/small/medium/large-v3")),
                (["--lang"], dict(default=None, help="en, hi, kn ... (auto-detect if omitted)")),
                (["--prompt"], dict(default=None, help="spellings to expect, e.g. 'KCET, NEET, Newton'"))]
-    cap_opts = [(["--highlight"], dict(default=None, choices=list(HIGHLIGHTS))),
-                (["--pos"], dict(type=float, default=0.68, help="caption height, 0=top 1=bottom")),
+    cap_opts = [(["--highlight"], dict(default=None, choices=list(HIGHLIGHTS) + ["none"], help="active-word colour; none = plain subtitles")),
+                (["--case"], dict(default=None, choices=["upper", "sentence", "lower"])),
+                (["--keywords"], dict(default=None, help="key-term pops: auto | none | comma list, e.g. 'Saturn,Cassini'")),
+                (["--key-style"], dict(default=None, choices=["pop", "box"])),
+                (["--lines"], dict(type=int, default=None, help="caption lines (2 = European subtitle style)")),
+                (["--cap-box"], dict(action="store_true", help="captions in a translucent dark box")),
+                (["--label"], dict(default=None, help="legal label shown all through, e.g. 'Collaboration commerciale'")),
+                (["--logo"], dict(default=None, help="logo PNG shown top-left")),
+                (["--pos"], dict(type=float, default=None, help="caption height, 0=top 1=bottom (default 0.68; styles set it)")),
                 (["--words"], dict(type=int, default=None, help="max words on screen (default 3)")),
                 (["--hook"], dict(default=None, help="big title shown at the start")),
                 (["--hook-secs"], dict(type=float, default=2.5)),
@@ -571,7 +657,8 @@ def main():
         *tr_opts, *cap_opts, *look_opts, (["--music"], dict(default=None)), (["--music-volume"], dict(default="0.18")),
         (["--bg"], dict(default=None, help="blur | #RRGGBB | image.jpg | video.mp4")),
         (["--punch"], dict(action="store_true", help="jump-zoom in/out at each sentence")),
-        (["--punch-zoom"], dict(type=float, default=1.14)), (["--push"], dict(type=float, default=0.0)),
+        (["--punch-zoom"], dict(type=float, default=None)), (["--push"], dict(type=float, default=0.0)),
+        (["--sponsored"], dict(action="store_true", help="add the country's legal ad label (Werbung, ADV, #ad...)")),
         (["--sfx"], dict(action="store_true", help="pop on hook, whoosh on punch-ins, ding at end")),
         (["--sfx-volume"], dict(type=float, default=0.45)),
         (["--no-cut"], dict(action="store_true")), (["--no-captions"], dict(action="store_true")),

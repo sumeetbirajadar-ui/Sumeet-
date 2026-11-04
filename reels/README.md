@@ -42,6 +42,7 @@ apps and how Instagram ranks Reels are covered in **[GUIDE.md](GUIDE.md)**.
 | `bg --bg blur\|#hex\|img\|video` | Blurs or replaces the background behind the person | MediaPipe selfie segmentation |
 | `styles` / `auto --style french` | 11 editing-style presets (French, Italian, British, Nordic, Hollywood) | |
 | `camera --shots talk --moves handheld,dolly` | Wide/medium/close/extreme shot changes at phrases, centred on the face, + handheld/pan/dolly/pull/orbit moves | OpenCV |
+| `light --light rembrandt` / `lights` | Virtual lighting: key/fill/rim/background/gels + face exposure fix (11 presets, set by each style) | MediaPipe multiclass segmentation |
 | `grade --film 35mm` | Film emulation: halation, bloom, softness, grain, gate weave | ffmpeg |
 | `sfx --cues pop@0.2,whoosh@3` | Places sound effects. `sfx-kit` rebuilds the built-in royalty-free kit in `sfx/` | numpy synthesis |
 

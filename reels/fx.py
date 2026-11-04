@@ -553,3 +553,146 @@ def add_sfx(inp, out, cues, volume=0.55):
     fc.append(f"[0:a]{''.join(labels)}amix=inputs={len(cues) + 1}:duration=first:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11[a]")
     subprocess.run(args + ["-filter_complex", ";".join(fc), "-map", "0:v", "-map", "[a]", "-c:v", "copy",
                            "-c:a", "aac", "-b:a", "192k", "-ar", "48000", str(out)], check=True)
+
+
+# ================================================================ virtual lighting (relight in the edit)
+# Physical setups this imitates (see GUIDE.md section 9). Every preset is a recipe of virtual lights:
+#   key: (side -1 = from viewer's left, +1 = right, 0 = front), height 0..1 (1 = from above), ratio (lit:shadow), colour K
+#   fill: shadow lift 0..1   rim: (strength, colour K)   bg: (dim 0..1, gel colour or None, gel side)
+LIGHTS = {
+    "auto":      dict(desc="Fix only: brings an under- or over-exposed face to a healthy level, leaves good exposure alone",
+                      key=None, fill=0.15, rim=None, bg=(0.0, None, 0)),
+    "creator":   dict(desc="Modern YouTube/Reels look: soft 45-degree key, warm rim for separation, slightly darker background",
+                      key=(-1, 0.6, 2.0, 5000), fill=0.25, rim=(0.35, 3800), bg=(0.18, None, 0)),
+    "loop":      dict(desc="Loop lighting: key 30-45 degrees and a little high - the most flattering everyday portrait light",
+                      key=(-1, 0.7, 2.5, 5200), fill=0.2, rim=(0.2, 5200), bg=(0.1, None, 0)),
+    "rembrandt": dict(desc="Rembrandt: strong 45-degree key, deep shadow side (4:1), moody and cinematic",
+                      key=(-1, 0.75, 4.0, 4800), fill=0.05, rim=(0.3, 4300), bg=(0.35, None, 0)),
+    "butterfly": dict(desc="Butterfly/paramount: frontal key from above - glamour, beauty, even and bright",
+                      key=(0, 0.9, 1.6, 5600), fill=0.35, rim=(0.15, 5600), bg=(0.0, None, 0)),
+    "split":     dict(desc="Split light: 90-degree side key, half the face in shadow - drama, mystery, villain",
+                      key=(-1, 0.5, 6.0, 5000), fill=0.0, rim=(0.25, 6500), bg=(0.45, None, 0)),
+    "window":    dict(desc="Soft daylight from a side window: natural, European arthouse feel",
+                      key=(1, 0.55, 2.2, 5800), fill=0.3, rim=None, bg=(0.05, None, 0)),
+    "golden":    dict(desc="Low warm golden-hour sun from the side + warm rim: Italian summer",
+                      key=(1, 0.4, 2.4, 3400), fill=0.25, rim=(0.45, 3000), bg=(0.08, (255, 170, 90), 1)),
+    "overcast":  dict(desc="Flat soft overcast light, low contrast, cool: British documentary",
+                      key=(0, 0.8, 1.3, 6800), fill=0.45, rim=None, bg=(0.05, None, 0)),
+    "neon":      dict(desc="Two-tone gels: teal background wash + magenta rim - tech, gaming, night creator",
+                      key=(-1, 0.6, 2.0, 5600), fill=0.15, rim=(0.6, (255, 60, 200)), bg=(0.35, (0, 200, 210), 1)),
+    "noir":      dict(desc="Hard side key, black background, cold rim: film noir / thriller",
+                      key=(1, 0.65, 5.0, 4800), fill=0.0, rim=(0.35, 7500), bg=(0.65, None, 0)),
+}
+
+
+def kelvin_rgb(k):
+    """Approximate RGB multiplier (normalised to green) for a colour temperature, 2000-10000 K."""
+    t = k / 100
+    r = 255 if t <= 66 else 329.7 * (t - 60) ** -0.1332
+    g = 99.47 * math.log(t) - 161.12 if t <= 66 else 288.12 * (t - 60) ** -0.0755
+    b = 255 if t >= 66 else (0 if t <= 19 else 138.52 * math.log(t - 10) - 305.04)
+    rgb = np.clip(np.array([r, g, b]), 1, 255)
+    return rgb / rgb[1]
+
+
+def _rgb_of(c):
+    """Colour spec -> linear RGB multiplier: a Kelvin number or an (R,G,B) tuple."""
+    if isinstance(c, (int, float)):
+        return kelvin_rgb(c)
+    v = np.array(c, float) / 255
+    return v / max(v.max(), 1e-6)
+
+
+def relight(inp, out, preset="creator", strength=1.0, side=None, target_face=0.5, smooth=0.6):
+    """Relight a person in the edit using MediaPipe's multiclass segmentation (background/hair/skin/face/clothes).
+    The face mask locates the face every frame, so the virtual key light follows the person.
+    Light maps are computed at quarter resolution (light is smooth) and gamma is done with lookup tables."""
+    import cv2, mediapipe as mp
+    from mediapipe.tasks.python import vision, BaseOptions
+    P = LIGHTS[preset]
+    seg = vision.ImageSegmenter.create_from_options(vision.ImageSegmenterOptions(
+        base_options=BaseOptions(model_asset_path=str(MODELS / "selfie_multiclass.tflite")),
+        output_confidence_masks=True))
+    cap = cv2.VideoCapture(str(inp))
+    fps = cap.get(cv2.CAP_PROP_FPS) or 30
+    w0, h0 = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    enc = subprocess.Popen(["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "bgr24", "-s", f"{w0}x{h0}",
+        "-r", str(fps), "-i", "-", "-i", str(inp), "-map", "0:v", "-map", "1:a?", "-c:v", "libx264", "-crf", "16",
+        "-preset", "medium", "-pix_fmt", "yuv420p", "-c:a", "copy", "-shortest", str(out)], stdin=subprocess.PIPE)
+    dec = ((np.arange(256) / 255.0) ** 2.2).astype(np.float32)            # sRGB-ish -> linear
+    encl = (np.clip(np.linspace(0, 1, 4096) ** (1 / 2.2), 0, 1) * 255).astype(np.uint8)
+    q = 4                                                                  # light-map downscale
+    lw, lh = w0 // q, h0 // q
+    ys, xs = np.mgrid[0:lh, 0:lw].astype(np.float32) * q
+    bgr = lambda c: _rgb_of(c)[::-1].astype(np.float32)                   # frames are BGR
+    person_prev = face_state = gain_prev = add_prev = None
+    expo_s = 1.0
+    S = strength
+    while True:
+        ok, fr = cap.read()
+        if not ok:
+            break
+        small = cv2.cvtColor(cv2.resize(fr, (lw * 2, lh * 2)), cv2.COLOR_BGR2RGB)
+        ms = seg.segment(mp.Image(image_format=mp.ImageFormat.SRGB, data=np.ascontiguousarray(small))).confidence_masks
+        person = cv2.resize(1 - ms[0].numpy_view()[..., 0], (lw, lh))
+        facem = cv2.resize(ms[3].numpy_view()[..., 0], (lw, lh))
+        person_prev = person if person_prev is None else smooth * person + (1 - smooth) * person_prev
+        pm = cv2.GaussianBlur(np.clip((person_prev - 0.4) / 0.25, 0, 1).astype(np.float32), (0, 0), 1.5)
+        tot = float(facem.sum())
+        if tot > 20:
+            fx, fy = float((facem * xs).sum() / tot), float((facem * ys).sum() / tot)
+            cur = np.array([fx, fy, math.sqrt(tot / math.pi) * q])
+            face_state = cur if face_state is None else 0.8 * face_state + 0.2 * cur
+            # auto exposure from face skin only, with a dead band: well-exposed faces are left alone
+            fs = cv2.resize(fr, (lw, lh)).astype(np.float32).mean(-1) / 255
+            lum = float((fs * facem).sum() / tot)
+            want = 1.0 if 0.38 <= lum <= 0.62 else np.clip(target_face / max(lum, 0.05), 0.7, 1.6) ** 2.2
+            expo_s = 0.9 * expo_s + 0.1 * want
+        fx, fy, rad = face_state if face_state is not None else (w0 / 2, h0 * 0.4, w0 * 0.12)
+        g = np.full((lh, lw, 3), 1.0, np.float32)
+        add = np.zeros((lh, lw, 3), np.float32)
+        g *= 1 + (expo_s - 1) * (0.85 * pm + 0.15)[..., None]
+        if P["key"]:
+            kside, height, ratio, kcol = P["key"]
+            if side is not None:
+                kside = side
+            ratio = 1 + (ratio - 1) * S
+            if kside:
+                lat = np.clip(0.5 + kside * (xs - fx) / (1.1 * rad), 0, 1)
+                lat = lat * lat * (3 - 2 * lat)                              # smoothstep: soft-box falloff
+            else:
+                lat = np.full_like(xs, 0.5)
+            vert = np.clip(0.5 + height * (fy - ys) / (2.5 * rad), 0, 1)
+            shape = lat * (0.7 + 0.3 * vert) if kside else 0.3 + 0.7 * vert
+            lit, shadow = 2 * ratio / (ratio + 1), 2 / (ratio + 1)
+            kg = shadow + (lit - shadow) * shape
+            kg = kg + (1 - kg) * P["fill"]                                  # fill lifts the shadow side
+            kc = 1 + (bgr(kcol) - 1) * 0.5 * S
+            m = pm * 0.8 + 0.2                                              # some key light spills onto the room
+            g *= 1 + (kg[..., None] * kc - 1) * m[..., None]
+        elif P["fill"]:
+            g *= 1 + P["fill"] * 0.3 * pm[..., None]
+        if P["rim"]:
+            rs, rcol = P["rim"]
+            edge = np.clip(pm - cv2.erode(pm, np.ones((5, 5), np.uint8)), 0, 1)
+            edge = cv2.GaussianBlur(edge, (0, 0), 1.2)
+            rim_side = -(P["key"][0] if P["key"] else 1) or 1
+            if side is not None:
+                rim_side = -side or 1
+            sidew = np.clip(0.5 + rim_side * (xs - fx) / (2.5 * rad), 0.2, 1)
+            add += (edge * sidew * rs * S)[..., None] * bgr(rcol) * 0.5
+        dim, gel, gside = P["bg"]
+        bgm = (1 - pm)[..., None]
+        g *= 1 - dim * S * bgm
+        if gel is not None:
+            grad = np.clip(0.5 + gside * (xs - w0 / 2) / w0, 0, 1) ** 1.2
+            add += bgm * (grad[..., None] * 0.22 * S) * bgr(gel)
+        gain_prev = g if gain_prev is None else 0.7 * gain_prev + 0.3 * g      # lights don't flicker
+        add_prev = add if add_prev is None else 0.7 * add_prev + 0.3 * add
+        G = cv2.resize(gain_prev, (w0, h0), interpolation=cv2.INTER_LINEAR)
+        A = cv2.resize(add_prev, (w0, h0), interpolation=cv2.INTER_LINEAR)
+        lin = dec[fr]
+        res = lin * G + A * (0.1 + lin)                                    # additive light scales with what's lit
+        res = np.where(res > 0.85, 0.85 + (res - 0.85) / (1 + (res - 0.85) * 3), res)  # gentle highlight roll-off
+        enc.stdin.write(encl[np.clip(res * 4095, 0, 4095).astype(np.int32)].tobytes())
+    enc.stdin.close(); enc.wait(); cap.release(); seg.close()

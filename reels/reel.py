@@ -14,6 +14,7 @@ One command per editing step, plus `auto` that runs the whole chain:
   grade/looks/luts  mood colour grades (also exported as .cube LUTs)
   motion     punch-in zooms, slow push-in, impact shake
   bg         blur or replace the background behind the person
+  light/lights  virtual relighting: key/fill/rim/background/gels (creator, rembrandt, golden, neon...)
   sfx/sfx-kit  royalty-free sound effects (whoosh, pop, riser, impact...)
   auto       cut -> vertical -> [bg] -> [punch/push] -> [grade] -> audio -> [music] -> [sfx]
              -> captions -> export -> cover   ([..] = optional flags)
@@ -42,51 +43,51 @@ STYLES = {
     "hollywood": dict(desc="US creator/blockbuster: teal-orange, snap jump-zooms, bold caps captions, SFX",
         look="blockbuster", film=None, grain=0, vignette=True, shots="talk", moves=["static", "dolly"], ease=3,
         cut_gap=2.2, font="Poppins ExtraBold", italic=False, upper=True, size=108, highlight="yellow",
-        anim="pop", outline=7, hook_box=True, words=3, sfx=True, margin="0.25s"),
+        anim="pop", outline=7, hook_box=True, words=3, sfx=True, margin="0.25s", light="creator"),
     "french": dict(desc="Modern French arthouse: muted pastel, 35mm film, handheld, slow glides, lowercase serif italics",
         look="parisian", film="35mm", grain=0, vignette=True, shots="minimal", moves=["handheld"], ease=16,
         cut_gap=3.5, font="Cormorant Garamond", italic=True, upper=False, size=112, highlight="cream",
-        anim="fade", outline=2, hook_box=False, words=4, sfx=False, margin="0.4s"),
+        anim="fade", outline=2, hook_box=False, words=4, sfx=False, margin="0.4s", light="window"),
     "french_whimsy": dict(desc="Amelie-style storybook: red/green/amber, playful dolly-ins, serif captions with red accent",
         look="amelie", film="35mm", grain=0, vignette=True, shots="talk", moves=["dolly", "handheld"], ease=8,
         cut_gap=2.8, font="DM Serif Display", italic=True, upper=False, size=104, highlight="red",
-        anim="pop", outline=3, hook_box=False, words=3, sfx=True, margin="0.3s"),
+        anim="pop", outline=3, hook_box=False, words=3, sfx=True, margin="0.3s", light="loop"),
     "nouvelle_vague": dict(desc="French New Wave: silvery B&W 16mm, tight jump cuts, handheld, minimal serif text",
         look="nouvelle_vague", film="16mm", grain=0, vignette=False, shots=["wide", "close"], moves=["handheld"],
         ease=1, cut_gap=2.0, font="Cormorant Garamond", italic=False, upper=False, size=104, highlight="white",
-        anim="fade", outline=3, hook_box=False, words=4, sfx=False, margin="0.12s"),
+        anim="fade", outline=3, hook_box=False, words=4, sfx=False, margin="0.12s", light="window"),
     "italian": dict(desc="Italian summer: golden 35mm warmth, gliding dolly and pan moves, elegant Playfair italics in gold",
         look="italian_summer", film="35mm", grain=0, vignette=True, shots="minimal", moves=["dolly", "pan"], ease=18,
         cut_gap=3.2, font="Playfair Display", italic=True, upper=False, size=100, highlight="gold",
-        anim="fade", outline=2, hook_box=False, words=3, sfx=False, margin="0.35s"),
+        anim="fade", outline=2, hook_box=False, words=3, sfx=False, margin="0.35s", light="golden"),
     "italian_baroque": dict(desc="Sorrentino-style grandeur: rich deep colour, slow orbits and pull-outs, dramatic shot changes",
         look="dolce_vita", film="35mm", grain=0, vignette=True, shots="drama", moves=["orbit", "pull", "dolly"],
         ease=16, cut_gap=3.0, font="Playfair Display", italic=False, upper=True, size=96, highlight="gold",
-        anim="fade", outline=2, hook_box=False, words=3, sfx=True, margin="0.3s"),
+        anim="fade", outline=2, hook_box=False, words=3, sfx=True, margin="0.3s", light="rembrandt"),
     "neorealismo": dict(desc="Italian neorealism: gritty B&W, handheld street realism, no frills",
         look="neorealismo", film="16mm", grain=0, vignette=True, shots="minimal", moves=["handheld"], ease=2,
         cut_gap=3.0, font="Playfair Display", italic=False, upper=False, size=100, highlight="white",
-        anim="fade", outline=3, hook_box=False, words=4, sfx=False, margin="0.3s"),
+        anim="fade", outline=3, hook_box=False, words=4, sfx=False, margin="0.3s", light="overcast"),
     "british": dict(desc="BBC-documentary British: overcast cool grade, measured cuts, handheld, clean sentence-case captions",
         look="british_drama", film=None, grain=5, vignette=False, shots="talk", moves=["handheld", "static"], ease=3,
         cut_gap=3.0, font="Montserrat", italic=False, upper=False, size=96, highlight="white",
-        anim="fade", outline=4, hook_box=True, words=4, sfx=False, margin="0.3s"),
+        anim="fade", outline=4, hook_box=True, words=4, sfx=False, margin="0.3s", light="overcast"),
     "peaky": dict(desc="British period drama: smoky selective colour, gold highlights, slow push/pull, bold condensed titles",
         look="peaky", film="35mm", grain=0, vignette=True, shots="drama", moves=["dolly", "pull", "static"], ease=10,
         cut_gap=3.0, font="Bebas Neue", italic=False, upper=True, size=140, highlight="gold",
-        anim="fade", outline=4, hook_box=False, words=3, sfx=True, margin="0.3s"),
+        anim="fade", outline=4, hook_box=False, words=3, sfx=True, margin="0.3s", light="rembrandt"),
     "ritchie": dict(desc="British crime-caper: bleached contrast, snap zooms, whip pans, impact hits, punchy condensed caps",
         look="ritchie", film=None, grain=8, vignette=True, shots="drama", moves=["static", "pan", "static", "orbit"],
         ease=2, cut_gap=1.8, font="Bebas Neue", italic=False, upper=True, size=150, highlight="red",
-        anim="pop", outline=6, hook_box=True, words=2, sfx=True, margin="0.15s"),
+        anim="pop", outline=6, hook_box=True, words=2, sfx=True, margin="0.15s", light="split"),
     "nordic": dict(desc="Scandinavian minimal: cold airy grade, still frames with slow pans, lots of space, lowercase sans",
         look="scandi", film=None, grain=3, vignette=False, shots="minimal", moves=["static", "pan"], ease=20,
         cut_gap=4.0, font="Montserrat", italic=False, upper=False, size=90, highlight="ice",
-        anim="fade", outline=2, hook_box=False, words=4, sfx=False, margin="0.35s"),
+        anim="fade", outline=2, hook_box=False, words=4, sfx=False, margin="0.35s", light="window"),
 }
-STYLE_KEYS = ["look", "film", "grain", "vignette", "shots", "moves", "ease", "cut_gap", "font", "italic", "upper",
+STYLE_KEYS = ["light", "look", "film", "grain", "vignette", "shots", "moves", "ease", "cut_gap", "font", "italic", "upper",
               "size", "highlight", "anim", "outline", "hook_box", "words", "sfx", "margin"]
-BASE = dict(look=None, film=None, grain=0, vignette=False, shots=None, moves=["static"], ease=3, cut_gap=2.2,
+BASE = dict(light=None, look=None, film=None, grain=0, vignette=False, shots=None, moves=["static"], ease=3, cut_gap=2.2,
             font=None, italic=False, upper=True, size=None, highlight="yellow", anim="pop", outline=7,
             hook_box=True, words=3, sfx=False, margin="0.25s")
 
@@ -235,7 +236,8 @@ def cmd_audio(a):
 
 def cmd_music(a):
     """Music under the voice; it ducks automatically whenever someone speaks."""
-    fc = (f"[1:a]volume={a.volume},aloop=loop=-1:size=2e9[m];"
+    # Carve a small mid-range "pocket" in the music (1-4 kHz) so the voice sits on top of it, as mixers do.
+    fc = (f"[1:a]volume={a.volume},equalizer=f=2200:t=q:w=1.1:g=-5,aloop=loop=-1:size=2e9[m];"
           f"[0:a]asplit[v][sc];[m][sc]sidechaincompress=threshold=0.02:ratio=10:attack=15:release=350[md];"
           f"[v][md]amix=inputs=2:duration=first:normalize=0,afade=t=out:st={probe(a.input)['dur'] - 1.5:.2f}:d=1.5,{LOUD}[a]")
     run(["ffmpeg", "-y", "-v", "error", "-i", a.input, "-i", a.music, "-filter_complex", fc,
@@ -435,6 +437,11 @@ def cmd_auto(a):
     if a.bg:
         fx.background(cur, work / "2b_bg.mp4", a.bg)
         cur = work / "2b_bg.mp4"
+    if a.light and a.light != "none":
+        print(f"  light {a.light}: {fx.LIGHTS[a.light]['desc']}")
+        fx.relight(cur, work / "2b2_light.mp4", a.light, strength=a.light_strength,
+                   side={"left": -1, "right": 1, "front": 0}.get(a.light_side))
+        cur = work / "2b2_light.mp4"
     shots = a.shots or ("punch" if a.punch else None)
     punches = fx.punch_times(words, min_gap=a.cut_gap) if shots else []
     if shots or a.push or a.moves != ["static"]:
@@ -518,6 +525,12 @@ def main():
                  (["--vignette"], dict(action="store_true"))]
     add("grade", lambda a: fx.grade(a.input, a.output, a.look, a.lut, a.strength, a.grain or 0, a.vignette, a.film),
         *io, *look_opts)
+    light_opts = [(["--light"], dict(default=None, choices=list(fx.LIGHTS) + ["none"], help="virtual lighting preset (see `lights`)")),
+                  (["--light-strength"], dict(type=float, default=1.0)),
+                  (["--light-side"], dict(default=None, choices=["left", "right", "front"], help="where the key light comes from"))]
+    add("lights", lambda a: [print(f"  {k:10} {v['desc']}") for k, v in fx.LIGHTS.items()])
+    add("light", lambda a: fx.relight(a.input, a.output, a.light or "creator", a.light_strength,
+                                      {"left": -1, "right": 1, "front": 0}.get(a.light_side)), *io, *light_opts)
     add("styles", lambda a: [print(f"  {k:16} {v['desc']}") for k, v in STYLES.items()])
     cam_opts = [(["--shots"], dict(default=None, help="talk | punch | drama | minimal, or a list: wide,close,medium")),
                 (["--moves"], dict(default=None, help="cycled per shot: handheld,pan,dolly,pull,orbit,static")),
@@ -551,6 +564,7 @@ def main():
         (["--volume"], dict(type=float, default=0.55)))
     add("auto", cmd_auto, (["input"], {}), (["output"], dict(nargs="?", default=None)), *cut_opts, *vert_opts,
         (["--style"], dict(default=None, choices=list(STYLES), help="editing style preset (see `styles`)")), *cam_opts,
+        *light_opts,
         (["--font"], dict(default=None, help="caption font family name")),
         *tr_opts, *cap_opts, *look_opts, (["--music"], dict(default=None)), (["--music-volume"], dict(default="0.18")),
         (["--bg"], dict(default=None, help="blur | #RRGGBB | image.jpg | video.mp4")),

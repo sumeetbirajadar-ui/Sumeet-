@@ -292,6 +292,19 @@ def _wrap2(text, line_chars):
     return text[:cut] + "\\N" + text[cut + 1:]
 
 
+def wrap_lines(text, max_chars):
+    """Greedy word wrap into lines of at most max_chars (ASS WrapStyle 2 never wraps by itself)."""
+    lines, cur = [], ""
+    for w in text.split():
+        if cur and len(cur) + 1 + len(w) > max_chars:
+            lines.append(cur); cur = w
+        else:
+            cur = (cur + " " + w).strip()
+    if cur:
+        lines.append(cur)
+    return "\\N".join(lines)
+
+
 def pick_keywords(words, spec, min_gap=2.5, after=0.0):
     """Words to 'pop' big on screen: numbers, proper nouns mid-sentence, long technical words,
     or an explicit comma list. Spaced out so it never becomes visual noise."""
@@ -376,7 +389,9 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
     if getattr(a, "label", None):   # legal sponsorship label, visible the whole time (FR/IT/DE/UK rules)
         ev.append(f"Dialogue: 3,{ass_time(0)},{ass_time(dur_end)},Label,,0,0,0,,{{\\pos(60,{getattr(a, 'label_y', 300)})}}{a.label}")
     if a.hook:
-        hook = fix(a.hook)
+        hook_size = int(size * 1.05)
+        # width budget: ~0.56 em per character for these bold fonts, inside 70 px side margins
+        hook = wrap_lines(fix(a.hook), max(8, int((W - 200) / (hook_size * (0.62 if case == "upper" else 0.54)))))
         ev.append(f"Dialogue: 1,{ass_time(0)},{ass_time(a.hook_secs)},Hook,,0,0,0,,"
                   f"{{\\fad(150,250)\\3c&H00000000&\\1c&H00FFFFFF&}}{hook}")
     caps = []

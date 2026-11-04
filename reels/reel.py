@@ -378,7 +378,7 @@ ScaledBorderAndShadow: yes
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 Style: Cap,{font},{size},{base_col},&H00FFFFFF,{cap_back if cap_box else '&H00000000'},{cap_back},-1,{italic},0,0,100,100,{1 if script == 'latin' and not cap_box else 0},0,{cap_border},2,90,90,{margin_v},1
 Style: Hook,{font},{int(size * 1.05)},&H00FFFFFF,&H00FFFFFF,&H00000000,{'&H00000000' if hook_box else '&H78000000'},-1,{italic},0,0,100,100,0,0,{3 if hook_box else 1},{26 if hook_box else 2},{0 if hook_box else 6},8,70,70,330,1
-Style: Key,{font},{int(size * 1.9)},{'&H00101010' if key_box else '&H0000E6FF'},&H00FFFFFF,{'&H0000E6FF' if key_box else '&H00000000'},&H96000000,-1,0,0,0,100,100,0,0,{'3,18,0' if key_box else '1,9,4'},5,60,60,0,1
+Style: Key,{font},{int(size * 1.9)},{'&H00101010' if key_box else '&H0000E6FF'},&H00FFFFFF,{'&H0000E6FF' if key_box else '&H00000000'},&H96000000,-1,0,0,0,100,100,0,0,{'3,18,0' if key_box else '1,9,4'},2,60,60,0,1
 Style: Label,Montserrat,46,&H00FFFFFF,&H00FFFFFF,&H50000000,&H50000000,-1,0,0,0,100,100,0,0,3,10,0,7,60,60,0,1
 
 [Events]
@@ -418,10 +418,12 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
     ev += [f"Dialogue: 0,{ass_time(s)},{ass_time(e)},Cap,,0,0,0,,{t}" for s, e, t in caps if e > s]
     # Keyword pops: the French/Spanish science-creator habit of slamming the key term big on screen.
     a._key_times = []
+    # bottom of the keyword = just above the top of the (possibly 2-line) subtitle block, so they never collide
+    key_bottom = int(H * a.pos - lines * size * 1.3 - (40 if cap_box else 24))
     for w in pick_keywords(data["words"], getattr(a, "keywords", None), after=a.hook_secs + 0.3 if a.hook else 0):
         t = _wrap2(re.sub(r"[,.;:!?]+$", "", w["w"]).upper(), 12)   # long names go on two lines
         ev.append(f"Dialogue: 2,{ass_time(w['s'])},{ass_time(w['s'] + 1.0)},Key,,0,0,0,,"
-                  f"{{\\pos({W // 2},{int(H * (a.pos - 0.075))})\\fscx60\\fscy60\\t(0,120,\\fscx100\\fscy100)\\fad(0,200)}}{t}")
+                  f"{{\\pos({W // 2},{key_bottom})\\fscx60\\fscy60\\t(0,120,\\fscx100\\fscy100)\\fad(0,200)}}{t}")
         a._key_times.append(w["s"])
     return head + "\n".join(ev) + "\n"
 

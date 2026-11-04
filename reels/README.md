@@ -7,6 +7,9 @@ clean voice, word-by-word captions, a hook title, a progress bar, and a cover im
 ```bash
 bash reels/setup.sh                       # once per session (the container resets)
 python3 reels/reel.py auto raw.mp4 --hook "3 habits of KCET toppers" --progress
+# European styles: french, french_whimsy, nouvelle_vague, italian, italian_baroque, neorealismo,
+#                  british, peaky, ritchie, nordic   (plus hollywood) - see `reel.py styles`
+python3 reels/reel.py auto raw.mp4 --style italian --hook "la fisica dell'estate"
 # everything on: background swap, jump zooms, teal-orange grade, sound effects
 python3 reels/reel.py auto raw.mp4 --hook "..." --progress --bg studio.jpg --punch --look blockbuster --vignette --sfx --music bed.mp3
 # -> raw_reel.mp4, raw_reel.cover.jpg, raw_reel_work/ (steps + words.json)
@@ -14,6 +17,8 @@ python3 reels/reel.py auto raw.mp4 --hook "..." --progress --bg studio.jpg --pun
 
 If a caption word is wrong, fix it in `raw_reel_work/words.json` and run the same
 command again. Your fixed transcript is kept, so only the render runs again.
+
+**Start with [MASTER.md](MASTER.md)**: every command, the style chooser and checklists (or type `/reel` in Claude Code).
 
 Music libraries, colour grading by mood, camera moves, background tips, editing
 apps and how Instagram ranks Reels are covered in **[GUIDE.md](GUIDE.md)**.
@@ -35,6 +40,9 @@ apps and how Instagram ranks Reels are covered in **[GUIDE.md](GUIDE.md)**.
 | `luts` / `looks` | Writes the looks as `.cube` files in `luts/` (for CapCut/Resolve too) / lists them | numpy |
 | `motion` | Punch-in jump zooms at each phrase, slow push-in, impact shake | OpenCV |
 | `bg --bg blur\|#hex\|img\|video` | Blurs or replaces the background behind the person | MediaPipe selfie segmentation |
+| `styles` / `auto --style french` | 11 editing-style presets (French, Italian, British, Nordic, Hollywood) | |
+| `camera --shots talk --moves handheld,dolly` | Wide/medium/close/extreme shot changes at phrases, centred on the face, + handheld/pan/dolly/pull/orbit moves | OpenCV |
+| `grade --film 35mm` | Film emulation: halation, bloom, softness, grain, gate weave | ffmpeg |
 | `sfx --cues pop@0.2,whoosh@3` | Places sound effects. `sfx-kit` rebuilds the built-in royalty-free kit in `sfx/` | numpy synthesis |
 
 Useful options: `--lang kn` (Kannada) or `--lang hi` (Hindi) switch the font

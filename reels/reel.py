@@ -32,6 +32,79 @@ YUNET = Path.home() / ".cache/reels/yunet.onnx"
 # Caption fonts per script. Latin captions are uppercased; Indic ones are not.
 FONTS = {"latin": "Poppins ExtraBold", "kn": "Noto Sans Kannada", "hi": "Noto Sans Devanagari"}
 
+# ASS colours are &HAABBGGRR
+HIGHLIGHTS = {"yellow": "&H0000E6FF", "green": "&H0050FF7A", "red": "&H002828D6", "cyan": "&H00FFE600",
+              "gold": "&H0042C5F5", "cream": "&H00C8E6F5", "ice": "&H00FFE7BD", "white": "&H00FFFFFF"}
+
+# Editing styles: one flag sets look + film stock + shot grammar + camera moves + pacing + typography + sound.
+# Each is a starting point; any explicit flag on the command line wins.
+STYLES = {
+    "hollywood": dict(desc="US creator/blockbuster: teal-orange, snap jump-zooms, bold caps captions, SFX",
+        look="blockbuster", film=None, grain=0, vignette=True, shots="talk", moves=["static", "dolly"], ease=3,
+        cut_gap=2.2, font="Poppins ExtraBold", italic=False, upper=True, size=108, highlight="yellow",
+        anim="pop", outline=7, hook_box=True, words=3, sfx=True, margin="0.25s"),
+    "french": dict(desc="Modern French arthouse: muted pastel, 35mm film, handheld, slow glides, lowercase serif italics",
+        look="parisian", film="35mm", grain=0, vignette=True, shots="minimal", moves=["handheld"], ease=16,
+        cut_gap=3.5, font="Cormorant Garamond", italic=True, upper=False, size=112, highlight="cream",
+        anim="fade", outline=2, hook_box=False, words=4, sfx=False, margin="0.4s"),
+    "french_whimsy": dict(desc="Amelie-style storybook: red/green/amber, playful dolly-ins, serif captions with red accent",
+        look="amelie", film="35mm", grain=0, vignette=True, shots="talk", moves=["dolly", "handheld"], ease=8,
+        cut_gap=2.8, font="DM Serif Display", italic=True, upper=False, size=104, highlight="red",
+        anim="pop", outline=3, hook_box=False, words=3, sfx=True, margin="0.3s"),
+    "nouvelle_vague": dict(desc="French New Wave: silvery B&W 16mm, tight jump cuts, handheld, minimal serif text",
+        look="nouvelle_vague", film="16mm", grain=0, vignette=False, shots=["wide", "close"], moves=["handheld"],
+        ease=1, cut_gap=2.0, font="Cormorant Garamond", italic=False, upper=False, size=104, highlight="white",
+        anim="fade", outline=3, hook_box=False, words=4, sfx=False, margin="0.12s"),
+    "italian": dict(desc="Italian summer: golden 35mm warmth, gliding dolly and pan moves, elegant Playfair italics in gold",
+        look="italian_summer", film="35mm", grain=0, vignette=True, shots="minimal", moves=["dolly", "pan"], ease=18,
+        cut_gap=3.2, font="Playfair Display", italic=True, upper=False, size=100, highlight="gold",
+        anim="fade", outline=2, hook_box=False, words=3, sfx=False, margin="0.35s"),
+    "italian_baroque": dict(desc="Sorrentino-style grandeur: rich deep colour, slow orbits and pull-outs, dramatic shot changes",
+        look="dolce_vita", film="35mm", grain=0, vignette=True, shots="drama", moves=["orbit", "pull", "dolly"],
+        ease=16, cut_gap=3.0, font="Playfair Display", italic=False, upper=True, size=96, highlight="gold",
+        anim="fade", outline=2, hook_box=False, words=3, sfx=True, margin="0.3s"),
+    "neorealismo": dict(desc="Italian neorealism: gritty B&W, handheld street realism, no frills",
+        look="neorealismo", film="16mm", grain=0, vignette=True, shots="minimal", moves=["handheld"], ease=2,
+        cut_gap=3.0, font="Playfair Display", italic=False, upper=False, size=100, highlight="white",
+        anim="fade", outline=3, hook_box=False, words=4, sfx=False, margin="0.3s"),
+    "british": dict(desc="BBC-documentary British: overcast cool grade, measured cuts, handheld, clean sentence-case captions",
+        look="british_drama", film=None, grain=5, vignette=False, shots="talk", moves=["handheld", "static"], ease=3,
+        cut_gap=3.0, font="Montserrat", italic=False, upper=False, size=96, highlight="white",
+        anim="fade", outline=4, hook_box=True, words=4, sfx=False, margin="0.3s"),
+    "peaky": dict(desc="British period drama: smoky selective colour, gold highlights, slow push/pull, bold condensed titles",
+        look="peaky", film="35mm", grain=0, vignette=True, shots="drama", moves=["dolly", "pull", "static"], ease=10,
+        cut_gap=3.0, font="Bebas Neue", italic=False, upper=True, size=140, highlight="gold",
+        anim="fade", outline=4, hook_box=False, words=3, sfx=True, margin="0.3s"),
+    "ritchie": dict(desc="British crime-caper: bleached contrast, snap zooms, whip pans, impact hits, punchy condensed caps",
+        look="ritchie", film=None, grain=8, vignette=True, shots="drama", moves=["static", "pan", "static", "orbit"],
+        ease=2, cut_gap=1.8, font="Bebas Neue", italic=False, upper=True, size=150, highlight="red",
+        anim="pop", outline=6, hook_box=True, words=2, sfx=True, margin="0.15s"),
+    "nordic": dict(desc="Scandinavian minimal: cold airy grade, still frames with slow pans, lots of space, lowercase sans",
+        look="scandi", film=None, grain=3, vignette=False, shots="minimal", moves=["static", "pan"], ease=20,
+        cut_gap=4.0, font="Montserrat", italic=False, upper=False, size=90, highlight="ice",
+        anim="fade", outline=2, hook_box=False, words=4, sfx=False, margin="0.35s"),
+}
+STYLE_KEYS = ["look", "film", "grain", "vignette", "shots", "moves", "ease", "cut_gap", "font", "italic", "upper",
+              "size", "highlight", "anim", "outline", "hook_box", "words", "sfx", "margin"]
+BASE = dict(look=None, film=None, grain=0, vignette=False, shots=None, moves=["static"], ease=3, cut_gap=2.2,
+            font=None, italic=False, upper=True, size=None, highlight="yellow", anim="pop", outline=7,
+            hook_box=True, words=3, sfx=False, margin="0.25s")
+
+
+def resolve_style(a):
+    """Fill every option the user didn't set from the chosen style, then from BASE."""
+    st = STYLES.get(getattr(a, "style", None) or "", {})
+    for k in STYLE_KEYS:
+        cur = getattr(a, k, None)
+        # None = not given; False = an on/off flag that wasn't switched on, so the style may switch it on
+        if cur is None or (cur is False and st.get(k)):
+            setattr(a, k, st.get(k, BASE[k]))
+    if isinstance(a.moves, str):
+        a.moves = a.moves.split(",")
+    if isinstance(a.shots, str) and "," in a.shots:
+        a.shots = a.shots.split(",")
+    return a
+
 
 def run(cmd, **kw):
     print("  $", " ".join(str(c) for c in cmd)[:300], flush=True)
@@ -50,7 +123,7 @@ def probe(path):
 # ---------------------------------------------------------------- cut
 def cmd_cut(a):
     """Drop silent stretches but keep a margin so word endings are never clipped."""
-    run(["auto-editor", a.input, "--edit", f"audio:threshold={a.threshold}", "--margin", a.margin,
+    run(["auto-editor", a.input, "--edit", f"audio:threshold={a.threshold}", "--margin", a.margin or "0.25s",
          "--no-open", "--progress", "none", "-o", a.output])
 
 
@@ -210,11 +283,17 @@ def group_words(words, max_words, max_chars):
 def build_ass(data, a):
     lang = data.get("lang", "en")
     script = lang if lang in FONTS else "latin"
-    font = a.font or FONTS[script]
-    upper = script == "latin" and not a.no_upper
-    # ASS colours are &HAABBGGRR
-    hl = {"yellow": "&H0000E6FF", "green": "&H0050FF7A", "red": "&H004040FF", "cyan": "&H00FFE600"}[a.highlight]
+    # Indic scripts always use their Noto font; style fonts only apply to Latin text.
+    font = (getattr(a, "font", None) or FONTS["latin"]) if script == "latin" else FONTS[script]
+    upper = script == "latin" and not getattr(a, "no_upper", False) and getattr(a, "upper", True)
+    italic = -1 if getattr(a, "italic", False) and script == "latin" else 0
+    hl = HIGHLIGHTS[getattr(a, "highlight", None) or "yellow"]
+    a.words = getattr(a, "words", None) or 3
     size = a.size or (108 if script == "latin" else 96)
+    outline = getattr(a, "outline", None) or 7
+    shadow = 3 if outline >= 5 else 5        # thin-outline (elegant) styles lean on a soft shadow instead
+    anim = getattr(a, "anim", None) or "pop"
+    hook_box = getattr(a, "hook_box", True)
     margin_v = int(H * (1 - a.pos))  # distance from bottom
     # NB: letter-spacing must stay 0 for Kannada/Devanagari or libass breaks the vowel signs apart.
     head = f"""[Script Info]
@@ -226,8 +305,8 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Cap,{font},{size},&H00FFFFFF,&H00FFFFFF,&H00000000,&H96000000,-1,0,0,0,100,100,{1 if script == 'latin' else 0},0,1,7,3,2,90,90,{margin_v},1
-Style: Hook,{FONTS['latin'] if script == 'latin' else font},{int(size * 1.05)},&H00FFFFFF,&H00FFFFFF,&H00000000,&H00000000,-1,0,0,0,100,100,0,0,3,26,0,8,70,70,330,1
+Style: Cap,{font},{size},&H00FFFFFF,&H00FFFFFF,&H00000000,&H96000000,-1,{italic},0,0,100,100,{1 if script == 'latin' else 0},0,1,{outline},{shadow},2,90,90,{margin_v},1
+Style: Hook,{font},{int(size * 1.05)},&H00FFFFFF,&H00FFFFFF,&H00000000,{'&H00000000' if hook_box else '&H78000000'},-1,{italic},0,0,100,100,0,0,{3 if hook_box else 1},{26 if hook_box else 2},{0 if hook_box else 6},8,70,70,330,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -245,7 +324,12 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             end = g[i + 1]["s"] if i + 1 < len(g) else w["e"] + 0.3
             parts = [f"{{\\1c{hl}&\\fscx112\\fscy112}}{t}{{\\1c&H00FFFFFF&\\fscx100\\fscy100}}" if j == i else t
                      for j, t in enumerate(toks)]
-            pop = "{\\fscx80\\fscy80\\t(0,90,\\fscx100\\fscy100)}" if i == 0 else ""
+            if i:
+                pop = ""
+            elif anim == "fade":   # European styles: words breathe in, no bounce
+                pop = "{\\fad(180,0)}"
+            else:
+                pop = "{\\fscx80\\fscy80\\t(0,90,\\fscx100\\fscy100)}"
             caps.append([w["s"], end, pop + " ".join(parts)])
     # Never let two caption lines share the screen: cut each one off where the next begins.
     for k in range(len(caps) - 1):
@@ -274,6 +358,8 @@ def cmd_captions(a):
 def cmd_export(a):
     p = probe(a.input)
     vf = f"scale={W}:{H}:force_original_aspect_ratio=decrease:flags=lanczos,pad={W}:{H}:(ow-iw)/2:(oh-ih)/2,fps={FPS},format=yuv420p"
+    if getattr(a, "grain", 0):
+        vf += f",noise=c0s={int(a.grain)}:c0f=t+u:c1s={int(a.grain) // 3}:c1f=t"
     cmd = ["ffmpeg", "-y", "-v", "error", "-i", a.input, "-vf", vf, "-c:v", "libx264", "-profile:v", "high",
            "-level", "4.2", "-preset", "slow", "-crf", "18", "-maxrate", "12M", "-bufsize", "24M",
            "-g", str(FPS * 2), "-movflags", "+faststart"]
@@ -285,6 +371,17 @@ def cmd_export(a):
     print(f"  {a.output}: {q['w']}x{q['h']}, {q['dur']:.1f}s, {mb:.1f} MB")
     if q["dur"] > 180:
         print("  note: over 3 minutes - Instagram may not show it to non-followers")
+
+
+def cover_font(family):
+    """Pick a .ttf for the cover title that matches the caption family."""
+    d = Path.home() / ".local/share/fonts/reels"
+    for key, f in [("Playfair", "PlayfairDisplay.ttf"), ("Cormorant", "CormorantGaramond.ttf"),
+                   ("DM Serif", "DMSerifDisplay-Regular.ttf"), ("Bebas", "BebasNeue-Regular.ttf"),
+                   ("Montserrat", "Montserrat.ttf")]:
+        if family and key in family and (d / f).exists():
+            return str(d / f)
+    return None
 
 
 def cmd_cover(a):
@@ -318,6 +415,9 @@ def cmd_cover(a):
 
 # ---------------------------------------------------------------- auto
 def cmd_auto(a):
+    resolve_style(a)
+    if a.style:
+        print(f"  style {a.style}: {STYLES[a.style]['desc']}")
     src = Path(a.input)
     out = Path(a.output or src.with_name(src.stem + "_reel.mp4"))
     work = out.with_name(out.stem + "_work")
@@ -335,13 +435,16 @@ def cmd_auto(a):
     if a.bg:
         fx.background(cur, work / "2b_bg.mp4", a.bg)
         cur = work / "2b_bg.mp4"
-    punches = fx.punch_times(words) if a.punch else []
-    if punches or a.push:
-        fx.motion(cur, work / "2c_motion.mp4", punch=punches, punch_zoom=a.punch_zoom, push=a.push)
-        cur = work / "2c_motion.mp4"
-    if a.look or a.lut:
+    shots = a.shots or ("punch" if a.punch else None)
+    punches = fx.punch_times(words, min_gap=a.cut_gap) if shots else []
+    if shots or a.push or a.moves != ["static"]:
+        fx.camera(cur, work / "2c_camera.mp4", cuts=punches, shots=shots or ["wide"], moves=a.moves,
+                  push=a.push, ease_frames=a.ease, punch_zoom=a.punch_zoom if shots == "punch" else None)
+        cur = work / "2c_camera.mp4"
+    if a.look or a.lut or a.film or a.grain or a.vignette:
+        # Grain is random every frame, which makes intermediate files huge - so it is added once, at export.
         fx.grade(cur, work / "2d_grade.mp4", look=a.look, lut=a.lut, strength=a.strength,
-                 grain=a.grain, vignette=a.vignette)
+                 grain=0, vignette=a.vignette, film=a.film, film_grain=False)
         cur = work / "2d_grade.mp4"
     cmd_audio(ns(input=cur, output=work / "3_audio.mp4"))
     cur = work / "3_audio.mp4"
@@ -350,17 +453,23 @@ def cmd_auto(a):
         cur = work / "4_music.mp4"
     if a.sfx:
         cues = [("pop", 0.05)] if a.hook else []          # pop as the hook title lands
-        cues += [("whoosh", max(0, t - 0.15)) for t in punches]  # whoosh into each punch-in
+        if a.ease <= 4:  # snappy styles: whoosh into each snap; smooth European styles stay quiet
+            cues += [("whoosh", max(0, t - 0.15)) for t in punches]
+        if a.style in ("ritchie", "peaky"):  # caper/period: a low hit on every second cut
+            cues += [("impact", t) for t in punches[1::2]]
         cues.append(("ding", max(0, probe(cur)["dur"] - 1.6)))   # soft ding on the call to action
         fx.add_sfx(cur, work / "4b_sfx.mp4", cues, volume=a.sfx_volume)
         cur = work / "4b_sfx.mp4"
     if not a.no_captions:
-        cmd_captions(ns(input=cur, output=work / "5_captions.mp4", words_json=words, font=None,
-                        highlight=a.highlight, size=None, pos=a.pos, words=a.words, chars=18, no_upper=False,
+        cmd_captions(ns(input=cur, output=work / "5_captions.mp4", words_json=words, font=a.font,
+                        highlight=a.highlight, size=a.size, pos=a.pos, words=a.words, chars=18, no_upper=not a.upper,
+                        upper=a.upper, italic=a.italic, anim=a.anim, outline=a.outline, hook_box=a.hook_box,
                         hook=a.hook, hook_secs=a.hook_secs, progress=a.progress))
         cur = work / "5_captions.mp4"
-    cmd_export(ns(input=cur, output=out))
-    cmd_cover(ns(input=out, output=out.with_suffix(".cover.jpg"), time=a.cover_time, title=a.hook, font_file=None))
+    grain = (a.grain or 0) + (fx.FILM_STOCKS[a.film]["grain"] if a.film else 0)
+    cmd_export(ns(input=cur, output=out, grain=grain))
+    cmd_cover(ns(input=out, output=out.with_suffix(".cover.jpg"), time=a.cover_time, title=a.hook,
+                  font_file=cover_font(a.font)))
     print(f"\nDone: {out}\n  working files + editable transcript: {work}/")
 
 
@@ -377,15 +486,15 @@ def main():
 
     io = [(["input"], {}), (["output"], {})]
     cut_opts = [(["--threshold"], dict(default="0.04", help="loudness below this is silence (0-1)")),
-                (["--margin"], dict(default="0.25s", help="padding kept around speech"))]
+                (["--margin"], dict(default=None, help="padding kept around speech (default 0.25s; styles change it)"))]
     vert_opts = [(["--mode"], dict(default="face", choices=["face", "blur", "crop"])),
                  (["--zoom"], dict(type=float, default=1.0, help="face mode: >1 crops tighter"))]
     tr_opts = [(["--model"], dict(default="small", help="tiny/base/small/medium/large-v3")),
                (["--lang"], dict(default=None, help="en, hi, kn ... (auto-detect if omitted)")),
                (["--prompt"], dict(default=None, help="spellings to expect, e.g. 'KCET, NEET, Newton'"))]
-    cap_opts = [(["--highlight"], dict(default="yellow", choices=["yellow", "green", "red", "cyan"])),
+    cap_opts = [(["--highlight"], dict(default=None, choices=list(HIGHLIGHTS))),
                 (["--pos"], dict(type=float, default=0.68, help="caption height, 0=top 1=bottom")),
-                (["--words"], dict(type=int, default=3, help="max words on screen")),
+                (["--words"], dict(type=int, default=None, help="max words on screen (default 3)")),
                 (["--hook"], dict(default=None, help="big title shown at the start")),
                 (["--hook-secs"], dict(type=float, default=2.5)),
                 (["--progress"], dict(action="store_true", help="thin progress bar at the top"))]
@@ -404,9 +513,25 @@ def main():
     look_opts = [(["--look"], dict(default=None, choices=list(fx.LOOKS), help="mood colour grade")),
                  (["--lut"], dict(default=None, help="any .cube LUT file instead of a built-in look")),
                  (["--strength"], dict(type=float, default=1.0, help="look strength 0-1")),
-                 (["--grain"], dict(type=int, default=0, help="film grain, try 6-12")),
+                 (["--grain"], dict(type=int, default=None, help="film grain, try 6-12")),
+                 (["--film"], dict(default=None, choices=list(fx.FILM_STOCKS), help="film emulation: halation, bloom, grain, gate weave")),
                  (["--vignette"], dict(action="store_true"))]
-    add("grade", lambda a: fx.grade(a.input, a.output, a.look, a.lut, a.strength, a.grain, a.vignette), *io, *look_opts)
+    add("grade", lambda a: fx.grade(a.input, a.output, a.look, a.lut, a.strength, a.grain or 0, a.vignette, a.film),
+        *io, *look_opts)
+    add("styles", lambda a: [print(f"  {k:16} {v['desc']}") for k, v in STYLES.items()])
+    cam_opts = [(["--shots"], dict(default=None, help="talk | punch | drama | minimal, or a list: wide,close,medium")),
+                (["--moves"], dict(default=None, help="cycled per shot: handheld,pan,dolly,pull,orbit,static")),
+                (["--ease"], dict(type=int, default=None, help="frames to glide between framings: 2 = snap, 16 = glide")),
+                (["--cut-gap"], dict(type=float, default=None, help="min seconds between shot changes"))]
+    add("camera", lambda a: fx.camera(a.input, a.output,
+                                      cuts=fx.punch_times(a.words_json, a.cut_gap or 2.2) if a.words_json else
+                                      [float(x) for x in (a.at or "").split(",") if x],
+                                      shots=(a.shots.split(",") if a.shots and "," in a.shots else a.shots or "talk"),
+                                      moves=(a.moves or "static").split(","), push=a.push, ease_frames=a.ease or 3,
+                                      shake=[float(x) for x in (a.shake or "").split(",") if x]),
+        *io, *cam_opts, (["--words-json"], dict(default=None, help="cut at phrase starts from this transcript")),
+        (["--at"], dict(default=None, help="or: cut times, e.g. 2.5,6,9.2")), (["--push"], dict(type=float, default=0.0)),
+        (["--shake"], dict(default=None)))
     add("luts", lambda a: print(f"  .cube files written to {fx.build_luts()}/"))
     add("looks", lambda a: [print(f"  {k:12} {v}") for k, v in fx.LOOKS.items()])
     add("motion", lambda a: fx.motion(a.input, a.output, punch=fx.punch_times(a.punch) if a.punch else
@@ -425,6 +550,8 @@ def main():
         *io, (["--cues"], dict(required=True, help="name@seconds list, e.g. pop@0.1,whoosh@3.2,impact@7")),
         (["--volume"], dict(type=float, default=0.55)))
     add("auto", cmd_auto, (["input"], {}), (["output"], dict(nargs="?", default=None)), *cut_opts, *vert_opts,
+        (["--style"], dict(default=None, choices=list(STYLES), help="editing style preset (see `styles`)")), *cam_opts,
+        (["--font"], dict(default=None, help="caption font family name")),
         *tr_opts, *cap_opts, *look_opts, (["--music"], dict(default=None)), (["--music-volume"], dict(default="0.18")),
         (["--bg"], dict(default=None, help="blur | #RRGGBB | image.jpg | video.mp4")),
         (["--punch"], dict(action="store_true", help="jump-zoom in/out at each sentence")),

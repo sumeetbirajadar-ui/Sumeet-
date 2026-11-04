@@ -197,6 +197,118 @@ favoured: reposts and visible TikTok watermarks are reportedly held back.
 
 ---
 
+## 7. European cinema styles: French, Italian, British, Nordic
+
+European film language is generally **slower, more observational and more natural-light** than the
+US creator style. It uses longer takes, fewer graphics, film texture, and type set like a book
+cover instead of a meme. One `--style` flag sets everything in the table below. The looks are
+*inspired by* the films named; they are not copies of any film's actual grade.
+
+| Style | Colour | Shots and moves | Pace | Captions | Sound |
+|---|---|---|---|---|---|
+| `french` | `parisian`: muted pastel, creamy highlights, cool-grey shadows + 35mm film | wide ↔ medium, **handheld** drift | slow, 3.5 s+ between changes, 16-frame glides | lowercase **Cormorant Garamond italic**, cream | voice and music only |
+| `french_whimsy` | `amelie`: saturated red/green/amber, gold light (Delbonnel-style) | wide/close/medium, **dolly-ins** | lively but smooth | **DM Serif italic**, red accent | light SFX |
+| `nouvelle_vague` | silvery B&W + **16mm** grain/halation | wide ↔ close **jump cuts** (Godard-style), handheld | tight cuts, 0.12 s margins | small lowercase serif | no SFX |
+| `italian` | `italian_summer`: golden natural sunlight, warm greens (Guadagnino-style) + 35mm | wide ↔ medium, **dolly + pan** glides | unhurried, 18-frame glides | **Playfair Display italic**, gold | music-led |
+| `italian_baroque` | `dolce_vita`: deep rich colour, wine shadows, high contrast (Sorrentino-style) | dramatic wide→close→extreme, **orbits, pull-outs** | grand, deliberate | Playfair caps, gold | sparse hits |
+| `neorealismo` | gritty high-contrast B&W + 16mm | handheld, mostly wide | plain | serif, white | none |
+| `british` | `british_drama`: overcast, cool green-grey, desaturated | wide/close/medium, handheld + static | measured, 3 s | **Montserrat** sentence case | none |
+| `peaky` | `peaky`: smoky, only strong colours survive, sepia lean, gold highlights + 35mm | dramatic changes, slow **push / pull** | brooding | **Bebas Neue** caps, gold | impacts on beats |
+| `ritchie` | `ritchie`: half-bleached, brown-gold, crunchy contrast + grain | **snap zooms**, pans, fake orbits | fast, 1.8 s, 2-frame snaps | Bebas caps, 2 words, red | whooshes + impacts |
+| `nordic` | `scandi`: cold, airy, low saturation | static + slow pans, lots of space | very slow, 4 s | lowercase Montserrat, ice blue | none |
+| `hollywood` | `blockbuster` teal-orange | talk pattern, snap jump-zooms | fast, 2.2 s | Poppins ExtraBold caps, yellow | full SFX |
+
+**How the colour works** (colourist order: correct, then look, then film print):
+- *Amélie*'s palette is described as deep red, warm yellow-amber, muted green and cool shadow blue,
+  under soft slightly-yellow light. The `amelie` look does this: green-lean shadows, gold highlights,
+  and extra saturation on reds, greens and yellows.
+- *Call Me By Your Name* relied on natural light and 35mm for a golden sunlit look. `italian_summer`
+  warms the mids, lifts yellow-greens, calms the blues, and adds 35mm texture.
+- *Peaky Blinders* was described by its cinematographer as desaturated except strong primaries,
+  with a slight sepia tint, period-photo-inspired, plus a signature "Peaky gold". The `peaky` look
+  uses *selective saturation*: weak colours are drained and strong ones are kept.
+- Warm looks fade their tint out in the brightest areas, so white walls stay cream, not lemon.
+  Skin hues are protected in every look.
+
+**Film emulation** (`--film 35mm|16mm|super8`), built from the YouTube film-look tutorials.
+It adds softness, **halation** (red-orange glow round bright edges), **bloom** (highlight glow),
+grain, and **gate weave** (the tiny frame wobble of a projector). 16mm and Super 8 push all of these harder.
+
+### Shot sizes and angles
+
+`camera` / `auto --shots` turns one camera into a multi-camera edit, centring every closer shot on
+the speaker's face:
+
+| Shot | Zoom | Use |
+|---|---|---|
+| `wide` | 1.0× | Context, the person + space. Opening and resetting |
+| `medium` | 1.2× | Normal talking |
+| `close` | 1.45× | Emphasis, emotion, "listen to this" |
+| `extreme` | 1.8× | Rare: a single punchline or reaction (drama pattern only) |
+
+Patterns: `talk` (wide→close→medium→close), `punch` (wide↔medium), `drama`
+(medium→close→wide→extreme…), `minimal` (wide↔medium). You can also give your own:
+`--shots wide,close,wide,medium`.
+
+**Digital zoom loses sharpness.** If you'll use close and extreme shots, film in 4K, or at
+least 1080p landscape, so there is resolution to crop into.
+
+### Moving angles
+
+`--moves` is cycled across the shots:
+
+| Move | Feel |
+|---|---|
+| `handheld` | Organic drift and slight roll, like someone holding the phone. French and British realism |
+| `pan` | Slow lateral slide. Italian and Nordic calm |
+| `dolly` | Slow push-in across the shot. Tension, intimacy |
+| `pull` | Pull-out. Reveal, ending, grandeur |
+| `orbit` | Rotate, slide and zoom together, faking a camera circling the subject. Baroque / premium |
+| `static` | Locked off. Authority, comedy timing (Ritchie) |
+
+`--ease` sets how framing changes: 1–3 frames is a cut (Hollywood, Ritchie, New Wave jump cuts),
+10–20 frames is a glide (French, Italian, Nordic).
+
+For **shooting** real camera angles: wide = phone 2–3 m away at chest height; close = 0.8–1 m, eye
+level; low angle = authority; high angle = vulnerability; over-the-shoulder for writing or solving;
+top-down for paper and desk work.
+
+```bash
+python3 reels/reel.py styles                                     # list all style presets
+python3 reels/reel.py auto raw.mp4 --style french --hook "la physique, simplement"
+python3 reels/reel.py auto raw.mp4 --style italian --music piano.mp3 --prompt "Newton"
+python3 reels/reel.py auto raw.mp4 --style ritchie --hook "3 mistakes" --moves static,pan,orbit
+python3 reels/reel.py camera in.mp4 out.mp4 --words-json work/words.json --shots drama --moves dolly,pull --ease 14
+python3 reels/reel.py grade in.mp4 out.mp4 --look peaky --film 35mm --vignette
+```
+
+---
+
+## 8. What the most-watched YouTube editing tutorials teach
+
+I searched YouTube (via yt-dlp) for Reels/Shorts editing, retention, CapCut, Edits, film look and
+software comparisons, and read the transcripts of the most-viewed relevant videos. The lessons are
+condensed below, with where each one lives in this toolkit.
+
+| Video (views) | Key lessons | In the toolkit |
+|---|---|---|
+| Learn By Leo, *How to edit SO good your viewers get addicted* (6.0M) | Match editing to the *experience* viewers want (hanging out vs entertainment). Change what's on screen every few seconds, but don't cut for its own sake. Zoom in for important lines. Keep the eye-trace in the same place across a cut. Captions ≤3 words. Whoosh on movement, **risers before hits**, drones for mystery. Change the music mood per section; pause music abruptly or let it fade to signal a section change | `--style` (pacing per experience), `--shots`, `--words 3`, `sfx --cues riser@x,impact@x`, face-centred framing |
+| vidIQ, *4 Editing Secrets Small Channels Learn Too Late* (1.1M) | **Visual hook** in the first frames (not just spoken). Cut-in / cut-back. Push-in, pull-out, pan and zoom added in the edit. Mix A-roll and B-roll | `--hook`, `--shots talk`, `--moves dolly,pull,pan` |
+| Logan Smith, *How to get retention SO HIGH* (369K) | Structure is **hook → tension → payoff**. The hook states the idea and promises a payoff in <5 s. Build tension with "but / however". Always deliver the payoff. Change music between sections | Script structure (see the Instagram section) |
+| heyDominik, *I Studied 1,000 Hooks* (842K) | People scroll on autopilot, so the first frame needs **context + a curiosity gap**. Challenge a common belief. Keep text small enough for the **safe zone**. Open loops and close them late | `--hook`, safe-zone caption positions |
+| Zeven 7, *Viral Minimal Reel Edits in CapCut* (835K) | Minimal style: clean background, one central object/character/word, soft shadows, eased (cubic) motion, subtle glitch and blur-in | `nordic`/`french` styles, `--ease` glides |
+| Collin Michael, *Advanced CapCut Tutorial* (1.7M) | Keyframes, masks, speed ramps, overlays, sound design | Speed ramps and masks: do in CapCut; the rest is here |
+| Sleepy Charlie, *How to get the film look* (1.4M) | The film look = soft highlights, warmth, grain, halation, bloom. **Correct the colour first**, then add film emulation (e.g. Dehancer) | `--film 35mm` + any look |
+| serr, *Emulating 16mm or 35mm film* (867K) | Node order: exposure/WB → softness → grain → halation → bloom → saturation density → print LUT. Gate weave and film breath for projector feel | `fx.film_filters` follows this order |
+| Justin Brown (Primal Video), *Instagram Edits app tutorials* (100K–2.8M) | Edits: free, made by Instagram, trending audio library, templates, captions, green screen | Finish in Edits after `reel.py` if you want in-app trending audio |
+| Think Media / Nathan, *Best editing software* (200K–880K) | Beginner: CapCut / Edits. Free pro: DaVinci Resolve. Paid pro: Premiere Pro / Final Cut. AI helpers: Descript, OpusClip | See section 5 |
+
+Couldn't read (YouTube rate-limited the session): Ben Claremont's CapCut Reels video,
+Dante Pascarella's *5 Color Grading Secrets*, and the Edits app transcript. Their titles are in
+the search list, and the lessons above overlap heavily with them.
+
+---
+
 ## Sources
 - Music and licensing: [Foxi Music: Reels copyright guide](https://www.foximusic.com/blog/instagram-reels-music-copyright-legal-guide/) ·
   [Music Business Worldwide: Meta Sound Collection](https://musicbusinessworldwide.com/meta-offers-royalty-free-music-library-to-instagram-reels-advertisers) ·

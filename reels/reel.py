@@ -11,12 +11,20 @@ One command per editing step, plus `auto` that runs the whole chain:
   captions   words.json -> animated word-by-word captions, burned in
   export     final Instagram-ready H.264/AAC MP4
   cover      1080x1920 cover image with a title
-  auto       cut -> vertical -> audio (+music) -> transcribe -> captions -> export -> cover
+  grade/looks/luts  mood colour grades (also exported as .cube LUTs)
+  motion     punch-in zooms, slow push-in, impact shake
+  bg         blur or replace the background behind the person
+  sfx/sfx-kit  royalty-free sound effects (whoosh, pop, riser, impact...)
+  auto       cut -> vertical -> [bg] -> [punch/push] -> [grade] -> audio -> [music] -> [sfx]
+             -> captions -> export -> cover   ([..] = optional flags)
 
 Run `python3 reels/reel.py <command> -h` for options.
 """
 import argparse, json, math, os, re, shutil, subprocess, sys, tempfile
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent))
+import fx  # noqa: E402  (colour looks, camera moves, background, SFX)
 
 W, H, FPS = 1080, 1920, 30
 YUNET = Path.home() / ".cache/reels/yunet.onnx"
@@ -321,14 +329,31 @@ def cmd_auto(a):
         cur = work / "1_cut.mp4"
     cmd_vertical(ns(input=cur, output=work / "2_vertical.mp4", mode=a.mode, zoom=a.zoom))
     cur = work / "2_vertical.mp4"
+    words = work / "words.json"
+    if not words.exists():  # keep hand-fixed transcripts between runs
+        cmd_transcribe(ns(input=cur, output=words, model=a.model, lang=a.lang, prompt=a.prompt))
+    if a.bg:
+        fx.background(cur, work / "2b_bg.mp4", a.bg)
+        cur = work / "2b_bg.mp4"
+    punches = fx.punch_times(words) if a.punch else []
+    if punches or a.push:
+        fx.motion(cur, work / "2c_motion.mp4", punch=punches, punch_zoom=a.punch_zoom, push=a.push)
+        cur = work / "2c_motion.mp4"
+    if a.look or a.lut:
+        fx.grade(cur, work / "2d_grade.mp4", look=a.look, lut=a.lut, strength=a.strength,
+                 grain=a.grain, vignette=a.vignette)
+        cur = work / "2d_grade.mp4"
     cmd_audio(ns(input=cur, output=work / "3_audio.mp4"))
     cur = work / "3_audio.mp4"
     if a.music:
         cmd_music(ns(input=cur, output=work / "4_music.mp4", music=a.music, volume=a.music_volume))
         cur = work / "4_music.mp4"
-    words = work / "words.json"
-    if not words.exists():  # keep hand-fixed transcripts between runs
-        cmd_transcribe(ns(input=work / "3_audio.mp4", output=words, model=a.model, lang=a.lang, prompt=a.prompt))
+    if a.sfx:
+        cues = [("pop", 0.05)] if a.hook else []          # pop as the hook title lands
+        cues += [("whoosh", max(0, t - 0.15)) for t in punches]  # whoosh into each punch-in
+        cues.append(("ding", max(0, probe(cur)["dur"] - 1.6)))   # soft ding on the call to action
+        fx.add_sfx(cur, work / "4b_sfx.mp4", cues, volume=a.sfx_volume)
+        cur = work / "4b_sfx.mp4"
     if not a.no_captions:
         cmd_captions(ns(input=cur, output=work / "5_captions.mp4", words_json=words, font=None,
                         highlight=a.highlight, size=None, pos=a.pos, words=a.words, chars=18, no_upper=False,
@@ -376,8 +401,36 @@ def main():
     add("export", cmd_export, *io)
     add("cover", cmd_cover, *io, (["--time"], dict(type=float, default=1.0)), (["--title"], dict(default=None)),
         (["--font-file"], dict(default=None)))
+    look_opts = [(["--look"], dict(default=None, choices=list(fx.LOOKS), help="mood colour grade")),
+                 (["--lut"], dict(default=None, help="any .cube LUT file instead of a built-in look")),
+                 (["--strength"], dict(type=float, default=1.0, help="look strength 0-1")),
+                 (["--grain"], dict(type=int, default=0, help="film grain, try 6-12")),
+                 (["--vignette"], dict(action="store_true"))]
+    add("grade", lambda a: fx.grade(a.input, a.output, a.look, a.lut, a.strength, a.grain, a.vignette), *io, *look_opts)
+    add("luts", lambda a: print(f"  .cube files written to {fx.build_luts()}/"))
+    add("looks", lambda a: [print(f"  {k:12} {v}") for k, v in fx.LOOKS.items()])
+    add("motion", lambda a: fx.motion(a.input, a.output, punch=fx.punch_times(a.punch) if a.punch else
+                                      [float(x) for x in a.at.split(",") if x] if a.at else [],
+                                      punch_zoom=a.punch_zoom, push=a.push,
+                                      shake=[float(x) for x in a.shake.split(",") if x] if a.shake else []),
+        *io, (["--punch"], dict(default=None, metavar="WORDS_JSON", help="punch in at each sentence")),
+        (["--at"], dict(default=None, help="or: punch times, e.g. 2.5,6,9.2")),
+        (["--punch-zoom"], dict(type=float, default=1.14)), (["--push"], dict(type=float, default=0.0)),
+        (["--shake"], dict(default=None, help="impact shake times, e.g. 4.1,8")))
+    add("bg", lambda a: fx.background(a.input, a.output, a.bg), *io,
+        (["--bg"], dict(default="blur", help="blur | #RRGGBB | image.jpg | video.mp4")))
+    add("sfx-kit", lambda a: print("  made:", ", ".join(fx.make_sfx()), f"-> {fx.SFX_DIR}/"))
+    add("sfx", lambda a: fx.add_sfx(a.input, a.output, [(c.split("@")[0], float(c.split("@")[1]))
+                                                         for c in a.cues.split(",")], a.volume),
+        *io, (["--cues"], dict(required=True, help="name@seconds list, e.g. pop@0.1,whoosh@3.2,impact@7")),
+        (["--volume"], dict(type=float, default=0.55)))
     add("auto", cmd_auto, (["input"], {}), (["output"], dict(nargs="?", default=None)), *cut_opts, *vert_opts,
-        *tr_opts, *cap_opts, (["--music"], dict(default=None)), (["--music-volume"], dict(default="0.18")),
+        *tr_opts, *cap_opts, *look_opts, (["--music"], dict(default=None)), (["--music-volume"], dict(default="0.18")),
+        (["--bg"], dict(default=None, help="blur | #RRGGBB | image.jpg | video.mp4")),
+        (["--punch"], dict(action="store_true", help="jump-zoom in/out at each sentence")),
+        (["--punch-zoom"], dict(type=float, default=1.14)), (["--push"], dict(type=float, default=0.0)),
+        (["--sfx"], dict(action="store_true", help="pop on hook, whoosh on punch-ins, ding at end")),
+        (["--sfx-volume"], dict(type=float, default=0.45)),
         (["--no-cut"], dict(action="store_true")), (["--no-captions"], dict(action="store_true")),
         (["--cover-time"], dict(type=float, default=1.0)))
     a = ap.parse_args()

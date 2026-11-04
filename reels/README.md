@@ -7,11 +7,16 @@ clean voice, word-by-word captions, a hook title, a progress bar, and a cover im
 ```bash
 bash reels/setup.sh                       # once per session (the container resets)
 python3 reels/reel.py auto raw.mp4 --hook "3 habits of KCET toppers" --progress
+# everything on: background swap, jump zooms, teal-orange grade, sound effects
+python3 reels/reel.py auto raw.mp4 --hook "..." --progress --bg studio.jpg --punch --look blockbuster --vignette --sfx --music bed.mp3
 # -> raw_reel.mp4, raw_reel.cover.jpg, raw_reel_work/ (steps + words.json)
 ```
 
 If a caption word is wrong, fix it in `raw_reel_work/words.json` and run the same
 command again. Your fixed transcript is kept, so only the render runs again.
+
+Music libraries, colour grading by mood, camera moves, background tips, editing
+apps and how Instagram ranks Reels are covered in **[GUIDE.md](GUIDE.md)**.
 
 ## Commands
 
@@ -26,6 +31,11 @@ command again. Your fixed transcript is kept, so only the render runs again.
 | `captions` | Animated captions: 3 words at a time, the current word pops in colour | libass (ASS subtitles) |
 | `export` | H.264 High, 30 fps, AAC 48 kHz, faststart, ≤12 Mbps | ffmpeg |
 | `cover` | 1080x1920 cover, title placed inside the square the profile grid shows | Pillow |
+| `grade --look moody` | Mood colour grade (9 looks), or any `.cube` LUT, plus grain/vignette | ffmpeg lut3d |
+| `luts` / `looks` | Writes the looks as `.cube` files in `luts/` (for CapCut/Resolve too) / lists them | numpy |
+| `motion` | Punch-in jump zooms at each phrase, slow push-in, impact shake | OpenCV |
+| `bg --bg blur\|#hex\|img\|video` | Blurs or replaces the background behind the person | MediaPipe selfie segmentation |
+| `sfx --cues pop@0.2,whoosh@3` | Places sound effects. `sfx-kit` rebuilds the built-in royalty-free kit in `sfx/` | numpy synthesis |
 
 Useful options: `--lang kn` (Kannada) or `--lang hi` (Hindi) switch the font
 automatically. `--prompt "KCET, NEET, Newton"` helps Whisper spell names.

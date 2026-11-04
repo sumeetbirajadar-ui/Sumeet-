@@ -298,9 +298,9 @@ def pick_keywords(words, spec, min_gap=2.5, after=0.0):
     if not spec or spec == "none":
         return []
     wanted = None if spec == "auto" else {w.strip().lower() for w in spec.split(",")}
-    out, last = [], -99
+    out, last, used = [], -99, set()
     for i, w in enumerate(words):
-        t = re.sub(r"[^\w-]", "", w["w"])
+        t = re.sub(r"[^\w-]", "", re.sub(r"['’]s$", "", w["w"]))   # NASA's -> NASA
         if not t:
             continue
         if wanted is not None:
@@ -308,9 +308,20 @@ def pick_keywords(words, spec, min_gap=2.5, after=0.0):
         else:
             prev = words[i - 1]["w"] if i else "."
             proper = t[0].isupper() and not re.search(r"[.!?]$", prev) and t.lower() not in ("i", "i'm")
-            hit = any(c.isdigit() for c in t) or proper or len(t) >= 9
-        if hit and w["s"] >= after and w["s"] - last >= min_gap:
-            out.append(w); last = w["s"]
+            technical = len(t) >= 10 and not t.lower().endswith(("ly", "ing", "ment", "ness"))
+            hit = any(c.isdigit() for c in t) or proper or technical
+        # each key term pops once only - repeating it turns emphasis into noise
+        if hit and t.lower() not in used and w["s"] >= after and w["s"] - last >= min_gap:
+            phrase = t
+            if wanted is None and t[0].isupper() and not re.search(r"[.!?,;:]$", w["w"]):
+                prev_raw = w["w"]                          # keep names together: "Great White Spot"
+                for nxt in words[i + 1:i + 4]:
+                    u = re.sub(r"[^\w-]", "", re.sub(r"['’]s$", "", nxt["w"]))
+                    if not u or not u[0].isupper() or re.search(r"[.!?,;:]$", prev_raw):
+                        break
+                    phrase += " " + u
+                    prev_raw = nxt["w"]
+            out.append(dict(w, w=phrase)); last = w["s"]; used.add(t.lower())
     return out
 
 
@@ -393,9 +404,9 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
     # Keyword pops: the French/Spanish science-creator habit of slamming the key term big on screen.
     a._key_times = []
     for w in pick_keywords(data["words"], getattr(a, "keywords", None), after=a.hook_secs + 0.3 if a.hook else 0):
-        t = re.sub(r"[,.;:!?]+$", "", w["w"]).upper()
+        t = _wrap2(re.sub(r"[,.;:!?]+$", "", w["w"]).upper(), 12)   # long names go on two lines
         ev.append(f"Dialogue: 2,{ass_time(w['s'])},{ass_time(w['s'] + 1.0)},Key,,0,0,0,,"
-                  f"{{\\pos({W // 2},{int(H * 0.56)})\\fscx60\\fscy60\\t(0,120,\\fscx100\\fscy100)\\fad(0,200)}}{t}")
+                  f"{{\\pos({W // 2},{int(H * (a.pos - 0.075))})\\fscx60\\fscy60\\t(0,120,\\fscx100\\fscy100)\\fad(0,200)}}{t}")
         a._key_times.append(w["s"])
     return head + "\n".join(ev) + "\n"
 

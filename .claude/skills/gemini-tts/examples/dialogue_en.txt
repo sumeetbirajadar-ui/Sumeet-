@@ -1,0 +1,5 @@
+# Two friends - multi-speaker example
+Dana [excited]: Guy, did you see the new TTS model?
+Guy [skeptical, dry]: Another one? <sigh> How good can it be.
+Dana: Listen to this. <laugh> It does laughs, pauses, everything.
+Guy [warming up]: Okay... <short pause> that is actually impressive.

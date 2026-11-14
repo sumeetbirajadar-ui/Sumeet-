@@ -1,0 +1,11 @@
+# Emotional range test - Hebrew - one speaker, style changes per line
+Narrator [calm, neutral, presenter tone]: טוב, בואו נעשה בדיקה קטנה. אני הולך לעבור בין כמה רגשות, ואתם תגידו לי אם זה נשמע אמיתי.
+Narrator [genuinely excited, fast, big smile in the voice]: רגע, רגע, רגע! אתם לא מבינים מה קרה הרגע! זה עבד! <laugh> מהניסיון הראשון! אני לא מאמין!
+Narrator [soft, nostalgic, slow, a little wistful]: אני זוכר את הפעם הראשונה שנגעתי במחשב. <breath> הייתי בן שבע... המסך היה ירוק, והכל היה נראה לי כמו קסם.
+Narrator [frustrated, annoyed, clipped, losing patience]: לא. לא, לא, לא. <sigh> כמה פעמים אני צריך להגיד את זה? זה לא ככה שעובדים. תקשיבו כשאני מדבר.
+Narrator [whispering, conspiratorial, close to the mic]: <whispers> בואו הנה, אני אגלה לכם סוד. <short pause> רוב האנשים בכלל לא קוראים את ההוראות. אף אחד. <snicker>
+Narrator [sad, heavy, quiet, voice almost breaking]: זה היה יום קשה. <long pause> ניסינו הכל, באמת. ובסוף... <sigh> בסוף זה פשוט לא הספיק.
+Narrator [warm, amused, storytelling, chuckling between words]: <chuckle> ואז הכלב, מיקה, פשוט נכנסת לפריים באמצע ההקלטה, מסתכלת על המצלמה, ו... <laugh> מתיישבת. כאילו זה הפודקאסט שלה.
+Narrator [dramatic, intense, building tension, movie trailer energy]: יש רגע אחד. רגע אחד בלבד. <short pause> שבו הכל יכול להשתנות. <breath> וזה... הרגע הזה.
+Narrator [tender, sincere, slow, speaking to someone you love]: כשתגדלו ותשמעו את זה... <short pause> תדעו שניסיתי. שתמיד, תמיד ניסיתי.
+Narrator [back to relaxed, friendly, wrapping up with a smile]: <exhales> טוב, זהו. <chuckle> אם הגעתם עד כאן, תגידו לי איזה קטע היה הכי משכנע. ביי.

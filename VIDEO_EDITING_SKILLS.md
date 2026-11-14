@@ -473,3 +473,252 @@ Higgsfield (image/video gen, image-to-video, upscale, voice change), ElevenLabs 
 - Some skills need API keys (Atlas Cloud/Seedance, Gemini, Freesound, ComfyUI Cloud, ElevenLabs) or local setup (Python venv, Node). Skills run their own setup on first use.
 - MoodLUT (mood → LUT app) was reviewed but is a web app, not a skill; `mood-lighting-grade` covers the same need.
 
+
+---
+
+# Part 3 — Repos from your "Video Production Bible" PDF
+
+All 38 repos the PDF names were checked on GitHub, and every one exists. **115 skills** from **21 repos** installed (the 6 already installed in Parts 1–2 were skipped), plus 2 MCP servers.
+
+### [AgriciDaniel/claude-shorts](https://github.com/AgriciDaniel/claude-shorts) — 1 skill(s)
+
+| Skill | What it does |
+|---|---|
+| `shorts` | Interactive longform-to-shortform video creator. Extracts viral-ready short clips |
+
+### [MartinDelophy/ai-video-editor](https://github.com/MartinDelophy/ai-video-editor) — 2 skill(s)
+
+| Skill | What it does |
+|---|---|
+| `develop-timeline-studio-plugin` | Design, evaluate, implement, or review image and video generation connectors for Timeline Studio. Use when adding a prov |
+| `edit-timeline-studio` | Analyze images, video, speech, motion, products, and websites; route local media models; auto-edit, replicate, enhance, |
+
+### [ReneRemsik/Claude-Video-Editing-Effects](https://github.com/ReneRemsik/Claude-Video-Editing-Effects) — 1 skill(s)
+
+| Skill | What it does |
+|---|---|
+| `effects` | Add any of 50 transcript-aware video effects to a talking-head video (glass widgets, keyword pop, notification stack, po |
+
+### [Science-Prof-Robot/recursive-math-animator](https://github.com/Science-Prof-Robot/recursive-math-animator) — 2 skill(s)
+
+| Skill | What it does |
+|---|---|
+| `recursive-maths-animator` | Recursive maths animator — Manim-based technical and physics animations with optional voiceover, pinned requirements, |
+| `recursive-maths-animator-physics` | Create verified Manim physics animations using manim-physics for rigid mechanics, pendulums, electromagnetism, optics, w |
+
+### [V413havai/vaibhav-video-editor](https://github.com/V413havai/vaibhav-video-editor) — 1 skill(s)
+
+| Skill | What it does |
+|---|---|
+| `vaibhav-video-editor` | Full start-to-finish video editing that runs every installed video skill as one pipeline. Cuts silences and retakes, pla |
+
+### [Vibha-Ramprakash/claude-video-effects](https://github.com/Vibha-Ramprakash/claude-video-effects) — 1 skill(s)
+
+| Skill | What it does |
+|---|---|
+| `effects-vibharamprak` | Add any of 51 video effects to a talking-head video (orbit, spotlight, glass widgets, timeline, checklist, headline wall |
+
+### [Yuuhann1999/agent-storyboard](https://github.com/Yuuhann1999/agent-storyboard) — 2 skill(s)
+
+| Skill | What it does |
+|---|---|
+| `manage-storyboard-projects` | Create, find, inspect, update, or delete Agent Storyboard projects directly through MCP. Use when the user asks the agen |
+| `process-storyboard-tasks` | Process pending Agent Storyboard image and video generation tasks. Use when the user asks to generate storyboard assets, |
+
+### [adithya-s-k/manim_skill](https://github.com/adithya-s-k/manim_skill) — 3 skill(s)
+
+| Skill | What it does |
+|---|---|
+| `manim-composer` | Trigger when: (1) User wants to create an educational/explainer video, (2) User has a vague concept they want visualized |
+| `manimce-best-practices` | Trigger when: (1) User mentions "manim" or "Manim Community" or "ManimCE", (2) Code contains `from manim import *`, (3) |
+| `manimgl-best-practices` | Trigger when: (1) User mentions "manimgl" or "ManimGL" or "3b1b manim", (2) Code contains `from manimlib import *`, (3) |
+
+### [artemnovitckii/claude-editing-skills](https://github.com/artemnovitckii/claude-editing-skills) — 11 skill(s)
+
+| Skill | What it does |
+|---|---|
+| `behind-the-person` | Edits a talking-head clip so the graphics sit BEHIND the speaker. The speaker is cut out and stays in front of a panel ( |
+| `explainer` | Edits a talking-head clip into an explainer reel. The speaker sits low in a rounded panel on a light backdrop with their |
+| `orbit-reel` | Portrait image cards travel around the speaker in a 3D ring, passing behind the head and across the foreground. Use for |
+| `picture-stack` | A small cluster of photographs floats above the speaker in the original room, then one photograph takes focus. Use for / |
+| `ranking-list` | Edits a talking-head clip into a tier-list ranking reel. An S-to-F tier table sits on the speaker's chest, each item pop |
+| `scene-switch` | Full-frame photographic backgrounds cut behind a continuously visible isolated speaker. Use for /scene-switch or to appl |
+| `shape-shift` | A photographic match cut aligns circular subjects at one fixed anchor while the speaker stays established below. Use for |
+| `split-screen` | Edits a talking-head clip into the classic half-and-half reel. Visuals and animation fill the top half (a step badge, a |
+| `storytelling` | Edits a talking-head clip into a storytelling reel. Three simple image cards run across the top, with a bold black-box t |
+| `trial-reels` | Turns one talking-head clip into 3 visually distinct reels to post as Instagram trial reels, so you can see which look w |
+| `visual-notes` | An image above the isolated speaker changes from a complete view to a deliberate close-up detail. Use for /visual-notes |
+
+### [bitwize-music-studio/claude-ai-music-skills](https://github.com/bitwize-music-studio/claude-ai-music-skills) — 8 skill(s)
+
+| Skill | What it does |
+|---|---|
+| `album-art-director` | Creates visual concepts for album artwork and generates AI art prompts. Use during planning for concept discussion, or a |
+| `genre-creator` | Create new genre documentation files for the bitwize-music genre library. Use when the user wants to add a genre, says |
+| `lyric-refiner` | Autonomous multi-pass lyric refinement for tightening, cohesion, and album unity. Use after lyrics are written to polish |
+| `lyric-writer` | Writes or reviews lyrics with professional prosody, rhyme craft, and quality checks. Use when writing new lyrics, revisi |
+| `mastering-engineer` | Guides audio mastering for streaming platforms including loudness optimization and tonal balance. Use when the user has |
+| `mix-engineer` | Polishes raw Suno audio by processing per-stem WAVs (vocals, backing_vocals, drums, bass, guitar, keyboard, strings, bra |
+| `pronunciation-specialist` | Scans lyrics for pronunciation risks and prevents Suno mispronunciations. Use when writing lyrics with proper nouns, tec |
+| `suno-engineer` | Constructs technical Suno style prompts for the current model family (v6, v6-wild, v6-mini), selects models and generati |
+
+### [browser-use/video-use](https://github.com/browser-use/video-use) — 2 skill(s)
+
+| Skill | What it does |
+|---|---|
+| `video-use` | Edit any video by conversation. Transcribe, cut, color grade, generate overlay animations, burn subtitles — for talkin |
+| `manim-video` | Production pipeline for mathematical and technical animations using Manim Community Edition. Creates 3Blue1Brown-style |
+
+### [erduo1998-cell/video-script-builder](https://github.com/erduo1998-cell/video-script-builder) — 1 skill(s)
+
+| Skill | What it does |
+|---|---|
+| `video-script-builder` | Convert a Chinese video voiceover script (逐字稿、口播稿) into a precise, renderer-bound storyboard specification |
+
+### [feicaiclub/ad-storyboarder](https://github.com/feicaiclub/ad-storyboarder) — 7 skill(s)
+
+| Skill | What it does |
+|---|---|
+| `ad-edit` | 写剪辑表、总装成片、做声音，多个交付规格各出一版；先出草稿量数再出正式版。每段过 |
+| `ad-grill` | 把用户对这条广告的要求和每轮看片反馈问透，写成需求文档里的"已确认"条目。有新产品 |
+| `ad-refs` | 备齐并核对每段要挂的参考。分段表定了之后用；入口二校验他给的并补缺。产出：素材库 |
+| `ad-review` | 交付前自审整片写自审文件；收到反馈后返修、归档旧版、交付。每次成片出来之后用；用 |
+| `ad-script` | 广告的创意和脚本。入口一先出几个创意方向让用户挑定，再一次写出拍摄脚本；入口二把 |
+| `ad-shoot` | 按分段表一段一段用 Higgsfield 生成，每段过三项质检才算过审；补拍、重出也用。参考齐了 |
+| `ad-studio` | 放映室（Lazy Studio）。用户说"打开放映室""我要看片""看看进度""/ad-studio"时用：在后台起本 |
+
+### [isamercan/claude-efekt](https://github.com/isamercan/claude-efekt) — 1 skill(s)
+
+| Skill | What it does |
+|---|---|
+| `efekt` | Add motion-design effects to a talking-head video with HyperFrames (spot, cam, belgesel, yörünge, grafik, liste, kurgu |
+
+### [jtydhr88/screenwriting-skills](https://github.com/jtydhr88/screenwriting-skills) — 22 skill(s)
+
+| Skill | What it does |
+|---|---|
+| `chekhov-dramaturgy` | Writing plays and screenplays in the Chekhovian mode (契诃夫戏剧法) — distilled from the complete plays (没有 |
+| `ozu-screenplay-style` | Writing screenplays in the style of Ozu Yasujiro and Noda Kogo (小津安二郎・野田高梧) — distilled from six c |
+| `succession-series-writing` | Writing a Succession-style ensemble series (继承之战群像剧写法) — distilled from Jesse Armstrong's complete s |
+| `sw-american-case-studies` | Case studies of American screenwriting (美国电影剧作案例) — Mei Feng's readings of the Hollywood Western (valu |
+| `sw-character-conflict` | Character creation, protagonist/antagonist design and dramatic conflict for scripts (人物/对手/冲突) — merged fr |
+| `sw-chinese-series-practice` | Mainland-Chinese TV-series craft, documents and production chain (国产剧创作体系与制片链) — the China layer |
+| `sw-dialogue` | Dialogue writing and revision for screen and stage (对白/台词/潜台词) — merged from Robert McKee's Dialogue (di |
+| `sw-format-adaptation` | Screenplay format, page craft, the writing process and adaptation (剧本格式/写作流程/改编) — merged from Wen |
+| `sw-genre-anatomy` | Genre anatomy from John Truby's The Anatomy of Genres (类型解剖 / 类型节拍 / 混合类型 / 超越类型) — ge |
+| `sw-industry-business` | The screenwriting business and career (编剧行业与生意经) — merged from Diamond & Weissman's Bulletproof (buyer |
+| `sw-japanese-screenwriting` | Japanese (and other non-Hollywood) screenwriting methods (日本编剧方法/原创剧本实战) — distilled from ten |
+| `sw-korean-french-screenwriting` | Korean and French screenwriting practice (韩国/法国编剧方法) — from the international masterclass; Oh Seung-uk |
+| `sw-premise-theme` | Premise, theme, controlling idea, subject selection and logline for scripts (前提/主题/立意/选材/戏核) — mer |
+| `sw-scene-craft` | Scene and sequence craft (场景/段落/细节/道具/悬念/情趣) — merged from Robert McKee's scene design and fiv |
+| `sw-series-case-studies` | Case studies of television series writing (剧集案例库) from primary texts; Sorkin's six West Wing teleplays (act-pa |
+| `sw-series-engine-bible` | From an idea to a sellable series design; series engine / franchise, story pattern, character webs that keep generating |
+| `sw-series-structure` | Episode and season structure for TV series (剧集单集与季的结构) — teasers and cold opens, broadcast four/five |
+| `sw-sitcom-comedy` | Half-hour television comedy craft (半小时情景喜剧/笑点力学/困境机器/多机位单机位格式) — merged |
+| `sw-story-structure` | Story structure for screenplays and stage plays (故事结构) — merged from Syd Field's paradigm and plot points, Bla |
+| `sw-truby-anatomy` | Organic story anatomy from John Truby's The Anatomy of Story (有机结构/设计原则/22步骤/道德议题/四角对 |
+| `sw-workflow` | Project orchestrator for the screenwriting skill set (剧本项目主线调度 / 状态存档 / story bible) — a meta |
+| `sw-writers-room` | How episodic television actually gets made by a group (编剧室与制作现实) — merged from Goldberg & Rabkin (pitc |
+
+### [kmilo93sd/agent-video-editor](https://github.com/kmilo93sd/agent-video-editor) — 1 skill(s)
+
+| Skill | What it does |
+|---|---|
+| `editing-videos` | Gives an editor's judgment, with sourced numbers, for cutting and pacing, J and L cuts, jump cuts, b-roll, |
+
+### [patraxo/ltx2-vidgen-skill](https://github.com/patraxo/ltx2-vidgen-skill) — 1 skill(s)
+
+| Skill | What it does |
+|---|---|
+| `ltx2-video` | Generate video from a photo (or two) using self-hosted LTX-2.3 on Modal GPU. |
+
+### [robonuggets/higgsfield-skill](https://github.com/robonuggets/higgsfield-skill) — 1 skill(s)
+
+| Skill | What it does |
+|---|---|
+| `higgsfield` | One MCP, 30+ image and video models. Use this skill when the user wants to generate images or videos via Higgsfield (See |
+
+### [scenario-labs/skills](https://github.com/scenario-labs/skills) — 45 skill(s)
+
+| Skill | What it does |
+|---|---|
+| `scenario-blender-lighting-rendering` | Use when lighting, rendering or compositing in Blender: light a character, product or hero shot, interior at dusk or ni |
+| `scenario-blender-previs-storyboard` | Use when turning a script or story into previs, layout, storyboards or an animatic in Blender: beats to shot list, came |
+| `scenario-unreal-cinematics` | Use when making a trailer, cutscene, cinematic or short film in Unreal Engine 5.8 with Sequencer: shot lists, master an |
+| `scenario-unreal-lighting-rendering` | Use when lighting or rendering in Unreal Engine 5.8: physical light units and exposure (EV100, lux, lumens), Lumen GI a |
+| `scenario` | Use when connecting an AI agent to Scenario (scenario.com) through MCP, or when a task involves generating images, video |
+| `scenario-ace-step` | Use when creating or editing music with ACE-Step models on Scenario via MCP: text-to-music songs with sung vocals from |
+| `scenario-audio` | Use when generating or handling audio on Scenario via MCP. Triggers include music tracks, full-length songs with vocals |
+| `scenario-brand-kit` | Use when building a visual identity or brand kit with Scenario: a logo, wordmark, or icon as editable SVG, a color pale |
+| `scenario-caption-studio` | Use when a video needs its spoken words on screen through Scenario via MCP: burned-in styled captions for a TikTok, Ree |
+| `scenario-consistency` | Use when one look must hold across Scenario generations: one character across scenes, a turnaround, or a video animated |
+| `scenario-elevenlabs` | Use when generating or transforming audio with ElevenLabs models on Scenario via MCP: text-to-speech with inline emotio |
+| `scenario-fan-cam` | Use when putting a person from a photo into live-broadcast crowd footage with Scenario: a stadium or arena fan-cam reac |
+| `scenario-formats` | Use when one approved visual, image or video, must ship at many sizes or placements through Scenario: adapting a master |
+| `scenario-identity-library` | Use when a named character or prop must become a reusable identity in Scenario: creating a character or prop from a bri |
+| `scenario-image` | Use when generating or editing images with Scenario through MCP: text-to-image, image-to-image, instruction editing, in |
+| `scenario-image-editing` | Use when editing an existing image on Scenario through MCP with a tool model, not a new generation: upscale or enhance |
+| `scenario-kinetic-film` | Use when making a launch film, game teaser, trailer, product promo or brand film from a brief in kinetic typography: hu |
+| `scenario-kinetic-music-video` | Use when turning a song into a kinetic-typography or motion-design music video, lyric video, visualizer or K-pop style |
+| `scenario-kling` | Use when generating or editing video with Kling models on Scenario via MCP: text-to-video, image-to-video with first an |
+| `scenario-luma-video` | Use when generating or editing video with Luma Ray models on Scenario via MCP: cinematic text-to-video, image-to-video |
+| `scenario-minimax-music` | Use when generating music with MiniMax models on Scenario via MCP: full songs with vocals from a lyric sheet, structure |
+| `scenario-minimax-video` | Use when generating or editing video with MiniMax Hailuo models on Scenario via MCP: text-to-video, image-to-video, fir |
+| `scenario-motion-loops` | Use when someone wants seamless looping motion graphics for video in their own brand colors: animated backgrounds behin |
+| `scenario-multi-reference` | Use when one image must be composed from several reference pictures through the Scenario MCP server, each lending one t |
+| `scenario-orbit-views` | Use when a single image of a character, creature, prop, vehicle, or building must be seen from new camera angles throug |
+| `scenario-product-shots` | Use when producing product photography with Scenario from a real product photo: e-commerce packshots on white, transpar |
+| `scenario-quality-gate` | Use when a generated Scenario image needs a quality check or a brand-brief compliance verdict before it ships: pass/war |
+| `scenario-reel-recast` | Use when recreating a trending reel, TikTok or Short with a different performer: the same dance, moves, timing and came |
+| `scenario-runway` | Use when generating or editing video with Runway models on Scenario via MCP: text-to-video or image-to-video from a fir |
+| `scenario-seedance` | Use when generating or editing video with Seedance models on Scenario via MCP: text-to-video, image-to-video, first and |
+| `scenario-seedance-storyboard` | Use when a Seedance video must hold continuous movement across shots: dance choreography, fights, sports, or any perfor |
+| `scenario-storyboards` | Use when a story must unfold across a sequence of Scenario images: a comic page or strip, manga or webtoon panels, a ch |
+| `scenario-text-overlay` | Use when text must appear letter-perfect on generated media: taglines, CTAs, prices, legal supers, lower thirds, end ca |
+| `scenario-thumbnails` | Use when creating or revising finished video thumbnails or cover images with Scenario: game trailers, boss reveals, pat |
+| `scenario-ugc` | Use when producing UGC-style creator video with Scenario: a talking-head ad or testimonial from a portrait and a script |
+| `scenario-veo` | Use when generating or extending video with Google Veo models on Scenario via MCP: text-to-video, image-to-video from a |
+| `scenario-video` | Use when generating or editing video on Scenario via MCP: text-to-video, a music video from a song, image-to-video (sti |
+| `scenario-video-ads` | Use when producing a video ad with Scenario from a product shot or brand assets: a mobile 9:16 or landscape 16:9 commer |
+| `scenario-video-assembly` | Use when generated clips must become a finished video on Scenario via MCP: cutting a shot list together, laying a timel |
+| `scenario-video-color-grade` | Use when color grading, color correcting, or relighting an existing video or still with deterministic code instead of a |
+| `scenario-video-editing` | Use when editing footage already on Scenario through MCP with a tool model, not a new generation: LUT grading, color co |
+| `scenario-video-to-motion` | Use when turning a reference video into 3D character animation through the Scenario MCP: markerless motion capture from |
+| `scenario-vidu` | Use when generating video with Vidu models on Scenario via MCP: text-to-video, image-to-video from a single still, star |
+| `scenario-wan` | Use when generating or editing video with Wan models on Scenario via MCP: text-to-video, image-to-video from a still, f |
+| `scenario-workflows` | Use when a task involves running a Scenario workflow through MCP, including anything the user calls a Scenario app, a s |
+
+### [thomasblc/elevenlabs-claude-skill](https://github.com/thomasblc/elevenlabs-claude-skill) — 1 skill(s)
+
+| Skill | What it does |
+|---|---|
+| `elevenlabs-content` | Generate voiceovers, clone voices, create sound effects, and batch-process scripts using ElevenLabs API. Developer conte |
+
+### [vincentsch/explainroo](https://github.com/vincentsch/explainroo) — 1 skill(s)
+
+| Skill | What it does |
+|---|---|
+| `explainroo` | Make an explainer video (MP4) with a voice-over using explainroo. The voice is made on this computer and no API key is n |
+
+### MCP servers added to `.mcp.json`
+| Server | URL | Needs |
+|---|---|---|
+| `scenario` | https://mcp.scenario.com/mcp | Scenario account (sign-in on first use) — powers all `scenario-*` skills |
+| `suno` | https://suno.mcp.acedata.cloud/mcp | AceDataCloud account/token — Suno music |
+
+### From the PDF but not installed (and why)
+| Item | Reason |
+|---|---|
+| Higgsfield, ElevenLabs, Descript MCP | Already connected to your Claude account as official connectors |
+| `@ajsmonty/adobe-mcp` | Unofficial third-party package; you already have the official Adobe connector |
+| remotion-dev/claude-code-plugin, hyperframes plugin | Same skills already installed in Part 1 |
+| scenario-labs game-engine skills (Godot, Unity, Roblox, Maya, ZBrush…) | Not video editing; kept the ~45 video/image/audio/lighting ones |
+| bitwize music album-management skills (~45) | Kept the 8 that are about making music (Suno, mix, master, lyrics) |
+| jamiepine/voicebox, debpalash/voicestudio, k2-fsa/OmniVoice, OpenBMB/VoxCPM | Desktop apps / GPU voice models, not Claude skills. Install on your own PC to clone voices locally |
+| Kunbyte-AI/Lumen | GPU relighting model, not a skill |
+| Hikhakk/higgsfield-mcp-unified, unifically-mcp, kie-mcp, fal-image-video-mcp, flow-mcp, mcp-flow-google, remotion-media-mcp | MCP servers that need paid API keys or your Google login; add them only for the service you use (Higgsfield is already connected) |
+| PDF's one-line installer script | Not run as-is; every repo was verified and safety-scanned first instead |
+
+### Name differences vs. the PDF
+`/ranking-format` → `ranking-list`, `/explainer-panel-reel` → `explainer`, `/depth-ui-reel` and `/cutout-grid-reel` → `behind-the-person`, `/giant-captions` → `backdrop-word` / `pastel-word` (in the effects packs), `/claude-ui` → `app-frame`. Vibha's `/effects` is installed as `effects-vibharamprak` because `effects` (ReneRemsik, 50 transcript-aware effects) has the same name.
+

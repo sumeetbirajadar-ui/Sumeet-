@@ -1,0 +1,46 @@
+.kg-ground { position: absolute; left: 0; right: 0; top: 0; background-color: #0b0a09;
+  background-image: radial-gradient(rgba(255,255,255,0.05) 1.6px, transparent 2px); background-size: 36px 36px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.45); border-radius: 0 0 44px 44px; }
+.kg-card { position: absolute; left: 40px; top: 250px; width: 1000px; background: linear-gradient(180deg, #1A161C, #121014 40%);
+  border-radius: 36px; border: 1.5px solid rgba(255,255,255,0.10);
+  box-shadow: 0 34px 70px rgba(40,20,10,0.38), 0 0 0 1px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08); overflow: hidden; }
+.kg-bar { position: absolute; left: 0; right: 0; top: 0; height: 92px; display: flex; align-items: center; gap: 26px; padding: 0 40px;
+  border-bottom: 1.5px solid rgba(255,255,255,0.08); opacity: 0; }
+.kg-dots { display: flex; gap: 12px; }
+.kg-dots i { width: 18px; height: 18px; border-radius: 50%; background: #FF6B6B; }
+.kg-dots i:nth-child(2) { background: #FFB547; }
+.kg-dots i:nth-child(3) { background: #5DD39E; }
+.kg-rec { font-size: 28px; font-weight: 700; color: #F4EFE6; letter-spacing: 0.02em; white-space: nowrap; }
+.kg-recdot { color: #FF4D5E; text-shadow: 0 0 12px rgba(255,77,94,0.8); }
+.kg-tc { color: #FFB38A; font-variant-numeric: tabular-nums; }
+.kg-fmt { margin-left: auto; font-size: 24px; font-weight: 600; color: rgba(244,239,230,0.5); white-space: nowrap; }
+.kg-head { position: absolute; left: 40px; top: 108px; white-space: nowrap; line-height: 1; opacity: 0; }
+.kg-head .big { font-size: 78px; letter-spacing: -0.03em; }
+.kg-head .lead { font-size: 86px; margin-left: 10px; }
+.kg-row { position: absolute; left: 44px; right: 44px; opacity: 0; }
+.kg-name { position: absolute; left: 0; top: 50%; transform: translateY(-50%); font-size: 28px; font-weight: 700; color: rgba(244,239,230,0.62); letter-spacing: 0.04em; }
+.kg-lane { position: absolute; top: 0; bottom: 0; border-radius: 14px; background: rgba(255,255,255,0.045); overflow: hidden; }
+.kg-thumb { position: absolute; top: 6px; bottom: 6px; border-radius: 9px;
+  background: radial-gradient(circle at 50% 46%, #241410 0 15%, transparent 16%),
+    radial-gradient(ellipse 46% 34% at 50% 100%, #241410 0 98%, transparent 100%),
+    radial-gradient(ellipse 60% 90% at 8% 40%, #FFD08A 0%, rgba(255,160,90,0) 70%),
+    linear-gradient(120deg, #B8683A, #5A2E1C 60%, #2A1712);
+  background-size: 100% 100%; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12); opacity: 0.35; }
+.kg-chip { position: absolute; top: 6px; bottom: 6px; border-radius: 10px; padding: 0 10px; display: flex; align-items: center; justify-content: center;
+  font-size: 30px; font-weight: 700; white-space: nowrap; overflow: hidden; opacity: 0.35; }
+.kg-cap { background: linear-gradient(90deg, #FF7BA5, #FFB38A); color: #1A1014; }
+.kg-fx { background: linear-gradient(90deg, #FF8A3D, #FFB547); color: #1A1014; }
+.kg-wave { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; overflow: hidden; }
+.kg-wave i { position: absolute; top: 50%; width: 7px; border-radius: 3.5px; transform: translateY(-50%); }
+.kg-dim i { background: rgba(244,239,230,0.22); }
+.kg-lit { width: 0; }
+.kg-lit i { background: linear-gradient(180deg, #FFB38A, #FF7BA5); }
+.kg-ph { position: absolute; width: 5px; margin-left: -2.5px; border-radius: 2px; background: linear-gradient(180deg, #FF7BA5, #FF9E5A);
+  box-shadow: 0 0 8px 1px #FF6E9A, 0 0 22px 4px rgba(255,110,154,0.7), 0 0 60px 10px rgba(255,140,90,0.4); opacity: 0; }
+.kg-handle { position: absolute; left: 50%; top: -12px; width: 26px; height: 30px; margin-left: -13px; border-radius: 7px 7px 13px 13px;
+  background: linear-gradient(180deg, #FF8FB2, #FF6E9A); box-shadow: 0 0 18px rgba(255,110,154,0.9); }
+.kg-prog { position: absolute; left: 44px; width: 740px; height: 16px; margin-top: 18px; border-radius: 8px; background: rgba(255,255,255,0.08); overflow: hidden; opacity: 0; }
+.kg-fill { position: absolute; inset: 0; border-radius: 8px; background: linear-gradient(90deg, #FF7BA5, #FFB38A); transform-origin: 0 50%; transform: scaleX(0);
+  box-shadow: 0 0 18px rgba(255,123,165,0.6); }
+.kg-pct { position: absolute; right: 44px; width: 170px; text-align: right; font-family: "Inter", sans-serif; font-weight: 900; font-size: 56px; line-height: 52px;
+  letter-spacing: -0.03em; color: #FFB38A; font-variant-numeric: tabular-nums; opacity: 0; }

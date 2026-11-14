@@ -1,0 +1,20 @@
+.gr-ground { position: absolute; left: 0; right: 0; top: 0; background-color: #0b0a09;
+  background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 54px 54px; box-shadow: 0 18px 40px rgba(0,0,0,0.45); border-radius: 0 0 44px 44px; }
+.gr-card { position: absolute; left: 40px; top: 250px; width: 1000px; background: #F4EFE6; border-radius: 36px;
+  box-shadow: 0 30px 60px rgba(60,40,20,0.22), 0 4px 12px rgba(60,40,20,0.12), inset 0 1px 0 rgba(255,255,255,0.8); overflow: hidden; }
+.gr-head { position: absolute; left: 60px; top: 46px; display: flex; flex-direction: column; line-height: 1; }
+.gr-title { font-family: "Inter", sans-serif; font-weight: 900; font-size: 74px; letter-spacing: -0.03em; color: #141414; }
+.gr-lead { font-family: "Playfair Display", serif; font-style: italic; font-weight: 700; font-size: 82px; color: #B9532F; margin-top: 4px;
+  padding-bottom: 6px; background: linear-gradient(#B9532F, #B9532F) 0 100% / 100% 5px no-repeat; align-self: flex-start; }
+.gr-chart { position: absolute; left: 0; width: 1000px; opacity: 0; }
+.gr-grid { position: absolute; right: 48px; height: 2px; background: rgba(20,20,20,0.09); }
+.gr-base { background: rgba(20,20,20,0.28); }
+.gr-tick { position: absolute; left: 22px; text-align: right; font-size: 26px; font-weight: 600; color: rgba(20,20,20,0.55); transform: translateY(-50%); }
+.gr-bar { position: absolute; bottom: 0; background: linear-gradient(180deg, #E08766, #D0694A); border-radius: 14px 14px 4px 4px;
+  transform-origin: 50% 100%; transform: scaleY(0); }
+.gr-best { background: linear-gradient(180deg, #FFE27A, #F7C93A); box-shadow: 0 10px 30px rgba(230,170,30,0.45); }
+.gr-val { position: absolute; font-family: "Inter", sans-serif; font-weight: 900; letter-spacing: -0.03em; color: #141414; white-space: nowrap; line-height: 1; opacity: 0; }
+.gr-lab { position: absolute; font-weight: 700; color: #3a3330; white-space: nowrap; letter-spacing: 0.02em; opacity: 0; }
+.gr-avg { position: absolute; right: 48px; height: 0; border-top: 3px dashed #C4502F; transform-origin: 0 50%; transform: scaleX(0); }
+.gr-avgtag { position: absolute; right: 52px; margin-top: -8px; font-size: 28px; font-weight: 700; color: #C4502F; background: #F4EFE6; padding: 0 0 0 10px; opacity: 0; }

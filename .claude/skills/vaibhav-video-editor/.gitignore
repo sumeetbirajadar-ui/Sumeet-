@@ -1,0 +1,8 @@
+.DS_Store
+__pycache__/
+*.pyc
+examples/kinetic-promo/work/
+examples/kinetic-promo/assets/
+examples/kinetic-promo/index.html
+examples/kinetic-promo/cues.json
+examples/kinetic-promo/.hyperframes/

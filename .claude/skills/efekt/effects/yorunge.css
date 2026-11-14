@@ -1,0 +1,10 @@
+.fx-yorunge .yr-card { position: absolute; left: 0; top: 0; opacity: 0; border-radius: 22px; overflow: hidden;
+  background-color: #222; background-size: cover; background-position: center;
+  border: 3px solid rgba(255, 255, 255, 0.92);
+  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.35); }
+.fx-yorunge .yr-shade { position: absolute; inset: 0; background: #000; opacity: 0; }
+.fx-yorunge .yr-num { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-family: "Inter", sans-serif; font-weight: 900; font-size: 160px; color: #fff; letter-spacing: -0.04em;
+  text-shadow: 0 6px 24px rgba(0, 0, 0, 0.3); }
+/* the cards sort by depth with z-index: keep that inside the layer, or a far card climbs over the cut-out person */
+.fx-root.fx-yorunge { z-index: 0; isolation: isolate; }

@@ -1,0 +1,11 @@
+# Emotional range test - English - one speaker, style changes per line
+Narrator [calm, neutral, presenter tone]: Okay, quick test. I'm going to move through a few emotions, and you tell me if it sounds real.
+Narrator [genuinely excited, fast, big smile in the voice]: Wait, wait, wait! You don't understand what just happened! It WORKED! <laugh> First try! I can't believe it!
+Narrator [soft, nostalgic, slow, a little wistful]: I remember the first time I touched a computer. <breath> I was seven... the screen was green, and the whole thing looked like magic to me.
+Narrator [frustrated, annoyed, clipped, losing patience]: No. No, no, no. <sigh> How many times do I have to say this? That is NOT how it works. Listen when I'm talking.
+Narrator [whispering, conspiratorial, close to the mic]: <whispers> Come closer, I'll tell you a secret. <short pause> Most people never read the instructions. Nobody. <snicker>
+Narrator [sad, heavy, quiet, voice almost breaking]: It was a hard day. <long pause> We tried everything, we really did. And in the end... <sigh> in the end it just wasn't enough.
+Narrator [warm, amused, storytelling, chuckling between words]: <chuckle> And then the dog, Mika, just walks into the frame in the middle of the recording, looks at the camera, and... <laugh> sits down. Like it's her podcast.
+Narrator [dramatic, intense, building tension, movie trailer energy]: There is one moment. Only one. <short pause> Where everything can change. <breath> And this... is that moment.
+Narrator [tender, sincere, slow, speaking to someone you love]: When you grow up and hear this... <short pause> know that I tried. That I always, always tried.
+Narrator [back to relaxed, friendly, wrapping up with a smile]: <exhales> Okay, that's it. <chuckle> If you made it this far, tell me which part was the most convincing. Bye.

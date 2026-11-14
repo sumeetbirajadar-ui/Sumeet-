@@ -1,0 +1,27 @@
+.ls-box { position: absolute; left: 0; top: 0; }
+.ls-card {
+  opacity: 0; color: #fff; border-radius: 44px; padding: 34px 40px 22px; transform-origin: 50% 0%;
+  background:
+    linear-gradient(170deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.02) 30%, rgba(255, 255, 255, 0) 70%, rgba(255, 255, 255, 0.05) 100%),
+    rgba(22, 19, 17, 0.80);
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.22), 0 30px 80px rgba(0, 0, 0, 0.55), 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+.ls-headrow { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.ls-title { display: flex; align-items: center; gap: 16px; font-weight: 800; font-size: 40px; letter-spacing: -0.015em; white-space: nowrap; }
+.ls-spark { width: 42px; height: 42px; flex: none; }
+.ls-spark line { stroke: #d97757; stroke-width: 4.2; stroke-linecap: round; }
+.ls-count { font-size: 30px; font-weight: 600; color: rgba(255, 255, 255, 0.62); }
+.ls-rule { height: 1.5px; margin: 26px 0 8px; background: linear-gradient(90deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08)); }
+.ls-row { display: flex; align-items: center; gap: 24px; height: 104px; opacity: 0.42; }
+.ls-ic { position: relative; flex: none; width: 52px; height: 52px; }
+.ls-ic svg { position: absolute; inset: 0; width: 52px; height: 52px; overflow: visible; }
+.ls-wait circle { fill: none; stroke: rgba(255, 255, 255, 0.5); stroke-width: 3; }
+.ls-spin { opacity: 0; }
+.ls-spin-bg { fill: none; stroke: rgba(255, 255, 255, 0.18); stroke-width: 3.5; }
+.ls-spin-arc { fill: none; stroke: #d97757; stroke-width: 3.5; stroke-linecap: round; }
+.ls-tick { opacity: 0; }
+.ls-tick circle { fill: #22c55e; }
+.ls-tick path { fill: none; stroke: #fff; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+.ls-step { flex: 1; font-weight: 800; font-size: 42px; letter-spacing: -0.015em; white-space: nowrap; }
+.ls-meta { font-size: 30px; font-weight: 600; color: rgba(255, 255, 255, 0.62); white-space: nowrap; }

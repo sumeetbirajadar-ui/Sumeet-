@@ -1,0 +1,8 @@
+# personal data - never commit
+voices.json
+recordings/
+samples/
+outputs/
+__pycache__/
+*.pyc
+.DS_Store

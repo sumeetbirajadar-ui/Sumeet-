@@ -1,0 +1,36 @@
+.fx-belgesel .bg-ground { position: absolute; inset: -30%; opacity: 0;
+  background:
+    radial-gradient(ellipse 70% 45% at 72% 30%, #5c1240 0%, rgba(60, 10, 40, 0.55) 45%, rgba(0, 0, 0, 0) 75%),
+    radial-gradient(ellipse 60% 50% at 30% 55%, #3a0a2a 0%, rgba(0, 0, 0, 0) 70%),
+    linear-gradient(180deg, #1a0512 0%, #24081a 40%, #0b0208 75%, #000 100%); }
+.fx-belgesel .bg-glow { position: absolute; border-radius: 50%; opacity: 0;
+  background: radial-gradient(circle, #ff4f93 0%, #e8336f 38%, rgba(214, 38, 104, 0.45) 56%, rgba(160, 20, 80, 0) 72%); }
+.fx-belgesel .bg-ring { position: absolute; border-radius: 50%; opacity: 0; border: 2px solid rgba(255, 128, 176, 0.42);
+  box-shadow: 0 0 24px rgba(255, 80, 150, 0.18); }
+.fx-belgesel .bg-floor { position: absolute; left: -30%; right: -30%; bottom: -10%; height: 32%;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.55) 45%, #000 85%); }
+.fx-belgesel .bg-kicker { position: absolute; top: 132px; font-family: "Inter", sans-serif; font-weight: 700; font-size: 28px;
+  letter-spacing: 0.32em; color: rgba(255, 236, 244, 0.92); white-space: nowrap; opacity: 0; }
+.fx-belgesel .bg-kicker b { color: #ff5d9a; font-weight: 900; margin: 0 0.5em 0 0.2em; }
+.fx-belgesel .bg-head { position: absolute; }
+.fx-belgesel .bg-line { position: absolute; left: 0; right: 0; white-space: nowrap; line-height: 1; opacity: 0; }
+.fx-belgesel .bg-line.big { letter-spacing: -0.035em; }
+.fx-belgesel .bg-line.lead { font-weight: 800; letter-spacing: -0.01em; }
+.fx-belgesel .bg-rule { position: absolute; left: 0; width: 120px; height: 8px; background: #ff4f93; transform-origin: 0 50%; transform: scaleX(0); }
+.fx-belgesel .bg-btn { position: absolute; border-radius: 18px; background: #0095f6; opacity: 0;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45); font-family: "Inter", sans-serif; font-weight: 700; font-size: 42px; color: #fff; }
+.fx-belgesel .bg-btn span { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; white-space: nowrap; }
+.fx-belgesel .bg-btn-b { opacity: 0; }
+.fx-belgesel .bg-cursor { position: absolute; opacity: 0; filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.5)); }
+.fx-belgesel .bg-cursor svg { display: block; }
+.fx-belgesel .bg-ripple { position: absolute; width: 90px; height: 90px; margin: -45px 0 0 -45px; border-radius: 50%;
+  border: 4px solid rgba(255, 255, 255, 0.85); opacity: 0; }
+.fx-belgesel .bg-name { position: absolute; left: 0; top: 1540px; }
+.fx-belgesel .bg-name.right { left: auto; right: 0; text-align: right; }
+.fx-belgesel .bg-name-bar { display: inline-block; background: #e5407c; padding: 22px 56px 20px 60px;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.4); }
+.fx-belgesel .bg-name.right .bg-name-bar { padding: 22px 60px 20px 56px; }
+.fx-belgesel .bg-name-bar span { display: inline-block; font-family: "Inter", sans-serif; font-weight: 800; font-size: 50px;
+  letter-spacing: 0.06em; color: #fff; white-space: nowrap; }
+.fx-belgesel .bg-handle { margin: 22px 60px 0; font-family: "Inter", sans-serif; font-weight: 500; font-size: 38px;
+  color: rgba(255, 255, 255, 0.9); opacity: 0; }

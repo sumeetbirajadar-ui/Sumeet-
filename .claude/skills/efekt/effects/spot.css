@@ -1,0 +1,2 @@
+.spot-shade { position: absolute; inset: 0; }
+.spot-word { position: absolute; font-family: "Playfair Display", serif; font-weight: 900; font-style: italic; letter-spacing: 0.02em; white-space: nowrap; line-height: 1; opacity: 0; }

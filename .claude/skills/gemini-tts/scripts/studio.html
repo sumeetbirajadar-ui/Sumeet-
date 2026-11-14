@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Gemini Voice Studio</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{--bg:#0e0e10;--card:#18181b;--fg:#f4f4f5;--mut:#9b9ba3;--acc:#e8402f;--ok:#3ecf8e;--line:#27272b;--in:#101012}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,"Segoe UI",Arial,"Noto Sans Hebrew",sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:20px 16px 90px}
+header{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:14px}
+h1{font-size:26px;margin:0}.sub{color:var(--mut);font-size:14px;flex:1 1 100%}
+.spacer{flex:1}.pill{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.pill button{border:0;background:transparent;color:var(--mut);padding:6px 14px;font-size:14px;cursor:pointer;margin:0;border-radius:0}
+.pill button.on{background:var(--fg);color:#111}
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 18px}
+nav.tabs button{background:var(--card);border:1px solid var(--line);color:var(--mut);border-radius:10px;padding:10px 16px;font-size:15px;cursor:pointer}
+nav.tabs button.on{color:var(--fg);border-color:var(--acc);box-shadow:inset 0 -3px 0 var(--acc)}
+.tab{display:none}.tab.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px}
+.card h2{margin:0 0 4px;font-size:18px}.hint{color:var(--mut);font-size:14px;margin:2px 0 12px}
+label{font-size:13px;color:var(--mut);display:block;margin:8px 0 4px}
+input[type=text],textarea,select{width:100%;background:var(--in);color:var(--fg);border:1px solid #333;border-radius:9px;padding:9px 11px;font-size:15px;font-family:inherit}
+textarea{min-height:120px;resize:vertical;line-height:1.6}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:end}.row>*{flex:1;min-width:140px}.row>.sm{flex:0 0 150px}.row>.xs{flex:0 0 auto}
+button{background:#2a2a2f;color:#fff;border:1px solid #3a3a40;border-radius:10px;padding:10px 16px;font-size:15px;cursor:pointer;font-family:inherit}
+button.primary{background:var(--acc);border-color:var(--acc)}button.ok{background:var(--ok);border-color:var(--ok);color:#052e1c}
+button.ghost{background:transparent}button.small{padding:5px 10px;font-size:13px}button:disabled{opacity:.45;cursor:default}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.chips button{padding:4px 10px;font-size:13px;border-radius:999px;background:#202024}
+.status{font-size:14px;color:var(--mut);margin-top:10px;white-space:pre-wrap;word-break:break-word}.good{color:var(--ok)}.bad{color:#ff7b6e}
+audio{width:100%;margin-top:10px}
+.quote{background:var(--in);border-inline-start:3px solid var(--acc);padding:12px 14px;border-radius:6px;font-size:17px;line-height:1.7;margin:8px 0}
+.timer{font-variant-numeric:tabular-nums;font-size:22px;min-width:64px}
+.bar{height:8px;background:#222;border-radius:4px;overflow:hidden;flex:1;min-width:120px}.bar i{display:block;height:100%;width:0;background:var(--acc);transition:width .2s}
+.meter{height:5px;background:#222;border-radius:3px;overflow:hidden;width:100%;margin-top:8px}.meter i{display:block;height:100%;width:0;background:var(--ok)}
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:8px 6px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}th{color:var(--mut);font-weight:500}
+.line{display:grid;grid-template-columns:150px 1fr 34px;gap:8px;margin-bottom:10px;align-items:start}
+.line .col{display:flex;flex-direction:column;gap:6px}.line textarea{min-height:64px}
+.line .del{background:transparent;border:0;color:var(--mut);font-size:20px;padding:6px 0;cursor:pointer}
+.cast{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.cast .m{background:var(--in);border:1px solid var(--line);border-radius:10px;padding:10px}.cast .m b{display:block;margin-bottom:6px}
+code{background:var(--in);padding:2px 6px;border-radius:4px;font-size:13px}
+.step{display:inline-block;background:var(--acc);color:#fff;border-radius:999px;width:24px;height:24px;text-align:center;line-height:24px;font-size:13px;margin-inline-end:8px}
+@media (max-width:640px){.line{grid-template-columns:1fr 34px}.line .col:first-child{grid-column:1/-1}}
+</style></head>
+<body><div class="wrap">
+<header>
+  <h1 data-i18n="title">Gemini Voice Studio</h1>
+  <div class="spacer"></div>
+  <div class="pill" id="modelPill"><button data-m="gemini-3.8-flash-tts" class="on">Flash</button><button data-m="gemini-3.8-flash-lite-tts">Flash-Lite</button></div>
+  <div class="pill" id="langPill"><button data-l="en" class="on">EN</button><button data-l="he">עברית</button></div>
+  <div class="sub" data-i18n="subtitle">Text to speech, dialogue, voice design and voice cloning with Gemini 3.8 Flash TTS. Runs on your machine; audio goes only to Google's API.</div>
+</header>
+<nav class="tabs">
+  <button data-tab="speak" class="on" data-i18n="tab_speak">Speak</button>
+  <button data-tab="dialogue" data-i18n="tab_dialogue">Dialogue</button>
+  <button data-tab="voices" data-i18n="tab_voices">My voices</button>
+  <button data-tab="clone" data-i18n="tab_clone">Clone my voice</button>
+</nav>
+
+<!-- ================= SPEAK ================= -->
+<section class="tab on" id="tab-speak">
+<div class="card">
+  <h2 data-i18n="speak_h">Turn text into speech</h2>
+  <div class="hint" data-i18n="speak_hint">Write the words exactly as they should be spoken. Put the mood in the Style box, and click the tags to drop laughs, sighs and pauses at exact spots.</div>
+  <div class="row">
+    <div><label data-i18n="voice">Voice</label><select id="sVoice"></select></div>
+    <div><label data-i18n="style">Style (how to deliver it)</label><input type="text" id="sStyle" data-i18n-ph="style_ph" placeholder="e.g. warm, calm, like telling a story to a friend"></div>
+    <div class="sm"><label data-i18n="format">Format</label><select id="sFmt"><option value="wav">WAV</option><option value="mp3">MP3</option></select></div>
+  </div>
+  <label data-i18n="text">Text</label>
+  <textarea id="sText" dir="auto" data-i18n-ph="text_ph" placeholder="Hey! <laugh> Welcome back. <short pause> Let's begin."></textarea>
+  <div class="chips" id="sTags"></div>
+  <div class="row"><div class="xs"><button class="primary" id="sGo" data-i18n="generate">Generate</button></div><div class="xs"><button class="ghost" id="sClear" data-i18n="clear">Clear</button></div><div class="status" id="sStatus" style="margin:0"></div></div>
+  <audio id="sAudio" controls hidden></audio>
+</div>
+</section>
+
+<!-- ================= DIALOGUE ================= -->
+<section class="tab" id="tab-dialogue">
+<div class="card">
+  <h2 data-i18n="dlg_h">Write a scene</h2>
+  <div class="hint" data-i18n="dlg_hint">One line per turn. Give each line a speaker and, if you want, a style like "excited" or "whispering, tired". Use the same speaker on every line for a single narrator with changing emotions.</div>
+  <div id="lines"></div>
+  <div class="row">
+    <div class="xs"><button id="dAdd" data-i18n="add_line">+ Add line</button></div>
+    <div class="xs"><select id="dExample"><option value="" data-i18n="load_example">Load an example...</option><option value="chat_en">Two friends (EN)</option><option value="chat_he">שני חברים (HE)</option><option value="emotions_en">Emotional range, one narrator (EN)</option><option value="emotions_he">טווח רגשי, קריין אחד (HE)</option></select></div>
+    <div class="xs"><button class="ghost small" id="dImport" data-i18n="import">Import .txt</button><input type="file" id="dFile" accept=".txt,.json" hidden></div>
+    <div class="xs"><button class="ghost small" id="dExport" data-i18n="export">Export .txt</button></div>
+  </div>
+</div>
+<div class="card">
+  <h2 data-i18n="cast_h">Cast</h2>
+  <div class="hint" data-i18n="cast_hint">Pick a voice for each speaker. Your cloned and designed voices are listed first.</div>
+  <div class="cast" id="cast"></div>
+</div>
+<div class="card">
+  <div class="row"><div class="sm"><label data-i18n="format">Format</label><select id="dFmt"><option value="wav">WAV</option><option value="mp3">MP3</option></select></div>
+  <div class="xs"><button class="primary" id="dGo" data-i18n="generate_scene">Generate scene</button></div><div class="status" id="dStatus" style="margin:0"></div></div>
+  <audio id="dAudio" controls hidden></audio>
+</div>
+</section>
+
+<!-- ================= VOICES ================= -->
+<section class="tab" id="tab-voices">
+<div class="card">
+  <h2 data-i18n="myv_h">My voices</h2>
+  <div class="hint" data-i18n="myv_hint">Voices you designed or cloned. Stored voices live for one year at Google; stateless keys for seven days.</div>
+  <table><thead><tr><th data-i18n="alias">Alias</th><th data-i18n="type">Type</th><th data-i18n="name">Name</th><th data-i18n="expires">Expires</th><th></th></tr></thead><tbody id="vRows"></tbody></table>
+  <div class="hint" style="margin-top:10px" data-i18n="cli_hint">From Claude Code or a terminal: <code>gemini_tts.py speak "text" --voice &lt;alias&gt;</code></div>
+</div>
+<div class="card">
+  <h2 data-i18n="design_h">Design a new voice from a description</h2>
+  <div class="hint" data-i18n="design_hint">Describe who is speaking in one or two sentences: age, gender, timbre, accent, baseline delivery. Emotions belong in Style later, not here.</div>
+  <div class="row">
+    <div><label data-i18n="name">Name</label><input type="text" id="vName" data-i18n-ph="design_name_ph" placeholder="Warm British astronomer"></div>
+    <div class="sm"><label data-i18n="alias">Alias (short)</label><input type="text" id="vAlias" placeholder="astronomer"></div>
+    <div class="sm"><label data-i18n="gender">Gender</label><select id="vGender"><option value="">-</option><option value="male" data-i18n="male">male</option><option value="female" data-i18n="female">female</option></select></div>
+    <div class="sm"><label data-i18n="language">Language</label><input type="text" id="vLang" placeholder="en-GB / he-IL"></div>
+  </div>
+  <label data-i18n="description">Description</label>
+  <textarea id="vPrompt" dir="auto" data-i18n-ph="design_prompt_ph" placeholder="A warm, thoughtful astronomer in his late 60s with a gentle British accent, speaking with quiet wonder."></textarea>
+  <div class="row"><div class="xs"><button class="primary" id="vGo" data-i18n="create_voice">Create voice</button></div><div class="status" id="vStatus" style="margin:0"></div></div>
+  <audio id="vAudio" controls hidden></audio>
+</div>
+</section>
+
+<!-- ================= CLONE ================= -->
+<section class="tab" id="tab-clone">
+<div class="card"><h2><span class="step">1</span><span data-i18n="c1_h">Consent sentence</span></h2>
+  <div class="hint" data-i18n="c1_hint">Google checks that the same person recorded both clips. Read this sentence exactly, once, clearly. Hebrew is not offered for this sentence; English works fine even if your voice will speak Hebrew.</div>
+  <div class="row"><div class="sm"><label data-i18n="consent_lang">Consent language</label><select id="clocale"></select></div></div>
+  <div class="quote" id="ctext"></div>
+  <div class="row"><div class="xs"><button class="primary" id="crec" data-i18n="rec_consent">● Record consent</button></div><div class="xs"><button id="cstop" disabled>■ Stop</button></div><div class="xs timer" id="ctimer">0:00</div></div>
+  <div class="row"><div><label data-i18n="or_file">or use a file</label><input type="file" id="cfile" accept="audio/*,video/*"></div><div><label data-i18n="or_saved">or pick a saved recording</label><select id="cpick"><option value="">...</option></select></div></div>
+  <audio id="caudio" controls hidden></audio><div class="status" id="cstatus"></div></div>
+
+<div class="card"><h2><span class="step">2</span><span data-i18n="c2_h">Your voice sample</span></h2>
+  <div class="hint" data-i18n="c2_hint">Quiet room, same mic as step 1, your normal speaking voice. Any language. Read the script below or just talk. Speak the way you want the clone to sound; only the first 30 seconds are used, so put your best delivery first.</div>
+  <div class="row"><div class="sm"><label data-i18n="reading_script">Reading script</label><select id="rlang"><option value="en">English</option><option value="he">עברית</option></select></div></div>
+  <div class="hint" id="rhint"></div><div class="quote" id="rtext"></div>
+  <div class="row"><div class="xs"><button class="primary" id="rrec" data-i18n="rec_ref">● Record sample</button></div><div class="xs"><button id="rstop" disabled>■ Stop</button></div><div class="xs timer" id="rtimer">0:00</div><div class="bar"><i id="rbar"></i></div><div class="xs" style="font-size:13px;color:var(--mut)" data-i18n="goal">goal 0:30</div></div>
+  <div class="meter"><i id="rmeter"></i></div>
+  <div class="row"><div><label data-i18n="or_file_have">or use audio/video you already have</label><input type="file" id="rfile" accept="audio/*,video/*"></div><div><label data-i18n="or_saved">or pick a saved recording</label><select id="rpick"><option value="">...</option></select></div></div>
+  <div class="row"><div class="sm"><label data-i18n="offset">Start at (sec, optional)</label><input type="text" id="roff" placeholder="0"></div><div class="sm"><label data-i18n="length">Length (sec, optional)</label><input type="text" id="rsec" placeholder="30"></div></div>
+  <audio id="raudio" controls hidden></audio><div class="status" id="rstatus"></div></div>
+
+<div class="card"><h2><span class="step">3</span><span data-i18n="c3_h">Create the voice</span></h2>
+  <div class="row"><div><label data-i18n="name">Name</label><input type="text" id="vname" value="My Voice"></div><div class="sm"><label data-i18n="alias">Alias (short)</label><input type="text" id="valias" placeholder="me"></div></div>
+  <label style="display:flex;gap:8px;align-items:center;margin-top:10px"><input type="checkbox" id="stateless"><span data-i18n="stateless">Stateless: 7-day key, nothing stored at Google</span></label>
+  <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="prepend" checked><span data-i18n="prepend">Prepend the consent clip to the sample (needed when the sample is in another language than the consent, e.g. Hebrew sample + English consent)</span></label>
+  <div class="row" style="margin-top:10px"><div class="xs"><button class="ok" id="create" disabled data-i18n="create_voice">Create voice</button></div><div class="status" id="vstat" style="margin:0"></div></div></div>
+
+<div class="card"><h2><span class="step">4</span><span data-i18n="c4_h">Test it</span></h2>
+  <div class="row"><div><input type="text" id="ttext" dir="auto" data-i18n-ph="test_ph" placeholder="Hey, this is my cloned voice speaking through Gemini."></div><div class="sm"><input type="text" id="tstyle" data-i18n-ph="style_short_ph" placeholder="style (optional)"></div><div class="xs"><button id="test" disabled data-i18n="speak_btn">Speak</button></div></div>
+  <audio id="taudio" controls hidden></audio><div class="status" id="tstatus"></div></div>
+</section>
+</div>
+
+<script>
+// ---------------------------------------------------------------- i18n
+const T = {
+en: {
+ title:"Gemini Voice Studio", subtitle:"Text to speech, dialogue, voice design and voice cloning with Gemini 3.8 Flash TTS. Runs on your machine; audio goes only to Google's API.",
+ tab_speak:"Speak", tab_dialogue:"Dialogue", tab_voices:"My voices", tab_clone:"Clone my voice",
+ speak_h:"Turn text into speech", speak_hint:"Write the words exactly as they should be spoken. Put the mood in the Style box, and click the tags to drop laughs, sighs and pauses at exact spots.",
+ voice:"Voice", style:"Style (how to deliver it)", style_ph:"e.g. warm, calm, like telling a story to a friend", format:"Format", text:"Text",
+ text_ph:"Hey! <laugh> Welcome back. <short pause> Let's begin.", generate:"Generate", clear:"Clear",
+ dlg_h:"Write a scene", dlg_hint:"One line per turn. Give each line a speaker and, if you want, a style like \"excited\" or \"whispering, tired\". Use the same speaker on every line for a single narrator with changing emotions.",
+ add_line:"+ Add line", load_example:"Load an example...", import:"Import .txt", export:"Export .txt", cast_h:"Cast", cast_hint:"Pick a voice for each speaker. Your cloned and designed voices are listed first.",
+ generate_scene:"Generate scene", speaker:"Speaker", line_style:"Style (optional)", line_text:"What they say",
+ myv_h:"My voices", myv_hint:"Voices you designed or cloned. Stored voices live for one year at Google; stateless keys for seven days.",
+ alias:"Alias", type:"Type", name:"Name", expires:"Expires", cli_hint:"From Claude Code or a terminal: <code>gemini_tts.py speak \"text\" --voice &lt;alias&gt;</code>",
+ design_h:"Design a new voice from a description", design_hint:"Describe who is speaking in one or two sentences: age, gender, timbre, accent, baseline delivery. Emotions belong in Style later, not here.",
+ design_name_ph:"Warm British astronomer", gender:"Gender", male:"male", female:"female", language:"Language", description:"Description",
+ design_prompt_ph:"A warm, thoughtful astronomer in his late 60s with a gentle British accent, speaking with quiet wonder.", create_voice:"Create voice",
+ c1_h:"Consent sentence", c1_hint:"Google checks that the same person recorded both clips. Read this sentence exactly, once, clearly. Hebrew is not offered for this sentence; English works fine even if your voice will speak Hebrew.",
+ consent_lang:"Consent language", rec_consent:"● Record consent", or_file:"or use a file", or_saved:"or pick a saved recording",
+ c2_h:"Your voice sample", c2_hint:"Quiet room, same mic as step 1, your normal speaking voice. Any language. Read the script below or just talk. Speak the way you want the clone to sound; only the first 30 seconds are used, so put your best delivery first.",
+ reading_script:"Reading script", rec_ref:"● Record sample", goal:"goal 0:30", or_file_have:"or use audio/video you already have", offset:"Start at (sec, optional)", length:"Length (sec, optional)",
+ c3_h:"Create the voice", stateless:"Stateless: 7-day key, nothing stored at Google", prepend:"Prepend the consent clip to the sample (needed when the sample is in another language than the consent, e.g. Hebrew sample + English consent)",
+ c4_h:"Test it", test_ph:"Hey, this is my cloned voice speaking through Gemini.", style_short_ph:"style (optional)", speak_btn:"Speak",
+ st_generating:"Generating...", st_saved:"Saved", st_recording:"Recording...", st_saving:"Saving...", st_mic:"Microphone error: ", st_error:"Error: ", st_creating:"Uploading to Google and verifying the speaker (30-60 s)...",
+ st_created:"Created", st_short:"Too short: Google needs at least about 10 seconds.", st_consent_long:"Consent clip is long; it should contain just the one sentence.", st_using:"Using", del_confirm:"Delete this voice at Google? This cannot be undone.",
+ play:"Play", del:"Delete", none_yet:"No custom voices yet. Design one below, or clone your own voice in the Clone tab.", studio_voices:"Studio voices", my_voices:"My voices", sample:"Preview", duration:"Duration",
+},
+he: {
+ title:"אולפן הקול של Gemini", subtitle:"טקסט לדיבור, דיאלוגים, עיצוב קולות ושיבוט הקול שלך עם Gemini 3.8 Flash TTS. רץ אצלך במחשב; האודיו נשלח רק ל-API של גוגל.",
+ tab_speak:"דיבור", tab_dialogue:"דיאלוג", tab_voices:"הקולות שלי", tab_clone:"שיבוט הקול שלי",
+ speak_h:"הופכים טקסט לדיבור", speak_hint:"כתבו את המילים בדיוק כמו שהן צריכות להישמע. את מצב הרוח שמים בתיבת הסגנון, ועל התגיות לוחצים כדי להכניס צחוק, אנחה או השהיה בנקודה מדויקת.",
+ voice:"קול", style:"סגנון (איך להגיש את זה)", style_ph:"למשל: חם, רגוע, כמו לספר סיפור לחבר", format:"פורמט", text:"טקסט",
+ text_ph:"היי! <laugh> ברוכים השבים. <short pause> בואו נתחיל.", generate:"צור אודיו", clear:"נקה",
+ dlg_h:"כותבים סצנה", dlg_hint:"שורה לכל תור. לכל שורה נותנים דובר, ואם רוצים גם סגנון כמו \"נרגש\" או \"לוחש, עייף\". אותו דובר בכל השורות = קריין אחד עם רגשות משתנים.",
+ add_line:"+ הוסף שורה", load_example:"טען דוגמה...", import:"ייבוא txt.", export:"ייצוא txt.", cast_h:"ליהוק", cast_hint:"בוחרים קול לכל דובר. הקולות המשובטים והמעוצבים שלכם מופיעים ראשונים.",
+ generate_scene:"צור סצנה", speaker:"דובר", line_style:"סגנון (לא חובה)", line_text:"מה הוא אומר",
+ myv_h:"הקולות שלי", myv_hint:"קולות שעיצבתם או שיבטתם. קולות שמורים חיים שנה אצל גוגל; מפתחות זמניים שבעה ימים.",
+ alias:"כינוי", type:"סוג", name:"שם", expires:"תוקף", cli_hint:"מ-Claude Code או מהטרמינל: <code>gemini_tts.py speak \"text\" --voice &lt;alias&gt;</code>",
+ design_h:"מעצבים קול חדש מתיאור", design_hint:"תארו מי מדבר במשפט או שניים: גיל, מגדר, גוון, מבטא, קצב בסיסי. רגשות שמים אחר כך בסגנון, לא כאן.",
+ design_name_ph:"קריינית תיעודית חמה", gender:"מגדר", male:"גבר", female:"אישה", language:"שפה", description:"תיאור",
+ design_prompt_ph:"גבר ישראלי רגוע בשנות הארבעים, בריטון חם, קצב של קריין סרטי טבע.", create_voice:"צור קול",
+ c1_h:"משפט ההסכמה", c1_hint:"גוגל בודקת שאותו אדם הקליט את שני הקטעים. קראו את המשפט הזה בדיוק, פעם אחת, ברור. עברית לא מוצעת למשפט הזה; אנגלית עובדת מצוין גם אם הקול ידבר עברית.",
+ consent_lang:"שפת ההסכמה", rec_consent:"● הקלט הסכמה", or_file:"או קובץ", or_saved:"או הקלטה שמורה",
+ c2_h:"דגימת הקול שלך", c2_hint:"חדר שקט, אותו מיקרופון כמו בשלב 1, הקול הרגיל שלכם. כל שפה. קראו את הטקסט למטה או פשוט דברו. דברו כמו שאתם רוצים שהשיבוט יישמע; רק 30 השניות הראשונות בשימוש, אז שימו את ההגשה הכי טובה בהתחלה.",
+ reading_script:"טקסט לקריאה", rec_ref:"● הקלט דגימה", goal:"יעד 0:30", or_file_have:"או אודיו/וידאו שכבר יש לכם", offset:"התחל מ- (שניות, לא חובה)", length:"אורך (שניות, לא חובה)",
+ c3_h:"יוצרים את הקול", stateless:"זמני: מפתח לשבעה ימים, שום דבר לא נשמר אצל גוגל", prepend:"הצמד את קטע ההסכמה לפני הדגימה (נדרש כשהדגימה בשפה אחרת מההסכמה, למשל דגימה בעברית והסכמה באנגלית)",
+ c4_h:"בודקים", test_ph:"היי, זה הקול המשובט שלי מדבר דרך Gemini.", style_short_ph:"סגנון (לא חובה)", speak_btn:"דבר",
+ st_generating:"מייצר...", st_saved:"נשמר", st_recording:"מקליט...", st_saving:"שומר...", st_mic:"שגיאת מיקרופון: ", st_error:"שגיאה: ", st_creating:"מעלה לגוגל ומאמת את הדובר (30-60 שניות)...",
+ st_created:"נוצר", st_short:"קצר מדי: גוגל צריכה לפחות בערך 10 שניות.", st_consent_long:"קטע ההסכמה ארוך; הוא צריך להכיל רק את המשפט.", st_using:"בשימוש", del_confirm:"למחוק את הקול הזה אצל גוגל? אי אפשר לבטל.",
+ play:"נגן", del:"מחק", none_yet:"עדיין אין קולות מותאמים. עצבו אחד למטה, או שבטו את הקול שלכם בלשונית השיבוט.", studio_voices:"קולות האולפן", my_voices:"הקולות שלי", sample:"תצוגה מקדימה", duration:"משך",
+}};
+let LANG = localStorage.getItem('gvs_lang') || (navigator.language||'').startsWith('he') ? 'he' : 'en';
+if (localStorage.getItem('gvs_lang')) LANG = localStorage.getItem('gvs_lang');
+const t = k => (T[LANG] && T[LANG][k]) || T.en[k] || k;
+const $ = id => document.getElementById(id);
+function applyLang(){
+  document.documentElement.lang = LANG; document.documentElement.dir = LANG==='he' ? 'rtl' : 'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.innerHTML = t(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => { el.placeholder = t(el.dataset.i18nPh); });
+  document.querySelectorAll('#langPill button').forEach(b => b.classList.toggle('on', b.dataset.l===LANG));
+  renderLines(); renderCast(); renderVoices();
+}
+document.querySelectorAll('#langPill button').forEach(b => b.onclick = () => { LANG=b.dataset.l; localStorage.setItem('gvs_lang', LANG); applyLang(); });
+
+// ---------------------------------------------------------------- state
+let CFG = {prebuilt:{}, voices:{}, consent:{}, scripts:{}};
+let MODEL = localStorage.getItem('gvs_model') || 'gemini-3.8-flash-tts';
+document.querySelectorAll('#modelPill button').forEach(b => { b.classList.toggle('on', b.dataset.m===MODEL); b.onclick = () => { MODEL=b.dataset.m; localStorage.setItem('gvs_model', MODEL); document.querySelectorAll('#modelPill button').forEach(x=>x.classList.toggle('on', x===b)); }; });
+const TAGS = ["<laugh>","<chuckle>","<giggle>","<sigh>","<gasp>","<breath>","<exhales>","<cough>","<throat-clearing>","<yawn>","<whispers>","<snicker>","<groan>","<phew>","<short pause>","<long pause>"];
+const post = (u, body) => fetch(u, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body)}).then(r=>r.json());
+const fileUrl = p => '/file?path='+encodeURIComponent(p)+'&t='+Date.now();
+function setStatus(el, msg, cls){ el.textContent = msg; el.className = 'status '+(cls||''); }
+
+// tabs
+document.querySelectorAll('nav.tabs button').forEach(b => b.onclick = () => showTab(b.dataset.tab));
+function showTab(name){ document.querySelectorAll('nav.tabs button').forEach(x=>x.classList.toggle('on', x.dataset.tab===name)); document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on', x.id==='tab-'+name)); location.hash = name; }
+
+// voice options
+function voiceOptions(sel, selected){
+  sel.innerHTML = '';
+  const mine = Object.entries(CFG.voices);
+  if (mine.length){ const g=document.createElement('optgroup'); g.label=t('my_voices'); mine.forEach(([a,v])=>{ const o=document.createElement('option'); o.value=a; o.textContent=`${a} (${v.display_name||v.type})`; g.appendChild(o); }); sel.appendChild(g); }
+  const g2=document.createElement('optgroup'); g2.label=t('studio_voices');
+  Object.entries(CFG.prebuilt).forEach(([n,c])=>{ const o=document.createElement('option'); o.value=n; o.textContent=`${n} (${c})`; g2.appendChild(o); }); sel.appendChild(g2);
+  if (selected) sel.value = selected; if (!sel.value) sel.value = mine.length ? mine[0][0] : 'Kore';
+}
+
+// ---------------------------------------------------------------- SPEAK
+TAGS.forEach(tag => { const b=document.createElement('button'); b.textContent=tag; b.onclick=()=>insertAtCursor($('sText'), tag+' '); $('sTags').appendChild(b); });
+function insertAtCursor(ta, txt){ const s=ta.selectionStart||0, e=ta.selectionEnd||0; ta.value = ta.value.slice(0,s)+txt+ta.value.slice(e); ta.focus(); ta.selectionStart=ta.selectionEnd=s+txt.length; save(); }
+$('sGo').onclick = async () => {
+  const text=$('sText').value.trim(); if(!text) return;
+  $('sGo').disabled=true; setStatus($('sStatus'), t('st_generating'));
+  const j = await post('/api/speak', {text, voice:$('sVoice').value, style:$('sStyle').value, model:MODEL, format:$('sFmt').value});
+  $('sGo').disabled=false;
+  if(!j.ok){ setStatus($('sStatus'), t('st_error')+j.error, 'bad'); return; }
+  $('sAudio').src=fileUrl(j.file); $('sAudio').hidden=false; $('sAudio').play();
+  setStatus($('sStatus'), `${t('st_saved')} ${j.file}  (${t('duration')} ${j.duration.toFixed(1)}s)`, 'good');
+};
+$('sClear').onclick = () => { $('sText').value=''; save(); };
+
+// ---------------------------------------------------------------- DIALOGUE
+let LINES = [];
+const EXAMPLES = {
+ chat_en: [{speaker:"Dana",style:"excited",text:"Guy, did you see the new TTS model?"},{speaker:"Guy",style:"skeptical, dry",text:"Another one? <sigh> How good can it be."},{speaker:"Dana",style:"",text:"Listen to this. <laugh> It does laughs, pauses, everything."},{speaker:"Guy",style:"warming up",text:"Okay... <short pause> that is actually impressive."}],
+ chat_he: [{speaker:"דנה",style:"נרגשת",text:"גיא, ראית את מודל הדיבור החדש?"},{speaker:"גיא",style:"ספקן, יבש",text:"עוד אחד? <sigh> כמה טוב הוא כבר יכול להיות."},{speaker:"דנה",style:"",text:"תקשיב לזה. <laugh> יש לו צחוקים, השהיות, הכל."},{speaker:"גיא",style:"מתרכך",text:"טוב... <short pause> זה באמת מרשים."}],
+ emotions_en: [
+  {speaker:"Narrator",style:"calm, neutral, presenter tone",text:"Okay, quick test. I'm going to move through a few emotions, and you tell me if it sounds real."},
+  {speaker:"Narrator",style:"genuinely excited, fast, big smile in the voice",text:"Wait, wait, wait! You don't understand what just happened! It WORKED! <laugh> First try!"},
+  {speaker:"Narrator",style:"soft, nostalgic, slow",text:"I remember the first time I touched a computer. <breath> I was seven... the screen was green, and it looked like magic."},
+  {speaker:"Narrator",style:"frustrated, clipped, losing patience",text:"No. No, no, no. <sigh> How many times do I have to say this? That is NOT how it works."},
+  {speaker:"Narrator",style:"whispering, conspiratorial",text:"<whispers> Come closer, I'll tell you a secret. <short pause> Most people never read the instructions. <snicker>"},
+  {speaker:"Narrator",style:"sad, heavy, quiet",text:"It was a hard day. <long pause> We tried everything. And in the end... <sigh> it just wasn't enough."},
+  {speaker:"Narrator",style:"warm, amused, storytelling",text:"<chuckle> And then the dog walks into the frame, looks at the camera, and... <laugh> sits down. Like it's her podcast."},
+  {speaker:"Narrator",style:"dramatic, intense, movie trailer",text:"There is one moment. Only one. <short pause> Where everything can change. <breath> And this... is that moment."},
+  {speaker:"Narrator",style:"tender, sincere, slow",text:"When you grow up and hear this... <short pause> know that I tried. That I always, always tried."},
+  {speaker:"Narrator",style:"relaxed, friendly, wrapping up",text:"<exhales> Okay, that's it. <chuckle> Tell me which part was the most convincing. Bye."}],
+ emotions_he: [
+  {speaker:"קריין",style:"רגוע, ניטרלי, טון של מגיש",text:"טוב, בדיקה קצרה. אני אעבור בין כמה רגשות, ואתם תגידו לי אם זה נשמע אמיתי."},
+  {speaker:"קריין",style:"נרגש באמת, מהיר, חיוך גדול בקול",text:"רגע, רגע, רגע! אתם לא מבינים מה קרה הרגע! זה עבד! <laugh> מהניסיון הראשון!"},
+  {speaker:"קריין",style:"רך, נוסטלגי, איטי",text:"אני זוכר את הפעם הראשונה שנגעתי במחשב. <breath> הייתי בן שבע... המסך היה ירוק, והכל נראה כמו קסם."},
+  {speaker:"קריין",style:"מתוסכל, קצר רוח",text:"לא. לא, לא, לא. <sigh> כמה פעמים אני צריך להגיד את זה? זה לא ככה שעובדים."},
+  {speaker:"קריין",style:"לוחש, קונספירטיבי",text:"<whispers> בואו הנה, אגלה לכם סוד. <short pause> רוב האנשים בכלל לא קוראים את ההוראות. <snicker>"},
+  {speaker:"קריין",style:"עצוב, כבד, שקט",text:"זה היה יום קשה. <long pause> ניסינו הכל. ובסוף... <sigh> זה פשוט לא הספיק."},
+  {speaker:"קריין",style:"חם, משועשע, מספר סיפור",text:"<chuckle> ואז הכלבה נכנסת לפריים, מסתכלת על המצלמה, ו... <laugh> מתיישבת. כאילו זה הפודקאסט שלה."},
+  {speaker:"קריין",style:"דרמטי, אינטנסיבי, טריילר",text:"יש רגע אחד. רגע אחד בלבד. <short pause> שבו הכל יכול להשתנות. <breath> וזה... הרגע הזה."},
+  {speaker:"קריין",style:"עדין, כן, איטי",text:"כשתגדלו ותשמעו את זה... <short pause> תדעו שניסיתי. שתמיד, תמיד ניסיתי."},
+  {speaker:"קריין",style:"רגוע, ידידותי, מסכם",text:"<exhales> טוב, זהו. <chuckle> תגידו לי איזה קטע היה הכי משכנע. ביי."}],
+};
+let CAST = {};
+function renderLines(){
+  const box=$('lines'); box.innerHTML='';
+  LINES.forEach((ln,i)=>{
+    const d=document.createElement('div'); d.className='line';
+    d.innerHTML=`<div class="col"><input type="text" class="spk" list="spkList" placeholder="${t('speaker')}" value=""><input type="text" class="sty" placeholder="${t('line_style')}" value=""></div>
+      <div class="col"><textarea class="txt" dir="auto" placeholder="${t('line_text')}"></textarea></div><button class="del" title="${t('del')}">×</button>`;
+    d.querySelector('.spk').value=ln.speaker||''; d.querySelector('.sty').value=ln.style||''; d.querySelector('.txt').value=ln.text||'';
+    d.querySelector('.spk').oninput=e=>{ln.speaker=e.target.value; renderCast(); save();};
+    d.querySelector('.sty').oninput=e=>{ln.style=e.target.value; save();};
+    d.querySelector('.txt').oninput=e=>{ln.text=e.target.value; save();};
+    d.querySelector('.del').onclick=()=>{LINES.splice(i,1); renderLines(); renderCast(); save();};
+    box.appendChild(d);
+  });
+  let dl=$('spkList'); if(!dl){ dl=document.createElement('datalist'); dl.id='spkList'; document.body.appendChild(dl); }
+  dl.innerHTML=[...new Set(LINES.map(l=>l.speaker).filter(Boolean))].map(s=>`<option value="${s}">`).join('');
+}
+function speakers(){ return [...new Set(LINES.map(l=>(l.speaker||'').trim()).filter(Boolean))]; }
+function renderCast(){
+  const c=$('cast'); c.innerHTML='';
+  const defaults=['Puck','Kore','Charon','Leda','Orus','Aoede'];
+  speakers().forEach((s,i)=>{ const m=document.createElement('div'); m.className='m'; m.innerHTML=`<b>${s}</b>`; const sel=document.createElement('select'); voiceOptions(sel, CAST[s]||defaults[i%defaults.length]); CAST[s]=sel.value; sel.onchange=()=>{CAST[s]=sel.value; save();}; m.appendChild(sel); c.appendChild(m); });
+}
+$('dAdd').onclick=()=>{ const last=LINES[LINES.length-1]; LINES.push({speaker:last?last.speaker:'', style:'', text:''}); renderLines(); renderCast(); save(); setTimeout(()=>{const ta=document.querySelectorAll('#lines .txt'); ta[ta.length-1].focus();},0); };
+$('dExample').onchange=()=>{ const k=$('dExample').value; if(!k) return; LINES=JSON.parse(JSON.stringify(EXAMPLES[k])); CAST={}; renderLines(); renderCast(); save(); $('dExample').value=''; };
+$('dImport').onclick=()=>$('dFile').click();
+$('dFile').onchange=async()=>{ const f=$('dFile').files[0]; if(!f) return; const txt=await f.text(); LINES=parseScript(txt); renderLines(); renderCast(); save(); };
+function parseScript(raw){ const s=raw.trim(); if(s.startsWith('[')) return JSON.parse(s); const out=[]; const pat=/^\s*([^:\[\]]+?)\s*(?:\[(.*?)\])?\s*:\s*(.+)$/; for(const line of raw.split(/\r?\n/)){ if(!line.trim()||line.trim().startsWith('#')) continue; const m=line.match(pat); if(!m){ if(out.length) out[out.length-1].text+=' '+line.trim(); continue;} out.push({speaker:m[1].trim(), style:(m[2]||'').trim(), text:m[3].trim()}); } return out; }
+$('dExport').onclick=()=>{ const txt=LINES.map(l=>`${l.speaker||'Speaker'}${l.style?' ['+l.style+']':''}: ${l.text}`).join('\n'); const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain'})); a.download='dialogue.txt'; a.click(); };
+$('dGo').onclick=async()=>{
+  const turns=LINES.filter(l=>(l.text||'').trim()).map(l=>({speaker:(l.speaker||'Speaker').trim(), style:l.style||null, text:l.text.trim()}));
+  if(!turns.length) return; $('dGo').disabled=true; setStatus($('dStatus'), t('st_generating'));
+  const j=await post('/api/dialogue', {turns, speakers:CAST, model:MODEL, format:$('dFmt').value});
+  $('dGo').disabled=false;
+  if(!j.ok){ setStatus($('dStatus'), t('st_error')+j.error, 'bad'); return; }
+  $('dAudio').src=fileUrl(j.file); $('dAudio').hidden=false; $('dAudio').play();
+  setStatus($('dStatus'), `${t('st_saved')} ${j.file}  (${t('duration')} ${j.duration.toFixed(1)}s)`, 'good');
+};
+
+// ---------------------------------------------------------------- VOICES
+function renderVoices(){
+  const tb=$('vRows'); tb.innerHTML='';
+  const entries=Object.entries(CFG.voices);
+  if(!entries.length){ tb.innerHTML=`<tr><td colspan="5" style="color:var(--mut)">${t('none_yet')}</td></tr>`; }
+  entries.forEach(([alias,v])=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td><code>${alias}</code></td><td>${v.type||''}${v.stateless?' (7d)':''}</td><td>${v.display_name||''}</td><td>${(v.expire_time||'').slice(0,10)}</td><td style="white-space:nowrap"></td>`;
+    const td=tr.lastElementChild;
+    if(v.sample){ const b=document.createElement('button'); b.className='small'; b.textContent=t('sample'); b.onclick=()=>{ new Audio(fileUrl(v.sample)).play(); }; td.appendChild(b); td.append(' '); }
+    const p=document.createElement('button'); p.className='small'; p.textContent=t('play'); p.onclick=()=>{ showTab('speak'); voiceOptions($('sVoice'), alias); }; td.appendChild(p); td.append(' ');
+    const d=document.createElement('button'); d.className='small ghost'; d.textContent=t('del'); d.onclick=async()=>{ if(!confirm(t('del_confirm'))) return; const j=await post('/api/voice-delete',{alias}); if(j.ok){ await loadConfig(); } else alert(j.error); }; td.appendChild(d);
+    tb.appendChild(tr);
+  });
+}
+$('vGo').onclick=async()=>{
+  const prompt=$('vPrompt').value.trim(), name=$('vName').value.trim(); if(!prompt||!name){ setStatus($('vStatus'), t('st_error')+'name + description', 'bad'); return; }
+  $('vGo').disabled=true; setStatus($('vStatus'), t('st_generating'));
+  const j=await post('/api/design',{name, prompt, alias:$('vAlias').value.trim(), gender:$('vGender').value, lang:$('vLang').value.trim(), model:MODEL});
+  $('vGo').disabled=false;
+  if(!j.ok){ setStatus($('vStatus'), t('st_error')+j.error, 'bad'); return; }
+  setStatus($('vStatus'), `${t('st_created')} ${j.voice} (${t('alias')}: ${j.alias})`, 'good');
+  if(j.sample){ $('vAudio').src=fileUrl(j.sample); $('vAudio').hidden=false; $('vAudio').play(); }
+  await loadConfig();
+};
+
+// ---------------------------------------------------------------- CLONE
+const st={consent:null, ref:null, voice:null};
+function setupClone(){
+  const cl=$('clocale'); cl.innerHTML=''; Object.keys(CFG.consent).forEach(k=>{ const o=document.createElement('option'); o.value=k; o.textContent=k; cl.appendChild(o); }); cl.value='en-US';
+  const setC=()=>{ $('ctext').textContent=CFG.consent[cl.value]; $('ctext').dir = cl.value.startsWith('ar')?'rtl':'ltr'; }; cl.onchange=setC; setC();
+  const setR=()=>{ const [h,txt]=CFG.scripts[$('rlang').value]; $('rhint').textContent=h; $('rtext').textContent=txt; $('rtext').dir=$('rlang').value==='he'?'rtl':'ltr'; }; $('rlang').onchange=setR; $('rlang').value=LANG==='he'?'he':'en'; setR();
+}
+const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
+function recorder(kind, recBtn, stopBtn, timerEl, audioEl, statusEl, barEl, meterEl, goal){
+  let mr, chunks=[], t0, iv, ctx, raf;
+  recBtn.onclick=async()=>{
+    try{
+      const stream=await navigator.mediaDevices.getUserMedia({audio:{channelCount:1,echoCancellation:false,noiseSuppression:false,autoGainControl:false}});
+      chunks=[]; mr=new MediaRecorder(stream,{mimeType: MediaRecorder.isTypeSupported('audio/webm;codecs=opus')?'audio/webm;codecs=opus':''});
+      mr.ondataavailable=e=>chunks.push(e.data);
+      mr.onstop=async()=>{
+        stream.getTracks().forEach(x=>x.stop()); clearInterval(iv); cancelAnimationFrame(raf); if(ctx) ctx.close();
+        const blob=new Blob(chunks,{type:mr.mimeType||'audio/webm'}); audioEl.src=URL.createObjectURL(blob); audioEl.hidden=false;
+        setStatus(statusEl, t('st_saving'));
+        const r=await fetch('/save?kind='+kind,{method:'POST',headers:{'Content-Type':blob.type},body:blob}); onSaved(kind, await r.json(), statusEl);
+        recBtn.disabled=false; stopBtn.disabled=true;
+      };
+      mr.start(250); t0=Date.now(); recBtn.disabled=true; stopBtn.disabled=false; setStatus(statusEl, t('st_recording'));
+      iv=setInterval(()=>{ const s=(Date.now()-t0)/1000; timerEl.textContent=fmt(s); if(barEl){ barEl.style.width=Math.min(100,s/goal*100)+'%'; barEl.style.background = s>=goal?'var(--ok)':'var(--acc)'; } },200);
+      if(meterEl){ ctx=new AudioContext(); const an=ctx.createAnalyser(); ctx.createMediaStreamSource(stream).connect(an); const buf=new Uint8Array(an.fftSize);
+        const tick=()=>{ an.getByteTimeDomainData(buf); let m=0; for(const v of buf) m=Math.max(m,Math.abs(v-128)); meterEl.style.width=Math.min(100,m/128*160)+'%'; raf=requestAnimationFrame(tick); }; tick(); }
+    }catch(e){ setStatus(statusEl, t('st_mic')+e.message, 'bad'); }
+  };
+  stopBtn.onclick=()=>{ if(mr&&mr.state!=='inactive') mr.stop(); };
+}
+function onSaved(kind, j, statusEl){
+  if(!j.ok){ setStatus(statusEl, t('st_error')+j.error, 'bad'); return; }
+  st[kind]=j.path;
+  let msg=`${t('st_saved')} ${j.duration.toFixed(1)}s -> ${j.path}`;
+  if(kind==='ref' && j.duration<10) msg+='\n'+t('st_short'); if(kind==='consent' && j.duration>20) msg+='\n'+t('st_consent_long');
+  setStatus(statusEl, msg, 'good'); $('create').disabled=!(st.consent&&st.ref); loadPicks();
+}
+async function uploadFile(kind, input, statusEl, audioEl){
+  const f=input.files[0]; if(!f) return; setStatus(statusEl, t('st_saving')+' '+f.name);
+  const r=await fetch('/save?kind='+kind+'&name='+encodeURIComponent(f.name),{method:'POST',headers:{'Content-Type':f.type||'application/octet-stream'},body:f});
+  const j=await r.json(); onSaved(kind, j, statusEl); if(j.ok){ audioEl.src=fileUrl(j.path); audioEl.hidden=false; }
+}
+async function loadPicks(){ const j=await (await fetch('/recordings')).json(); for(const id of ['cpick','rpick']){ const sel=$(id); const cur=sel.value; sel.innerHTML='<option value="">...</option>'; for(const f of j.files){ const o=document.createElement('option'); o.value=f.path; o.textContent=`${f.name} (${f.duration.toFixed(0)}s)`; sel.appendChild(o);} sel.value=cur; } }
+function pick(kind, sel, statusEl, audioEl){ sel.onchange=()=>{ if(!sel.value) return; st[kind]=sel.value; setStatus(statusEl, t('st_using')+' '+sel.value, 'good'); audioEl.src=fileUrl(sel.value); audioEl.hidden=false; $('create').disabled=!(st.consent&&st.ref); }; }
+recorder('consent', $('crec'), $('cstop'), $('ctimer'), $('caudio'), $('cstatus'), null, null, 0);
+recorder('ref', $('rrec'), $('rstop'), $('rtimer'), $('raudio'), $('rstatus'), $('rbar'), $('rmeter'), 30);
+$('cfile').onchange=()=>uploadFile('consent', $('cfile'), $('cstatus'), $('caudio'));
+$('rfile').onchange=()=>uploadFile('ref', $('rfile'), $('rstatus'), $('raudio'));
+pick('consent', $('cpick'), $('cstatus'), $('caudio')); pick('ref', $('rpick'), $('rstatus'), $('raudio'));
+$('create').onclick=async()=>{
+  $('create').disabled=true; setStatus($('vstat'), t('st_creating'));
+  const j=await post('/replicate',{source:st.ref, consent:st.consent, name:$('vname').value, alias:$('valias').value, stateless:$('stateless').checked, prepend_consent:$('prepend').checked, offset:$('roff').value, seconds:$('rsec').value, model:MODEL});
+  $('create').disabled=false;
+  if(!j.ok){ setStatus($('vstat'), t('st_error')+j.error, 'bad'); return; }
+  st.voice=j.alias; setStatus($('vstat'), `${t('st_created')} ${j.voice} (${t('alias')}: ${j.alias}${j.expire_time?', '+t('expires')+' '+j.expire_time.slice(0,10):''})`, 'good'); $('test').disabled=false; await loadConfig();
+};
+$('test').onclick=async()=>{
+  $('test').disabled=true; setStatus($('tstatus'), t('st_generating'));
+  const j=await post('/api/speak',{text:$('ttext').value||$('ttext').placeholder, style:$('tstyle').value, voice:st.voice, model:MODEL, format:'wav'});
+  $('test').disabled=false; if(!j.ok){ setStatus($('tstatus'), t('st_error')+j.error, 'bad'); return; }
+  $('taudio').src=fileUrl(j.file); $('taudio').hidden=false; $('taudio').play(); setStatus($('tstatus'), j.file, 'good');
+};
+
+// ---------------------------------------------------------------- persistence + boot
+function save(){ try{ localStorage.setItem('gvs_state', JSON.stringify({sText:$('sText').value, sStyle:$('sStyle').value, sVoice:$('sVoice').value, LINES, CAST})); }catch(e){} }
+['sText','sStyle','sVoice'].forEach(id=>$(id).addEventListener('input', save));
+async function loadConfig(){ CFG=await (await fetch('/api/config')).json(); const keep=$('sVoice').value; voiceOptions($('sVoice'), keep); renderCast(); renderVoices(); setupClone(); loadPicks(); }
+(async()=>{
+  await loadConfig();
+  try{ const s=JSON.parse(localStorage.getItem('gvs_state')||'{}'); if(s.sText) $('sText').value=s.sText; if(s.sStyle) $('sStyle').value=s.sStyle; if(s.sVoice) voiceOptions($('sVoice'), s.sVoice); if(s.LINES&&s.LINES.length) LINES=s.LINES; if(s.CAST) CAST=s.CAST; }catch(e){}
+  if(!LINES.length) LINES=JSON.parse(JSON.stringify(LANG==='he'?EXAMPLES.chat_he:EXAMPLES.chat_en));
+  applyLang();
+  const h=(location.hash||'').replace('#',''); if(['speak','dialogue','voices','clone'].includes(h)) showTab(h);
+})();
+</script></body></html>

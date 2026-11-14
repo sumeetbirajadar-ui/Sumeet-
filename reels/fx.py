@@ -774,13 +774,15 @@ def broll(inp, out, items, fade_frames=4):
 
 
 def parse_broll(spec):
-    """'img.jpg@6.1-8.2@0.3,0.2;other.jpg@20-24' -> items for broll()."""
+    """'img.jpg@6.1-8.2@0.3,0.2@1.6,1.75;other.jpg@20-24' -> items for broll(). Fields: path@start-end[@focus x,y[@zoom from,to]]"""
     items = []
     for part in [x for x in (spec or "").split(";") if x.strip()]:
         bits = part.strip().split("@")
         a, b = (float(v) for v in bits[1].split("-"))
         it = dict(path=bits[0], start=a, end=b)
-        if len(bits) > 2:
+        if len(bits) > 2 and bits[2]:
             it["focus"] = tuple(float(v) for v in bits[2].split(","))
+        if len(bits) > 3:                                   # zoom from,to  e.g. 1.6,1.75
+            it["zoom"] = tuple(float(v) for v in bits[3].split(","))
         items.append(it)
     return items

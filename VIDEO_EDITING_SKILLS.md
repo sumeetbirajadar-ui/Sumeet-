@@ -1,6 +1,6 @@
 # Installed Video Editing, YouTube & Instagram Skills
 
-**Total: 318 skills** (Part 1: 102, Part 2: 101, Part 3: 115), plus **4 MCP servers**.
+**Total: 494 skills** (Part 1: 102, Part 2: 101, Part 3: 115, Part 4: 176), **15 MCP servers**, and a local-apps installer.
 
 Installed in `.claude/skills/` (this repo) — Claude Code loads them automatically in any session opened on this repo. Use one by name, e.g. `/remotion-best-practices`, `/ig-reel`, `/yt-seo`.
 
@@ -721,4 +721,239 @@ All 38 repos the PDF names were checked on GitHub, and every one exists. **115 s
 
 ### Name differences vs. the PDF
 `/ranking-format` → `ranking-list`, `/explainer-panel-reel` → `explainer`, `/depth-ui-reel` and `/cutout-grid-reel` → `behind-the-person`, `/giant-captions` → `backdrop-word` / `pastel-word` (in the effects packs), `/claude-ui` → `app-frame`. Vibha's `/effects` is installed as `effects-vibharamprak` because `effects` (ReneRemsik, 50 transcript-aware effects) has the same name.
+
+
+---
+
+# Part 4 — Everything previously skipped, now installed
+
+**176 more skills**, **11 more MCP servers**, and an installer for the apps that need your own computer.
+
+### [bitwize-music-studio/claude-ai-music-skills](https://github.com/bitwize-music-studio/claude-ai-music-skills) — 44 skill(s)
+
+| Skill | What it does |
+|---|---|
+| `about` | Provides information about the bitwize-music plugin, its version, and its creator. Use when the user asks abou |
+| `album-conceptualizer` | Designs album concepts, tracklist architecture, and thematic planning through 7 structured phases. Use when pl |
+| `album-dashboard` | Shows a structured progress dashboard for an album with percentage complete per phase, blocking items, and sta |
+| `album-ideas` | Tracks and manages album ideas including brainstorming, planning, and status updates. Use when the user wants  |
+| `clipboard` | Copies track content (lyrics, style prompts, streaming lyrics) to the system clipboard. Use when the user need |
+| `cloud-uploader` | Uploads promo videos and content to Cloudflare R2 or AWS S3. Use when the user wants to host promo content for |
+| `configure` | Sets up or edits the plugin configuration file interactively. Use on first-time setup, when config is missing, |
+| `document-hunter` | Searches and retrieves documents from free public sources using automated browser navigation. Use when researc |
+| `explicit-checker` | Scans lyrics for explicit content and verifies that explicit flags match actual content. Use before Suno gener |
+| `health-check` | Runs plugin health checks (venv packages, skill registration, and album slug collisions). Use when the user as |
+| `help-bitwizemusic` | Shows available skills, common workflows, and quick reference for the plugin. Use when the user asks for help, |
+| `import-art` | Places album art files in the correct audio and content directory locations. Use when the user has generated o |
+| `import-audio` | Moves audio files to the correct album location with proper path structure. Use when the user has downloaded W |
+| `import-track` | Moves track markdown files to the correct album location. Use when the user has track files in Downloads or ot |
+| `lyric-reviewer` | Reviews lyrics against a quality checklist before Suno generation. Use before generating tracks to catch rhyme |
+| `new-album` | Creates a new album with the correct directory structure and templates. Use IMMEDIATELY when the user says 'ma |
+| `next-step` | Analyzes album state and recommends the optimal next action. Use when the user asks "what should I do next?" o |
+| `plagiarism-checker` | Scans lyrics for phrases that may match existing songs using web search and LLM knowledge. Use before release  |
+| `pre-generation-check` | Validates all pre-generation gates before sending tracks to Suno. Checks sources verified, lyrics reviewed, pr |
+| `promo-director` | Generates 15-second vertical promo videos for social media from mastered audio. Use after mastering is complet |
+| `promo-reviewer` | Reviews and iterates on social media copy in album promo/ files. Use after populating promo templates and befo |
+| `promo-writer` | Generates platform-specific social media copy from album themes, track concepts, and lyrics. Use when promo/ t |
+| `promote-idea` | Converts an album idea from IDEAS.md into an actual album project in one step. Use when the user says "promote |
+| `release-director` | Coordinates album release including QA, distribution prep, and platform uploads. Use when mastering and album  |
+| `rename` | Renames an album or track, updating slugs, titles, and all mirrored paths. Use when the user wants to rename a |
+| `researcher` | Conducts investigative-grade research with primary source analysis, cross-verification, and trial-level depth. |
+| `researchers-biographical` | Researches personal backgrounds, interviews, motivations, and humanizing details. Use when research needs biog |
+| `researchers-financial` | Researches SEC filings, earnings calls, analyst reports, and market data. Use when the album subject involves  |
+| `researchers-gov` | Researches DOJ/FBI/SEC press releases, agency statements, and government sources. Use when research needs offi |
+| `researchers-historical` | Researches archives, contemporary accounts, and timeline reconstruction. Use when the album subject involves h |
+| `researchers-journalism` | Researches investigative articles, interviews, and news coverage. Use when research needs journalistic sources |
+| `researchers-legal` | Researches court documents, indictments, plea agreements, and sentencing records. Use when the album subject i |
+| `researchers-primary-source` | Researches the subject's own words from tweets, blogs, forums, and chat logs. Use when research needs direct q |
+| `researchers-security` | Researches malware analysis, CVEs, attribution reports, and hacker community sources. Use when the album subje |
+| `researchers-tech` | Researches project histories, changelogs, developer interviews, and open source documentation. Use when the al |
+| `researchers-verifier` | Performs quality control, citation validation, and fact-checking before human review. Use after research is co |
+| `resume` | Finds an album by name and shows detailed status with next steps. Use when the user mentions an album name or  |
+| `session-start` | Runs the session startup procedure - verifies setup, loads config and state, checks skill models, and reports  |
+| `setup-bitwizemusic` | Detects your Python environment and guides you through installing plugin dependencies. Use on first-time setup |
+| `sheet-music-publisher` | Converts mastered audio to sheet music and creates printable songbooks. Use after mastering when the user want |
+| `tutorial` | Provides interactive guided album creation for new users. Use when the user is new to the plugin or asks for a |
+| `validate-album` | Validates album directory structure, file locations, and content integrity. Use before release or whenever the |
+| `verify-sources` | Captures human source verification for tracks, timestamps it, and updates track files. Use when sources need h |
+| `voice-checker` | Reviews lyrics and prose for AI-written patterns (abstract noun stacking, over-explained metaphors, cliche esc |
+
+### [jtydhr88/screenwriting-skills](https://github.com/jtydhr88/screenwriting-skills) — 4 skill(s)
+
+| Skill | What it does |
+|---|---|
+| `sw-chinese-opera-banqiang` | Playwriting for banqiang-system Chinese opera (板腔体：京剧、豫剧、越剧、秦腔、评剧、沪剧、淮剧、川剧弹戏), where sung passages are paired  |
+| `sw-chinese-opera-banqiang-cases` | Worked full-length scripts of banqiang-system Chinese opera with their creation records (板腔体全本语料库). Primary te |
+| `sw-chinese-opera-qupai` | Chinese opera playwriting for the qupai (曲牌体) system — 元杂剧, 明清传奇, 昆曲, 川剧高腔, where sung text is filled into fix |
+| `sw-chinese-opera-qupai-cases` | Worked qupai-system (曲牌体) opera scripts, act by act. Guan Hanqing's three surviving zaju (窦娥冤／救风尘／金线池 — twelve |
+
+### [scenario-labs/skills](https://github.com/scenario-labs/skills) — 127 skill(s)
+
+| Skill | What it does |
+|---|---|
+| `scenario-blender-animation` | Use when animating characters or objects in Blender through Python, a bouncing ball, walk or run cycle, jump,  |
+| `scenario-blender-blockout` | Use when a text brief or a reference image must become a Blender blockout whose playblast guides a render-to-r |
+| `scenario-blender-expert` | Use when doing any 3D work in Blender through Python or an MCP bridge, headless or in a live session: modeling |
+| `scenario-blender-export` | Use when exporting a model, character or animation from Blender to a game engine, the web or a 3D printer: FBX |
+| `scenario-blender-geometry-nodes` | Use when building or debugging Geometry Nodes, headless or live: procedural modeling, scattering objects on a  |
+| `scenario-blender-grease-pencil` | Use when drawing or animating with Grease Pencil in Blender 5.x from Python: 2D or 2.5D illustration, frame-by |
+| `scenario-blender-hair` | Use when grooming hair or fur in Blender with hair curves, such as a character hairstyle, animal fur, procedur |
+| `scenario-blender-hard-surface` | Use when modeling hard-surface objects in Blender (sci-fi panels, props, weapons, vehicles, robots, machined o |
+| `scenario-blender-retopology` | Use when turning a dense sculpt, scan or AI-generated mesh into clean topology in Blender, for animation, subd |
+| `scenario-blender-rigging` | Use when rigging a character, creature or prop in Blender through Python: "rig this character", Rigify metarig |
+| `scenario-blender-sculpting` | Use when sculpting in Blender through Python: sculpt a head, face or bust, a stylized or cartoon character, a  |
+| `scenario-blender-texturing-shading` | Use when texturing, shading or look-developing in Blender: building a PBR material from a texture set, displac |
+| `scenario-blender-uv-baking` | Use when UV unwrapping, placing seams, straightening or packing UVs, setting texel density, laying out UDIMs o |
+| `scenario-maya-animation` | Use when animating a character or prop in Maya through Python: a walk or run cycle, a jump or landing, a heavy |
+| `scenario-maya-deformation` | Use when skinning a character in Maya ("bind skin", "fix the weights", weight painting, Skin Tools or ngSkinTo |
+| `scenario-maya-expert` | Use when doing any Autodesk Maya task through Python or a bridge, headless or live: maya.cmds or OpenMaya 2.0  |
+| `scenario-maya-fx` | Use when a Maya task involves simulation or procedural effects: nCloth or Nucleus (a cape, skirt, flag or garm |
+| `scenario-maya-groom` | Use when grooming hair or fur in Maya with XGen (Interactive Groom splines or legacy descriptions): scalp hair |
+| `scenario-maya-lighting-rendering` | Use when lighting or rendering in Maya with Arnold: a product hero shot, a character close-up or a sequence (m |
+| `scenario-maya-lookdev` | Use when shading an asset in Maya with Arnold: OpenPBR or aiStandardSurface materials, hooking up Substance Pa |
+| `scenario-maya-modeling` | Use when modeling in Autodesk Maya, such as hard-surface props, weapons, vehicles, a sci-fi crate, a game-read |
+| `scenario-maya-pipeline-scripting` | Use when writing or fixing Maya pipeline code in Python: mayapy batch jobs over many scenes, validating and au |
+| `scenario-maya-retopology-uv` | Use when turning a dense sculpt, scan, ZBrush export or AI-generated mesh into animation-ready or game-ready t |
+| `scenario-maya-rigging` | Use when rigging a character, creature or prop in Maya: "rig this character", placing or orienting joints, Ori |
+| `scenario-zbrush-automation` | Use when automating ZBrush 2026: batch processing a folder of OBJ or ZTL files, a ZBrush Python script or ZScr |
+| `scenario-zbrush-character-creature` | Use when sculpting a realistic head, face, portrait, body or creature in ZBrush (anatomy, landmarks, proportio |
+| `scenario-zbrush-expert` | Use when an agent drives Maxon ZBrush 2026 for any task (sculpt in ZBrush, DynaMesh, ZRemesher, UVs, export, p |
+| `scenario-zbrush-hard-surface` | Use when modeling hard surface in ZBrush 2026 (sci-fi helmet, weapon, prop, armor plates, mechanical parts, ki |
+| `scenario-zbrush-paint-render` | Use when polypainting in ZBrush (skin color zones, fills, cavity or AO passes, Spotlight), baking polypaint to |
+| `scenario-zbrush-pose-print` | Use when posing a sculpt or preparing it for 3D printing in ZBrush: "pose this character", Transpose Master, T |
+| `scenario-zbrush-retopology-export` | Use when a ZBrush sculpt, scan or AI-generated mesh must become production topology and files (ZRemesher and g |
+| `scenario-zbrush-sculpting` | Use when an agent sculpts organic forms in ZBrush 2026 (sculpt a head, bust or creature in ZBrush from a spher |
+| `scenario-zbrush-stylized` | Use when sculpting a stylized or cartoon character, bust, collectible or toy in ZBrush (Overwatch, Fortnite, D |
+| `scenario-godot-2d` | Use when building a 2D game in Godot 4.7: make a platformer or top-down controller that feels right (coyote ti |
+| `scenario-godot-3d-world` | Use when building 3D levels and worlds in Godot 4.7: third-person or FPS controller, player stuck on stairs, s |
+| `scenario-godot-animation` | Use when animating characters or scenes in Godot 4.7: AnimationPlayer clips and RESET, AnimationTree state mac |
+| `scenario-godot-architecture` | Use when structuring Godot 4.7 game code: folders, scenes and nodes, signals or an event bus autoload, custom  |
+| `scenario-godot-audio` | Use when adding or fixing sound in Godot 4.7: audio buses and effects, volume sliders, 'too many sounds', comb |
+| `scenario-godot-expert` | Use when an agent drives Godot 4.7 on macOS or Windows for any task: headless --script jobs, --import, --check |
+| `scenario-godot-gameplay` | Use when building gameplay systems in Godot 4.7: enemy AI that patrols, chases and attacks, state machines, be |
+| `scenario-godot-multiplayer` | Use when a Godot 4 game goes online or co-op: host and join with ENet, WebSocket for a web build, RPCs (@rpc,  |
+| `scenario-godot-performance-export` | Use when a Godot game stutters, drops frames, hitches when entering new areas, overheats a phone, or must ship |
+| `scenario-godot-pipeline-automation` | Use when Godot 4.7 work must run without a mouse or at scale: batch import of hundreds of GLB props or an AI i |
+| `scenario-godot-rendering-lighting` | Use when lighting or rendering a Godot 4.7 3D scene: pick a renderer (Forward+, Mobile, Compatibility), choose |
+| `scenario-godot-shaders` | Use when writing or fixing Godot 4.7 shaders: .gdshader code (spatial, canvas_item, particles, sky, fog), Visu |
+| `scenario-godot-ui` | Use when building or fixing game UI in Godot 4.7: main menu, settings screen, HUD (health bar, ammo, minimap f |
+| `scenario-godot-vfx` | Use when making or fixing particle effects and game feel in Godot 4.7: GPUParticles3D or GPUParticles2D explos |
+| `scenario-roblox-animation` | Use when animating Roblox characters, NPCs or creatures: animation not playing, wrong animation wins, animatio |
+| `scenario-roblox-architecture` | Use when structuring Roblox game code: where scripts go (ServerScriptService, ReplicatedStorage, StarterPlayer |
+| `scenario-roblox-assets` | Use when bringing 3D assets into Roblox Studio or preparing avatar items: import from Blender, GLB, FBX or OBJ |
+| `scenario-roblox-data` | Use when a Roblox game saves or loads player data, or when players report data not saving, lost progress, roll |
+| `scenario-roblox-environment` | Use when building or lighting a Roblox map: graybox or blockout, level layout, landmarks, doors and walls, par |
+| `scenario-roblox-expert` | Use when an agent builds, fixes or tests anything in Roblox Studio: \"make a Roblox game\", \"Roblox Studio\", |
+| `scenario-roblox-gameplay` | Use when building Roblox gameplay systems: NPC or enemy AI that patrols, chases and attacks, state machines or |
+| `scenario-roblox-luau` | Use when writing, reviewing or debugging Luau in a Roblox experience: task.spawn vs task.defer vs task.wait, r |
+| `scenario-roblox-monetization` | Use when a Roblox game sells something or plans live ops: Developer Products, game passes, experience subscrip |
+| `scenario-roblox-networking` | Use when securing a Roblox experience against exploiters or designing its networking: RemoteEvent, RemoteFunct |
+| `scenario-roblox-performance` | Use when a Roblox experience is slow, laggy, stuttering, crashing or out of memory, or before shipping or upda |
+| `scenario-roblox-tooling` | Use when setting up or repairing a Roblox team project outside Studio: Rojo or Script Sync, Wally packages, Ro |
+| `scenario-roblox-ui` | Use when building or fixing Roblox game UI or input: HUD (health bar, currency, ability cooldowns), main menu, |
+| `scenario-roblox-vfx-audio` | Use when making or fixing Roblox visual effects or game audio: ParticleEmitter, Beam, Trail, flipbook sprite s |
+| `scenario-unity-2d` | Use when building a 2D game in Unity 6.3 URP: pixel-art or HD sprite import and PPU, sprite atlases, Tilemaps, |
+| `scenario-unity-animation` | Use when a Unity 6.3 task involves character animation or cameras: Mixamo or mocap humanoid import and retarge |
+| `scenario-unity-architecture` | Use when structuring Unity 6.3 C# code: ScriptableObject data vs runtime state, events and services, inventory |
+| `scenario-unity-expert` | Use when an agent drives Unity 6.3 (6000.3) on a Mac for any task: batch mode and -executeMethod jobs, a runni |
+| `scenario-unity-gameplay` | Use when building or debugging Unity gameplay systems: enemy AI that patrols, chases and attacks, NavMesh baki |
+| `scenario-unity-mobile` | Use when a Unity 6.3 game targets Android or iOS: phone frame budget, overheating after 20 minutes, 'my game s |
+| `scenario-unity-performance` | Use when a Unity 6.3 game is slow or stutters: low fps, frame spikes, hitches when entering areas or on first  |
+| `scenario-unity-pipeline-automation` | Use when automating a Unity 6.3 content pipeline or build: importing an art drop (FBX, PNG) with AssetPostproc |
+| `scenario-unity-rendering-lighting` | Use when setting up URP (or choosing URP vs HDRP), configuring URP assets and quality tiers for PC and phones, |
+| `scenario-unity-shaders` | Use when a Unity 6.3 URP task involves shaders: hand-written HLSL, Shader Graph water, toon, dissolve or outli |
+| `scenario-unity-ui` | Use when building or fixing game UI in Unity 6.3: main menu, settings screen (resolution, quality, volume, key |
+| `scenario-unity-vfx` | Use when making or fixing real-time VFX in Unity 6.3: explosions, fireballs, projectiles with muzzle, trail an |
+| `scenario-unity-web` | Use when a Unity 6.3 game must run in a browser: 'export to WebGL', Web build settings or Build Profiles, gzip |
+| `scenario-unity-world-building` | Use when building a Unity 6.3 level or open world: terrain from code or heightmaps, procedural islands, erosio |
+| `scenario-unreal-animation` | Use when a UE5 task involves characters in motion: "import FBX from Maya" with a skeleton, "retarget animation |
+| `scenario-unreal-expert` | Use when an agent drives Unreal Engine 5.8 on a Mac for any task: Editor Python (the unreal module), headless  |
+| `scenario-unreal-gameplay` | Use when building or debugging UE5 gameplay: a character with double jump or dash, abilities with cooldowns, e |
+| `scenario-unreal-materials` | Use when a UE5 task involves materials or textures: a master material and instances for a kit, Substrate or le |
+| `scenario-unreal-performance` | Use when an Unreal Engine 5.8 project misses its frame rate or stutters: "optimize to 60 fps", "we run at 38 f |
+| `scenario-unreal-pipeline-automation` | Use when importing FBX, USD, OBJ or glTF from Maya, ZBrush or Blender into Unreal Engine 5.8 in bulk or reimpo |
+| `scenario-unreal-vfx` | Use when a UE5 task involves Niagara or Chaos destruction: a Niagara fireball, projectile trail, impact explos |
+| `scenario-unreal-world-building` | Use when building or fixing an Unreal Engine 5 level or open world: World Partition, OFPA, Data Layers, Level  |
+| `scenario-3d` | Use when generating or handling 3D assets through the Scenario MCP server, including text-to-3D or image-to-3D |
+| `scenario-3d-worlds` | Use when generating navigable 3D worlds or Gaussian splat scenes on Scenario via MCP: text-to-world, image-to- |
+| `scenario-ad-variants` | Use when making multiple independent ad or campaign edits from existing footage with Scenario: hook, CTA, copy |
+| `scenario-admin-analytics` | Use when answering Scenario admin analytics questions about Creative Unit consumption, most-used models, usage |
+| `scenario-asset-analysis` | Use when finished Scenario assets have to give something back: a caption for a dataset or alt text, a reusable |
+| `scenario-blender` | Use when an agent works in an open Blender scene through the Scenario for Blender extension's local MCP server |
+| `scenario-blender-2d-animation` | Use when a 2D side-scroller shot, platformer cutscene, game trailer or parallax animation has to be built in B |
+| `scenario-chatgpt-pet-create` | Use when creating a ChatGPT pet or Codex pet with Scenario: hatching an animated companion from a text idea, a |
+| `scenario-chatgpt-pet-update` | Use when changing an existing ChatGPT pet or Codex pet sprite sheet with Scenario: fixing a broken row, frame, |
+| `scenario-comic-creator` | Use when a user wants to make their own comic, manga, BD, graphic novel or illustrated book with Scenario: a s |
+| `scenario-game-assets` | Use when creating game art through Scenario MCP: sprites, sprite sheets, icons, props, loot, tilesets and auto |
+| `scenario-game-ua-ads` | Use when making a finished mobile game user-acquisition (UA) video ad with Scenario at an exact length for Tik |
+| `scenario-gemini-image` | Use when generating or editing images with Google's Gemini image models (Nano Banana) on Scenario via MCP: tex |
+| `scenario-gemini-omni` | Use when generating, extending, or editing video with Gemini Omni models on Scenario via MCP: text-to-video, i |
+| `scenario-gpt-image` | Use when generating or editing images with OpenAI's GPT Image models on Scenario via MCP: text-to-image, edits |
+| `scenario-grok-imagine-image` | Use when generating or editing images with Grok Imagine models on Scenario via MCP: text-to-image, instruction |
+| `scenario-grok-imagine-video` | Use when generating or editing video with Grok Imagine models on Scenario via MCP: text-to-video, image-to-vid |
+| `scenario-ideogram` | Use when generating or editing images with Ideogram models on Scenario via MCP: posters, logos, menus, packagi |
+| `scenario-inspiration` | Use when a creative task has no direction yet: finding inspiration, exploring looks or styles, proposing conce |
+| `scenario-luma-image` | Use when generating or editing images with Luma Uni-1 models on Scenario via MCP: text-to-image, prompt-based  |
+| `scenario-mai-image` | Use when generating or editing images with Microsoft MAI Image models on Scenario via MCP: photoreal or styliz |
+| `scenario-meshy` | Use when creating or refining 3D assets with Meshy models on Scenario via MCP: image-to-3D from one photo or 1 |
+| `scenario-model-comparison` | Use when comparing Scenario models on the same brief through MCP: a bake-off with shared prompts and inputs, c |
+| `scenario-model-training` | Use when generated assets must keep a consistent style, character, or product look and references stop scaling |
+| `scenario-moderation` | Use when a Scenario generation is blocked, refused, or returns a moderation or sensitive-content error, when a |
+| `scenario-patina-retexture` | Use when retexturing an existing 3D asset with PATINA PBR materials through the Scenario MCP server: a GLB or  |
+| `scenario-playable-ads` | Use when a mobile game's gameplay recording, screenshots, existing art and sound, or only an idea or a genre n |
+| `scenario-refine-loop` | Use when a Scenario output must be checked and improved rather than accepted first roll: iterating a generatio |
+| `scenario-report` | Use when a Scenario user wants to report a bug or request a change, on the public tracker at github.com/scenar |
+| `scenario-reve` | Use when generating or editing images with Reve models on Scenario via MCP: text-to-image from a prompt alone, |
+| `scenario-rodin` | Use when generating 3D assets with Rodin Hyper3D models on Scenario via MCP: image-to-3D from up to five multi |
+| `scenario-seedance-drafts` | Use when exploring several Seedance video takes before paying for a final: cheap 480p previews, variations of  |
+| `scenario-seedance-music-video` | Use when turning a song, track, or audio master into a finished music video with Scenario and Seedance: planni |
+| `scenario-seedream` | Use when generating or editing images with Seedream models on Scenario via MCP: text-to-image, image-to-image  |
+| `scenario-side-view-game-kit` | Use when making the art for a side-scroller or 2D platformer: side-view pixel-art sprite sheets for a hero and |
+| `scenario-skyboxes` | Use when a task involves generating or iterating on skyboxes, 360 panoramas, equirectangular images, environme |
+| `scenario-sonilo` | Use when adding sound to a video or generating standalone audio with Sonilo models on Scenario via MCP: text-t |
+| `scenario-sparc3d` | Use when turning images or photos into 3D meshes with Sparc3D models on Scenario via MCP: single-image or mult |
+| `scenario-sprite-animation` | Use when animating 2D game art with Scenario: walk, idle or attack cycles in 4 or 8 directions, isometric spri |
+| `scenario-task-tracking` | Use when a Scenario billed call is refused with task-id-required, when a project attributes Creative Units to  |
+| `scenario-team-admin` | Use when administering a Scenario team from an agent through MCP: restricting which models a team or project c |
+| `scenario-textures` | Use when a task involves game textures or materials through the Scenario MCP: seamless or tileable textures, t |
+| `scenario-walkable-room` | Use when one interior photo, uploaded or generated on Scenario, should become a room a visitor walks into in a |
+| `scenario-workflow-authoring` | Use when a task involves creating or editing a Scenario workflow graph through MCP: building an app from a bri |
+
+### [debpalash/voicestudio](https://github.com/debpalash/voicestudio) — 1 skill(s)
+
+| Skill | What it does |
+|---|---|
+| `voicestudio` | Generate local speech with saved or designed voices, transcribe audio, and automate dubbing or narration workf |
+
+### All MCP servers in `.mcp.json` (15)
+| Server | Type | Key / login needed (set as an environment variable on your PC) |
+|---|---|---|
+| `youtube-transcript`, `youtube` | npx | none |
+| `scenario` | http | Scenario sign-in |
+| `suno` | http | AceDataCloud sign-in |
+| `higgsfield` | http | Higgsfield sign-in (also connected as a Claude connector) |
+| `elevenlabs` | http | ElevenLabs sign-in (also a connector) |
+| `descript` | http | Descript sign-in (also a connector) |
+| `openflow-google-flow` | http | `OPENFLOW_API_KEY` |
+| `unifically` | http | `UNIFICALLY_API_KEY` |
+| `higgsfield-unified` | uvx | `HIGGSFIELD_API_KEY`, `HIGGSFIELD_SECRET` |
+| `fal-image-video` | npx | `FAL_KEY` |
+| `remotion-media` | npx | `KIE_API_KEY` |
+| `kie` | npx | `KIE_API_KEY` |
+| `adobe-desktop` | npx | macOS with Adobe apps installed (unofficial, AJSMonty/adobe-mcp) |
+| `voicebox` | http (localhost) | Voicebox desktop app running |
+
+Servers without their key simply fail to start; nothing else breaks.
+
+### Apps for your own computer — `tools/install-local-ai-tools.sh`
+Run `bash tools/install-local-ai-tools.sh` on your PC/Mac. It clones and sets up:
+| Repo | What you get |
+|---|---|
+| jamiepine/voicebox | Local ElevenLabs alternative with MCP (desktop app download) |
+| debpalash/voicestudio | OmniVoice studio, 600+ language voice cloning (desktop app / Docker) |
+| k2-fsa/OmniVoice, OpenBMB/VoxCPM | Zero-shot voice cloning models (installed into a Python venv) |
+| Kunbyte-AI/Lumen | Video relighting model (needs NVIDIA GPU; else use its Hugging Face Space) |
+| GTAI-1/flow-mcp | Google Flow (Veo 3.1 + Nano Banana) MCP, built and registered |
+| Yuuhann1999/agent-storyboard | Storyboard workbench, installed as a Claude Code plugin |
+| elibarnett/kie-mcp | Source for the `kie` MCP |
 

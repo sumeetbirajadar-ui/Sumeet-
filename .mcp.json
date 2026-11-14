@@ -21,6 +21,88 @@
     "suno": {
       "type": "http",
       "url": "https://suno.mcp.acedata.cloud/mcp"
+    },
+    "higgsfield": {
+      "type": "http",
+      "url": "https://mcp.higgsfield.ai/mcp"
+    },
+    "elevenlabs": {
+      "type": "http",
+      "url": "https://api.elevenlabs.io/v1/mcp"
+    },
+    "descript": {
+      "type": "http",
+      "url": "https://api.descript.com/v2/mcp"
+    },
+    "openflow-google-flow": {
+      "type": "http",
+      "url": "https://openflowmcp.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${OPENFLOW_API_KEY:-}"
+      }
+    },
+    "unifically": {
+      "type": "http",
+      "url": "https://mcp.unifically.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${UNIFICALLY_API_KEY:-}"
+      }
+    },
+    "higgsfield-unified": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "higgsfield-mcp-unified",
+        "higgsfield-mcp"
+      ],
+      "env": {
+        "HIGGSFIELD_API_KEY": "${HIGGSFIELD_API_KEY:-}",
+        "HIGGSFIELD_SECRET": "${HIGGSFIELD_SECRET:-}"
+      }
+    },
+    "fal-image-video": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fal-image-video-mcp"
+      ],
+      "env": {
+        "FAL_KEY": "${FAL_KEY:-}"
+      }
+    },
+    "remotion-media": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "remotion-media-mcp"
+      ],
+      "env": {
+        "KIE_API_KEY": "${KIE_API_KEY:-}"
+      }
+    },
+    "kie": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "kie-mcp"
+      ],
+      "env": {
+        "KIE_API_KEY": "${KIE_API_KEY:-}"
+      }
+    },
+    "adobe-desktop": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@ajsmonty/adobe-mcp"
+      ]
+    },
+    "voicebox": {
+      "type": "http",
+      "url": "http://127.0.0.1:17493/mcp",
+      "headers": {
+        "X-Voicebox-Client-Id": "claude-code"
+      }
     }
   }
 }

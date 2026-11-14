@@ -1,6 +1,6 @@
 # Installed Video Editing, YouTube & Instagram Skills
 
-**Total: 203 skills** (Part 1: 102 from 16 repos; Part 2 below), plus **2 MCP servers**.
+**Total: 318 skills** (Part 1: 102, Part 2: 101, Part 3: 115), plus **4 MCP servers**.
 
 Installed in `.claude/skills/` (this repo) — Claude Code loads them automatically in any session opened on this repo. Use one by name, e.g. `/remotion-best-practices`, `/ig-reel`, `/yt-seo`.
 

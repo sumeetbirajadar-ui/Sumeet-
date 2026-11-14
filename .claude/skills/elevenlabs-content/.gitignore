@@ -1,0 +1,7 @@
+audio/
+*.mp3
+*.wav
+*.m4a
+.env
+__pycache__/
+.DS_Store

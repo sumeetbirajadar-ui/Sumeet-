@@ -2,11 +2,25 @@
   "mcpServers": {
     "youtube-transcript": {
       "command": "npx",
-      "args": ["-y", "@kimtaeyoon83/mcp-server-youtube-transcript"]
+      "args": [
+        "-y",
+        "@kimtaeyoon83/mcp-server-youtube-transcript"
+      ]
     },
     "youtube": {
       "command": "npx",
-      "args": ["-y", "@anaisbetts/mcp-youtube"]
+      "args": [
+        "-y",
+        "@anaisbetts/mcp-youtube"
+      ]
+    },
+    "scenario": {
+      "type": "http",
+      "url": "https://mcp.scenario.com/mcp"
+    },
+    "suno": {
+      "type": "http",
+      "url": "https://suno.mcp.acedata.cloud/mcp"
     }
   }
 }

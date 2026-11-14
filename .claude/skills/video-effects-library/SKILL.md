@@ -68,3 +68,27 @@ Plus `reel-effects-hyperframes` (maps ~80 trending names to HyperFrames registry
 | Split flap / Day counter / Day dial | `reel-effects-hyperframes` split-flap-board, count-up, conic-progress-ring |
 
 If a name isn't listed: check `reel-effects-hyperframes` first, then search the HyperFrames catalogue (`npx hyperframes catalog --query "<name>"`), then build by hand with `hyperframes` or `remotion-best-practices`.
+
+## C. More effect packs (batch 3)
+
+| Pack | Skill | Notes |
+|---|---|---|
+| 51 face-tracked effects (Vibha Ramprakash) | `effects-vibharamprak` | over-the-shoulder, fan-build, iMessage pop-ups, crayon-write, huge-strike, tape-label, wave-trim, select-resize, freeze-frame, place-in-grid |
+| 50 transcript-aware effects (ReneRemsik) | `effects` | reads what you say, then fills keyword pop, notification stack, post card, big number, chapter bar, search bar, chat bubbles, lower third |
+| 22 Remotion + Three.js effects | `facecammaxxing` | over-the-shoulder, kallaway-split, glass-graph, text-behind, kinetic-caption, color-grade (LOG → cinema), prop-3d (Blender trophy/coin/phone) |
+| Turkish/English HyperFrames effects | `efekt` | spot, cam, belgesel (documentary), yörünge (orbit), grafik, liste, kurgu |
+| Full reel layouts (artemnovitckii) | `behind-the-person`, `explainer`, `ranking-list`, `orbit-reel`, `picture-stack`, `scene-switch`, `shape-shift`, `split-screen`, `visual-notes`, `trial-reels`, `storytelling` | depth-UI reel = behind-the-person, explainer-panel reel = explainer, ranking format = ranking-list |
+| Single-command editor | `vaibhav-video-editor` | |
+| Editor's rulebook + 128 CC0 SFX + CC0 graphics | `editing-videos` | pacing, J/L cuts, LUFS, ducking, meme/Content-ID risk |
+| Long video → Shorts | `shorts` (claude-shorts), `video-use` (browser-use) | |
+| Relighting + Color Wheels + optical-flow + cutouts | `edit-timeline-studio` (see references/relighting-and-depth-video.md) | |
+| Storyboard app + MCP | `manage-storyboard-projects`, `process-storyboard-tasks` (Agent Storyboard) | |
+| Ad director pipeline with Higgsfield | `ad-grill` → `ad-script` → `ad-refs` → `ad-shoot` → `ad-edit` → `ad-review` (+ `ad-studio` screening room) | instructions in Chinese |
+| Screenwriting | `sw-*` (story structure, dialogue, scene craft, genre…), `chekhov-dramaturgy`, `ozu-screenplay-style`, `video-script-builder` | |
+| Image-to-video | `higgsfield`, `ltx2-video`, `scenario-kling`, `scenario-veo`, `scenario-runway`, `scenario-seedance`, `scenario-wan`, `scenario-luma-video`, `scenario-minimax-video`, `scenario-vidu` | Scenario skills need the `scenario` MCP (sign in at scenario.com) |
+| Voice | `elevenlabs-content`, `scenario-elevenlabs`, `scenario-audio` | |
+| Music | `suno-engineer`, `mix-engineer`, `mastering-engineer`, `lyric-writer`, `scenario-ace-step`, `scenario-minimax-music` | `suno` MCP needs an AceDataCloud account |
+| Relight / grade / upscale | `scenario-product-shots` (relight), `scenario-image-editing` (upscale 4K/8K, 3D LUT), `scenario-video-color-grade`, `scenario-blender-lighting-rendering`, `scenario-unreal-lighting-rendering` | |
+| Math / science explainers | `manim-composer`, `manim-video`, `manimce-best-practices`, `manimgl-best-practices`, `recursive-maths-animator`, `explainroo` | |
+
+Two skills answer `/effects`: `effects` (transcript-aware, 50) and `effects-vibharamprak` (51 face-tracked). Name the one you want.

@@ -58,6 +58,7 @@ Werbung, #ad, Publicidad). Any explicit option overrides the style, e.g. `--styl
 | Transcribe | `--lang` | en / hi / kn / auto | Language (sets the Indic font automatically) |
 | | `--model` | small | tiny, base, small, medium, large-v3 (slower = better) |
 | | `--prompt` | | Spellings to expect: "KCET, NEET, Newton, Science Monk" |
+| B-roll | `--broll` | `img.jpg@6.1-8.3[@fx,fy];...` | Full-screen cutaways with slow zoom, fades and blurred fill for wide images |
 | Background | `--bg` | blur / #RRGGBB / img / video | Portrait blur or background replace |
 | Light | `--light` | auto, creator, loop, rembrandt, butterfly, split, window, golden, overcast, neon, noir, none (style) | Virtual key/fill/rim/background/gel lighting + face exposure fix |
 | | `--light-side` / `--light-strength` | left/right/front / 1.0 | Where the key comes from / how strong |

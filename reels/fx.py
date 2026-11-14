@@ -349,8 +349,13 @@ def camera(inp, out, cuts=(), shots="punch", moves=("static",), push=0.0, shake=
     if punch_zoom and pattern == SHOT_PATTERNS["punch"]:
         pattern = ["wide", f"z{punch_zoom}"]
     # Compress the shot ladder to the resolution budget, keeping wide < medium < close < extreme.
-    squeeze = min(1.0, (max_zoom - 1) / 0.8)
-    zoom_of = lambda name: 1 + ((float(name[1:]) if name.startswith("z") else SHOTS[name]) - 1) * squeeze
+    # Fit the shot ladder to the resolution budget, but never squash small steps into invisibility:
+    # a cut-in must still read as a new shot (Higgsfield's scene analysis saw 1.04x steps as "no change").
+    squeeze = max(0.6, min(1.0, (max_zoom - 1) / 0.8))
+    def zoom_of(name):
+        raw = float(name[1:]) if name.startswith("z") else SHOTS[name]
+        z = raw if name.startswith("z") else 1 + (raw - 1) * squeeze
+        return min(z, max_zoom)
     cap = cv2.VideoCapture(str(inp))
     fps = cap.get(cv2.CAP_PROP_FPS) or 30
     n = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) or 1
@@ -704,3 +709,78 @@ def relight(inp, out, preset="creator", strength=1.0, side=None, target_face=0.5
         res = np.where(res > 0.85, 0.85 + (res - 0.85) / (1 + (res - 0.85) * 3), res)  # gentle highlight roll-off
         enc.stdin.write(encl[np.clip(res * 4095, 0, 4095).astype(np.int32)].tobytes())
     enc.stdin.close(); enc.wait(); cap.release(); seg.close()
+
+
+# ================================================================ B-roll cutaways
+def broll(inp, out, items, fade_frames=4):
+    """Full-screen cutaways over the talking head, audio untouched (captions are burned later, on top).
+    items: list of dicts {path, start, end, focus=(x,y) 0-1, zoom=(from,to)}.
+    Wide images: fitted to width over a blurred, darkened copy of themselves. Square/tall images: cover-filled,
+    panning toward `focus`. A slow zoom (Ken Burns) keeps a still image alive, as creators do with B-roll."""
+    import cv2
+    cap = cv2.VideoCapture(str(inp))
+    fps = cap.get(cv2.CAP_PROP_FPS) or 30
+    w0, h0 = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    loaded = []
+    for it in items:
+        img = cv2.imread(str(it["path"]))
+        if img is None:
+            raise SystemExit(f"cannot read B-roll image {it['path']}")
+        loaded.append(dict(it, img=img))
+    enc = subprocess.Popen(["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "bgr24", "-s", f"{w0}x{h0}",
+        "-r", str(fps), "-i", "-", "-i", str(inp), "-map", "0:v", "-map", "1:a?", "-c:v", "libx264", "-crf", "16",
+        "-preset", "medium", "-pix_fmt", "yuv420p", "-c:a", "copy", "-shortest", str(out)], stdin=subprocess.PIPE)
+
+    def frame_for(it, u):
+        img = it["img"]; ih, iw = img.shape[:2]
+        z0, z1 = it.get("zoom", (1.0, 1.12))
+        z = z0 + (z1 - z0) * u
+        fx, fy = it.get("focus", (0.5, 0.5))
+        if iw / ih > 1.3:                                   # wide: fit width on blurred fill
+            bg = cv2.resize(img, (int(iw * h0 / ih), h0))
+            x = (bg.shape[1] - w0) // 2
+            bg = cv2.GaussianBlur(bg[:, x:x + w0], (0, 0), 30) * 0.45
+            fw = int(w0 * z); fh = int(ih * fw / iw)
+            fg = cv2.resize(img, (fw, fh), interpolation=cv2.INTER_LANCZOS4)
+            cx = int((fw - w0) * fx)
+            fg = fg[:, cx:cx + w0]
+            y = (h0 - fh) // 2
+            canvas = bg.astype(np.uint8)
+            canvas[max(y, 0):max(y, 0) + min(fh, h0)] = fg[max(-y, 0):max(-y, 0) + min(fh, h0)]
+            return canvas
+        s = max(w0 / iw, h0 / ih) * z                       # square/tall: cover, pan toward focus
+        big = cv2.resize(img, (int(iw * s) + 1, int(ih * s) + 1), interpolation=cv2.INTER_LANCZOS4)
+        x = int(np.clip(big.shape[1] * fx - w0 / 2, 0, big.shape[1] - w0))
+        y = int(np.clip(big.shape[0] * fy - h0 / 2, 0, big.shape[0] - h0))
+        return big[y:y + h0, x:x + w0]
+
+    i = 0
+    while True:
+        ok, fr = cap.read()
+        if not ok:
+            break
+        t = i / fps
+        for it in loaded:
+            if it["start"] <= t < it["end"]:
+                u = (t - it["start"]) / max(it["end"] - it["start"], 1e-3)
+                b = frame_for(it, u)
+                k = min((t - it["start"]) * fps, (it["end"] - t) * fps) / fade_frames
+                a = float(np.clip(k, 0, 1))
+                fr = (b * a + fr * (1 - a)).astype(np.uint8) if a < 1 else b
+                break
+        enc.stdin.write(fr.tobytes())
+        i += 1
+    enc.stdin.close(); enc.wait(); cap.release()
+
+
+def parse_broll(spec):
+    """'img.jpg@6.1-8.2@0.3,0.2;other.jpg@20-24' -> items for broll()."""
+    items = []
+    for part in [x for x in (spec or "").split(";") if x.strip()]:
+        bits = part.strip().split("@")
+        a, b = (float(v) for v in bits[1].split("-"))
+        it = dict(path=bits[0], start=a, end=b)
+        if len(bits) > 2:
+            it["focus"] = tuple(float(v) for v in bits[2].split(","))
+        items.append(it)
+    return items

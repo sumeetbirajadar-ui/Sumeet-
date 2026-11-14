@@ -51,7 +51,7 @@ STYLES = {
                         "key terms popping in yellow caps, 'mini zooms' everywhere, tight hook",
         case="sentence", words=7, lines=2, line_chars=26, cap_box=False, cap_color="white", highlight="none",
         font="Montserrat", size=82, outline=3, anim="fade", hook_box=True, pos=0.72, keywords="auto",
-        key_style="pop", shots="punch", punch_zoom=1.08, moves=["static"], ease=6, cut_gap=2.6, sfx=True,
+        key_style="pop", shots="punch", punch_zoom=1.15, moves=["static"], ease=6, cut_gap=2.6, sfx=True,
         margin="0.2s", light="auto", label="Collaboration commerciale"),
     "italian": dict(desc="Italian creators (Geopop, Khaby-era talking heads): subtitles in a translucent dark box, key words in a "
                          "yellow highlight box, logo top-left, direct-to-camera with gentle punch-ins",
@@ -549,6 +549,9 @@ def cmd_auto(a):
                   push=a.push, ease_frames=a.ease, punch_zoom=a.punch_zoom if shots == "punch" else None,
                   max_zoom=fx.zoom_cap(min(src_h, probe(src)["w"] or src_h)))
         cur = work / "2c_camera.mp4"
+    if a.broll:   # full-screen cutaways (images), before grading so they match the look
+        fx.broll(cur, work / "2c2_broll.mp4", fx.parse_broll(a.broll))
+        cur = work / "2c2_broll.mp4"
     if a.look or a.lut or a.film or a.grain or a.vignette:
         # Grain is random every frame, which makes intermediate files huge - so it is added once, at export.
         fx.grade(cur, work / "2d_grade.mp4", look=a.look, lut=a.lut, strength=a.strength,
@@ -686,6 +689,7 @@ def main():
         (["--bg"], dict(default=None, help="blur | #RRGGBB | image.jpg | video.mp4")),
         (["--punch"], dict(action="store_true", help="jump-zoom in/out at each sentence")),
         (["--punch-zoom"], dict(type=float, default=None)), (["--push"], dict(type=float, default=0.0)),
+        (["--broll"], dict(default=None, help="cutaways: 'img.jpg@start-end[@fx,fy];img2.jpg@a-b'")),
         (["--sponsored"], dict(action="store_true", help="add the country's legal ad label (Werbung, ADV, #ad...)")),
         (["--sfx"], dict(action="store_true", help="pop on hook, whoosh on punch-ins, ding at end")),
         (["--sfx-volume"], dict(type=float, default=0.45)),

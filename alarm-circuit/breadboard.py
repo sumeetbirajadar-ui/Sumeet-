@@ -69,7 +69,7 @@ steps=['1  Battery + → switch IN.   Switch OUT → top + rail (1).',
        '4  Buzzer: – leg in 12c, + leg in 15c.   Jumper 15a → + rail (16).',
        '5  Pad foil 1 → hole 12b.   Pad foil 2 → – rail (22).',
        '6  Rail jumpers: top + → bottom + (col 29), top – → bottom – (col 30).',
-       '7  Vibration module (DIGITAL): VCC → bottom + rail, GND → bottom – rail, DO → hole 12e.',
+       '7  Vibration module: + → bottom + rail, – → bottom – rail, S → hole 12e.',
        '8  Check: nothing from column 12 goes straight to the – rail. Then switch ON and test.']
 for i,s in enumerate(steps): T(-11,-3.4-i*0.0 - 0 if False else 9.0-i*1.05,s,fontsize=10,ha='left',va='center',bbox=None) if False else None
 T(-11.5,-11.4,'\n'.join(steps),fontsize=10.5,va='top',family='monospace')
@@ -81,11 +81,11 @@ wire([(30,TOPN),(30,BOTN)],K,3.5); end(30,TOPN,K); end(30,BOTN,K)
 ax.add_patch(FancyBboxPatch((12.3,-9.9),7.6,3.3,boxstyle='round,pad=0.15',fc='#1d4f9c',ec='k',zorder=4))
 ax.add_patch(Rectangle((18.8,-9.5),0.8,2.0,fc='#3c6fc4',ec='k',zorder=5))
 ax.add_patch(Circle((18.0,-9.2),0.3,fc='#3b7fd8',ec='k',zorder=5))
-T(15.4,-8.6,'Vibration module\n(digital, DO pin)',ha='center',va='center',color='white',fontsize=9.5,weight='bold',zorder=11)
-for x,n in [(13.5,'DO'),(15.5,'GND'),(17.5,'VCC')]: T(x,-7.25,n,ha='center',fontsize=8.5,weight='bold',color='white',zorder=11); end(x,-6.6,'#e8c84a')
+T(15.4,-8.6,'Vibration module\n(S  –  +)',ha='center',va='center',color='white',fontsize=9.5,weight='bold',zorder=11)
+for x,n in [(13.5,'S'),(15.5,'–'),(17.5,'+')]: T(x,-7.25,n,ha='center',fontsize=8.5,weight='bold',color='white',zorder=11); end(x,-6.6,'#e8c84a')
 wire([(17.5,-6.6),(17.5,BOTP)],R,3.5); end(17.5,BOTP,R)
 wire([(15.5,-6.6),(15.5,BOTN)],K,3.5); end(15.5,BOTN,K)
 wire([(13.5,-6.6),(13.5,-4.6),(10.6,-4.6),(10.6,6.3),(12,6.3),(12,7)],BL); end(12,7,BL)
-T(0.3,-6.3,'DO → 12e (the wire passes over\nrows f–j; only its end is plugged in)',fontsize=9,color=BL,weight='bold')
-T(20.5,-8.2,'Your – + S module will NOT work here:\nit has no DO pin / chip.\nUse SW-420 or an LM393\nvibration module.',fontsize=9,color=R,va='center')
+T(0.3,-6.3,'S → 12e (the wire passes over\nrows f–j; only its end is plugged in)',fontsize=9,color=BL,weight='bold')
+T(20.5,-8.2,'Works only if S drops to 0 V\nwhen shaken (switch type).\nThe piezo-disc module with a\nscrew terminal will NOT ring it.',fontsize=9,color=R,va='center')
 plt.savefig('breadboard_layout.png',dpi=140,bbox_inches='tight',facecolor='white')

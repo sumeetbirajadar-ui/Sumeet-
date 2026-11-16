@@ -25,11 +25,11 @@ L([(8.4,4.5),(10,4.5),(10,GY)],K); dot(10,GY,K)
 L([(8.4,5.5),(16.8,5.5)],BL)
 # vibration module (pins on left)
 VX=16.8
-box(VX,3.6,3.8,3.8,'   Vibration\n   module\n   (digital)',"#dfe8fb")
-for yy,n in [(6.5,'VCC'),(5.5,'DO'),(4.5,'GND')]: T(VX+0.15,yy,n,ha='left',va='center',fontsize=10)
+box(VX,3.6,3.8,3.8,'   Vibration\n   module',"#dfe8fb")
+for yy,n in [(6.5,'+'),(5.5,'S'),(4.5,'–')]: T(VX+0.15,yy,n,ha='left',va='center',fontsize=14,weight='bold')
 L([(VX,6.5),(15.8,6.5),(15.8,VY)],R); dot(15.8,VY,R)
 L([(VX,4.5),(15.2,4.5),(15.2,GY)],K); dot(15.2,GY,K)
-T(VX+1.9,3.0,'SW-420 / LM393 type\n(not the – + S module)',ha='center',va='top',fontsize=9)
+T(VX+1.9,3.0,'S must go to 0 V when\nshaken/pressed (switch type,\ne.g. KY-002 / KY-031)',ha='center',va='top',fontsize=9)
 # pressure pad / push button on the trigger line
 PX=12
 L([(PX,5.5),(PX,4.0)],BL)

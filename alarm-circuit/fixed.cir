@@ -1,0 +1,47 @@
+* Corrected piezo + IR alarm: both sensors OR-trigger a 555 monostable
+.param vcc=4.5
+VB vcc 0 4.5
+* ---- behavioural NE555 (pins: trig thr dis out) ----
+Blatch 0 q I = 1e-3*( time < 2m ? -v(q) : v(trig) < 1.5 ? (1-v(q)) : ( v(thr) > 3.0 ? -v(q) : ( v(q) > 0.5 ? (1-v(q)) : -v(q) ) ) )
+Cq q 0 1n IC=0
+Ctr trig 0 1n IC=4.5
+Cto thr 0 1p IC=0
+Bout out 0 V = 4.3*v(q)
+Bdis dis 0 I = (v(q) < 0.5 ? v(dis)/20 : 0)
+* timing: 270k + 10uF  -> 1.1RC ~ 3 s
+Rt vcc thr 270k
+Ct thr 0 10u IC=0
+Vlink thr dis 0
+* trigger node pull-up
+Rp vcc trig 10k
+* ---- IR module: open-collector OUT with on-board 10k pull-up, LOW on detection ----
+Rir vcc irout 10k
+Sir irout 0 irdet 0 swmod
+Vir irdet 0 PWL(0 0 6 0 6.001 1 6.5 1 6.501 0 10 0 10.001 1 10.3 1 10.301 0)
+.model swmod sw vt=0.5 vh=0.1 ron=20 roff=1e9
+D1 trig irout D1N4148
+* ---- piezo disc tap: 5 V spike, 5 ms, source impedance ~ 10k ----
+Vpz pzraw 0 PWL(0 0 1 0 1.001 5 1.005 0 10 0 10.001 5 10.005 0)
+Rpzs pzraw s 10k
+Rpd s 0 1Meg
+Rb s b 10k
+Q1 trig b 0 BC547
+* ---- active buzzer as load (~25 mA) ----
+Rbuz out 0 180
+.model D1N4148 D(Is=2.52n Rs=0.568 N=1.752 Cjo=4p BV=100)
+.model BC547 NPN(Is=7.05e-15 Bf=378 Vaf=85 Ikf=0.1 Rb=10 Rc=1 Re=0.5)
+.tran 1m 14 uic
+.control
+run
+wrdata fixed.dat v(trig) v(out) v(thr)
+meas tran on1 WHEN v(out)=2 RISE=1
+meas tran buz1 WHEN v(out)=2 FALL=1
+meas tran trigmin MIN v(trig) from=0.999 to=1.01
+meas tran on2 WHEN v(out)=2 RISE=2
+meas tran on3 WHEN v(out)=2 RISE=3
+meas tran ibuz MAX i(VB)
+meas tran buz2 WHEN v(out)=2 FALL=2
+meas tran buz3 WHEN v(out)=2 FALL=3
+quit
+.endc
+.end

@@ -22,10 +22,10 @@ for yy,col,lab in [(TOPP,R,'+'),(TOPN,BL,'–'),(BOTP,R,'+'),(BOTN,BL,'–')]:
     for c in range(1,31): ax.add_patch(Circle((c,yy),0.13,fc='#555',zorder=2))
     T(-0.25,yy,lab,color=col,fontsize=14,weight='bold',va='center',ha='center')
 T(31.0,TOPP,' + rail (RED)',color=R,va='center',fontsize=10,weight='bold'); T(31.0,TOPN,' – rail (BLACK/GND)',color=BL,va='center',fontsize=10,weight='bold')
-T(31.0,-1.8,' bottom rails: not used',va='center',fontsize=9,color='#777')
+T(31.0,-1.8,' bottom rails: powered by\n jumpers at columns 29/30',va='center',fontsize=9,color='#444')
 # highlight trigger column 12
 ax.add_patch(Rectangle((11.55,6.55),0.9,4.9,fc='none',ec=BL,lw=2.5,ls='--',zorder=3))
-T(0.3,-3.6,'column 12 (dashed) = BLUE trigger: holes 12a–12e are all connected',va='center',fontsize=9.5,color=BL,weight='bold',zorder=11)
+T(0.3,-10.6,'column 12 (dashed) = BLUE trigger: holes 12a–12e are all connected',va='center',fontsize=9.5,color=BL,weight='bold',zorder=11)
 # ---- battery + switch (off board) ----
 ax.add_patch(FancyBboxPatch((-11,13),4.2,7,boxstyle='round,pad=0.2',fc='#333',ec='k',zorder=4))
 for i in range(3): ax.add_patch(Rectangle((-10.6+i*1.3,13.6),1.0,5.8,fc='#c8913c',ec='k',zorder=5))
@@ -47,10 +47,10 @@ wire([(7.5,17.3),(7.5,16.0),(6,16.0),(6,TOPN)],K); end(6,TOPN,K)
 wire([(6,17.3),(6,16.5),(4.6,16.5),(4.6,14.4),(10.2,14.4),(10.2,11.4),(12,11.4),(12,11)],BL); end(12,11,BL)
 T(11.0,17.6,'(female–male\njumper wires)',fontsize=8,color='#444')
 # ---- buzzer on board: – leg col 12 row c, + leg col 15 row c ----
-ax.add_patch(Circle((13.5,7.0),1.55,fc='#1a1a1a',ec='k',zorder=8,alpha=0.93)); ax.add_patch(Circle((13.5,7.0),0.3,fc='#999',zorder=9))
-T(15.3,8.3,'+',color=R,fontsize=16,weight='bold',zorder=11); T(11.2,8.3,'–',fontsize=16,weight='bold',zorder=11)
-T(17.6,8.9,'Active buzzer\n– leg → 12d\n+ leg → 15d',va='center',fontsize=10,weight='bold',bbox=dict(fc='white',ec='none',pad=1))
-ax.add_patch(Circle((12,8),0.24,fc='#ccc',ec='k',zorder=10)); ax.add_patch(Circle((15,8),0.24,fc='#ccc',ec='k',zorder=10))
+ax.add_patch(Circle((13.5,8.0),1.45,fc='#1a1a1a',ec='k',zorder=8,alpha=0.93)); ax.add_patch(Circle((13.5,8.0),0.3,fc='#999',zorder=9))
+T(15.3,9.6,'+',color=R,fontsize=16,weight='bold',zorder=11); T(11.0,9.6,'–',fontsize=16,weight='bold',zorder=11)
+T(17.6,8.9,'Active buzzer\n– leg → 12c\n+ leg → 15c',va='center',fontsize=10,weight='bold',bbox=dict(fc='white',ec='none',pad=1))
+ax.add_patch(Circle((12,9),0.24,fc='#ccc',ec='k',zorder=10)); ax.add_patch(Circle((15,9),0.24,fc='#ccc',ec='k',zorder=10))
 wire([(15,11),(15,12.0),(16,12.0),(16,TOPP)],R,3.5); end(15,11,R); end(16,TOPP,R)
 T(16.3,10.9,'15a → + rail (16)',fontsize=9,color=R,weight='bold',bbox=dict(fc='white',ec='none',pad=1))
 # ---- pressure pad / button (off board) ----
@@ -62,14 +62,30 @@ end(24.5,16.35,'#bbb'); end(24.5,15.35,'#bbb')
 wire([(24.5,16.35),(19,16.35),(19,14.6),(12.6,14.6),(12.6,10.4),(12,10.4),(12,10)],BL); end(12,10,BL)
 wire([(24.5,15.35),(22,15.35),(22,TOPN)],K); end(22,TOPN,K)
 T(19.3,16.7,'foil 1 → 12b',fontsize=9,color=BL,weight='bold'); T(22.3,14.0,'foil 2 → – rail',fontsize=9,weight='bold')
-T(15.5,23,'BREADBOARD LAYOUT — IR sensor OR pressure pad rings the buzzer',ha='center',fontsize=16,weight='bold')
+T(15.5,23,'BREADBOARD LAYOUT — IR sensor OR vibration module OR pressure pad rings the buzzer',ha='center',fontsize=16,weight='bold')
 steps=['1  Battery + → switch IN.   Switch OUT → top + rail (1).',
        '2  Battery – → top – rail (2).',
        '3  IR VCC → + rail (8).   IR GND → – rail (6).   IR OUT → hole 12a.',
-       '4  Buzzer: – leg in 12d, + leg in 15d.   Jumper 15a → + rail (16).',
+       '4  Buzzer: – leg in 12c, + leg in 15c.   Jumper 15a → + rail (16).',
        '5  Pad foil 1 → hole 12b.   Pad foil 2 → – rail (22).',
-       '6  Check: nothing from column 12 goes straight to the – rail. Then switch ON and test.']
+       '6  Rail jumpers: top + → bottom + (col 29), top – → bottom – (col 30).',
+       '7  Vibration module (DIGITAL): VCC → bottom + rail, GND → bottom – rail, DO → hole 12e.',
+       '8  Check: nothing from column 12 goes straight to the – rail. Then switch ON and test.']
 for i,s in enumerate(steps): T(-11,-3.4-i*0.0 - 0 if False else 9.0-i*1.05,s,fontsize=10,ha='left',va='center',bbox=None) if False else None
-T(-11.5,-4.4,'\n'.join(steps),fontsize=10.5,va='top',family='monospace')
-ax.set_ylim(-11,24)
+T(-11.5,-11.4,'\n'.join(steps),fontsize=10.5,va='top',family='monospace')
+ax.set_ylim(-19.5,24)
+# rail bridge jumpers
+wire([(29,TOPP),(29,BOTP)],R,3.5); end(29,TOPP,R); end(29,BOTP,R)
+wire([(30,TOPN),(30,BOTN)],K,3.5); end(30,TOPN,K); end(30,BOTN,K)
+# digital vibration module below board
+ax.add_patch(FancyBboxPatch((12.3,-9.9),7.6,3.3,boxstyle='round,pad=0.15',fc='#1d4f9c',ec='k',zorder=4))
+ax.add_patch(Rectangle((18.8,-9.5),0.8,2.0,fc='#3c6fc4',ec='k',zorder=5))
+ax.add_patch(Circle((18.0,-9.2),0.3,fc='#3b7fd8',ec='k',zorder=5))
+T(15.4,-8.6,'Vibration module\n(digital, DO pin)',ha='center',va='center',color='white',fontsize=9.5,weight='bold',zorder=11)
+for x,n in [(13.5,'DO'),(15.5,'GND'),(17.5,'VCC')]: T(x,-7.25,n,ha='center',fontsize=8.5,weight='bold',color='white',zorder=11); end(x,-6.6,'#e8c84a')
+wire([(17.5,-6.6),(17.5,BOTP)],R,3.5); end(17.5,BOTP,R)
+wire([(15.5,-6.6),(15.5,BOTN)],K,3.5); end(15.5,BOTN,K)
+wire([(13.5,-6.6),(13.5,-4.6),(10.6,-4.6),(10.6,6.3),(12,6.3),(12,7)],BL); end(12,7,BL)
+T(0.3,-6.3,'DO → 12e (the wire passes over\nrows f–j; only its end is plugged in)',fontsize=9,color=BL,weight='bold')
+T(20.5,-8.2,'Your – + S module will NOT work here:\nit has no DO pin / chip.\nUse SW-420 or an LM393\nvibration module.',fontsize=9,color=R,va='center')
 plt.savefig('breadboard_layout.png',dpi=140,bbox_inches='tight',facecolor='white')

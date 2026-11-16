@@ -33,7 +33,7 @@ T(17.5,3.0,'piezo disc → module screw\nterminal, if it has one',ha='center',fo
 ax.add_patch(Circle((12,7.6),0.95,fc='#222',ec=K,zorder=3)); ax.add_patch(Circle((12,7.6),0.18,fc='#aaa',zorder=4))
 L([(12,8.55),(12,VY)],R); dot(12,VY,R); L([(12,6.65),(12,5.5)],BL); dot(12,5.5,BL)
 T(12.35,8.75,'+',color=R,fontsize=15,weight='bold'); T(12.35,6.3,'–',fontsize=15,weight='bold')
-T(10.6,8.3,'Active buzzer\n+ to RED\n– to BLUE',va='center',ha='right',fontsize=11)
+T(12,3.4,'Active buzzer:\n+ to RED, – to BLUE',va='center',ha='center',fontsize=11)
 T(12,5.0,'BLUE trigger wire',color=BL,ha='center',fontsize=11,weight='bold')
 T(0,-1.3,'Either module pulls OUT/DO to 0 V when it detects → current flows RED → buzzer → BLUE → module → BLACK → buzzer sounds.',fontsize=11)
 T(0,-1.95,'Do NOT connect the BLUE wire to BLACK, and do not connect a module that has only an analog "S" pin to BLUE.',fontsize=11,color=R)

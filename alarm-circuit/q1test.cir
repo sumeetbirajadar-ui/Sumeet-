@@ -1,0 +1,18 @@
+* piezo module S -> 10k -> BC547 driving active buzzer directly
+VB vcc 0 4.5
+Vpz pzraw 0 PWL(0 0 1m 0 1.1m 10 6m 0)
+Rpzs pzraw s 10k
+Rpd s 0 1Meg
+Rb s b 10k
+Q1 c b 0 BC547
+Rbuz vcc c 180
+.model BC547 NPN(Is=7.05e-15 Bf=378 Vaf=85 Ikf=0.1 Rb=10 Rc=1 Re=0.5)
+.tran 10u 10m
+.control
+run
+meas tran ibuz MAX par('(4.5-v(c))/180')
+meas tran tlow WHEN v(c)=1.5 RISE=1
+meas tran thigh WHEN v(c)=1.5 FALL=1
+quit
+.endc
+.end

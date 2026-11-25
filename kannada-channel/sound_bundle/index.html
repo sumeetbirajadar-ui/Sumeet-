@@ -1,0 +1,174 @@
+<title>Kannada Meme Soundboard</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@600;800&family=Noto+Sans+Kannada:wght@400;600&display=swap">
+<style>
+/* Layout: a two-section soundboard of tap pads, styled after an auto-rickshaw: black body, meter yellow, number-plate green. */
+:root {
+  --bg: #fbf8ee;
+  --panel: #ffffff;
+  --ink: #1d1a12;
+  --muted: #6b6450;
+  --line: #e4dcc4;
+  --auto: #f2b705;
+  --auto-ink: #1d1a12;
+  --plate: #1f7a4d;
+  --display: "Baloo Tamma 2", "Noto Sans Kannada", system-ui, sans-serif;
+  --body: "Noto Sans Kannada", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15130d; --panel: #211e15; --ink: #f3eedd; --muted: #b0a78c;
+    --line: #3a3423; --auto: #f5c21b; --auto-ink: #15130d; --plate: #4fc28a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #15130d; --panel: #211e15; --ink: #f3eedd; --muted: #b0a78c;
+  --line: #3a3423; --auto: #f5c21b; --auto-ink: #15130d; --plate: #4fc28a;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 48px;
+}
+.wrap { max-width: 980px; margin: 0 auto; display: grid; gap: 28px; }
+header { display: grid; gap: 6px; }
+h1 { font-family: var(--display); font-weight: 800; font-size: clamp(30px, 6vw, 46px); line-height: 1.05; margin: 0; text-wrap: balance; }
+h1 span { background: var(--auto); color: var(--auto-ink); padding: 0 .25em; border-radius: 6px; }
+.lede { color: var(--muted); margin: 0; max-width: 62ch; }
+.note { font-size: 13px; color: var(--muted); border-left: 3px solid var(--plate); padding-left: 10px; margin: 0; max-width: 70ch; }
+section { display: grid; gap: 12px; }
+.sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+h2 { font-family: var(--display); font-weight: 800; font-size: 24px; margin: 0; }
+h2 small { font-family: var(--body); font-weight: 400; font-size: 14px; color: var(--muted); margin-left: 6px; }
+.count { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-variant-numeric: tabular-nums; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+.pad {
+  appearance: none; text-align: left; font: inherit; color: inherit; cursor: pointer;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+  padding: 12px 12px 12px 12px; display: grid; grid-template-columns: 40px 1fr; gap: 4px 10px; align-items: center;
+  min-width: 0;
+}
+.pad:hover { border-color: var(--auto); }
+.pad:focus-visible { outline: 3px solid var(--plate); outline-offset: 2px; }
+.btn {
+  grid-row: span 2; width: 40px; height: 40px; border-radius: 50%; background: var(--auto); color: var(--auto-ink);
+  display: grid; place-items: center; font-size: 16px; font-weight: 800;
+}
+.pad.playing { border-color: var(--plate); box-shadow: 0 0 0 2px var(--plate) inset; }
+.pad.playing .btn { background: var(--plate); color: var(--bg); }
+.name { font-weight: 600; min-width: 0; overflow-wrap: anywhere; }
+.meta { font-size: 12.5px; color: var(--muted); min-width: 0; }
+.meta b { font-weight: 600; font-variant-numeric: tabular-nums; color: var(--ink); }
+.bar { grid-column: 1 / -1; height: 3px; background: var(--line); border-radius: 2px; overflow: hidden; margin-top: 6px; }
+.bar i { display: block; height: 100%; width: 0; background: var(--plate); }
+footer { font-size: 13px; color: var(--muted); display: grid; gap: 6px; }
+footer code { background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; overflow-wrap: anywhere; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Kannada Meme <span>Soundboard</span></h1>
+    <p class="lede">Starter audio bundle for the channel: 19 meme sound effects and 10 emotion music beds. Tap a pad to play it. Every sound was made from scratch in code, so the channel owns it and there is no copyright claim risk.</p>
+    <p class="note">Basic synth versions. Use them now, and swap in richer ones from ElevenLabs, Pixabay or Epidemic Sound later. Music beds sit 4 dB quieter than effects so your voice stays on top.</p>
+  </header>
+
+  <section aria-labelledby="sfx-h">
+    <div class="sec-head"><h2 id="sfx-h">Meme SFX <small>ಮೀಮ್ ಸೌಂಡ್ಸ್</small></h2><span class="count" id="sfx-count"></span></div>
+    <div class="grid" id="sfx"></div>
+  </section>
+
+  <section aria-labelledby="bed-h">
+    <div class="sec-head"><h2 id="bed-h">Emotion music beds <small>ಭಾವನೆ ಸಂಗೀತ · 15 s</small></h2><span class="count" id="bed-count"></span></div>
+    <div class="grid" id="bed"></div>
+  </section>
+
+  <footer>
+    <span>To download: get the MP3s from your GitHub repo in <code>kannada-channel/sound_bundle/</code>, or long-press a sound in your editor's import screen.</span>
+    <span>Names match the files, e.g. <code>01_Meme_SFX/vine_boom.mp3</code>.</span>
+  </footer>
+</div>
+
+<script>
+const SFX = [
+  ["vine_boom", "Vine boom", "1.7 s", "sudden reveal, side-eye"],
+  ["record_scratch", "Record scratch", "0.7 s", "wait… what just happened"],
+  ["crickets_awkward", "Crickets", "4.0 s", "joke falls flat"],
+  ["sad_trombone_fail", "Sad trombone", "3.0 s", "plan fails"],
+  ["ding_correct", "Ding", "2.2 s", "right answer, idea"],
+  ["whoosh_transition", "Whoosh", "0.9 s", "scene change"],
+  ["boing_cartoon", "Boing", "0.9 s", "cartoon bounce, silly move"],
+  ["slap_hit", "Slap", "0.3 s", "amma slap, comic hit"],
+  ["dun_dun_dun_dramatic", "Dun dun dun", "3.4 s", "dramatic twist"],
+  ["drum_roll_crash_reveal", "Drum roll + crash", "3.6 s", "big reveal, results"],
+  ["tick_tock_waiting", "Tick tock", "4.0 s", "waiting, exam clock"],
+  ["heartbeat_tension", "Heartbeat", "4.0 s", "nervous moment"],
+  ["error_buzz_wrong", "Wrong buzzer", "0.7 s", "wrong answer"],
+  ["success_chime", "Success chime", "1.8 s", "small win"],
+  ["pop_text", "Pop", "0.2 s", "text or emoji pops up"],
+  ["suspense_sting", "Suspense sting", "3.0 s", "something is about to go wrong"],
+  ["rimshot_joke", "Ba-dum-tss", "2.0 s", "after a bad joke"],
+  ["mass_entry_hit", "Mass entry hit", "3.2 s", "hero walks in"],
+  ["thud_fall", "Fall + thud", "1.7 s", "someone falls"],
+];
+const BEDS = [
+  ["sad_emotional_15s", "Sad", "ದುಃಖ", "fake-emotional moments"],
+  ["suspense_tension_15s", "Suspense", "ಕುತೂಹಲ", "who ate the last laddu?"],
+  ["happy_bouncy_15s", "Happy", "ಖುಷಿ", "intros, good news"],
+  ["mass_hero_entry_15s", "Mass hero entry", "ಮಾಸ್", "slow-motion entry"],
+  ["awkward_silence_15s", "Awkward", "ಮುಜುಗರ", "nobody laughs"],
+  ["romantic_soft_15s", "Romantic", "ಪ್ರೀತಿ", "crush scenes"],
+  ["horror_scary_15s", "Horror", "ಭಯ", "dark room, exam results"],
+  ["villain_march_15s", "Villain", "ವಿಲನ್", "strict teacher or boss walks in"],
+  ["comedy_chase_15s", "Comedy chase", "ಓಟ", "running late, chase scenes"],
+  ["victory_celebration_15s", "Victory", "ಗೆಲುವು", "passed, won, done"],
+];
+
+let current = null;
+function stop() {
+  if (!current) return;
+  current.audio.pause();
+  current.pad.classList.remove("playing");
+  current.pad.querySelector(".btn").textContent = "▶";
+  current.pad.querySelector(".bar i").style.width = "0";
+  current = null;
+}
+function makePad(dir, file, title, sub, use, container) {
+  const pad = document.createElement("button");
+  pad.className = "pad";
+  pad.type = "button";
+  pad.id = "pad-" + file;
+  pad.setAttribute("aria-label", "Play " + title);
+  pad.innerHTML = '<span class="btn" aria-hidden="true">▶</span><span class="name"></span><span class="meta"></span><span class="bar"><i></i></span>';
+  pad.querySelector(".name").textContent = title;
+  const meta = pad.querySelector(".meta");
+  const b = document.createElement("b"); b.textContent = sub;
+  meta.append(b, " · " + use);
+  pad.addEventListener("click", () => {
+    if (current && current.pad === pad) { stop(); return; }
+    stop();
+    const audio = new Audio(dir + "/" + file + ".mp3");
+    current = { audio, pad };
+    pad.classList.add("playing");
+    pad.querySelector(".btn").textContent = "■";
+    const bar = pad.querySelector(".bar i");
+    audio.addEventListener("timeupdate", () => {
+      if (audio.duration) bar.style.width = (100 * audio.currentTime / audio.duration) + "%";
+    });
+    audio.addEventListener("ended", () => { if (current && current.pad === pad) stop(); });
+    audio.play().catch(() => stop());
+  });
+  container.appendChild(pad);
+}
+const sfxEl = document.getElementById("sfx");
+SFX.forEach(([f, t, d, u]) => makePad("01_Meme_SFX", f, t, d, u, sfxEl));
+const bedEl = document.getElementById("bed");
+BEDS.forEach(([f, t, k, u]) => makePad("02_Emotion_Music", f, t, k, u, bedEl));
+document.getElementById("sfx-count").textContent = SFX.length + " sounds";
+document.getElementById("bed-count").textContent = BEDS.length + " beds";
+</script>
